@@ -1,4 +1,1 @@
-ff _justafunc(num:int, fl: float) : auto
-{
-    print num;
-}
+print x + 2;

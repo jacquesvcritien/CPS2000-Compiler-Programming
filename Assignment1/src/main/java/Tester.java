@@ -1,18 +1,16 @@
+import exceptions.InvalidNodeException;
 import exceptions.InvalidSyntaxException;
 import lexer.Lexer;
-import lexer.Token;
-import lexer.TypeToken;
 import parser.Parser;
-import parser.node.Node;
+import parser.node.ASTNode;
+import parser.node.ASTProgram;
+import visitor.VisitorXMLGenerator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
-
 public class Tester {
-    public static void main(String args[]) throws IOException, InvalidSyntaxException {
+    public static void main(String args[]) throws IOException, InvalidSyntaxException, InvalidNodeException {
         Lexer lexer = new Lexer("sourcecode.txt");
+        VisitorXMLGenerator xml = new VisitorXMLGenerator();
 //        Token nextToken;
 //        int counter = 1;
 //        do{
@@ -21,6 +19,8 @@ public class Tester {
 //            counter++;
 //        }while(nextToken.getType() != TypeToken.EOF && nextToken.getType() != TypeToken.INVALID);
         Parser parser = new Parser(lexer);
-        Node node = parser.parse();
+        ASTProgram node = parser.parse();
+
+        xml.visit(node);
     }
 }
