@@ -220,8 +220,9 @@ public class Parser {
         ASTIdentifier identifier = identifier();
         absorb(TypeToken.COLON);
         Token type = type();
+        identifier.setType(type.getAttribute());
 
-        return new ASTFormalParam(identifier, type);
+        return new ASTFormalParam(identifier);
     }
 
     private ASTFormalParams formalParams() throws IOException, InvalidSyntaxException, InvalidNodeException {
@@ -299,7 +300,7 @@ public class Parser {
             case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break; // case of '-'
             case NOT: absorb(TypeToken.NOT);break; // case of '-'
         }
-        return new ASTUnary(new Token(TypeToken.UNARY, token.getAttribute()), simpleExpression());
+        return new ASTUnary(token.getAttribute(), simpleExpression());
 
     }
 

@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="184e9c0f-0e90-4b3c-a173-369a38e4bf63" name="Default Changelist" comment="" />
+    <list default="true" id="184e9c0f-0e90-4b3c-a173-369a38e4bf63" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sourcecode.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sourcecode.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTActualParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTActualParams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTAssignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTAssignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTFor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTFor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTFormalParam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTFormalParam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTFormalParams.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTFormalParams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTFunctionCall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTFunctionCall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTFunctionDecl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTFunctionDecl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTIf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTIf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTReturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTReturn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTUnary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTUnary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/node/ASTWhile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/node/ASTWhile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/visitor/VisitorXMLGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/visitor/VisitorXMLGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/Assignment1.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Tester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Tester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/exceptions/InvalidNodeException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exceptions/InvalidNodeException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/exceptions/InvalidSyntaxException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/exceptions/InvalidSyntaxException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Keyword.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Keyword.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Lexer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Lexer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Lexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Lexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Operand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Operand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/State.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Token.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Token.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Transition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Transition.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/TypeToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/TypeToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Parser$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Parser$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTActualParams.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTActualParams.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTAdditiveOp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTAdditiveOp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTAssignment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTAssignment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTBinExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTBinExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTBooleanLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTBooleanLiteral.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTExpression.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTExpression.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFloatLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFloatLiteral.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFormalParam.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFormalParam.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFormalParams.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFormalParams.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFunctionCall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFunctionCall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTFunctionDecl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTFunctionDecl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTIdentifier.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTIdentifier.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTIf.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTIf.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTIntegerLiteral.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTIntegerLiteral.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTMultiplicativeOp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTMultiplicativeOp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTPrint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTPrint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTProgram.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTProgram.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTRelationalOp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTRelationalOp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTReturn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTReturn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTStatement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTStatement.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTUnary.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTUnary.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTVariableDecl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTVariableDecl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/node/ASTWhile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/node/ASTWhile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visitor/Visitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visitor/Visitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/visitor/VisitorXMLGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visitor/VisitorXMLGenerator.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="Assignment1" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -19,25 +80,23 @@
       </list>
     </option>
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1a545XQwAKe4o4goyhEyhGTPF87" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -89,10 +148,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="233" y="4" key="#Project_Structure" timestamp="1586388516672">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="233" y="27" key="#Project_Structure" timestamp="1586459400007">
+      <screen x="0" y="23" width="1280" height="732" />
     </state>
     <state x="233" y="4" key="#Project_Structure/0.0.1280.689@0.0.1280.689" timestamp="1586388516672" />
+    <state x="233" y="27" key="#Project_Structure/0.23.1280.732@0.23.1280.732" timestamp="1586459400007" />
     <state x="-1251" y="-100" key="#com.intellij.ide.util.MemberChooser" timestamp="1586458018944">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
@@ -135,8 +195,8 @@
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1181" y="89" key="FileChooserDialogImpl/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586453874023" />
-    <state width="1877" height="295" key="GridCell.Tab.0.bottom" timestamp="1586458447256">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="255" height="525" key="GridCell.Tab.0.bottom" timestamp="1586469099839">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="143" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176790" />
@@ -144,9 +204,11 @@
     <state width="1877" height="295" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458447256" />
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1586388730020" />
+    <state width="609" height="175" key="GridCell.Tab.0.bottom/0.23.1280.732@0.23.1280.732" timestamp="1586466154475" />
+    <state width="255" height="525" key="GridCell.Tab.0.bottom/0.23.1280.733@0.23.1280.733" timestamp="1586469099839" />
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="295" key="GridCell.Tab.0.center" timestamp="1586458447256">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="255" height="525" key="GridCell.Tab.0.center" timestamp="1586469099836">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.center/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="143" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176790" />
@@ -154,9 +216,11 @@
     <state width="1877" height="295" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458447256" />
     <state width="1237" height="173" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1586388730020" />
+    <state width="609" height="175" key="GridCell.Tab.0.center/0.23.1280.732@0.23.1280.732" timestamp="1586466154474" />
+    <state width="255" height="525" key="GridCell.Tab.0.center/0.23.1280.733@0.23.1280.733" timestamp="1586469099836" />
     <state width="1237" height="173" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="295" key="GridCell.Tab.0.left" timestamp="1586458447256">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="255" height="525" key="GridCell.Tab.0.left" timestamp="1586469099835">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.left/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="143" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176790" />
@@ -164,9 +228,11 @@
     <state width="1877" height="295" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458447256" />
     <state width="1237" height="173" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1586388730020" />
+    <state width="609" height="175" key="GridCell.Tab.0.left/0.23.1280.732@0.23.1280.732" timestamp="1586466154474" />
+    <state width="255" height="525" key="GridCell.Tab.0.left/0.23.1280.733@0.23.1280.733" timestamp="1586469099835" />
     <state width="1237" height="173" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="295" key="GridCell.Tab.0.right" timestamp="1586458447256">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="255" height="525" key="GridCell.Tab.0.right" timestamp="1586469099837">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.right/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="143" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176790" />
@@ -174,9 +240,11 @@
     <state width="1877" height="295" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458447256" />
     <state width="1237" height="173" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1586388730020" />
+    <state width="609" height="175" key="GridCell.Tab.0.right/0.23.1280.732@0.23.1280.732" timestamp="1586466154475" />
+    <state width="255" height="525" key="GridCell.Tab.0.right/0.23.1280.733@0.23.1280.733" timestamp="1586469099837" />
     <state width="1237" height="173" key="GridCell.Tab.0.right/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="295" key="GridCell.Tab.1.bottom" timestamp="1586458442592">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="609" height="218" key="GridCell.Tab.1.bottom" timestamp="1586468319510">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="143" key="GridCell.Tab.1.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176575" />
@@ -184,9 +252,10 @@
     <state width="1877" height="295" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458442592" />
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860377" />
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/0.0.1280.689@0.0.1280.689" timestamp="1586388730271" />
+    <state width="609" height="218" key="GridCell.Tab.1.bottom/0.23.1280.733@0.23.1280.733" timestamp="1586468319510" />
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="295" key="GridCell.Tab.1.center" timestamp="1586458442591">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="609" height="218" key="GridCell.Tab.1.center" timestamp="1586468319509">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.center/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="143" key="GridCell.Tab.1.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176575" />
@@ -194,9 +263,10 @@
     <state width="1877" height="295" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458442591" />
     <state width="1237" height="173" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.1.center/0.0.1280.689@0.0.1280.689" timestamp="1586388730271" />
+    <state width="609" height="218" key="GridCell.Tab.1.center/0.23.1280.733@0.23.1280.733" timestamp="1586468319509" />
     <state width="1237" height="173" key="GridCell.Tab.1.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="295" key="GridCell.Tab.1.left" timestamp="1586458442591">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="609" height="218" key="GridCell.Tab.1.left" timestamp="1586468319509">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.left/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="143" key="GridCell.Tab.1.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176575" />
@@ -204,9 +274,10 @@
     <state width="1877" height="295" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458442591" />
     <state width="1237" height="173" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860376" />
     <state width="1237" height="173" key="GridCell.Tab.1.left/0.0.1280.689@0.0.1280.689" timestamp="1586388730271" />
+    <state width="609" height="218" key="GridCell.Tab.1.left/0.23.1280.733@0.23.1280.733" timestamp="1586468319509" />
     <state width="1237" height="173" key="GridCell.Tab.1.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="295" key="GridCell.Tab.1.right" timestamp="1586458442592">
-      <screen x="-1920" y="-184" width="1920" height="1050" />
+    <state width="609" height="218" key="GridCell.Tab.1.right" timestamp="1586468319510">
+      <screen x="0" y="23" width="1280" height="733" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.right/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="143" key="GridCell.Tab.1.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586103176575" />
@@ -214,11 +285,16 @@
     <state width="1877" height="295" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1586458442592" />
     <state width="1237" height="173" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586427860377" />
     <state width="1237" height="173" key="GridCell.Tab.1.right/0.0.1280.689@0.0.1280.689" timestamp="1586388730271" />
+    <state width="609" height="218" key="GridCell.Tab.1.right/0.23.1280.733@0.23.1280.733" timestamp="1586468319510" />
     <state width="1237" height="173" key="GridCell.Tab.1.right/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
     <state x="171" y="0" key="Maven.ArtifactSearchDialog" timestamp="1586361086915">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="171" y="0" key="Maven.ArtifactSearchDialog/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1586361086915" />
+    <state x="123" y="23" key="SettingsEditor" timestamp="1586461902484">
+      <screen x="0" y="23" width="1280" height="732" />
+    </state>
+    <state x="123" y="23" key="SettingsEditor/0.23.1280.732@0.23.1280.732" timestamp="1586461902484" />
     <state x="337" y="169" key="com.intellij.ide.util.TipDialog" timestamp="1586360702962">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
@@ -249,16 +325,6 @@
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Tester.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Tester.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/node/ASTExpression.java</url>
           <line>8</line>
           <option name="timeStamp" value="37" />
@@ -267,6 +333,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/parser/node/ASTIdentifier.java</url>
           <line>31</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/visitor/VisitorXMLGenerator.java</url>
+          <line>237</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

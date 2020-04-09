@@ -1,6 +1,7 @@
 package parser.node;
 
 import lexer.Token;
+import visitor.Visitor;
 
 public class ASTFunctionDecl extends ASTStatement {
     ASTIdentifier identifier;
@@ -13,4 +14,22 @@ public class ASTFunctionDecl extends ASTStatement {
         this.formalParams = formalParams;
         this.block = block;
     }
+
+    public ASTBlock getBlock() {
+        return block;
+    }
+
+    public ASTFormalParams getFormalParams() {
+        return formalParams;
+    }
+
+    public ASTIdentifier getIdentifier() {
+        return identifier;
+    }
+
+    public void accept(Visitor visitor)
+    {
+        visitor.visit(this);
+    }
+
 }

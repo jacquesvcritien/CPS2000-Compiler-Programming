@@ -13,7 +13,12 @@ public class ASTActualParams implements ASTNode {
         this.expressions = expressions;
     }
 
-    public void accept(Visitor visitor) {
+    public ArrayList<ASTExpression> getExpressions() {
+        return expressions;
+    }
 
+    public void accept(Visitor visitor)
+    {
+        visitor.visit(this);
     }
 }

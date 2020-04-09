@@ -1,5 +1,7 @@
 package parser.node;
 
+import visitor.Visitor;
+
 public class ASTAssignment extends ASTStatement {
     ASTIdentifier identifier;
     ASTExpression expression;
@@ -17,4 +19,9 @@ public class ASTAssignment extends ASTStatement {
     public ASTExpression getExpression() {
         return expression;
     }
+    public void accept(Visitor visitor)
+    {
+        visitor.visit(this);
+    }
+
 }

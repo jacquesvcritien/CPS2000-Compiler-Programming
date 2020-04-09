@@ -1,6 +1,7 @@
 package parser.node;
 
 import lexer.Token;
+import visitor.Visitor;
 
 public class ASTReturn extends ASTStatement {
     ASTExpression expression;
@@ -13,4 +14,10 @@ public class ASTReturn extends ASTStatement {
     public ASTExpression getExpression() {
         return expression;
     }
+
+    public void accept(Visitor visitor)
+    {
+        visitor.visit(this);
+    }
+
 }
