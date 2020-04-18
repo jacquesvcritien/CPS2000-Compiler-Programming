@@ -28,6 +28,7 @@ public class Lexer
         put("return", Keyword.RETURN);
         put("ff", Keyword.FF);
         put("print", Keyword.PRINT);
+        put("true", Keyword.TRUE);
         put("false", Keyword.FALSE);
         put("not", Keyword.NOT);
         put("*", Operand.MULTIPLY);

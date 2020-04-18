@@ -1,5 +1,6 @@
 package parser.node;
 
+import exceptions.*;
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -7,7 +8,9 @@ import java.util.ArrayList;
 public class ASTBlock extends ASTStatement {
     ArrayList<ASTStatement> statements;
 
-    public ASTBlock(){};
+    public ASTBlock(){
+        statements = new ArrayList<ASTStatement>();
+    };
     public ASTBlock(ArrayList<ASTStatement> statements)
     {
         this.statements = statements;
@@ -17,8 +20,7 @@ public class ASTBlock extends ASTStatement {
         return statements;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 

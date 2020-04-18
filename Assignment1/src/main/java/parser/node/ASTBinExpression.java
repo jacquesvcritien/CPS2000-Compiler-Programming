@@ -1,5 +1,8 @@
 package parser.node;
 
+import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
+import exceptions.UndeclaredException;
 import visitor.Visitor;
 
 public class ASTBinExpression extends ASTExpression {
@@ -28,8 +31,7 @@ public class ASTBinExpression extends ASTExpression {
         return right;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
         visitor.visit(this);
     }
 }

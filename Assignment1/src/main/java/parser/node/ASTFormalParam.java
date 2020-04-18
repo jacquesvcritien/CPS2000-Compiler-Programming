@@ -1,5 +1,7 @@
 package parser.node;
 
+import exceptions.AlreadyDeclaredException;
+import exceptions.UndeclaredException;
 import lexer.Token;
 import visitor.Visitor;
 
@@ -17,8 +19,7 @@ public class ASTFormalParam extends ASTExpression {
     }
 
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
         visitor.visit(this);
     }
 

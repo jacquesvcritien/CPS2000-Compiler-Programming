@@ -1,5 +1,9 @@
 package parser.node;
 
+import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
+import exceptions.InvalidNodeException;
+import exceptions.UndeclaredException;
 import lexer.Token;
 import visitor.Visitor;
 
@@ -15,8 +19,7 @@ public class ASTReturn extends ASTStatement {
         return expression;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, InvalidNodeException, UndeclaredException {
         visitor.visit(this);
     }
 

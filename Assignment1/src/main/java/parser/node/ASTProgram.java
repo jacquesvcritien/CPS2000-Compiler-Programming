@@ -1,5 +1,6 @@
 package parser.node;
 
+import exceptions.*;
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -16,8 +17,7 @@ public class ASTProgram implements ASTNode {
         return statements;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }

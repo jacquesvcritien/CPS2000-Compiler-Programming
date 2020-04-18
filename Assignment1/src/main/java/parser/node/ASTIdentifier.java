@@ -1,6 +1,8 @@
 package parser.node;
 
+import exceptions.AlreadyDeclaredException;
 import exceptions.InvalidNodeException;
+import exceptions.UndeclaredException;
 import lexer.Token;
 import lexer.TypeToken;
 import visitor.Visitor;
@@ -15,6 +17,13 @@ public class ASTIdentifier extends ASTExpression {
         this.value =value;
     }
 
+    //constructor
+    public ASTIdentifier(String value, String type) throws InvalidNodeException {
+
+        this.value =value;
+        this.type = type;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
@@ -27,8 +36,7 @@ public class ASTIdentifier extends ASTExpression {
         return type;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
         visitor.visit(this);
     }
 }

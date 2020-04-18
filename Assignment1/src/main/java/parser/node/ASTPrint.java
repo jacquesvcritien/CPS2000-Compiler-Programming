@@ -1,5 +1,8 @@
 package parser.node;
 
+import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
+import exceptions.UndeclaredException;
 import lexer.Token;
 import visitor.Visitor;
 
@@ -15,8 +18,7 @@ public class ASTPrint extends ASTStatement {
         return expression;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
         visitor.visit(this);
     }
 }

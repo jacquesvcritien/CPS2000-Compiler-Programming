@@ -1,5 +1,6 @@
 package parser.node;
 
+import exceptions.*;
 import visitor.Visitor;
 
 public class ASTIf extends ASTStatement {
@@ -26,8 +27,7 @@ public class ASTIf extends ASTStatement {
         return elseBlock;
     }
 
-    public void accept(Visitor visitor)
-    {
+    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }
