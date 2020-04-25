@@ -1,0 +1,5 @@
+//function with bad return type
+ff bad_return_type():int
+{
+    return 0.1;
+}

@@ -1,0 +1,2 @@
+//bad assignment - undeclared
+x = 1;

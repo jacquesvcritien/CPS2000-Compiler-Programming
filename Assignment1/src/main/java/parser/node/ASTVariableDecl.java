@@ -1,8 +1,6 @@
 package parser.node;
 
-import exceptions.AlreadyDeclaredException;
-import exceptions.IncorrectTypeException;
-import exceptions.UndeclaredException;
+import exceptions.*;
 import lexer.Token;
 import lexer.TypeToken;
 import visitor.Visitor;
@@ -26,7 +24,7 @@ public class ASTVariableDecl extends ASTStatement {
         return identifier;
     }
 
-    public void accept(Visitor visitor) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException {
+    public void accept(Visitor visitor) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }

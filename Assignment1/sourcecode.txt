@@ -1,8 +1,0 @@
-ff test(a: float):float {
-
-    if (a < 2.3) {
-        return 2.2;
-    }
-
-
-}

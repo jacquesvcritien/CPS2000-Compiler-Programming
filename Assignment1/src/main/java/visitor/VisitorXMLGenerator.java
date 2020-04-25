@@ -7,10 +7,10 @@ import parser.node.*;
 public class VisitorXMLGenerator implements Visitor {
     private int indent = 0;
 
-    public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
-        if(actualParams.getExpressions() == null || actualParams.getExpressions().size() == 0)
+        if(actualParams.getExpressions().size() == 0)
             System.out.println(indentation+"<ActualParams>Empty</ActualParams>");
         else
         {
@@ -24,11 +24,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent--;
     }
 
-    public void visit(ASTAdditiveOp additiveOp) {
-
-    }
-
-    public void visit(ASTAssignment assignment) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTAssignment assignment) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         this.indent++;
 
@@ -36,7 +32,7 @@ public class VisitorXMLGenerator implements Visitor {
         ASTExpression expression = assignment.getExpression();
 
         //if the assignment is null (for example in for loop)
-        if(identifier == null && expression == null)
+        if(identifier == null)
         {
             System.out.println(indentation+"<Assignment>Empty</Assignment>");
         }
@@ -52,7 +48,7 @@ public class VisitorXMLGenerator implements Visitor {
 
     }
 
-    public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
         String operand = expression.getOperand();
@@ -60,24 +56,17 @@ public class VisitorXMLGenerator implements Visitor {
         ASTExpression left = expression.getLeft();
         ASTExpression right = expression.getRight();
 
-        if(operand == null || left == null || right == null)
-        {
-            System.out.println("<Expression>Empty</Expression>");
-        }
-        else
-        {
-            System.out.println(indentation+"<BinaryExpr Op=\""+operand+"\">");
+        System.out.println(indentation+"<BinaryExpr Op=\""+operand+"\">");
 
-            left.accept(this);
-            right.accept(this);
-            System.out.println(indentation+"</BinaryExpr>");
+        left.accept(this);
+        right.accept(this);
+        System.out.println(indentation+"</BinaryExpr>");
 
-        }
 
         indent--;
     }
 
-    public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
         if(block.getStatements().size() == 0)
@@ -110,7 +99,7 @@ public class VisitorXMLGenerator implements Visitor {
 
     }
 
-    public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
 
@@ -161,7 +150,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent--;
     }
 
-    public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         this.indent++;
 
@@ -175,7 +164,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent--;
     }
 
-    public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         this.indent++;
 
@@ -199,7 +188,7 @@ public class VisitorXMLGenerator implements Visitor {
         System.out.println(indentation+"<Identifier"+type+">"+identifier.getValue()+"</Identifier>");
     }
 
-    public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
 
@@ -224,11 +213,7 @@ public class VisitorXMLGenerator implements Visitor {
 
     }
 
-    public void visit(ASTMultiplicativeOp multiplicativeOp) {
-
-    }
-
-    public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
         ASTExpression expression = printNode.getExpression();
@@ -239,7 +224,7 @@ public class VisitorXMLGenerator implements Visitor {
         System.out.println(indentation+"</Print>");
     }
 
-    public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
 
         String indentation = getIndent().toString();
         this.indent++;
@@ -251,11 +236,8 @@ public class VisitorXMLGenerator implements Visitor {
         System.out.println(indentation+"</Program>");
     }
 
-    public void visit(ASTRelationalOp relationalOp) {
 
-    }
-
-    public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
         ASTExpression expression = returnNode.getExpression();
@@ -266,7 +248,7 @@ public class VisitorXMLGenerator implements Visitor {
         System.out.println(indentation+"</Return>");
     }
 
-    public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
 
@@ -278,7 +260,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent--;
     }
 
-    public void visit(ASTVariableDecl variableDecl) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTVariableDecl variableDecl) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         this.indent++;
 
@@ -286,7 +268,7 @@ public class VisitorXMLGenerator implements Visitor {
         ASTIdentifier identifier = variableDecl.getIdentifier();
         ASTExpression expression = variableDecl.getExpression();
 
-        if(identifier == null && expression == null)
+        if(identifier == null)
         {
             System.out.println(indentation+"<VarDecl>Empty</VarDecl>");
         }
@@ -301,7 +283,7 @@ public class VisitorXMLGenerator implements Visitor {
 
     }
 
-    public void visit(ASTWhile whileNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTWhile whileNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         String indentation = getIndent().toString();
         indent++;
 
@@ -327,5 +309,9 @@ public class VisitorXMLGenerator implements Visitor {
             indentation.append("\t");
 
         return indentation;
+    }
+
+    public void generate(ASTProgram program) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        program.accept(this);
     }
 }

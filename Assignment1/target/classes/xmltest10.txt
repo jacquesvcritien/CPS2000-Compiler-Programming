@@ -1,0 +1,5 @@
+//function with no formal params
+ff square(): int
+{
+    return 1;
+}

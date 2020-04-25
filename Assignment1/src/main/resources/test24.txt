@@ -1,0 +1,4 @@
+//function no return
+ff andgate(x:bool):bool
+{
+}

@@ -7,23 +7,19 @@ import java.beans.Expression;
 import java.util.ArrayList;
 
 public class VisitorSemanticAnalysis implements Visitor {
-    private SymbolTable symbolTable = new SymbolTable();
-    private int indent = 0;
+    private SymbolTable symbolTable = SymbolTable.getSymbolTable();
 
-    public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         ArrayList<ASTExpression> expressions = actualParams.getExpressions();
 
         for(ASTExpression expression: expressions)
             expression.accept(this);
     }
 
-    public void visit(ASTAdditiveOp additiveOp) {
 
-    }
-
-    public void visit(ASTAssignment assignment) throws UndeclaredException, AlreadyDeclaredException, IncorrectTypeException {
+    public void visit(ASTAssignment assignment) throws UndeclaredException, AlreadyDeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //if not an empty assignment (example in for loop)
-        if(assignment.getIdentifier() != null && assignment.getExpression() != null) {
+        if(assignment.getExpression() != null) {
             //get current scope
             Scope currentScope = symbolTable.getCurrentScope();
 
@@ -32,7 +28,7 @@ public class VisitorSemanticAnalysis implements Visitor {
 
             ASTIdentifier actualId = (ASTIdentifier) symbolTable.getDeclaration(identifier.getValue());
 
-            //check if is id exists
+            //check if id exists
             if (actualId == null)
                 throw new UndeclaredException(identifier.getValue() + " is not declared");
 
@@ -45,54 +41,41 @@ public class VisitorSemanticAnalysis implements Visitor {
             switch (type) {
                 case "int": {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.INT)
+                    if (symbolTable.getConstant() != Type.INT)
                         throw new IncorrectTypeException("The value is not of type int");
                 }
                 ;
                 break;
                 case "float": {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.FLOAT)
+                    if (symbolTable.getConstant() != Type.FLOAT)
                         throw new IncorrectTypeException("The value is not of type float");
                 }
                 ;
                 break;
-                case "boolean": {
+                //boolean
+                default: {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.BOOL)
+                    if (symbolTable.getConstant() != Type.BOOL)
                         throw new IncorrectTypeException("The value is not of type bool");
-                }
-                case "auto": {
-                    switch (currentScope.getConstant()) {
-                        case INT:
-                            identifier.setType("int");
-                            break;
-                        case FLOAT:
-                            identifier.setType("float");
-                            break;
-                        case BOOL:
-                            identifier.setType("bool");
-                            break;
-                    }
-                }
-
-                //empty value
-                currentScope.setConstant(null);
+                };break;
             }
+            //empty value
+            symbolTable.setConstant(null);
         }
 
     }
 
-    public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get current scope
         Scope currentScope = symbolTable.getCurrentScope();
         ASTExpression left = expression.getLeft();
         ASTExpression right = expression.getRight();
 
         left.accept(this);
-        Type leftType = currentScope.getConstant();
+        Type leftType = symbolTable.getConstant();
         right.accept(this);
-        Type rightType = currentScope.getConstant();
+        Type rightType = symbolTable.getConstant();
 
         if(leftType != rightType)
             throw new IncorrectTypeException("Types in expression do not match");
@@ -106,74 +89,89 @@ public class VisitorSemanticAnalysis implements Visitor {
             case "/":
             case "+":
             case "-":
+            {
+                if(leftType == Type.BOOL)
+                    throw new IncorrectTypeException(operand+" cannot work on type bool");
+            };break;
             case ">":
             case "<":
             case "<=":
             case ">=":
             {
-                if(leftType == Type.BOOL || rightType == Type.BOOL)
+                if(leftType == Type.BOOL)
                     throw new IncorrectTypeException(operand+" cannot work on type bool");
+
+                //set type as BOOL
+                symbolTable.setConstant(Type.BOOL);
             };break;
             case "and":
             case "or":
-                if(leftType != Type.BOOL || rightType != Type.BOOL)
+            {
+                if(leftType != Type.BOOL)
                     throw new IncorrectTypeException(operand+" can only work on type bool");
+            };break;
+            // == || <>
+            default:
+            {
+                //set type as BOOL
+                symbolTable.setConstant(Type.BOOL);
+            };break;
+
         }
 
     }
 
-    public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        symbolTable.getGlobalScope().removeDeclarations("return");
+
+
         // declare new scope
         Scope scope = new Scope();
+        //boolean to hold if a there was a return statement before
+        boolean alreadyReturn = false;
         symbolTable.insertScope(scope);
 
         for(int i=0; i <block.getStatements().size(); i++)
         {
-            block.getStatements().get(i).accept(this);
-        }
+            if(alreadyReturn)
+                System.out.println("WARNING: Return statement already exists!");
 
-        ASTIdentifier returnIdentifier = null;
-        //check if there was a return
-        if(scope.isDefined("return"))
-        {
-            /*
-            *get return identifier and store in the parent scope so that it could
-            *be checked against the function identifier's return type
-            */
-            returnIdentifier = (ASTIdentifier)scope.getDeclaration("return");
+            ASTStatement statement = block.getStatements().get(i);
+            statement.accept(this);
+
+            if(statement.getClass() == ASTReturn.class)
+                alreadyReturn = true;
         }
 
         //pop scope
         symbolTable.popScope();
 
-        //if there was a return type, add it to the parent scope
-        symbolTable.insertDecl("return", returnIdentifier);
     }
 
     public void visit(ASTBooleanLiteral booleanLiteral) {
         //get current scope
         Scope scope = symbolTable.getCurrentScope();
         //set constant type
-        scope.setConstant(Type.BOOL);
+        symbolTable.setConstant(Type.BOOL);
     }
 
     public void visit(ASTFloatLiteral floatLiteral) {
         //get current scope
         Scope scope = symbolTable.getCurrentScope();
         //set constant type
-        scope.setConstant(Type.FLOAT);
+        symbolTable.setConstant(Type.FLOAT);
     }
 
-    public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         //get variable declaration
         ASTVariableDecl variableDecl = forNode.getVariableDecl();
         //check variable declaration
         variableDecl.accept(this);
 
         //get expression
-        ASTExpression expreesion = forNode.getExpression();
+        ASTExpression expression = forNode.getExpression();
         //check expression
-        expreesion.accept(this);
+        expression.accept(this);
 
         //get assignment
         ASTAssignment assignment = forNode.getAssignment();
@@ -205,7 +203,7 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     }
 
-    public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //get identifier
         ASTIdentifier identifier = functionCall.getIdentifier();
 
@@ -244,30 +242,38 @@ public class VisitorSemanticAnalysis implements Visitor {
             //get formal param type
             String formalParamType = formalParam.getType();
             //check formal params type
-            Type expressionType = symbolTable.getCurrentScope().getConstant();
-            switch (expressionType)
+            Type expressionType = symbolTable.getConstant();
+            switch (formalParamType)
             {
-                case INT:
+                case "int":
                 {
-                    if (!formalParamType.equals("int"))
+                    if (!expressionType.equals(Type.INT))
                         throw new IncorrectTypeException(formalParam.getValue()+" should be passed an int value");
                 };break;
-                case FLOAT:
+                case "float":
                 {
-                    if (!formalParamType.equals("float"))
+                    if (!expressionType.equals(Type.FLOAT))
                         throw new IncorrectTypeException(formalParam.getValue()+" should be passed a float value");
                 };break;
-                case BOOL:
+                //boolean
+                default:
                 {
-                    if (!formalParamType.equals("bool"))
+                    if (!expressionType.equals(Type.BOOL))
                         throw new IncorrectTypeException(formalParam.getValue()+" should be passed an bool value");
-                };break;
+                }
             }
+        }
+
+        switch (actualFunction.getIdentifier().getType())
+        {
+            case "int": symbolTable.setConstant(Type.INT);break;
+            case "float": symbolTable.setConstant(Type.FLOAT);break;
+            default: symbolTable.setConstant(Type.BOOL);
         }
 
     }
 
-    public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, InvalidNodeException {
+    public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException{
 
         //create a scope for formal params
         Scope functionDeclerationScope = new Scope();
@@ -286,15 +292,12 @@ public class VisitorSemanticAnalysis implements Visitor {
         ASTIdentifier returnTypeNode;
 
         //if there was no return statement, throw an error
-        if(!functionDeclerationScope.isDefined("return"))
+        if(!symbolTable.getGlobalScope().isDefined("return"))
             throw new ReturnTypeMismatchException("Nothing is returned");
         //else store the type of return
         else
         {
-            returnTypeNode = (ASTIdentifier) functionDeclerationScope.getDeclaration("return");
-            //if it is still null
-            if(returnTypeNode == null)
-                throw new ReturnTypeMismatchException("Nothing is returned");
+            returnTypeNode = (ASTIdentifier) symbolTable.getGlobalScope().getDeclaration("return");
 
         }
 
@@ -308,8 +311,12 @@ public class VisitorSemanticAnalysis implements Visitor {
         String returnType = identifier.getType();
 
         //if the return type of the function does not match the type returned from the block
-        if(!returnType.equals(returnTypeNode.getType()))
+        if(!returnType.equals(returnTypeNode.getType()) && !returnType.equals("auto"))
             throw new ReturnTypeMismatchException(identifier.getValue()+" should return a value of type "+returnType);
+
+        //if return type is auto, set it to return type from block
+        if( returnType.equals("auto"))
+            identifier.setType(returnTypeNode.getType());
 
         //add the identifier to the global scope
         symbolTable.insertDeclGlobal(identifier.getValue(), functionDecl);
@@ -337,20 +344,20 @@ public class VisitorSemanticAnalysis implements Visitor {
         String type = identifier.getType();
         switch (type)
         {
-            case "int": scope.setConstant(Type.INT);break;
-            case "float": scope.setConstant(Type.FLOAT);break;
-            case "bool": scope.setConstant(Type.BOOL);break;
+            case "int": symbolTable.setConstant(Type.INT);break;
+            case "float": symbolTable.setConstant(Type.FLOAT);break;
+            default: symbolTable.setConstant(Type.BOOL);break;
         }
     }
 
-    public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         //get expression
         ASTExpression expression = ifNode.getExpression();
         //check expression
         expression.accept(this);
 
         //empty constant
-        symbolTable.getCurrentScope().setConstant(null);
+        symbolTable.setConstant(null);
 
         //get block if true
         ASTBlock trueBlock = ifNode.getBlock();
@@ -381,21 +388,17 @@ public class VisitorSemanticAnalysis implements Visitor {
         //get current scope
         Scope scope = symbolTable.getCurrentScope();
         //set constant type
-        scope.setConstant(Type.INT);
+        symbolTable.setConstant(Type.INT);
     }
 
-    public void visit(ASTMultiplicativeOp multiplicativeOp) {
-
-    }
-
-    public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         ASTExpression expression = printNode.getExpression();
         expression.accept(this);
         //empty value
-        symbolTable.getCurrentScope().setConstant(null);
+        symbolTable.setConstant(null);
     }
 
-    public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
 
         // declare new scope
         Scope scope = new Scope();
@@ -407,39 +410,36 @@ public class VisitorSemanticAnalysis implements Visitor {
         }
 
         //pop scope
+        symbolTable.popScope();
     }
 
-    public void visit(ASTRelationalOp relationalOp) {
-
-    }
-
-    public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, InvalidNodeException, UndeclaredException {
+    public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
         ASTExpression expression = returnNode.getExpression();
         //check expression
         expression.accept(this);
         //get expression type
-        Type returnType = symbolTable.getCurrentScope().getConstant();
+        Type returnType = symbolTable.getConstant();
 
         //this is done just temporarily to store the return type
         //add a declaration as a return identifier with the type of return
         switch(returnType)
         {
-            case INT: symbolTable.insertDecl("return", new ASTIdentifier("return", "int"));break;
-            case FLOAT: symbolTable.insertDecl("return", new ASTIdentifier("return", "float"));break;
-            case BOOL: symbolTable.insertDecl("return", new ASTIdentifier("return", "bool"));break;
+            case INT: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "int"));break;
+            case FLOAT: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "float"));break;
+            default: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "bool"));break;
         }
 
     }
 
-    public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         ASTExpression expression = unary.getNext();
         expression.accept(this);
     }
 
-    public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         //if not an empty declaration (example in for loop)
-        if(variableDecl.getIdentifier() != null && variableDecl.getExpression() != null)
+        if(variableDecl.getExpression() != null)
         {
             Scope currentScope = symbolTable.getCurrentScope();
             ASTExpression expression = variableDecl.getExpression();
@@ -453,28 +453,29 @@ public class VisitorSemanticAnalysis implements Visitor {
             switch (type) {
                 case "int": {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.INT)
+                    if (symbolTable.getConstant() != Type.INT)
                         throw new IncorrectTypeException("The value is not of type int");
                 };break;
                 case "float": {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.FLOAT)
+                    if (symbolTable.getConstant() != Type.FLOAT)
                         throw new IncorrectTypeException("The value is not of type float");
                 };break;
-                case "boolean": {
+                case "bool": {
                     //check if the expression led to a correct type
-                    if (currentScope.getConstant() != Type.BOOL)
+                    if (symbolTable.getConstant() != Type.BOOL)
                         throw new IncorrectTypeException("The value is not of type bool");
                 };break;
-                case "auto": {
-                    switch (currentScope.getConstant()) {
+                //auto
+                default: {
+                    switch (symbolTable.getConstant()) {
                         case INT:
                             identifier.setType("int");
                             break;
                         case FLOAT:
                             identifier.setType("float");
                             break;
-                        case BOOL:
+                        default:
                             identifier.setType("bool");
                             break;
                     }
@@ -485,20 +486,20 @@ public class VisitorSemanticAnalysis implements Visitor {
             symbolTable.insertDecl(identifier.getValue(), identifier);
             identifier.accept(this);
             //empty value
-            currentScope.setConstant(null);
+            symbolTable.setConstant(null);
         }
 
     }
 
     @Override
-    public void visit(ASTWhile whileNode) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void visit(ASTWhile whileNode) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
         ASTExpression expression = whileNode.getExpression();
         //check expression
         expression.accept(this);
 
         //empty constant
-        symbolTable.getCurrentScope().setConstant(null);
+        symbolTable.setConstant(null);
 
         //get block if true
         ASTBlock trueBlock = whileNode.getBlock();
@@ -517,4 +518,8 @@ public class VisitorSemanticAnalysis implements Visitor {
     public void visit(ASTExpression astExpression) {}
     public void visit(ASTStatement astStatement) {}
 
+    public void analyse(ASTProgram program) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        symbolTable.reset();
+        program.accept(this);
+    }
 }

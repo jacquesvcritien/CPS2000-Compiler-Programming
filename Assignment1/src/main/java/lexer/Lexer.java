@@ -1,8 +1,12 @@
 package lexer;
 
+import exceptions.InvalidSyntaxException;
 import org.omg.CORBA.ORB;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,9 +57,13 @@ public class Lexer
     private FileReader fileReader;
     private BufferedReader bufferedReader;
 
-    public Lexer(String filename) throws FileNotFoundException {
-        this.file = new File(filename);
-        fileReader = new FileReader(this.file);
+    public Lexer(String filename) throws FileNotFoundException, URISyntaxException {
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        String absolutePath = file.getAbsolutePath();
+
+        //read file
+        fileReader = new FileReader(absolutePath);
         bufferedReader =new BufferedReader(fileReader);
 
         setAcceptableStates();
@@ -1435,7 +1443,7 @@ public class Lexer
 
     }
 
-    public Token nextToken() throws IOException {
+    public Token nextToken() throws IOException, InvalidSyntaxException {
         //initialisation
         State previous = State.START;
         State state = State.START;
@@ -1446,81 +1454,72 @@ public class Lexer
         //scanning loop
         while(state != State.BAD)
         {
-            try {
-                //get next character
-                char nextChar = nextChar();
+            //get next character
+            char nextChar = nextChar();
 
-                //if state is an acceptableState, clear stack
-                if(acceptableStates.containsKey(state))
-                    stack.clear();
+            //if state is an acceptableState, clear stack
+            if(acceptableStates.containsKey(state))
+                stack.clear();
 
-                //push state to stack
-                stack.push(state);
+            //push state to stack
+            stack.push(state);
 
-                //get category
-                Category cat = charCat(nextChar);
+            //get category
+            Category cat = charCat(nextChar);
 
-                //if you are in a comment, and encounter a star but the next character is not a'/' i.e. end of comment, clear lexeme
-                if(previous ==State.S24 && state == State.S5 && cat != Category.DIVIDE_OPERAND) {
-                    lexeme.setLength(0);
-                    continue;
-                }
-
-                //set transition
-                Transition transition = new Transition(state, cat);
-                //set previous state
-                previous = state;
-                //get state
-                state = transitionTable.get(transition);
-
-                //If previous was a '/' and next is either a '*' or another '/' i.e. start of comment
-                if((previous == State.S6 && (state == State.S23 || state == State.S24)) ||
-                        // OR previous was a '*' and next is '/' i.e. end of  block comment
-                        (previous == State.S5 && state == State.S25))
-                {
-                    //clear lexeme and continue, i.e. do not add character to lexeme
-                    lexeme.setLength(0);
-                    continue;
-                }
-
-                //If there was a whitespace or a newline at the start
-                if((previous == State.START && state == State.START) ||
-                        //OR it is a comment
-                        (previous == State.S23 && state == State.S23) || (previous == State.S24  && state == State.S24) ||
-                        //OR end of comment
-                        ((previous == State.S25 || previous == State.S23)  && state == State.START))
-                {
-                    //do not add character to lexeme
-                    continue;
-                }
-
-                //add character to lexeme
-                lexeme.append(nextChar);
+            //if you are in a comment, and encounter a star but the next character is not a'/' i.e. end of comment, clear lexeme
+            if(previous ==State.S24 && state == State.S5 && cat != Category.DIVIDE_OPERAND) {
+                lexeme.setLength(0);
+                continue;
             }
-            catch (IOException e)
+
+            //set transition
+            Transition transition = new Transition(state, cat);
+            //set previous state
+            previous = state;
+            //get state
+            state = transitionTable.get(transition);
+
+            //If previous was a '/' and next is either a '*' or another '/' i.e. start of comment
+            if((previous == State.S6 && (state == State.S23 || state == State.S24)) ||
+                    // OR previous was a '*' and next is '/' i.e. end of  block comment
+                    (previous == State.S5 && state == State.S25))
             {
-                System.out.println("Failed to read next Character: "+e.getMessage());
+                //clear lexeme and continue, i.e. do not add character to lexeme
+                lexeme.setLength(0);
+                continue;
             }
+
+            //If there was a whitespace or a newline at the start
+            if((previous == State.START && state == State.START) ||
+                    //OR it is a comment
+                    (previous == State.S23 && state == State.S23) || (previous == State.S24  && state == State.S24) ||
+                    //OR end of comment
+                    ((previous == State.S25)  && state == State.START) || previous == State.S23)
+            {
+                //do not add character to lexeme
+                continue;
+            }
+
+
+            //add character to lexeme
+            lexeme.append(nextChar);
         }
 
         //rollback loop
-        while(!acceptableStates.containsKey(state) && state != State.SE)
+        while(!acceptableStates.containsKey(state))
         {
             state = stack.pop();
+            if(lexeme.length()-1 < 0)
+                throw new InvalidSyntaxException("Syntax is invalid");
             lexeme.setLength(lexeme.length()-1);
             rollback();
         }
 
-        //report result
-        if(acceptableStates.containsKey(state))
-        {
-            if(acceptableStates.get(state) == TypeToken.IDENTIFIER)
-                return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());
-            else
-                return new Token(acceptableStates.get(state), lexeme.toString());
-        }
+        if(acceptableStates.get(state) == TypeToken.IDENTIFIER)
+            return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());
         else
-            return new Token(TypeToken.INVALID, lexeme.toString());
+            return new Token(acceptableStates.get(state), lexeme.toString());
 
 
     }

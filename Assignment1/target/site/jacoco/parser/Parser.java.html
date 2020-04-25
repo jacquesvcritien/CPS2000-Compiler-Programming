@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Parser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment1</a> &gt; <a href="index.source.html" class="el_package">parser</a> &gt; <span class="el_source">Parser.java</span></div><h1>Parser.java</h1><pre class="source lang-java linenums">package parser;
+
+import exceptions.InvalidSyntaxException;
+import lexer.Lexer;
+import lexer.Token;
+import lexer.TypeToken;
+import parser.node.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Parser {
+    Lexer lexer;
+    Token currentToken;
+
+<span class="fc" id="L16">    public Parser(Lexer lexer) throws IOException, InvalidSyntaxException {</span>
+<span class="fc" id="L17">        this.lexer = lexer;</span>
+<span class="fc" id="L18">        this.currentToken = this.lexer.nextToken();</span>
+<span class="fc" id="L19">    }</span>
+
+    private void absorb(TypeToken typeToken) throws IOException, InvalidSyntaxException {
+        /*
+         compare current token's type with the type passed and if they match,
+         absorb the token. Otherwise throw an error
+         */
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if(typeToken == this.currentToken.getType())</span>
+<span class="fc" id="L27">            this.currentToken = this.lexer.nextToken();</span>
+        else
+<span class="fc" id="L29">            throw new InvalidSyntaxException(&quot;Syntax is invalid&quot;);</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Method for literal
+     * @return an Expression
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTExpression literal() throws IOException, InvalidSyntaxException {
+<span class="fc" id="L39">        Token token = this.currentToken;</span>
+
+<span class="fc bfc" id="L41" title="All 3 branches covered.">        switch(token.getType()) {</span>
+            //if literal
+            case INTEGER_LITERAL: {
+<span class="fc" id="L44">                absorb(TypeToken.INTEGER_LITERAL);</span>
+<span class="fc" id="L45">                return new ASTIntegerLiteral(token);</span>
+            }
+            //if float
+            case FLOAT_LITERAL: {
+<span class="fc" id="L49">                absorb(TypeToken.FLOAT_LITERAL);</span>
+<span class="fc" id="L50">                return new ASTFloatLiteral(token);</span>
+            }
+            //if boolean
+            default: {
+<span class="fc" id="L54">                absorb(TypeToken.BOOLEAN_LITERAL);</span>
+<span class="fc" id="L55">                return new ASTBooleanLiteral(token);</span>
+            }
+        }
+    }
+
+    private ASTIdentifier identifier() throws IOException, InvalidSyntaxException{
+
+<span class="fc" id="L62">        Token identifier = this.currentToken;</span>
+<span class="fc" id="L63">        absorb(TypeToken.IDENTIFIER);</span>
+
+<span class="fc" id="L65">        return new ASTIdentifier(identifier.getAttribute());</span>
+    }
+
+    private Token type() throws IOException, InvalidSyntaxException {
+<span class="fc" id="L69">        Token token = this.currentToken;</span>
+
+<span class="fc" id="L71">        absorb(TypeToken.TYPE);</span>
+<span class="fc" id="L72">        return token;</span>
+    }
+
+
+    private ASTExpression factor() throws IOException, InvalidSyntaxException{
+        //INTEGER_LITERAL | BOOLEAN_LITERAL |  FLOAT_LITERAL
+<span class="fc" id="L78">        Token token = this.currentToken;</span>
+
+<span class="fc bfc" id="L80" title="All 4 branches covered.">        switch(token.getType())</span>
+        {
+            //literal
+            case INTEGER_LITERAL:
+            case FLOAT_LITERAL:
+            case BOOLEAN_LITERAL:
+            {
+<span class="fc" id="L87">                return literal();</span>
+            }
+            //identifier
+            case IDENTIFIER:
+            {
+<span class="fc" id="L92">                ASTIdentifier identifier = identifier();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                if(this.currentToken.getType() != TypeToken.BRACKET_OPEN)</span>
+<span class="fc" id="L94">                    return identifier;</span>
+                else
+<span class="fc" id="L96">                    return functionCall(identifier);</span>
+            }
+            //subexpression
+            case BRACKET_OPEN:
+            {
+<span class="fc" id="L101">                return subExpression();</span>
+            }
+            //unary - not
+            //unary - '-'
+            default:
+            {
+<span class="fc" id="L107">                return unary();</span>
+            }
+
+        }
+    }
+
+    private ASTExpression term() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L114">        ASTExpression node = factor();</span>
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.MULTIPLICATIVE_OP)</span>
+        {
+<span class="fc" id="L118">            Token token = this.currentToken;</span>
+<span class="fc" id="L119">            absorb(TypeToken.MULTIPLICATIVE_OP);</span>
+
+<span class="fc" id="L121">            ASTExpression right = factor();</span>
+<span class="fc" id="L122">            node = new ASTBinExpression(node, token.getAttribute(), right);</span>
+<span class="fc" id="L123">        }</span>
+
+<span class="fc" id="L125">        return node;</span>
+
+    }
+    private ASTExpression subExpression() throws IOException, InvalidSyntaxException{
+
+<span class="fc" id="L130">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L131">        ASTExpression node = simpleExpression();</span>
+<span class="fc" id="L132">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L133">        return node;</span>
+
+    }
+    private ASTActualParams actualParams() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L137">        ArrayList&lt;ASTExpression&gt; expressions = new ArrayList&lt;ASTExpression&gt;();</span>
+<span class="fc" id="L138">        expressions.add(expression());</span>
+
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
+        {
+
+<span class="fc" id="L143">            absorb(TypeToken.COMMA);</span>
+
+<span class="fc" id="L145">            ASTExpression newExpression = expression();</span>
+<span class="fc" id="L146">            expressions.add(newExpression);</span>
+<span class="fc" id="L147">        }</span>
+
+<span class="fc" id="L149">        return new ASTActualParams(expressions);</span>
+
+    }
+    private ASTFunctionCall functionCall(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
+
+<span class="fc" id="L154">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        ASTActualParams actualParamsNode = (this.currentToken.getType() != TypeToken.BRACKET_CLOSE) ? actualParams() : new ASTActualParams();</span>
+<span class="fc" id="L156">        absorb(TypeToken.BRACKET_CLOSE);</span>
+
+<span class="fc" id="L158">        return new ASTFunctionCall(identifier, actualParamsNode);</span>
+    }
+
+
+
+    private ASTAssignment assignment() throws IOException, InvalidSyntaxException{
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if((currentToken.getType()!= TypeToken.IDENTIFIER))</span>
+<span class="fc" id="L166">            return new ASTAssignment();</span>
+<span class="fc" id="L167">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L168">        absorb(TypeToken.EQUAL_SIGN);</span>
+<span class="fc" id="L169">        ASTExpression expression = expression();</span>
+
+<span class="fc" id="L171">        return new ASTAssignment(identifier, expression);</span>
+    }
+
+    private ASTVariableDecl variableDeclaration() throws IOException, InvalidSyntaxException{
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if(currentToken.getType()!= TypeToken.LET)</span>
+<span class="fc" id="L177">            return new ASTVariableDecl();</span>
+
+<span class="fc" id="L179">        absorb(TypeToken.LET);</span>
+
+<span class="fc" id="L181">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L182">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L183">        Token type = this.currentToken;</span>
+
+        //absorb type
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        switch(type.getType())</span>
+        {
+<span class="fc" id="L188">            case TYPE: absorb(TypeToken.TYPE);break;</span>
+<span class="fc" id="L189">            default: absorb(TypeToken.AUTO);break; //auto</span>
+        }
+
+<span class="fc" id="L192">        identifier.setType(type.getAttribute());</span>
+
+<span class="fc" id="L194">        absorb(TypeToken.EQUAL_SIGN);</span>
+
+<span class="fc" id="L196">        ASTExpression expression = expression();</span>
+
+<span class="fc" id="L198">        return new ASTVariableDecl(identifier, expression);</span>
+    }
+
+    private ASTFormalParam formalParam() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L202">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L203">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L204">        Token type = type();</span>
+<span class="fc" id="L205">        identifier.setType(type.getAttribute());</span>
+
+<span class="fc" id="L207">        return new ASTFormalParam(identifier);</span>
+    }
+
+    private ASTFormalParams formalParams() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L211">        ArrayList&lt;ASTFormalParam&gt; params = new ArrayList&lt;ASTFormalParam&gt;();</span>
+
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if(this.currentToken.getType() == TypeToken.BRACKET_CLOSE)</span>
+<span class="fc" id="L214">            return new ASTFormalParams(params);</span>
+<span class="fc" id="L215">        params.add(formalParam());</span>
+
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
+        {
+<span class="fc" id="L219">            Token token = this.currentToken;</span>
+
+<span class="fc" id="L221">            absorb(TypeToken.COMMA);</span>
+
+<span class="fc" id="L223">            ASTFormalParam newParam = formalParam();</span>
+<span class="fc" id="L224">            params.add(newParam);</span>
+<span class="fc" id="L225">        }</span>
+
+<span class="fc" id="L227">        return new ASTFormalParams(params);</span>
+
+    }
+
+    private ASTFunctionDecl functionDeclaration() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L232">        absorb(TypeToken.FF);</span>
+
+<span class="fc" id="L234">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L235">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L236">        ASTFormalParams formalParamsNode = formalParams();</span>
+<span class="fc" id="L237">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L238">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L239">        Token type = this.currentToken;</span>
+
+        //absorb type
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        switch(type.getType())</span>
+        {
+<span class="fc" id="L244">            case TYPE: absorb(TypeToken.TYPE);break;</span>
+<span class="fc" id="L245">            default: absorb(TypeToken.AUTO);break;</span>
+        }
+
+<span class="fc" id="L248">        identifier.setType(type.getAttribute());</span>
+
+<span class="fc" id="L250">        ASTBlock block = block();</span>
+
+<span class="fc" id="L252">        return new ASTFunctionDecl(identifier, formalParamsNode, block);</span>
+    }
+
+    private ASTPrint printStatement() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L256">        Token token = this.currentToken;</span>
+<span class="fc" id="L257">        absorb(TypeToken.PRINT);</span>
+<span class="fc" id="L258">        ASTExpression expression = expression();</span>
+<span class="fc" id="L259">        return new ASTPrint(token, expression);</span>
+    }
+
+    private ASTReturn returnStatement() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L263">        Token token = this.currentToken;</span>
+//      ASTNode returnNode = new ASTIntegerLiteral(token);
+<span class="fc" id="L265">        absorb(TypeToken.RETURN);</span>
+<span class="fc" id="L266">        ASTExpression expression = expression();</span>
+<span class="fc" id="L267">        return new ASTReturn(token, expression);</span>
+    }
+
+    private ASTUnary unary() throws IOException, InvalidSyntaxException{
+
+<span class="fc" id="L272">        Token token = this.currentToken;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        switch(token.getType())</span>
+        {
+<span class="fc" id="L275">            case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break; // case of '-'</span>
+<span class="fc" id="L276">            default: absorb(TypeToken.NOT);break; // case of '-'</span>
+        }
+<span class="fc" id="L278">        return new ASTUnary(token.getAttribute(), expression());</span>
+
+    }
+
+    private ASTExpression simpleExpression() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L283">        ASTExpression node = term();</span>
+
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.ADDITIVE_OP)</span>
+        {
+<span class="fc" id="L287">            Token token = this.currentToken;</span>
+
+<span class="fc" id="L289">            absorb(TypeToken.ADDITIVE_OP);</span>
+
+<span class="fc" id="L291">            node = new ASTBinExpression(node, token.getAttribute(), term());</span>
+<span class="fc" id="L292">        }</span>
+
+<span class="fc" id="L294">        return node;</span>
+
+    }
+    private ASTIf ifStatement() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L298">        absorb(TypeToken.IF);</span>
+<span class="fc" id="L299">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L300">        ASTExpression expression = expression();</span>
+<span class="fc" id="L301">        absorb(TypeToken.BRACKET_CLOSE);</span>
+
+<span class="fc" id="L303">        ASTBlock block = block();</span>
+        ASTBlock elseBlock;
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        if(currentToken.getType() == TypeToken.ELSE)</span>
+        {
+<span class="fc" id="L307">            absorb(TypeToken.ELSE);</span>
+<span class="fc" id="L308">            elseBlock = block();</span>
+        }
+        else
+<span class="fc" id="L311">            elseBlock = new ASTBlock();</span>
+<span class="fc" id="L312">        return new ASTIf(expression, block, elseBlock);</span>
+    }
+
+    private ASTFor forStatement() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L316">        absorb(TypeToken.FOR);</span>
+<span class="fc" id="L317">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L318">        ASTVariableDecl variableDecl = variableDeclaration();</span>
+<span class="fc" id="L319">        absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L320">        ASTExpression expression = expression();</span>
+<span class="fc" id="L321">        absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L322">        ASTAssignment assignment = assignment();</span>
+<span class="fc" id="L323">        absorb(TypeToken.BRACKET_CLOSE);</span>
+
+<span class="fc" id="L325">        ASTBlock block = block();</span>
+<span class="fc" id="L326">        return new ASTFor(variableDecl, expression, assignment, block);</span>
+    }
+
+    private ASTWhile whileStatement() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L330">        absorb(TypeToken.WHILE);</span>
+<span class="fc" id="L331">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L332">        ASTExpression expression = expression();</span>
+<span class="fc" id="L333">        absorb(TypeToken.BRACKET_CLOSE);</span>
+
+<span class="fc" id="L335">        ASTBlock block = block();</span>
+<span class="fc" id="L336">        return new ASTWhile(expression, block);</span>
+    }
+
+    private ASTExpression expression() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L340">        ASTExpression node = simpleExpression();</span>
+
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.RELATIONAL_OP)</span>
+        {
+<span class="fc" id="L344">            Token token = this.currentToken;</span>
+
+<span class="fc" id="L346">            absorb(TypeToken.RELATIONAL_OP);</span>
+
+<span class="fc" id="L348">            node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());</span>
+<span class="fc" id="L349">        }</span>
+
+<span class="fc" id="L351">        return node;</span>
+
+    }
+
+    private ASTStatement statement() throws IOException, InvalidSyntaxException{
+
+<span class="fc" id="L357">        Token token = this.currentToken;</span>
+<span class="fc" id="L358">        ASTStatement toReturn = null;</span>
+
+<span class="fc bfc" id="L360" title="All 10 branches covered.">        switch(token.getType())</span>
+        {
+            //variable declaration
+            case LET:
+            {
+<span class="fc" id="L365">                toReturn = variableDeclaration();</span>
+<span class="fc" id="L366">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L367">            };break;</span>
+            case IDENTIFIER:
+            {
+<span class="fc" id="L370">                toReturn = assignment();</span>
+<span class="fc" id="L371">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L372">            };break;</span>
+            case PRINT:
+            {
+<span class="fc" id="L375">                toReturn = printStatement();</span>
+<span class="fc" id="L376">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L377">            };break;</span>
+<span class="fc" id="L378">            case IF: return ifStatement();</span>
+<span class="fc" id="L379">            case FOR: return forStatement();</span>
+<span class="fc" id="L380">            case WHILE: return whileStatement();</span>
+            case RETURN:
+            {
+<span class="fc" id="L383">                toReturn = returnStatement();</span>
+<span class="fc" id="L384">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L385">            };break;</span>
+<span class="fc" id="L386">            case FF: return functionDeclaration();</span>
+<span class="fc" id="L387">            case CURLY_OPEN: return block();</span>
+<span class="fc" id="L388">            default: return null;//EOF</span>
+        }
+<span class="fc" id="L390">        return toReturn;</span>
+    }
+
+    public ASTBlock block() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L394">        absorb(TypeToken.CURLY_OPEN);</span>
+<span class="fc" id="L395">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        while(this.currentToken.getType() != TypeToken.CURLY_CLOSE)</span>
+        {
+<span class="fc" id="L399">            ASTStatement statement = statement();</span>
+<span class="fc" id="L400">            statements.add(statement);</span>
+<span class="fc" id="L401">        }</span>
+
+<span class="fc" id="L403">        absorb(TypeToken.CURLY_CLOSE);</span>
+<span class="fc" id="L404">        return new ASTBlock(statements);</span>
+    }
+
+    public ASTProgram program() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L408">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+<span class="fc" id="L409">        ASTStatement statement = statement();</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">        while(statement != null)</span>
+        {
+<span class="fc" id="L412">            statements.add(statement);</span>
+<span class="fc" id="L413">            statement = statement();</span>
+        }
+
+<span class="fc" id="L416">        return new ASTProgram(statements);</span>
+    }
+    public ASTProgram parse() throws IOException, InvalidSyntaxException{
+<span class="fc" id="L419">        return program();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

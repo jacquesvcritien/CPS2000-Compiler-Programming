@@ -1,10 +1,7 @@
 package parser.node;
 
 import exceptions.AlreadyDeclaredException;
-import exceptions.InvalidNodeException;
 import exceptions.UndeclaredException;
-import lexer.Token;
-import lexer.TypeToken;
 import visitor.Visitor;
 
 public class ASTIdentifier extends ASTExpression {
@@ -12,13 +9,13 @@ public class ASTIdentifier extends ASTExpression {
     String type;
 
     //constructor
-    public ASTIdentifier(String value) throws InvalidNodeException {
+    public ASTIdentifier(String value)  {
 
         this.value =value;
     }
 
     //constructor
-    public ASTIdentifier(String value, String type) throws InvalidNodeException {
+    public ASTIdentifier(String value, String type)  {
 
         this.value =value;
         this.type = type;

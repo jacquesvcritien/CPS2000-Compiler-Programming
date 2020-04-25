@@ -1,0 +1,7 @@
+//for loop no assignment and declaration
+let x : int =9;
+for(; x < 10;)
+{
+print x;
+x = x+1;
+}

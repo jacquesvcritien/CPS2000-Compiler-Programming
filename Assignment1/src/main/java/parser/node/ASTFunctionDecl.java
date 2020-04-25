@@ -4,6 +4,8 @@ import exceptions.*;
 import lexer.Token;
 import visitor.Visitor;
 
+import java.util.ArrayList;
+
 public class ASTFunctionDecl extends ASTStatement {
     ASTIdentifier identifier;
     ASTFormalParams formalParams;
@@ -28,7 +30,7 @@ public class ASTFunctionDecl extends ASTStatement {
         return identifier;
     }
 
-    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, InvalidNodeException {
+    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException{
         visitor.visit(this);
     }
 

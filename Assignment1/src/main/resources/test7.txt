@@ -1,0 +1,2 @@
+//incorrect type exception
+let x:int = 3.2;

@@ -21,8 +21,6 @@ public enum TypeToken {
     MULTIPLICATIVE_OP,
     ADDITIVE_OP,
     RELATIONAL_OP,
-    AND_OPERAND,
-    OR_OPERAND,
     EQUAL_SIGN,
     BRACKET_OPEN,
     BRACKET_CLOSE,

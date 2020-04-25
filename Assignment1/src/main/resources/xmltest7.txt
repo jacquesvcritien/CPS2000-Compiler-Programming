@@ -1,0 +1,5 @@
+//function with formal params
+ff square(x: int): int
+{
+    return x*x;
+}

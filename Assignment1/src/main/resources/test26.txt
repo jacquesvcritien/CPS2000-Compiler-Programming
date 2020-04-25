@@ -1,0 +1,2 @@
+//bad variable decl bool
+let x: bool = 1;

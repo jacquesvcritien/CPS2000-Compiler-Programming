@@ -1,6 +1,5 @@
 package parser;
 
-import exceptions.InvalidNodeException;
 import exceptions.InvalidSyntaxException;
 import lexer.Lexer;
 import lexer.Token;
@@ -14,7 +13,7 @@ public class Parser {
     Lexer lexer;
     Token currentToken;
 
-    public Parser(Lexer lexer) throws IOException {
+    public Parser(Lexer lexer) throws IOException, InvalidSyntaxException {
         this.lexer = lexer;
         this.currentToken = this.lexer.nextToken();
     }
@@ -30,28 +29,35 @@ public class Parser {
             throw new InvalidSyntaxException("Syntax is invalid");
     }
 
+    /**
+     * Method for literal
+     * @return an Expression
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
     private ASTExpression literal() throws IOException, InvalidSyntaxException {
         Token token = this.currentToken;
 
         switch(token.getType()) {
-            //literal
+            //if literal
             case INTEGER_LITERAL: {
                 absorb(TypeToken.INTEGER_LITERAL);
                 return new ASTIntegerLiteral(token);
             }
+            //if float
             case FLOAT_LITERAL: {
                 absorb(TypeToken.FLOAT_LITERAL);
                 return new ASTFloatLiteral(token);
             }
-            case BOOLEAN_LITERAL: {
+            //if boolean
+            default: {
                 absorb(TypeToken.BOOLEAN_LITERAL);
                 return new ASTBooleanLiteral(token);
             }
         }
-        return null;
     }
 
-    private ASTIdentifier identifier() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTIdentifier identifier() throws IOException, InvalidSyntaxException{
 
         Token identifier = this.currentToken;
         absorb(TypeToken.IDENTIFIER);
@@ -62,18 +68,12 @@ public class Parser {
     private Token type() throws IOException, InvalidSyntaxException {
         Token token = this.currentToken;
 
-        switch(token.getType()) {
-            //literal
-            case TYPE: {
-                absorb(TypeToken.TYPE);
-                return token;
-            }
-            default: throw new InvalidSyntaxException("Invalid Syntax");
-        }
+        absorb(TypeToken.TYPE);
+        return token;
     }
 
 
-    private ASTExpression factor() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTExpression factor() throws IOException, InvalidSyntaxException{
         //INTEGER_LITERAL | BOOLEAN_LITERAL |  FLOAT_LITERAL
         Token token = this.currentToken;
 
@@ -101,32 +101,22 @@ public class Parser {
                 return subExpression();
             }
             //unary - not
-            case NOT:
             //unary - '-'
-            case ADDITIVE_OP:
+            default:
             {
                 return unary();
             }
 
         }
-        return null;
     }
 
-    private ASTExpression term() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTExpression term() throws IOException, InvalidSyntaxException{
         ASTExpression node = factor();
 
-        //fill accepted tokens
-        ArrayList<TypeToken> acceptedTokens = new ArrayList<TypeToken>();
-        acceptedTokens.add(TypeToken.MULTIPLICATIVE_OP);
-
-        while(acceptedTokens.contains(this.currentToken.getType()))
+        while(this.currentToken.getType() == TypeToken.MULTIPLICATIVE_OP)
         {
             Token token = this.currentToken;
-
-            switch(token.getType())
-            {
-                case MULTIPLICATIVE_OP: absorb(TypeToken.MULTIPLICATIVE_OP);break;
-            }
+            absorb(TypeToken.MULTIPLICATIVE_OP);
 
             ASTExpression right = factor();
             node = new ASTBinExpression(node, token.getAttribute(), right);
@@ -135,7 +125,7 @@ public class Parser {
         return node;
 
     }
-    private ASTExpression subExpression() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTExpression subExpression() throws IOException, InvalidSyntaxException{
 
         absorb(TypeToken.BRACKET_OPEN);
         ASTExpression node = simpleExpression();
@@ -143,22 +133,14 @@ public class Parser {
         return node;
 
     }
-    private ASTActualParams actualParams() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTActualParams actualParams() throws IOException, InvalidSyntaxException{
         ArrayList<ASTExpression> expressions = new ArrayList<ASTExpression>();
         expressions.add(expression());
 
-        //fill accepted tokens
-        ArrayList<TypeToken> acceptedTokens = new ArrayList<TypeToken>();
-        acceptedTokens.add(TypeToken.COMMA);
-
-        while(acceptedTokens.contains(this.currentToken.getType()))
+        while(this.currentToken.getType() == TypeToken.COMMA)
         {
-            Token token = this.currentToken;
 
-            switch(token.getType())
-            {
-                case COMMA: absorb(TypeToken.COMMA);break;
-            }
+            absorb(TypeToken.COMMA);
 
             ASTExpression newExpression = expression();
             expressions.add(newExpression);
@@ -167,7 +149,7 @@ public class Parser {
         return new ASTActualParams(expressions);
 
     }
-    private ASTFunctionCall functionCall(ASTIdentifier identifier) throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTFunctionCall functionCall(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
 
         absorb(TypeToken.BRACKET_OPEN);
         ASTActualParams actualParamsNode = (this.currentToken.getType() != TypeToken.BRACKET_CLOSE) ? actualParams() : new ASTActualParams();
@@ -178,7 +160,7 @@ public class Parser {
 
 
 
-    private ASTAssignment assignment() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTAssignment assignment() throws IOException, InvalidSyntaxException{
 
         if((currentToken.getType()!= TypeToken.IDENTIFIER))
             return new ASTAssignment();
@@ -189,7 +171,7 @@ public class Parser {
         return new ASTAssignment(identifier, expression);
     }
 
-    private ASTVariableDecl variableDeclaration() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTVariableDecl variableDeclaration() throws IOException, InvalidSyntaxException{
 
         if(currentToken.getType()!= TypeToken.LET)
             return new ASTVariableDecl();
@@ -204,7 +186,7 @@ public class Parser {
         switch(type.getType())
         {
             case TYPE: absorb(TypeToken.TYPE);break;
-            case AUTO: absorb(TypeToken.AUTO);break;
+            default: absorb(TypeToken.AUTO);break; //auto
         }
 
         identifier.setType(type.getAttribute());
@@ -216,7 +198,7 @@ public class Parser {
         return new ASTVariableDecl(identifier, expression);
     }
 
-    private ASTFormalParam formalParam() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTFormalParam formalParam() throws IOException, InvalidSyntaxException{
         ASTIdentifier identifier = identifier();
         absorb(TypeToken.COLON);
         Token type = type();
@@ -225,25 +207,18 @@ public class Parser {
         return new ASTFormalParam(identifier);
     }
 
-    private ASTFormalParams formalParams() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTFormalParams formalParams() throws IOException, InvalidSyntaxException{
         ArrayList<ASTFormalParam> params = new ArrayList<ASTFormalParam>();
 
         if(this.currentToken.getType() == TypeToken.BRACKET_CLOSE)
             return new ASTFormalParams(params);
         params.add(formalParam());
 
-        //fill accepted tokens
-        ArrayList<TypeToken> acceptedTokens = new ArrayList<TypeToken>();
-        acceptedTokens.add(TypeToken.COMMA);
-
-        while(acceptedTokens.contains(this.currentToken.getType()))
+        while(this.currentToken.getType() == TypeToken.COMMA)
         {
             Token token = this.currentToken;
 
-            switch(token.getType())
-            {
-                case COMMA: absorb(TypeToken.COMMA);break;
-            }
+            absorb(TypeToken.COMMA);
 
             ASTFormalParam newParam = formalParam();
             params.add(newParam);
@@ -253,7 +228,7 @@ public class Parser {
 
     }
 
-    private ASTFunctionDecl functionDeclaration() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTFunctionDecl functionDeclaration() throws IOException, InvalidSyntaxException{
         absorb(TypeToken.FF);
 
         ASTIdentifier identifier = identifier();
@@ -267,7 +242,7 @@ public class Parser {
         switch(type.getType())
         {
             case TYPE: absorb(TypeToken.TYPE);break;
-            case AUTO: absorb(TypeToken.AUTO);break;
+            default: absorb(TypeToken.AUTO);break;
         }
 
         identifier.setType(type.getAttribute());
@@ -277,14 +252,14 @@ public class Parser {
         return new ASTFunctionDecl(identifier, formalParamsNode, block);
     }
 
-    private ASTPrint printStatement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTPrint printStatement() throws IOException, InvalidSyntaxException{
         Token token = this.currentToken;
         absorb(TypeToken.PRINT);
         ASTExpression expression = expression();
         return new ASTPrint(token, expression);
     }
 
-    private ASTReturn returnStatement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTReturn returnStatement() throws IOException, InvalidSyntaxException{
         Token token = this.currentToken;
 //      ASTNode returnNode = new ASTIntegerLiteral(token);
         absorb(TypeToken.RETURN);
@@ -292,33 +267,26 @@ public class Parser {
         return new ASTReturn(token, expression);
     }
 
-    private ASTUnary unary() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTUnary unary() throws IOException, InvalidSyntaxException{
 
         Token token = this.currentToken;
         switch(token.getType())
         {
             case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break; // case of '-'
-            case NOT: absorb(TypeToken.NOT);break; // case of '-'
+            default: absorb(TypeToken.NOT);break; // case of '-'
         }
-        return new ASTUnary(token.getAttribute(), simpleExpression());
+        return new ASTUnary(token.getAttribute(), expression());
 
     }
 
-    private ASTExpression simpleExpression() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTExpression simpleExpression() throws IOException, InvalidSyntaxException{
         ASTExpression node = term();
 
-        //fill accepted tokens
-        ArrayList<TypeToken> acceptedTokens = new ArrayList<TypeToken>();
-        acceptedTokens.add(TypeToken.ADDITIVE_OP);
-
-        while(acceptedTokens.contains(this.currentToken.getType()))
+        while(this.currentToken.getType() == TypeToken.ADDITIVE_OP)
         {
             Token token = this.currentToken;
 
-            switch(token.getType())
-            {
-                case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break;
-            }
+            absorb(TypeToken.ADDITIVE_OP);
 
             node = new ASTBinExpression(node, token.getAttribute(), term());
         }
@@ -326,7 +294,7 @@ public class Parser {
         return node;
 
     }
-    private ASTIf ifStatement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTIf ifStatement() throws IOException, InvalidSyntaxException{
         absorb(TypeToken.IF);
         absorb(TypeToken.BRACKET_OPEN);
         ASTExpression expression = expression();
@@ -344,7 +312,7 @@ public class Parser {
         return new ASTIf(expression, block, elseBlock);
     }
 
-    private ASTFor forStatement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTFor forStatement() throws IOException, InvalidSyntaxException{
         absorb(TypeToken.FOR);
         absorb(TypeToken.BRACKET_OPEN);
         ASTVariableDecl variableDecl = variableDeclaration();
@@ -358,7 +326,7 @@ public class Parser {
         return new ASTFor(variableDecl, expression, assignment, block);
     }
 
-    private ASTWhile whileStatement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTWhile whileStatement() throws IOException, InvalidSyntaxException{
         absorb(TypeToken.WHILE);
         absorb(TypeToken.BRACKET_OPEN);
         ASTExpression expression = expression();
@@ -368,21 +336,14 @@ public class Parser {
         return new ASTWhile(expression, block);
     }
 
-    private ASTExpression expression() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTExpression expression() throws IOException, InvalidSyntaxException{
         ASTExpression node = simpleExpression();
 
-        //fill accepted tokens
-        ArrayList<TypeToken> acceptedTokens = new ArrayList<TypeToken>();
-        acceptedTokens.add(TypeToken.RELATIONAL_OP);
-
-        while(acceptedTokens.contains(this.currentToken.getType()))
+        while(this.currentToken.getType() == TypeToken.RELATIONAL_OP)
         {
             Token token = this.currentToken;
 
-            switch(token.getType())
-            {
-                case RELATIONAL_OP: absorb(TypeToken.RELATIONAL_OP);break;
-            }
+            absorb(TypeToken.RELATIONAL_OP);
 
             node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());
         }
@@ -391,7 +352,7 @@ public class Parser {
 
     }
 
-    private ASTStatement statement() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    private ASTStatement statement() throws IOException, InvalidSyntaxException{
 
         Token token = this.currentToken;
         ASTStatement toReturn = null;
@@ -424,13 +385,12 @@ public class Parser {
             };break;
             case FF: return functionDeclaration();
             case CURLY_OPEN: return block();
-            case EOF: return null;
-            default: throw new InvalidSyntaxException("Invalid syntax");
+            default: return null;//EOF
         }
         return toReturn;
     }
 
-    public ASTBlock block() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    public ASTBlock block() throws IOException, InvalidSyntaxException{
         absorb(TypeToken.CURLY_OPEN);
         ArrayList<ASTStatement> statements = new ArrayList<ASTStatement>();
 
@@ -444,7 +404,7 @@ public class Parser {
         return new ASTBlock(statements);
     }
 
-    public ASTProgram program() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    public ASTProgram program() throws IOException, InvalidSyntaxException{
         ArrayList<ASTStatement> statements = new ArrayList<ASTStatement>();
         ASTStatement statement = statement();
         while(statement != null)
@@ -455,7 +415,7 @@ public class Parser {
 
         return new ASTProgram(statements);
     }
-    public ASTProgram parse() throws IOException, InvalidSyntaxException, InvalidNodeException {
+    public ASTProgram parse() throws IOException, InvalidSyntaxException{
         return program();
     }
 

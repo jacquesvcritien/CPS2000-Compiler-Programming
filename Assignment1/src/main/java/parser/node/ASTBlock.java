@@ -20,7 +20,7 @@ public class ASTBlock extends ASTStatement {
         return statements;
     }
 
-    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, InvalidNodeException, ReturnTypeMismatchException {
+    public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 

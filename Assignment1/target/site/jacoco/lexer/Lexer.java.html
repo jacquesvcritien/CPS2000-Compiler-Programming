@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lexer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment1</a> &gt; <a href="index.source.html" class="el_package">lexer</a> &gt; <span class="el_source">Lexer.java</span></div><h1>Lexer.java</h1><pre class="source lang-java linenums">package lexer;
+
+import exceptions.InvalidSyntaxException;
+import org.omg.CORBA.ORB;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.security.Key;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+
+/**
+ * Class for Lexer
+ */
+public class Lexer
+{
+    //hashmap containing words
+<span class="fc" id="L22">    private HashMap&lt;String, Token&gt; keywords = new HashMap&lt;String, Token&gt;(){{</span>
+<span class="fc" id="L23">        put(&quot;auto&quot;, Keyword.AUTO);</span>
+<span class="fc" id="L24">        put(&quot;int&quot;, Keyword.INT);</span>
+<span class="fc" id="L25">        put(&quot;float&quot;, Keyword.FLOAT);</span>
+<span class="fc" id="L26">        put(&quot;bool&quot;, Keyword.BOOL);</span>
+<span class="fc" id="L27">        put(&quot;if&quot;, Keyword.IF);</span>
+<span class="fc" id="L28">        put(&quot;else&quot;, Keyword.ELSE);</span>
+<span class="fc" id="L29">        put(&quot;for&quot;, Keyword.FOR);</span>
+<span class="fc" id="L30">        put(&quot;while&quot;, Keyword.WHILE);</span>
+<span class="fc" id="L31">        put(&quot;let&quot;, Keyword.LET);</span>
+<span class="fc" id="L32">        put(&quot;return&quot;, Keyword.RETURN);</span>
+<span class="fc" id="L33">        put(&quot;ff&quot;, Keyword.FF);</span>
+<span class="fc" id="L34">        put(&quot;print&quot;, Keyword.PRINT);</span>
+<span class="fc" id="L35">        put(&quot;true&quot;, Keyword.TRUE);</span>
+<span class="fc" id="L36">        put(&quot;false&quot;, Keyword.FALSE);</span>
+<span class="fc" id="L37">        put(&quot;not&quot;, Keyword.NOT);</span>
+<span class="fc" id="L38">        put(&quot;*&quot;, Operand.MULTIPLY);</span>
+<span class="fc" id="L39">        put(&quot;/&quot;, Operand.DIVIDE);</span>
+<span class="fc" id="L40">        put(&quot;+&quot;, Operand.ADDITION);</span>
+<span class="fc" id="L41">        put(&quot;-&quot;, Operand.SUBTRACT);</span>
+<span class="fc" id="L42">        put(&quot;and&quot;, Operand.AND_OP);</span>
+<span class="fc" id="L43">        put(&quot;or&quot;, Operand.OR_OP);</span>
+<span class="fc" id="L44">        put(&quot;&gt;&quot;, Operand.GT);</span>
+<span class="fc" id="L45">        put(&quot;&lt;&quot;, Operand.LT);</span>
+<span class="fc" id="L46">        put(&quot;&gt;=&quot;, Operand.GTE);</span>
+<span class="fc" id="L47">        put(&quot;&lt;=&quot;, Operand.LTE);</span>
+<span class="fc" id="L48">        put(&quot;==&quot;, Operand.EQUAL);</span>
+<span class="fc" id="L49">        put(&quot;&lt;&gt;&quot;, Operand.NOTEQUAL);</span>
+<span class="fc" id="L50">    }};</span>
+
+<span class="fc" id="L52">    private Stack&lt;State&gt; stack = new Stack&lt;State&gt;();</span>
+
+<span class="fc" id="L54">    private static Map&lt;State, TypeToken&gt; acceptableStates = new HashMap&lt;State, TypeToken&gt;();</span>
+<span class="fc" id="L55">    private static final Map&lt;Transition, State&gt; transitionTable = new HashMap&lt;Transition, State&gt;();</span>
+    private File file;
+    private FileReader fileReader;
+    private BufferedReader bufferedReader;
+
+<span class="fc" id="L60">    public Lexer(String filename) throws FileNotFoundException, URISyntaxException {</span>
+<span class="fc" id="L61">        URL url = Lexer.class.getClassLoader().getResource(filename);</span>
+<span class="fc" id="L62">        File file = Paths.get(url.toURI()).toFile();</span>
+<span class="fc" id="L63">        String absolutePath = file.getAbsolutePath();</span>
+
+        //read file
+<span class="fc" id="L66">        fileReader = new FileReader(absolutePath);</span>
+<span class="fc" id="L67">        bufferedReader =new BufferedReader(fileReader);</span>
+
+<span class="fc" id="L69">        setAcceptableStates();</span>
+<span class="fc" id="L70">        setTransitionTable();</span>
+<span class="fc" id="L71">    }</span>
+
+    private void setTransitionTable() {
+        Transition transition;
+
+        /* ************ START ROW ************ */
+<span class="fc" id="L77">        transition = new Transition(State.START, Category.DIGIT);</span>
+<span class="fc" id="L78">        transitionTable.put(transition, State.S1);</span>
+<span class="fc" id="L79">        transition = new Transition(State.START, Category.DOT);</span>
+<span class="fc" id="L80">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L81">        transition = new Transition(State.START, Category.LETTER);</span>
+<span class="fc" id="L82">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L83">        transition = new Transition(State.START, Category.UNDERSCORE);</span>
+<span class="fc" id="L84">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L85">        transition = new Transition(State.START, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L86">        transitionTable.put(transition, State.S5);</span>
+<span class="fc" id="L87">        transition = new Transition(State.START, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L88">        transitionTable.put(transition, State.S6);</span>
+<span class="fc" id="L89">        transition = new Transition(State.START, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L90">        transitionTable.put(transition, State.S7);</span>
+<span class="fc" id="L91">        transition = new Transition(State.START, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L92">        transitionTable.put(transition, State.S8);</span>
+<span class="fc" id="L93">        transition = new Transition(State.START, Category.ST_OPERAND);</span>
+<span class="fc" id="L94">        transitionTable.put(transition, State.S9);</span>
+<span class="fc" id="L95">        transition = new Transition(State.START, Category.GT_OPERAND);</span>
+<span class="fc" id="L96">        transitionTable.put(transition, State.S10);</span>
+<span class="fc" id="L97">        transition = new Transition(State.START, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L98">        transitionTable.put(transition, State.S14);</span>
+<span class="fc" id="L99">        transition = new Transition(State.START, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L100">        transitionTable.put(transition, State.S16);</span>
+<span class="fc" id="L101">        transition = new Transition(State.START, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L102">        transitionTable.put(transition, State.S17);</span>
+<span class="fc" id="L103">        transition = new Transition(State.START, Category.CURLY_OPEN);</span>
+<span class="fc" id="L104">        transitionTable.put(transition, State.S18);</span>
+<span class="fc" id="L105">        transition = new Transition(State.START, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L106">        transitionTable.put(transition, State.S19);</span>
+<span class="fc" id="L107">        transition = new Transition(State.START, Category.COLON);</span>
+<span class="fc" id="L108">        transitionTable.put(transition, State.S20);</span>
+<span class="fc" id="L109">        transition = new Transition(State.START, Category.SEMI_COLON);</span>
+<span class="fc" id="L110">        transitionTable.put(transition, State.S21);</span>
+<span class="fc" id="L111">        transition = new Transition(State.START, Category.COMMA);</span>
+<span class="fc" id="L112">        transitionTable.put(transition, State.S22);</span>
+<span class="fc" id="L113">        transition = new Transition(State.START, Category.NEWLINE);</span>
+<span class="fc" id="L114">        transitionTable.put(transition, State.START);</span>
+<span class="fc" id="L115">        transition = new Transition(State.START, Category.SPACE);</span>
+<span class="fc" id="L116">        transitionTable.put(transition, State.START);</span>
+<span class="fc" id="L117">        transition = new Transition(State.START, Category.EOF);</span>
+<span class="fc" id="L118">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L119">        transition = new Transition(State.START, Category.OTHER);</span>
+<span class="fc" id="L120">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S1 ROW ************ */
+<span class="fc" id="L123">        transition = new Transition(State.S1, Category.DIGIT);</span>
+<span class="fc" id="L124">        transitionTable.put(transition, State.S1);</span>
+<span class="fc" id="L125">        transition = new Transition(State.S1, Category.DOT);</span>
+<span class="fc" id="L126">        transitionTable.put(transition, State.S2);</span>
+<span class="fc" id="L127">        transition = new Transition(State.S1, Category.LETTER);</span>
+<span class="fc" id="L128">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L129">        transition = new Transition(State.S1, Category.UNDERSCORE);</span>
+<span class="fc" id="L130">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L131">        transition = new Transition(State.S1, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L132">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L133">        transition = new Transition(State.S1, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L134">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L135">        transition = new Transition(State.S1, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L136">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L137">        transition = new Transition(State.S1, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L138">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L139">        transition = new Transition(State.S1, Category.ST_OPERAND);</span>
+<span class="fc" id="L140">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L141">        transition = new Transition(State.S1, Category.GT_OPERAND);</span>
+<span class="fc" id="L142">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L143">        transition = new Transition(State.S1, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L144">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L145">        transition = new Transition(State.S1, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L146">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L147">        transition = new Transition(State.S1, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L148">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L149">        transition = new Transition(State.S1, Category.CURLY_OPEN);</span>
+<span class="fc" id="L150">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L151">        transition = new Transition(State.S1, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L152">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L153">        transition = new Transition(State.S1, Category.COLON);</span>
+<span class="fc" id="L154">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L155">        transition = new Transition(State.S1, Category.SEMI_COLON);</span>
+<span class="fc" id="L156">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L157">        transition = new Transition(State.S1, Category.COMMA);</span>
+<span class="fc" id="L158">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L159">        transition = new Transition(State.S1, Category.NEWLINE);</span>
+<span class="fc" id="L160">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L161">        transition = new Transition(State.S1, Category.SPACE);</span>
+<span class="fc" id="L162">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L163">        transition = new Transition(State.S1, Category.EOF);</span>
+<span class="fc" id="L164">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L165">        transition = new Transition(State.S1, Category.OTHER);</span>
+<span class="fc" id="L166">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S2 ROW ************ */
+<span class="fc" id="L169">        transition = new Transition(State.S2, Category.DIGIT);</span>
+<span class="fc" id="L170">        transitionTable.put(transition, State.S3);</span>
+<span class="fc" id="L171">        transition = new Transition(State.S2, Category.DOT);</span>
+<span class="fc" id="L172">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L173">        transition = new Transition(State.S2, Category.LETTER);</span>
+<span class="fc" id="L174">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L175">        transition = new Transition(State.S2, Category.UNDERSCORE);</span>
+<span class="fc" id="L176">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L177">        transition = new Transition(State.S2, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L178">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L179">        transition = new Transition(State.S2, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L180">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L181">        transition = new Transition(State.S2, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L182">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L183">        transition = new Transition(State.S2, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L184">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L185">        transition = new Transition(State.S2, Category.ST_OPERAND);</span>
+<span class="fc" id="L186">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L187">        transition = new Transition(State.S2, Category.GT_OPERAND);</span>
+<span class="fc" id="L188">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L189">        transition = new Transition(State.S2, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L190">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L191">        transition = new Transition(State.S2, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L192">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L193">        transition = new Transition(State.S2, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L194">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L195">        transition = new Transition(State.S2, Category.CURLY_OPEN);</span>
+<span class="fc" id="L196">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L197">        transition = new Transition(State.S2, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L198">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L199">        transition = new Transition(State.S2, Category.COLON);</span>
+<span class="fc" id="L200">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L201">        transition = new Transition(State.S2, Category.SEMI_COLON);</span>
+<span class="fc" id="L202">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L203">        transition = new Transition(State.S2, Category.COMMA);</span>
+<span class="fc" id="L204">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L205">        transition = new Transition(State.S2, Category.NEWLINE);</span>
+<span class="fc" id="L206">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L207">        transition = new Transition(State.S2, Category.SPACE);</span>
+<span class="fc" id="L208">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L209">        transition = new Transition(State.S2, Category.EOF);</span>
+<span class="fc" id="L210">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L211">        transition = new Transition(State.S2, Category.OTHER);</span>
+<span class="fc" id="L212">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S3 ROW ************ */
+<span class="fc" id="L215">        transition = new Transition(State.S3, Category.DIGIT);</span>
+<span class="fc" id="L216">        transitionTable.put(transition, State.S3);</span>
+<span class="fc" id="L217">        transition = new Transition(State.S3, Category.DOT);</span>
+<span class="fc" id="L218">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L219">        transition = new Transition(State.S3, Category.LETTER);</span>
+<span class="fc" id="L220">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L221">        transition = new Transition(State.S3, Category.UNDERSCORE);</span>
+<span class="fc" id="L222">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L223">        transition = new Transition(State.S3, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L224">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L225">        transition = new Transition(State.S3, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L226">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L227">        transition = new Transition(State.S3, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L228">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L229">        transition = new Transition(State.S3, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L230">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L231">        transition = new Transition(State.S3, Category.ST_OPERAND);</span>
+<span class="fc" id="L232">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L233">        transition = new Transition(State.S3, Category.GT_OPERAND);</span>
+<span class="fc" id="L234">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L235">        transition = new Transition(State.S3, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L236">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L237">        transition = new Transition(State.S3, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L238">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L239">        transition = new Transition(State.S3, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L240">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L241">        transition = new Transition(State.S3, Category.CURLY_OPEN);</span>
+<span class="fc" id="L242">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L243">        transition = new Transition(State.S3, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L244">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L245">        transition = new Transition(State.S3, Category.COLON);</span>
+<span class="fc" id="L246">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L247">        transition = new Transition(State.S3, Category.SEMI_COLON);</span>
+<span class="fc" id="L248">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L249">        transition = new Transition(State.S3, Category.COMMA);</span>
+<span class="fc" id="L250">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L251">        transition = new Transition(State.S3, Category.NEWLINE);</span>
+<span class="fc" id="L252">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L253">        transition = new Transition(State.S3, Category.SPACE);</span>
+<span class="fc" id="L254">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L255">        transition = new Transition(State.S3, Category.EOF);</span>
+<span class="fc" id="L256">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L257">        transition = new Transition(State.S3, Category.OTHER);</span>
+<span class="fc" id="L258">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S4 ROW ************ */
+<span class="fc" id="L261">        transition = new Transition(State.S4, Category.DIGIT);</span>
+<span class="fc" id="L262">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L263">        transition = new Transition(State.S4, Category.DOT);</span>
+<span class="fc" id="L264">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L265">        transition = new Transition(State.S4, Category.LETTER);</span>
+<span class="fc" id="L266">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L267">        transition = new Transition(State.S4, Category.UNDERSCORE);</span>
+<span class="fc" id="L268">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L269">        transition = new Transition(State.S4, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L270">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L271">        transition = new Transition(State.S4, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L272">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L273">        transition = new Transition(State.S4, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L274">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L275">        transition = new Transition(State.S4, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L276">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L277">        transition = new Transition(State.S4, Category.ST_OPERAND);</span>
+<span class="fc" id="L278">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L279">        transition = new Transition(State.S4, Category.GT_OPERAND);</span>
+<span class="fc" id="L280">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L281">        transition = new Transition(State.S4, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L282">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L283">        transition = new Transition(State.S4, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L284">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L285">        transition = new Transition(State.S4, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L286">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L287">        transition = new Transition(State.S4, Category.CURLY_OPEN);</span>
+<span class="fc" id="L288">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L289">        transition = new Transition(State.S4, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L290">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L291">        transition = new Transition(State.S4, Category.COLON);</span>
+<span class="fc" id="L292">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L293">        transition = new Transition(State.S4, Category.SEMI_COLON);</span>
+<span class="fc" id="L294">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L295">        transition = new Transition(State.S4, Category.COMMA);</span>
+<span class="fc" id="L296">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L297">        transition = new Transition(State.S4, Category.NEWLINE);</span>
+<span class="fc" id="L298">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L299">        transition = new Transition(State.S4, Category.SPACE);</span>
+<span class="fc" id="L300">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L301">        transition = new Transition(State.S4, Category.EOF);</span>
+<span class="fc" id="L302">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L303">        transition = new Transition(State.S4, Category.OTHER);</span>
+<span class="fc" id="L304">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S5 ROW ************ */
+<span class="fc" id="L307">        transition = new Transition(State.S5, Category.DIGIT);</span>
+<span class="fc" id="L308">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L309">        transition = new Transition(State.S5, Category.DOT);</span>
+<span class="fc" id="L310">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L311">        transition = new Transition(State.S5, Category.LETTER);</span>
+<span class="fc" id="L312">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L313">        transition = new Transition(State.S5, Category.UNDERSCORE);</span>
+<span class="fc" id="L314">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L315">        transition = new Transition(State.S5, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L316">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L317">        transition = new Transition(State.S5, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L318">        transitionTable.put(transition, State.S25);</span>
+<span class="fc" id="L319">        transition = new Transition(State.S5, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L320">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L321">        transition = new Transition(State.S5, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L322">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L323">        transition = new Transition(State.S5, Category.ST_OPERAND);</span>
+<span class="fc" id="L324">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L325">        transition = new Transition(State.S5, Category.GT_OPERAND);</span>
+<span class="fc" id="L326">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L327">        transition = new Transition(State.S5, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L328">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L329">        transition = new Transition(State.S5, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L330">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L331">        transition = new Transition(State.S5, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L332">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L333">        transition = new Transition(State.S5, Category.CURLY_OPEN);</span>
+<span class="fc" id="L334">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L335">        transition = new Transition(State.S5, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L336">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L337">        transition = new Transition(State.S5, Category.COLON);</span>
+<span class="fc" id="L338">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L339">        transition = new Transition(State.S5, Category.SEMI_COLON);</span>
+<span class="fc" id="L340">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L341">        transition = new Transition(State.S5, Category.COMMA);</span>
+<span class="fc" id="L342">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L343">        transition = new Transition(State.S5, Category.NEWLINE);</span>
+<span class="fc" id="L344">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L345">        transition = new Transition(State.S5, Category.SPACE);</span>
+<span class="fc" id="L346">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L347">        transition = new Transition(State.S5, Category.EOF);</span>
+<span class="fc" id="L348">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L349">        transition = new Transition(State.S5, Category.OTHER);</span>
+<span class="fc" id="L350">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S6 ROW ************ */
+<span class="fc" id="L353">        transition = new Transition(State.S6, Category.DIGIT);</span>
+<span class="fc" id="L354">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L355">        transition = new Transition(State.S6, Category.DOT);</span>
+<span class="fc" id="L356">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L357">        transition = new Transition(State.S6, Category.LETTER);</span>
+<span class="fc" id="L358">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L359">        transition = new Transition(State.S6, Category.UNDERSCORE);</span>
+<span class="fc" id="L360">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L361">        transition = new Transition(State.S6, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L362">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L363">        transition = new Transition(State.S6, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L364">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L365">        transition = new Transition(State.S6, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L366">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L367">        transition = new Transition(State.S6, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L368">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L369">        transition = new Transition(State.S6, Category.ST_OPERAND);</span>
+<span class="fc" id="L370">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L371">        transition = new Transition(State.S6, Category.GT_OPERAND);</span>
+<span class="fc" id="L372">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L373">        transition = new Transition(State.S6, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L374">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L375">        transition = new Transition(State.S6, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L376">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L377">        transition = new Transition(State.S6, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L378">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L379">        transition = new Transition(State.S6, Category.CURLY_OPEN);</span>
+<span class="fc" id="L380">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L381">        transition = new Transition(State.S6, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L382">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L383">        transition = new Transition(State.S6, Category.COLON);</span>
+<span class="fc" id="L384">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L385">        transition = new Transition(State.S6, Category.SEMI_COLON);</span>
+<span class="fc" id="L386">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L387">        transition = new Transition(State.S6, Category.COMMA);</span>
+<span class="fc" id="L388">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L389">        transition = new Transition(State.S6, Category.NEWLINE);</span>
+<span class="fc" id="L390">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L391">        transition = new Transition(State.S6, Category.SPACE);</span>
+<span class="fc" id="L392">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L393">        transition = new Transition(State.S6, Category.EOF);</span>
+<span class="fc" id="L394">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L395">        transition = new Transition(State.S6, Category.OTHER);</span>
+<span class="fc" id="L396">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S7 ROW ************ */
+<span class="fc" id="L399">        transition = new Transition(State.S7, Category.DIGIT);</span>
+<span class="fc" id="L400">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L401">        transition = new Transition(State.S7, Category.DOT);</span>
+<span class="fc" id="L402">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L403">        transition = new Transition(State.S7, Category.LETTER);</span>
+<span class="fc" id="L404">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L405">        transition = new Transition(State.S7, Category.UNDERSCORE);</span>
+<span class="fc" id="L406">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L407">        transition = new Transition(State.S7, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L408">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L409">        transition = new Transition(State.S7, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L410">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L411">        transition = new Transition(State.S7, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L412">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L413">        transition = new Transition(State.S7, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L414">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L415">        transition = new Transition(State.S7, Category.ST_OPERAND);</span>
+<span class="fc" id="L416">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L417">        transition = new Transition(State.S7, Category.GT_OPERAND);</span>
+<span class="fc" id="L418">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L419">        transition = new Transition(State.S7, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L420">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L421">        transition = new Transition(State.S7, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L422">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L423">        transition = new Transition(State.S7, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L424">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L425">        transition = new Transition(State.S7, Category.CURLY_OPEN);</span>
+<span class="fc" id="L426">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L427">        transition = new Transition(State.S7, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L428">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L429">        transition = new Transition(State.S7, Category.COLON);</span>
+<span class="fc" id="L430">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L431">        transition = new Transition(State.S7, Category.SEMI_COLON);</span>
+<span class="fc" id="L432">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L433">        transition = new Transition(State.S7, Category.COMMA);</span>
+<span class="fc" id="L434">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L435">        transition = new Transition(State.S7, Category.NEWLINE);</span>
+<span class="fc" id="L436">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L437">        transition = new Transition(State.S7, Category.SPACE);</span>
+<span class="fc" id="L438">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L439">        transition = new Transition(State.S7, Category.EOF);</span>
+<span class="fc" id="L440">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L441">        transition = new Transition(State.S7, Category.OTHER);</span>
+<span class="fc" id="L442">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S8 ROW ************ */
+<span class="fc" id="L445">        transition = new Transition(State.S8, Category.DIGIT);</span>
+<span class="fc" id="L446">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L447">        transition = new Transition(State.S8, Category.DOT);</span>
+<span class="fc" id="L448">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L449">        transition = new Transition(State.S8, Category.LETTER);</span>
+<span class="fc" id="L450">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L451">        transition = new Transition(State.S8, Category.UNDERSCORE);</span>
+<span class="fc" id="L452">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L453">        transition = new Transition(State.S8, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L454">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L455">        transition = new Transition(State.S8, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L456">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L457">        transition = new Transition(State.S8, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L458">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L459">        transition = new Transition(State.S8, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L460">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L461">        transition = new Transition(State.S8, Category.ST_OPERAND);</span>
+<span class="fc" id="L462">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L463">        transition = new Transition(State.S8, Category.GT_OPERAND);</span>
+<span class="fc" id="L464">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L465">        transition = new Transition(State.S8, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L466">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L467">        transition = new Transition(State.S8, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L468">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L469">        transition = new Transition(State.S8, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L470">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L471">        transition = new Transition(State.S8, Category.CURLY_OPEN);</span>
+<span class="fc" id="L472">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L473">        transition = new Transition(State.S8, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L474">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L475">        transition = new Transition(State.S8, Category.COLON);</span>
+<span class="fc" id="L476">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L477">        transition = new Transition(State.S8, Category.SEMI_COLON);</span>
+<span class="fc" id="L478">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L479">        transition = new Transition(State.S8, Category.COMMA);</span>
+<span class="fc" id="L480">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L481">        transition = new Transition(State.S8, Category.NEWLINE);</span>
+<span class="fc" id="L482">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L483">        transition = new Transition(State.S8, Category.SPACE);</span>
+<span class="fc" id="L484">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L485">        transition = new Transition(State.S8, Category.EOF);</span>
+<span class="fc" id="L486">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L487">        transition = new Transition(State.S8, Category.OTHER);</span>
+<span class="fc" id="L488">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S9 ROW ************ */
+<span class="fc" id="L491">        transition = new Transition(State.S9, Category.DIGIT);</span>
+<span class="fc" id="L492">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L493">        transition = new Transition(State.S9, Category.DOT);</span>
+<span class="fc" id="L494">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L495">        transition = new Transition(State.S9, Category.LETTER);</span>
+<span class="fc" id="L496">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L497">        transition = new Transition(State.S9, Category.UNDERSCORE);</span>
+<span class="fc" id="L498">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L499">        transition = new Transition(State.S9, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L500">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L501">        transition = new Transition(State.S9, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L502">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L503">        transition = new Transition(State.S9, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L504">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L505">        transition = new Transition(State.S9, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L506">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L507">        transition = new Transition(State.S9, Category.ST_OPERAND);</span>
+<span class="fc" id="L508">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L509">        transition = new Transition(State.S9, Category.GT_OPERAND);</span>
+<span class="fc" id="L510">        transitionTable.put(transition, State.S11);</span>
+<span class="fc" id="L511">        transition = new Transition(State.S9, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L512">        transitionTable.put(transition, State.S12);</span>
+<span class="fc" id="L513">        transition = new Transition(State.S9, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L514">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L515">        transition = new Transition(State.S9, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L516">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L517">        transition = new Transition(State.S9, Category.CURLY_OPEN);</span>
+<span class="fc" id="L518">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L519">        transition = new Transition(State.S9, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L520">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L521">        transition = new Transition(State.S9, Category.COLON);</span>
+<span class="fc" id="L522">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L523">        transition = new Transition(State.S9, Category.SEMI_COLON);</span>
+<span class="fc" id="L524">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L525">        transition = new Transition(State.S9, Category.COMMA);</span>
+<span class="fc" id="L526">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L527">        transition = new Transition(State.S9, Category.NEWLINE);</span>
+<span class="fc" id="L528">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L529">        transition = new Transition(State.S9, Category.SPACE);</span>
+<span class="fc" id="L530">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L531">        transition = new Transition(State.S9, Category.EOF);</span>
+<span class="fc" id="L532">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L533">        transition = new Transition(State.S9, Category.OTHER);</span>
+<span class="fc" id="L534">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S10 ROW ************ */
+<span class="fc" id="L537">        transition = new Transition(State.S10, Category.DIGIT);</span>
+<span class="fc" id="L538">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L539">        transition = new Transition(State.S10, Category.DOT);</span>
+<span class="fc" id="L540">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L541">        transition = new Transition(State.S10, Category.LETTER);</span>
+<span class="fc" id="L542">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L543">        transition = new Transition(State.S10, Category.UNDERSCORE);</span>
+<span class="fc" id="L544">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L545">        transition = new Transition(State.S10, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L546">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L547">        transition = new Transition(State.S10, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L548">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L549">        transition = new Transition(State.S10, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L550">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L551">        transition = new Transition(State.S10, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L552">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L553">        transition = new Transition(State.S10, Category.ST_OPERAND);</span>
+<span class="fc" id="L554">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L555">        transition = new Transition(State.S10, Category.GT_OPERAND);</span>
+<span class="fc" id="L556">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L557">        transition = new Transition(State.S10, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L558">        transitionTable.put(transition, State.S13);</span>
+<span class="fc" id="L559">        transition = new Transition(State.S10, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L560">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L561">        transition = new Transition(State.S10, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L562">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L563">        transition = new Transition(State.S10, Category.CURLY_OPEN);</span>
+<span class="fc" id="L564">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L565">        transition = new Transition(State.S10, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L566">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L567">        transition = new Transition(State.S10, Category.COLON);</span>
+<span class="fc" id="L568">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L569">        transition = new Transition(State.S10, Category.SEMI_COLON);</span>
+<span class="fc" id="L570">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L571">        transition = new Transition(State.S10, Category.COMMA);</span>
+<span class="fc" id="L572">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L573">        transition = new Transition(State.S10, Category.NEWLINE);</span>
+<span class="fc" id="L574">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L575">        transition = new Transition(State.S10, Category.SPACE);</span>
+<span class="fc" id="L576">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L577">        transition = new Transition(State.S10, Category.EOF);</span>
+<span class="fc" id="L578">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L579">        transition = new Transition(State.S10, Category.OTHER);</span>
+<span class="fc" id="L580">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S11 ROW ************ */
+<span class="fc" id="L583">        transition = new Transition(State.S11, Category.DIGIT);</span>
+<span class="fc" id="L584">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L585">        transition = new Transition(State.S11, Category.DOT);</span>
+<span class="fc" id="L586">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L587">        transition = new Transition(State.S11, Category.LETTER);</span>
+<span class="fc" id="L588">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L589">        transition = new Transition(State.S11, Category.UNDERSCORE);</span>
+<span class="fc" id="L590">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L591">        transition = new Transition(State.S11, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L592">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L593">        transition = new Transition(State.S11, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L594">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L595">        transition = new Transition(State.S11, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L596">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L597">        transition = new Transition(State.S11, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L598">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L599">        transition = new Transition(State.S11, Category.ST_OPERAND);</span>
+<span class="fc" id="L600">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L601">        transition = new Transition(State.S11, Category.GT_OPERAND);</span>
+<span class="fc" id="L602">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L603">        transition = new Transition(State.S11, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L604">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L605">        transition = new Transition(State.S11, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L606">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L607">        transition = new Transition(State.S11, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L608">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L609">        transition = new Transition(State.S11, Category.CURLY_OPEN);</span>
+<span class="fc" id="L610">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L611">        transition = new Transition(State.S11, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L612">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L613">        transition = new Transition(State.S11, Category.COLON);</span>
+<span class="fc" id="L614">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L615">        transition = new Transition(State.S11, Category.SEMI_COLON);</span>
+<span class="fc" id="L616">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L617">        transition = new Transition(State.S11, Category.COMMA);</span>
+<span class="fc" id="L618">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L619">        transition = new Transition(State.S11, Category.NEWLINE);</span>
+<span class="fc" id="L620">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L621">        transition = new Transition(State.S11, Category.SPACE);</span>
+<span class="fc" id="L622">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L623">        transition = new Transition(State.S11, Category.EOF);</span>
+<span class="fc" id="L624">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L625">        transition = new Transition(State.S11, Category.OTHER);</span>
+<span class="fc" id="L626">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S12 ROW ************ */
+<span class="fc" id="L629">        transition = new Transition(State.S12, Category.DIGIT);</span>
+<span class="fc" id="L630">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L631">        transition = new Transition(State.S12, Category.DOT);</span>
+<span class="fc" id="L632">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L633">        transition = new Transition(State.S12, Category.LETTER);</span>
+<span class="fc" id="L634">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L635">        transition = new Transition(State.S12, Category.UNDERSCORE);</span>
+<span class="fc" id="L636">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L637">        transition = new Transition(State.S12, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L638">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L639">        transition = new Transition(State.S12, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L640">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L641">        transition = new Transition(State.S12, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L642">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L643">        transition = new Transition(State.S12, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L644">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L645">        transition = new Transition(State.S12, Category.ST_OPERAND);</span>
+<span class="fc" id="L646">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L647">        transition = new Transition(State.S12, Category.GT_OPERAND);</span>
+<span class="fc" id="L648">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L649">        transition = new Transition(State.S12, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L650">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L651">        transition = new Transition(State.S12, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L652">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L653">        transition = new Transition(State.S12, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L654">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L655">        transition = new Transition(State.S12, Category.CURLY_OPEN);</span>
+<span class="fc" id="L656">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L657">        transition = new Transition(State.S12, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L658">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L659">        transition = new Transition(State.S12, Category.COLON);</span>
+<span class="fc" id="L660">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L661">        transition = new Transition(State.S12, Category.SEMI_COLON);</span>
+<span class="fc" id="L662">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L663">        transition = new Transition(State.S12, Category.COMMA);</span>
+<span class="fc" id="L664">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L665">        transition = new Transition(State.S12, Category.NEWLINE);</span>
+<span class="fc" id="L666">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L667">        transition = new Transition(State.S12, Category.SPACE);</span>
+<span class="fc" id="L668">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L669">        transition = new Transition(State.S12, Category.EOF);</span>
+<span class="fc" id="L670">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L671">        transition = new Transition(State.S12, Category.OTHER);</span>
+<span class="fc" id="L672">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S12 ROW ************ */
+<span class="fc" id="L675">        transition = new Transition(State.S12, Category.DIGIT);</span>
+<span class="fc" id="L676">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L677">        transition = new Transition(State.S12, Category.DOT);</span>
+<span class="fc" id="L678">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L679">        transition = new Transition(State.S12, Category.LETTER);</span>
+<span class="fc" id="L680">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L681">        transition = new Transition(State.S12, Category.UNDERSCORE);</span>
+<span class="fc" id="L682">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L683">        transition = new Transition(State.S12, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L684">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L685">        transition = new Transition(State.S12, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L686">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L687">        transition = new Transition(State.S12, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L688">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L689">        transition = new Transition(State.S12, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L690">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L691">        transition = new Transition(State.S12, Category.ST_OPERAND);</span>
+<span class="fc" id="L692">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L693">        transition = new Transition(State.S12, Category.GT_OPERAND);</span>
+<span class="fc" id="L694">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L695">        transition = new Transition(State.S12, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L696">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L697">        transition = new Transition(State.S12, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L698">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L699">        transition = new Transition(State.S12, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L700">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L701">        transition = new Transition(State.S12, Category.CURLY_OPEN);</span>
+<span class="fc" id="L702">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L703">        transition = new Transition(State.S12, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L704">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L705">        transition = new Transition(State.S12, Category.COLON);</span>
+<span class="fc" id="L706">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L707">        transition = new Transition(State.S12, Category.SEMI_COLON);</span>
+<span class="fc" id="L708">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L709">        transition = new Transition(State.S12, Category.COMMA);</span>
+<span class="fc" id="L710">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L711">        transition = new Transition(State.S12, Category.NEWLINE);</span>
+<span class="fc" id="L712">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L713">        transition = new Transition(State.S12, Category.SPACE);</span>
+<span class="fc" id="L714">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L715">        transition = new Transition(State.S12, Category.EOF);</span>
+<span class="fc" id="L716">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L717">        transition = new Transition(State.S12, Category.OTHER);</span>
+<span class="fc" id="L718">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S13 ROW ************ */
+<span class="fc" id="L721">        transition = new Transition(State.S13, Category.DIGIT);</span>
+<span class="fc" id="L722">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L723">        transition = new Transition(State.S13, Category.DOT);</span>
+<span class="fc" id="L724">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L725">        transition = new Transition(State.S13, Category.LETTER);</span>
+<span class="fc" id="L726">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L727">        transition = new Transition(State.S13, Category.UNDERSCORE);</span>
+<span class="fc" id="L728">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L729">        transition = new Transition(State.S13, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L730">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L731">        transition = new Transition(State.S13, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L732">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L733">        transition = new Transition(State.S13, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L734">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L735">        transition = new Transition(State.S13, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L736">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L737">        transition = new Transition(State.S13, Category.ST_OPERAND);</span>
+<span class="fc" id="L738">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L739">        transition = new Transition(State.S13, Category.GT_OPERAND);</span>
+<span class="fc" id="L740">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L741">        transition = new Transition(State.S13, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L742">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L743">        transition = new Transition(State.S13, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L744">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L745">        transition = new Transition(State.S13, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L746">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L747">        transition = new Transition(State.S13, Category.CURLY_OPEN);</span>
+<span class="fc" id="L748">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L749">        transition = new Transition(State.S13, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L750">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L751">        transition = new Transition(State.S13, Category.COLON);</span>
+<span class="fc" id="L752">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L753">        transition = new Transition(State.S13, Category.SEMI_COLON);</span>
+<span class="fc" id="L754">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L755">        transition = new Transition(State.S13, Category.COMMA);</span>
+<span class="fc" id="L756">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L757">        transition = new Transition(State.S13, Category.NEWLINE);</span>
+<span class="fc" id="L758">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L759">        transition = new Transition(State.S13, Category.SPACE);</span>
+<span class="fc" id="L760">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L761">        transition = new Transition(State.S13, Category.EOF);</span>
+<span class="fc" id="L762">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L763">        transition = new Transition(State.S13, Category.OTHER);</span>
+<span class="fc" id="L764">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S14 ROW ************ */
+<span class="fc" id="L767">        transition = new Transition(State.S14, Category.DIGIT);</span>
+<span class="fc" id="L768">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L769">        transition = new Transition(State.S14, Category.DOT);</span>
+<span class="fc" id="L770">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L771">        transition = new Transition(State.S14, Category.LETTER);</span>
+<span class="fc" id="L772">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L773">        transition = new Transition(State.S14, Category.UNDERSCORE);</span>
+<span class="fc" id="L774">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L775">        transition = new Transition(State.S14, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L776">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L777">        transition = new Transition(State.S14, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L778">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L779">        transition = new Transition(State.S14, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L780">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L781">        transition = new Transition(State.S14, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L782">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L783">        transition = new Transition(State.S14, Category.ST_OPERAND);</span>
+<span class="fc" id="L784">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L785">        transition = new Transition(State.S14, Category.GT_OPERAND);</span>
+<span class="fc" id="L786">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L787">        transition = new Transition(State.S14, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L788">        transitionTable.put(transition, State.S15);</span>
+<span class="fc" id="L789">        transition = new Transition(State.S14, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L790">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L791">        transition = new Transition(State.S14, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L792">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L793">        transition = new Transition(State.S14, Category.CURLY_OPEN);</span>
+<span class="fc" id="L794">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L795">        transition = new Transition(State.S14, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L796">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L797">        transition = new Transition(State.S14, Category.COLON);</span>
+<span class="fc" id="L798">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L799">        transition = new Transition(State.S14, Category.SEMI_COLON);</span>
+<span class="fc" id="L800">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L801">        transition = new Transition(State.S14, Category.COMMA);</span>
+<span class="fc" id="L802">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L803">        transition = new Transition(State.S14, Category.NEWLINE);</span>
+<span class="fc" id="L804">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L805">        transition = new Transition(State.S14, Category.SPACE);</span>
+<span class="fc" id="L806">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L807">        transition = new Transition(State.S14, Category.EOF);</span>
+<span class="fc" id="L808">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L809">        transition = new Transition(State.S14, Category.OTHER);</span>
+<span class="fc" id="L810">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S15 ROW ************ */
+<span class="fc" id="L813">        transition = new Transition(State.S15, Category.DIGIT);</span>
+<span class="fc" id="L814">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L815">        transition = new Transition(State.S15, Category.DOT);</span>
+<span class="fc" id="L816">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L817">        transition = new Transition(State.S15, Category.LETTER);</span>
+<span class="fc" id="L818">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L819">        transition = new Transition(State.S15, Category.UNDERSCORE);</span>
+<span class="fc" id="L820">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L821">        transition = new Transition(State.S15, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L822">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L823">        transition = new Transition(State.S15, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L824">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L825">        transition = new Transition(State.S15, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L826">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L827">        transition = new Transition(State.S15, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L828">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L829">        transition = new Transition(State.S15, Category.ST_OPERAND);</span>
+<span class="fc" id="L830">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L831">        transition = new Transition(State.S15, Category.GT_OPERAND);</span>
+<span class="fc" id="L832">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L833">        transition = new Transition(State.S15, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L834">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L835">        transition = new Transition(State.S15, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L836">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L837">        transition = new Transition(State.S15, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L838">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L839">        transition = new Transition(State.S15, Category.CURLY_OPEN);</span>
+<span class="fc" id="L840">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L841">        transition = new Transition(State.S15, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L842">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L843">        transition = new Transition(State.S15, Category.COLON);</span>
+<span class="fc" id="L844">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L845">        transition = new Transition(State.S15, Category.SEMI_COLON);</span>
+<span class="fc" id="L846">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L847">        transition = new Transition(State.S15, Category.COMMA);</span>
+<span class="fc" id="L848">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L849">        transition = new Transition(State.S15, Category.NEWLINE);</span>
+<span class="fc" id="L850">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L851">        transition = new Transition(State.S15, Category.SPACE);</span>
+<span class="fc" id="L852">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L853">        transition = new Transition(State.S15, Category.EOF);</span>
+<span class="fc" id="L854">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L855">        transition = new Transition(State.S15, Category.OTHER);</span>
+<span class="fc" id="L856">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S16 ROW ************ */
+<span class="fc" id="L859">        transition = new Transition(State.S16, Category.DIGIT);</span>
+<span class="fc" id="L860">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L861">        transition = new Transition(State.S16, Category.DOT);</span>
+<span class="fc" id="L862">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L863">        transition = new Transition(State.S16, Category.LETTER);</span>
+<span class="fc" id="L864">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L865">        transition = new Transition(State.S16, Category.UNDERSCORE);</span>
+<span class="fc" id="L866">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L867">        transition = new Transition(State.S16, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L868">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L869">        transition = new Transition(State.S16, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L870">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L871">        transition = new Transition(State.S16, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L872">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L873">        transition = new Transition(State.S16, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L874">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L875">        transition = new Transition(State.S16, Category.ST_OPERAND);</span>
+<span class="fc" id="L876">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L877">        transition = new Transition(State.S16, Category.GT_OPERAND);</span>
+<span class="fc" id="L878">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L879">        transition = new Transition(State.S16, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L880">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L881">        transition = new Transition(State.S16, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L882">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L883">        transition = new Transition(State.S16, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L884">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L885">        transition = new Transition(State.S16, Category.CURLY_OPEN);</span>
+<span class="fc" id="L886">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L887">        transition = new Transition(State.S16, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L888">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L889">        transition = new Transition(State.S16, Category.COLON);</span>
+<span class="fc" id="L890">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L891">        transition = new Transition(State.S16, Category.SEMI_COLON);</span>
+<span class="fc" id="L892">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L893">        transition = new Transition(State.S16, Category.COMMA);</span>
+<span class="fc" id="L894">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L895">        transition = new Transition(State.S16, Category.NEWLINE);</span>
+<span class="fc" id="L896">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L897">        transition = new Transition(State.S16, Category.SPACE);</span>
+<span class="fc" id="L898">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L899">        transition = new Transition(State.S16, Category.EOF);</span>
+<span class="fc" id="L900">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L901">        transition = new Transition(State.S16, Category.OTHER);</span>
+<span class="fc" id="L902">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S17 ROW ************ */
+<span class="fc" id="L905">        transition = new Transition(State.S17, Category.DIGIT);</span>
+<span class="fc" id="L906">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L907">        transition = new Transition(State.S17, Category.DOT);</span>
+<span class="fc" id="L908">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L909">        transition = new Transition(State.S17, Category.LETTER);</span>
+<span class="fc" id="L910">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L911">        transition = new Transition(State.S17, Category.UNDERSCORE);</span>
+<span class="fc" id="L912">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L913">        transition = new Transition(State.S17, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L914">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L915">        transition = new Transition(State.S17, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L916">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L917">        transition = new Transition(State.S17, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L918">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L919">        transition = new Transition(State.S17, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L920">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L921">        transition = new Transition(State.S17, Category.ST_OPERAND);</span>
+<span class="fc" id="L922">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L923">        transition = new Transition(State.S17, Category.GT_OPERAND);</span>
+<span class="fc" id="L924">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L925">        transition = new Transition(State.S17, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L926">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L927">        transition = new Transition(State.S17, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L928">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L929">        transition = new Transition(State.S17, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L930">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L931">        transition = new Transition(State.S17, Category.CURLY_OPEN);</span>
+<span class="fc" id="L932">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L933">        transition = new Transition(State.S17, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L934">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L935">        transition = new Transition(State.S17, Category.COLON);</span>
+<span class="fc" id="L936">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L937">        transition = new Transition(State.S17, Category.SEMI_COLON);</span>
+<span class="fc" id="L938">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L939">        transition = new Transition(State.S17, Category.COMMA);</span>
+<span class="fc" id="L940">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L941">        transition = new Transition(State.S17, Category.NEWLINE);</span>
+<span class="fc" id="L942">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L943">        transition = new Transition(State.S17, Category.SPACE);</span>
+<span class="fc" id="L944">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L945">        transition = new Transition(State.S17, Category.EOF);</span>
+<span class="fc" id="L946">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L947">        transition = new Transition(State.S17, Category.OTHER);</span>
+<span class="fc" id="L948">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S18 ROW ************ */
+<span class="fc" id="L951">        transition = new Transition(State.S18, Category.DIGIT);</span>
+<span class="fc" id="L952">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L953">        transition = new Transition(State.S18, Category.DOT);</span>
+<span class="fc" id="L954">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L955">        transition = new Transition(State.S18, Category.LETTER);</span>
+<span class="fc" id="L956">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L957">        transition = new Transition(State.S18, Category.UNDERSCORE);</span>
+<span class="fc" id="L958">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L959">        transition = new Transition(State.S18, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L960">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L961">        transition = new Transition(State.S18, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L962">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L963">        transition = new Transition(State.S18, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L964">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L965">        transition = new Transition(State.S18, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L966">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L967">        transition = new Transition(State.S18, Category.ST_OPERAND);</span>
+<span class="fc" id="L968">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L969">        transition = new Transition(State.S18, Category.GT_OPERAND);</span>
+<span class="fc" id="L970">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L971">        transition = new Transition(State.S18, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L972">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L973">        transition = new Transition(State.S18, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L974">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L975">        transition = new Transition(State.S18, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L976">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L977">        transition = new Transition(State.S18, Category.CURLY_OPEN);</span>
+<span class="fc" id="L978">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L979">        transition = new Transition(State.S18, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L980">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L981">        transition = new Transition(State.S18, Category.COLON);</span>
+<span class="fc" id="L982">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L983">        transition = new Transition(State.S18, Category.SEMI_COLON);</span>
+<span class="fc" id="L984">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L985">        transition = new Transition(State.S18, Category.COMMA);</span>
+<span class="fc" id="L986">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L987">        transition = new Transition(State.S18, Category.NEWLINE);</span>
+<span class="fc" id="L988">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L989">        transition = new Transition(State.S18, Category.SPACE);</span>
+<span class="fc" id="L990">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L991">        transition = new Transition(State.S18, Category.EOF);</span>
+<span class="fc" id="L992">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L993">        transition = new Transition(State.S18, Category.OTHER);</span>
+<span class="fc" id="L994">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S19 ROW ************ */
+<span class="fc" id="L997">        transition = new Transition(State.S19, Category.DIGIT);</span>
+<span class="fc" id="L998">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L999">        transition = new Transition(State.S19, Category.DOT);</span>
+<span class="fc" id="L1000">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1001">        transition = new Transition(State.S19, Category.LETTER);</span>
+<span class="fc" id="L1002">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1003">        transition = new Transition(State.S19, Category.UNDERSCORE);</span>
+<span class="fc" id="L1004">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1005">        transition = new Transition(State.S19, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1006">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1007">        transition = new Transition(State.S19, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1008">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1009">        transition = new Transition(State.S19, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1010">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1011">        transition = new Transition(State.S19, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1012">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1013">        transition = new Transition(State.S19, Category.ST_OPERAND);</span>
+<span class="fc" id="L1014">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1015">        transition = new Transition(State.S19, Category.GT_OPERAND);</span>
+<span class="fc" id="L1016">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1017">        transition = new Transition(State.S19, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1018">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1019">        transition = new Transition(State.S19, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1020">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1021">        transition = new Transition(State.S19, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1022">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1023">        transition = new Transition(State.S19, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1024">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1025">        transition = new Transition(State.S19, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1026">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1027">        transition = new Transition(State.S19, Category.COLON);</span>
+<span class="fc" id="L1028">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1029">        transition = new Transition(State.S19, Category.SEMI_COLON);</span>
+<span class="fc" id="L1030">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1031">        transition = new Transition(State.S19, Category.COMMA);</span>
+<span class="fc" id="L1032">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1033">        transition = new Transition(State.S19, Category.NEWLINE);</span>
+<span class="fc" id="L1034">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1035">        transition = new Transition(State.S19, Category.SPACE);</span>
+<span class="fc" id="L1036">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1037">        transition = new Transition(State.S19, Category.EOF);</span>
+<span class="fc" id="L1038">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1039">        transition = new Transition(State.S19, Category.OTHER);</span>
+<span class="fc" id="L1040">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S20 ROW ************ */
+<span class="fc" id="L1043">        transition = new Transition(State.S20, Category.DIGIT);</span>
+<span class="fc" id="L1044">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1045">        transition = new Transition(State.S20, Category.DOT);</span>
+<span class="fc" id="L1046">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1047">        transition = new Transition(State.S20, Category.LETTER);</span>
+<span class="fc" id="L1048">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1049">        transition = new Transition(State.S20, Category.UNDERSCORE);</span>
+<span class="fc" id="L1050">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1051">        transition = new Transition(State.S20, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1052">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1053">        transition = new Transition(State.S20, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1054">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1055">        transition = new Transition(State.S20, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1056">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1057">        transition = new Transition(State.S20, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1058">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1059">        transition = new Transition(State.S20, Category.ST_OPERAND);</span>
+<span class="fc" id="L1060">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1061">        transition = new Transition(State.S20, Category.GT_OPERAND);</span>
+<span class="fc" id="L1062">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1063">        transition = new Transition(State.S20, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1064">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1065">        transition = new Transition(State.S20, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1066">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1067">        transition = new Transition(State.S20, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1068">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1069">        transition = new Transition(State.S20, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1070">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1071">        transition = new Transition(State.S20, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1072">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1073">        transition = new Transition(State.S20, Category.COLON);</span>
+<span class="fc" id="L1074">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1075">        transition = new Transition(State.S20, Category.SEMI_COLON);</span>
+<span class="fc" id="L1076">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1077">        transition = new Transition(State.S20, Category.COMMA);</span>
+<span class="fc" id="L1078">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1079">        transition = new Transition(State.S20, Category.NEWLINE);</span>
+<span class="fc" id="L1080">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1081">        transition = new Transition(State.S20, Category.SPACE);</span>
+<span class="fc" id="L1082">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1083">        transition = new Transition(State.S20, Category.EOF);</span>
+<span class="fc" id="L1084">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1085">        transition = new Transition(State.S20, Category.OTHER);</span>
+<span class="fc" id="L1086">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S21 ROW ************ */
+<span class="fc" id="L1089">        transition = new Transition(State.S21, Category.DIGIT);</span>
+<span class="fc" id="L1090">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1091">        transition = new Transition(State.S21, Category.DOT);</span>
+<span class="fc" id="L1092">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1093">        transition = new Transition(State.S21, Category.LETTER);</span>
+<span class="fc" id="L1094">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1095">        transition = new Transition(State.S21, Category.UNDERSCORE);</span>
+<span class="fc" id="L1096">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1097">        transition = new Transition(State.S21, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1098">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1099">        transition = new Transition(State.S21, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1100">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1101">        transition = new Transition(State.S21, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1102">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1103">        transition = new Transition(State.S21, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1104">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1105">        transition = new Transition(State.S21, Category.ST_OPERAND);</span>
+<span class="fc" id="L1106">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1107">        transition = new Transition(State.S21, Category.GT_OPERAND);</span>
+<span class="fc" id="L1108">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1109">        transition = new Transition(State.S21, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1110">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1111">        transition = new Transition(State.S21, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1112">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1113">        transition = new Transition(State.S21, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1114">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1115">        transition = new Transition(State.S21, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1116">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1117">        transition = new Transition(State.S21, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1118">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1119">        transition = new Transition(State.S21, Category.COLON);</span>
+<span class="fc" id="L1120">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1121">        transition = new Transition(State.S21, Category.SEMI_COLON);</span>
+<span class="fc" id="L1122">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1123">        transition = new Transition(State.S21, Category.COMMA);</span>
+<span class="fc" id="L1124">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1125">        transition = new Transition(State.S21, Category.NEWLINE);</span>
+<span class="fc" id="L1126">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1127">        transition = new Transition(State.S21, Category.SPACE);</span>
+<span class="fc" id="L1128">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1129">        transition = new Transition(State.S21, Category.EOF);</span>
+<span class="fc" id="L1130">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1131">        transition = new Transition(State.S21, Category.OTHER);</span>
+<span class="fc" id="L1132">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S22 ROW ************ */
+<span class="fc" id="L1135">        transition = new Transition(State.S22, Category.DIGIT);</span>
+<span class="fc" id="L1136">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1137">        transition = new Transition(State.S22, Category.DOT);</span>
+<span class="fc" id="L1138">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1139">        transition = new Transition(State.S22, Category.LETTER);</span>
+<span class="fc" id="L1140">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1141">        transition = new Transition(State.S22, Category.UNDERSCORE);</span>
+<span class="fc" id="L1142">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1143">        transition = new Transition(State.S22, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1144">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1145">        transition = new Transition(State.S22, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1146">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1147">        transition = new Transition(State.S22, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1148">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1149">        transition = new Transition(State.S22, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1150">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1151">        transition = new Transition(State.S22, Category.ST_OPERAND);</span>
+<span class="fc" id="L1152">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1153">        transition = new Transition(State.S22, Category.GT_OPERAND);</span>
+<span class="fc" id="L1154">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1155">        transition = new Transition(State.S22, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1156">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1157">        transition = new Transition(State.S22, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1158">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1159">        transition = new Transition(State.S22, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1160">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1161">        transition = new Transition(State.S22, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1162">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1163">        transition = new Transition(State.S22, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1164">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1165">        transition = new Transition(State.S22, Category.COLON);</span>
+<span class="fc" id="L1166">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1167">        transition = new Transition(State.S22, Category.SEMI_COLON);</span>
+<span class="fc" id="L1168">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1169">        transition = new Transition(State.S22, Category.COMMA);</span>
+<span class="fc" id="L1170">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1171">        transition = new Transition(State.S22, Category.NEWLINE);</span>
+<span class="fc" id="L1172">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1173">        transition = new Transition(State.S22, Category.SPACE);</span>
+<span class="fc" id="L1174">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1175">        transition = new Transition(State.S22, Category.EOF);</span>
+<span class="fc" id="L1176">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1177">        transition = new Transition(State.S22, Category.OTHER);</span>
+<span class="fc" id="L1178">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S23 ROW ************ */
+<span class="fc" id="L1181">        transition = new Transition(State.S23, Category.DIGIT);</span>
+<span class="fc" id="L1182">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1183">        transition = new Transition(State.S23, Category.DOT);</span>
+<span class="fc" id="L1184">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1185">        transition = new Transition(State.S23, Category.LETTER);</span>
+<span class="fc" id="L1186">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1187">        transition = new Transition(State.S23, Category.UNDERSCORE);</span>
+<span class="fc" id="L1188">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1189">        transition = new Transition(State.S23, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1190">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1191">        transition = new Transition(State.S23, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1192">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1193">        transition = new Transition(State.S23, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1194">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1195">        transition = new Transition(State.S23, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1196">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1197">        transition = new Transition(State.S23, Category.ST_OPERAND);</span>
+<span class="fc" id="L1198">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1199">        transition = new Transition(State.S23, Category.GT_OPERAND);</span>
+<span class="fc" id="L1200">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1201">        transition = new Transition(State.S23, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1202">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1203">        transition = new Transition(State.S23, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1204">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1205">        transition = new Transition(State.S23, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1206">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1207">        transition = new Transition(State.S23, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1208">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1209">        transition = new Transition(State.S23, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1210">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1211">        transition = new Transition(State.S23, Category.COLON);</span>
+<span class="fc" id="L1212">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1213">        transition = new Transition(State.S23, Category.SEMI_COLON);</span>
+<span class="fc" id="L1214">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1215">        transition = new Transition(State.S23, Category.COMMA);</span>
+<span class="fc" id="L1216">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1217">        transition = new Transition(State.S23, Category.NEWLINE);</span>
+<span class="fc" id="L1218">        transitionTable.put(transition, State.START);</span>
+<span class="fc" id="L1219">        transition = new Transition(State.S23, Category.SPACE);</span>
+<span class="fc" id="L1220">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1221">        transition = new Transition(State.S23, Category.EOF);</span>
+<span class="fc" id="L1222">        transitionTable.put(transition, State.S23);</span>
+<span class="fc" id="L1223">        transition = new Transition(State.S23, Category.OTHER);</span>
+<span class="fc" id="L1224">        transitionTable.put(transition, State.S23);</span>
+        
+        /* ************ S24 ROW ************ */
+<span class="fc" id="L1227">        transition = new Transition(State.S24, Category.DIGIT);</span>
+<span class="fc" id="L1228">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1229">        transition = new Transition(State.S24, Category.DOT);</span>
+<span class="fc" id="L1230">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1231">        transition = new Transition(State.S24, Category.LETTER);</span>
+<span class="fc" id="L1232">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1233">        transition = new Transition(State.S24, Category.UNDERSCORE);</span>
+<span class="fc" id="L1234">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1235">        transition = new Transition(State.S24, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1236">        transitionTable.put(transition, State.S5);</span>
+<span class="fc" id="L1237">        transition = new Transition(State.S24, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1238">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1239">        transition = new Transition(State.S24, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1240">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1241">        transition = new Transition(State.S24, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1242">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1243">        transition = new Transition(State.S24, Category.ST_OPERAND);</span>
+<span class="fc" id="L1244">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1245">        transition = new Transition(State.S24, Category.GT_OPERAND);</span>
+<span class="fc" id="L1246">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1247">        transition = new Transition(State.S24, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1248">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1249">        transition = new Transition(State.S24, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1250">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1251">        transition = new Transition(State.S24, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1252">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1253">        transition = new Transition(State.S24, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1254">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1255">        transition = new Transition(State.S24, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1256">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1257">        transition = new Transition(State.S24, Category.COLON);</span>
+<span class="fc" id="L1258">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1259">        transition = new Transition(State.S24, Category.SEMI_COLON);</span>
+<span class="fc" id="L1260">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1261">        transition = new Transition(State.S24, Category.COMMA);</span>
+<span class="fc" id="L1262">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1263">        transition = new Transition(State.S24, Category.NEWLINE);</span>
+<span class="fc" id="L1264">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1265">        transition = new Transition(State.S24, Category.SPACE);</span>
+<span class="fc" id="L1266">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1267">        transition = new Transition(State.S24, Category.EOF);</span>
+<span class="fc" id="L1268">        transitionTable.put(transition, State.S24);</span>
+<span class="fc" id="L1269">        transition = new Transition(State.S24, Category.OTHER);</span>
+<span class="fc" id="L1270">        transitionTable.put(transition, State.S24);</span>
+
+        /* ************ S25 ROW ************ */
+<span class="fc" id="L1273">        transition = new Transition(State.S25, Category.DIGIT);</span>
+<span class="fc" id="L1274">        transitionTable.put(transition, State.S1);</span>
+<span class="fc" id="L1275">        transition = new Transition(State.S25, Category.DOT);</span>
+<span class="fc" id="L1276">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1277">        transition = new Transition(State.S25, Category.LETTER);</span>
+<span class="fc" id="L1278">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L1279">        transition = new Transition(State.S25, Category.UNDERSCORE);</span>
+<span class="fc" id="L1280">        transitionTable.put(transition, State.S4);</span>
+<span class="fc" id="L1281">        transition = new Transition(State.S25, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1282">        transitionTable.put(transition, State.S5);</span>
+<span class="fc" id="L1283">        transition = new Transition(State.S25, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1284">        transitionTable.put(transition, State.S6);</span>
+<span class="fc" id="L1285">        transition = new Transition(State.S25, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1286">        transitionTable.put(transition, State.S7);</span>
+<span class="fc" id="L1287">        transition = new Transition(State.S25, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1288">        transitionTable.put(transition, State.S8);</span>
+<span class="fc" id="L1289">        transition = new Transition(State.S25, Category.ST_OPERAND);</span>
+<span class="fc" id="L1290">        transitionTable.put(transition, State.S9);</span>
+<span class="fc" id="L1291">        transition = new Transition(State.S25, Category.GT_OPERAND);</span>
+<span class="fc" id="L1292">        transitionTable.put(transition, State.S10);</span>
+<span class="fc" id="L1293">        transition = new Transition(State.S25, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1294">        transitionTable.put(transition, State.S14);</span>
+<span class="fc" id="L1295">        transition = new Transition(State.S25, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1296">        transitionTable.put(transition, State.S16);</span>
+<span class="fc" id="L1297">        transition = new Transition(State.S25, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1298">        transitionTable.put(transition, State.S17);</span>
+<span class="fc" id="L1299">        transition = new Transition(State.S25, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1300">        transitionTable.put(transition, State.S18);</span>
+<span class="fc" id="L1301">        transition = new Transition(State.S25, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1302">        transitionTable.put(transition, State.S19);</span>
+<span class="fc" id="L1303">        transition = new Transition(State.S25, Category.COLON);</span>
+<span class="fc" id="L1304">        transitionTable.put(transition, State.S20);</span>
+<span class="fc" id="L1305">        transition = new Transition(State.S25, Category.SEMI_COLON);</span>
+<span class="fc" id="L1306">        transitionTable.put(transition, State.S21);</span>
+<span class="fc" id="L1307">        transition = new Transition(State.S25, Category.COMMA);</span>
+<span class="fc" id="L1308">        transitionTable.put(transition, State.S22);</span>
+<span class="fc" id="L1309">        transition = new Transition(State.S25, Category.NEWLINE);</span>
+<span class="fc" id="L1310">        transitionTable.put(transition, State.START);</span>
+<span class="fc" id="L1311">        transition = new Transition(State.S25, Category.SPACE);</span>
+<span class="fc" id="L1312">        transitionTable.put(transition, State.START);</span>
+<span class="fc" id="L1313">        transition = new Transition(State.S25, Category.EOF);</span>
+<span class="fc" id="L1314">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1315">        transition = new Transition(State.S25, Category.OTHER);</span>
+<span class="fc" id="L1316">        transitionTable.put(transition, State.BAD);</span>
+
+        /* ************ S26 ROW ************ */
+<span class="fc" id="L1319">        transition = new Transition(State.S26, Category.DIGIT);</span>
+<span class="fc" id="L1320">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1321">        transition = new Transition(State.S26, Category.DOT);</span>
+<span class="fc" id="L1322">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1323">        transition = new Transition(State.S26, Category.LETTER);</span>
+<span class="fc" id="L1324">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1325">        transition = new Transition(State.S26, Category.UNDERSCORE);</span>
+<span class="fc" id="L1326">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1327">        transition = new Transition(State.S26, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1328">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1329">        transition = new Transition(State.S26, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1330">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1331">        transition = new Transition(State.S26, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1332">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1333">        transition = new Transition(State.S26, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1334">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1335">        transition = new Transition(State.S26, Category.ST_OPERAND);</span>
+<span class="fc" id="L1336">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1337">        transition = new Transition(State.S26, Category.GT_OPERAND);</span>
+<span class="fc" id="L1338">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1339">        transition = new Transition(State.S26, Category.EQUAL_SIGN);</span>
+<span class="fc" id="L1340">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1341">        transition = new Transition(State.S26, Category.BRACKET_OPEN);</span>
+<span class="fc" id="L1342">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1343">        transition = new Transition(State.S26, Category.BRACKET_CLOSE);</span>
+<span class="fc" id="L1344">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1345">        transition = new Transition(State.S26, Category.CURLY_OPEN);</span>
+<span class="fc" id="L1346">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1347">        transition = new Transition(State.S26, Category.CURLY_CLOSE);</span>
+<span class="fc" id="L1348">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1349">        transition = new Transition(State.S26, Category.COLON);</span>
+<span class="fc" id="L1350">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1351">        transition = new Transition(State.S26, Category.SEMI_COLON);</span>
+<span class="fc" id="L1352">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1353">        transition = new Transition(State.S26, Category.COMMA);</span>
+<span class="fc" id="L1354">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1355">        transition = new Transition(State.S26, Category.NEWLINE);</span>
+<span class="fc" id="L1356">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1357">        transition = new Transition(State.S26, Category.SPACE);</span>
+<span class="fc" id="L1358">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1359">        transition = new Transition(State.S26, Category.EOF);</span>
+<span class="fc" id="L1360">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1361">        transition = new Transition(State.S26, Category.OTHER);</span>
+<span class="fc" id="L1362">        transitionTable.put(transition, State.BAD);</span>
+<span class="fc" id="L1363">    }</span>
+
+    private void setAcceptableStates()
+    {
+<span class="fc" id="L1367">        acceptableStates.put(State.S1, TypeToken.INTEGER_LITERAL);</span>
+<span class="fc" id="L1368">        acceptableStates.put(State.S3, TypeToken.FLOAT_LITERAL);</span>
+<span class="fc" id="L1369">        acceptableStates.put(State.S4, TypeToken.IDENTIFIER);</span>
+<span class="fc" id="L1370">        acceptableStates.put(State.S5, TypeToken.MULTIPLICATIVE_OP); //MULTIPLY_OPERAND</span>
+<span class="fc" id="L1371">        acceptableStates.put(State.S6, TypeToken.MULTIPLICATIVE_OP); //DIVIDE_OPERAND</span>
+<span class="fc" id="L1372">        acceptableStates.put(State.S7, TypeToken.ADDITIVE_OP); //ADDITION_OPERAND</span>
+<span class="fc" id="L1373">        acceptableStates.put(State.S8, TypeToken.ADDITIVE_OP); //SUBTRACT_OPERAND</span>
+<span class="fc" id="L1374">        acceptableStates.put(State.S9, TypeToken.RELATIONAL_OP); //ST_OPERAND</span>
+<span class="fc" id="L1375">        acceptableStates.put(State.S10, TypeToken.RELATIONAL_OP); //GT_OPERAND</span>
+<span class="fc" id="L1376">        acceptableStates.put(State.S11, TypeToken.RELATIONAL_OP); //NOTEQUAL_OPEAND</span>
+<span class="fc" id="L1377">        acceptableStates.put(State.S12, TypeToken.RELATIONAL_OP); //STE_OPERAND</span>
+<span class="fc" id="L1378">        acceptableStates.put(State.S13, TypeToken.RELATIONAL_OP); //GTE_OPERAND</span>
+<span class="fc" id="L1379">        acceptableStates.put(State.S14, TypeToken.EQUAL_SIGN);</span>
+<span class="fc" id="L1380">        acceptableStates.put(State.S15, TypeToken.RELATIONAL_OP); //EQUAL_OPERAND</span>
+<span class="fc" id="L1381">        acceptableStates.put(State.S16, TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L1382">        acceptableStates.put(State.S17, TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L1383">        acceptableStates.put(State.S18, TypeToken.CURLY_OPEN);</span>
+<span class="fc" id="L1384">        acceptableStates.put(State.S19, TypeToken.CURLY_CLOSE);</span>
+<span class="fc" id="L1385">        acceptableStates.put(State.S20, TypeToken.COLON);</span>
+<span class="fc" id="L1386">        acceptableStates.put(State.S21, TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L1387">        acceptableStates.put(State.S22, TypeToken.COMMA);</span>
+<span class="fc" id="L1388">        acceptableStates.put(State.S23, TypeToken.COMMENT_1LINE);</span>
+<span class="fc" id="L1389">        acceptableStates.put(State.S24, TypeToken.COMMENT_MULTI_OPEN);</span>
+<span class="fc" id="L1390">        acceptableStates.put(State.S25, TypeToken.COMMENT_MULTI_CLOSE);</span>
+<span class="fc" id="L1391">        acceptableStates.put(State.S26, TypeToken.EOF);</span>
+
+<span class="fc" id="L1393">    }</span>
+
+    public char nextChar() throws IOException {
+
+<span class="fc" id="L1397">        bufferedReader.mark(1);</span>
+<span class="fc" id="L1398">        int char_val =  bufferedReader.read();</span>
+<span class="fc" id="L1399">        return (char) char_val;</span>
+    }
+
+    public void rollback() throws IOException {
+<span class="fc" id="L1403">        bufferedReader.reset();</span>
+<span class="fc" id="L1404">    }</span>
+
+    public Category charCat(char character)
+    {
+        //if letter
+<span class="fc bfc" id="L1409" title="All 2 branches covered.">        if(Character.isLetter(character))</span>
+        {
+<span class="fc" id="L1411">            return Category.LETTER;</span>
+        }
+        //if digit
+<span class="fc bfc" id="L1414" title="All 2 branches covered.">        else if (Character.isDigit(character))</span>
+        {
+<span class="fc" id="L1416">            return Category.DIGIT;</span>
+        }
+
+<span class="fc bfc" id="L1419" title="All 20 branches covered.">        switch(character)</span>
+        {
+<span class="fc" id="L1421">            case '.' : return Category.DOT;</span>
+<span class="fc" id="L1422">            case '*' : return Category.MULTIPLY_OPERAND;</span>
+<span class="fc" id="L1423">            case '/' : return Category.DIVIDE_OPERAND;</span>
+<span class="fc" id="L1424">            case '-' : return Category.SUBTRACT_OPERAND;</span>
+<span class="fc" id="L1425">            case '+' : return Category.ADDITION_OPERAND;</span>
+<span class="fc" id="L1426">            case '=' : return Category.EQUAL_SIGN;</span>
+<span class="fc" id="L1427">            case '&gt;' : return Category.GT_OPERAND;</span>
+<span class="fc" id="L1428">            case '&lt;' : return Category.ST_OPERAND;</span>
+<span class="fc" id="L1429">            case '(' : return Category.BRACKET_OPEN;</span>
+<span class="fc" id="L1430">            case ')' : return Category.BRACKET_CLOSE;</span>
+<span class="fc" id="L1431">            case '{' : return Category.CURLY_OPEN;</span>
+<span class="fc" id="L1432">            case '}' : return Category.CURLY_CLOSE;</span>
+<span class="fc" id="L1433">            case ';' : return Category.SEMI_COLON;</span>
+<span class="fc" id="L1434">            case ':' : return Category.COLON;</span>
+<span class="fc" id="L1435">            case ',' : return Category.COMMA;</span>
+<span class="fc" id="L1436">            case '_' : return Category.UNDERSCORE;</span>
+            case '\n' :
+<span class="fc" id="L1438">            case '\r' : return Category.NEWLINE;</span>
+<span class="fc" id="L1439">            case ' ' : return Category.SPACE;</span>
+<span class="fc" id="L1440">            case '\uFFFF' : return Category.EOF;</span>
+<span class="fc" id="L1441">            default : return Category.OTHER;</span>
+        }
+
+    }
+
+    public Token nextToken() throws IOException, InvalidSyntaxException {
+        //initialisation
+<span class="fc" id="L1448">        State previous = State.START;</span>
+<span class="fc" id="L1449">        State state = State.START;</span>
+<span class="fc" id="L1450">        StringBuilder lexeme = new StringBuilder(&quot;&quot;);</span>
+<span class="fc" id="L1451">        stack.clear();</span>
+<span class="fc" id="L1452">        stack.push(State.SE);</span>
+
+        //scanning loop
+<span class="fc bfc" id="L1455" title="All 2 branches covered.">        while(state != State.BAD)</span>
+        {
+            //get next character
+<span class="fc" id="L1458">            char nextChar = nextChar();</span>
+
+            //if state is an acceptableState, clear stack
+<span class="fc bfc" id="L1461" title="All 2 branches covered.">            if(acceptableStates.containsKey(state))</span>
+<span class="fc" id="L1462">                stack.clear();</span>
+
+            //push state to stack
+<span class="fc" id="L1465">            stack.push(state);</span>
+
+            //get category
+<span class="fc" id="L1468">            Category cat = charCat(nextChar);</span>
+
+            //if you are in a comment, and encounter a star but the next character is not a'/' i.e. end of comment, clear lexeme
+<span class="fc bfc" id="L1471" title="All 6 branches covered.">            if(previous ==State.S24 &amp;&amp; state == State.S5 &amp;&amp; cat != Category.DIVIDE_OPERAND) {</span>
+<span class="fc" id="L1472">                lexeme.setLength(0);</span>
+<span class="fc" id="L1473">                continue;</span>
+            }
+
+            //set transition
+<span class="fc" id="L1477">            Transition transition = new Transition(state, cat);</span>
+            //set previous state
+<span class="fc" id="L1479">            previous = state;</span>
+            //get state
+<span class="fc" id="L1481">            state = transitionTable.get(transition);</span>
+
+            //If previous was a '/' and next is either a '*' or another '/' i.e. start of comment
+<span class="fc bfc" id="L1484" title="All 10 branches covered.">            if((previous == State.S6 &amp;&amp; (state == State.S23 || state == State.S24)) ||</span>
+                    // OR previous was a '*' and next is '/' i.e. end of  block comment
+                    (previous == State.S5 &amp;&amp; state == State.S25))
+            {
+                //clear lexeme and continue, i.e. do not add character to lexeme
+<span class="fc" id="L1489">                lexeme.setLength(0);</span>
+<span class="fc" id="L1490">                continue;</span>
+            }
+
+            //If there was a whitespace or a newline at the start
+<span class="fc bfc" id="L1494" title="All 18 branches covered.">            if((previous == State.START &amp;&amp; state == State.START) ||</span>
+                    //OR it is a comment
+                    (previous == State.S23 &amp;&amp; state == State.S23) || (previous == State.S24  &amp;&amp; state == State.S24) ||
+                    //OR end of comment
+                    ((previous == State.S25)  &amp;&amp; state == State.START) || previous == State.S23)
+            {
+                //do not add character to lexeme
+<span class="fc" id="L1501">                continue;</span>
+            }
+
+
+            //add character to lexeme
+<span class="fc" id="L1506">            lexeme.append(nextChar);</span>
+<span class="fc" id="L1507">        }</span>
+
+        //rollback loop
+<span class="fc bfc" id="L1510" title="All 2 branches covered.">        while(!acceptableStates.containsKey(state))</span>
+        {
+<span class="fc" id="L1512">            state = stack.pop();</span>
+<span class="fc bfc" id="L1513" title="All 2 branches covered.">            if(lexeme.length()-1 &lt; 0)</span>
+<span class="fc" id="L1514">                throw new InvalidSyntaxException(&quot;Syntax is invalid&quot;);</span>
+<span class="fc" id="L1515">            lexeme.setLength(lexeme.length()-1);</span>
+<span class="fc" id="L1516">            rollback();</span>
+        }
+
+<span class="fc bfc" id="L1519" title="All 2 branches covered.">        if(acceptableStates.get(state) == TypeToken.IDENTIFIER)</span>
+<span class="fc bfc" id="L1520" title="All 2 branches covered.">            return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());</span>
+        else
+<span class="fc" id="L1522">            return new Token(acceptableStates.get(state), lexeme.toString());</span>
+
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

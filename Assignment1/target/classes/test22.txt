@@ -1,0 +1,7 @@
+ff plus1(x:float):float
+{
+    return x+1.0;
+}
+
+//bad function call
+let x: int =  plus1(1);

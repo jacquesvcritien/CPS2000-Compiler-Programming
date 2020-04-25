@@ -6,7 +6,6 @@ parser\node\ASTNode.class
 lexer\Lexer.class
 parser\node\ASTAssignment.class
 exceptions\IncorrectTypeException.class
-parser\node\ASTRelationalOp.class
 exceptions\AlreadyDeclaredException.class
 parser\Parser.class
 parser\node\ASTFor.class
@@ -28,14 +27,13 @@ parser\node\ASTExpression.class
 exceptions\InvalidSyntaxException.class
 exceptions\ReturnTypeMismatchException.class
 exceptions\UndeclaredException.class
+visitor\VisitorInterpreter.class
 parser\node\ASTWhile.class
 visitor\VisitorSemanticAnalysis$1.class
 lexer\Transition.class
 visitor\SymbolTable.class
-parser\node\ASTMultiplicativeOp.class
 parser\node\ASTFunctionDecl.class
 parser\node\ASTReturn.class
-parser\node\ASTAdditiveOp.class
 parser\node\ASTIdentifier.class
 parser\Parser$1.class
 lexer\Category.class
@@ -43,9 +41,9 @@ parser\node\ASTFormalParam.class
 parser\node\ASTStatement.class
 parser\node\ASTBooleanLiteral.class
 visitor\VisitorSemanticAnalysis.class
-exceptions\InvalidNodeException.class
 lexer\State.class
 lexer\Token.class
+visitor\VisitorInterpreter$1.class
 lexer\Lexer$1.class
 lexer\Operand.class
 parser\node\ASTIf.class

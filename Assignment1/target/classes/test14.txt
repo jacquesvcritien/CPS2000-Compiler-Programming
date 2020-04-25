@@ -1,0 +1,3 @@
+let x : bool =false;
+//bad assignment - should be boolean
+x = 1;

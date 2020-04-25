@@ -1,8 +1,6 @@
 package parser.node;
 
-import exceptions.AlreadyDeclaredException;
-import exceptions.IncorrectTypeException;
-import exceptions.UndeclaredException;
+import exceptions.*;
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -10,7 +8,9 @@ import java.util.ArrayList;
 public class ASTActualParams implements ASTNode {
     ArrayList<ASTExpression> expressions;
 
-    public ASTActualParams() {};
+    public ASTActualParams() {
+        this.expressions = new ArrayList<ASTExpression>();
+    };
     public ASTActualParams(ArrayList<ASTExpression> expressions)
     {
         this.expressions = expressions;
@@ -20,7 +20,7 @@ public class ASTActualParams implements ASTNode {
         return expressions;
     }
 
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }

@@ -1,8 +1,6 @@
 package parser.node;
 
-import exceptions.AlreadyDeclaredException;
-import exceptions.IncorrectTypeException;
-import exceptions.UndeclaredException;
+import exceptions.*;
 import lexer.Token;
 import visitor.Visitor;
 
@@ -23,7 +21,7 @@ public class ASTUnary extends ASTExpression {
     public String getLexeme() {
         return lexeme;
     }
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }

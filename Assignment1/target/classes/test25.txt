@@ -1,0 +1,2 @@
+//bad variable decl float
+let x: float = 1;

@@ -1,0 +1,2 @@
+//function call with inexistent function
+let x: bool = bad_func();

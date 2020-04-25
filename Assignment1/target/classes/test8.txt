@@ -1,0 +1,2 @@
+//undeclared exception
+let x:int = y;

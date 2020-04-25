@@ -1,0 +1,2 @@
+//bad expression
+let x: bool = true > true;

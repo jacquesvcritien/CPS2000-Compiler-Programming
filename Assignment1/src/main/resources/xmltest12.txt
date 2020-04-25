@@ -1,0 +1,2 @@
+//function call no params
+let x: int = func();
