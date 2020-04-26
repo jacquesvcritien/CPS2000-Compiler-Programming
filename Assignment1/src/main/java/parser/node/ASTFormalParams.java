@@ -6,18 +6,31 @@ import visitor.Visitor;
 
 import java.util.ArrayList;
 
+/**
+ * Class for formal params node
+ */
 public class ASTFormalParams implements ASTNode {
-    ArrayList<ASTFormalParam> formalParams;
+    //formal params
+    private ArrayList<ASTFormalParam> formalParams;
 
-    public ASTFormalParams(ArrayList<ASTFormalParam> expressions)
+    /**
+     * Constructor
+     * @param formalParams formalParams
+     */
+    public ASTFormalParams(ArrayList<ASTFormalParam> formalParams)
     {
-        this.formalParams = expressions;
+        this.formalParams = formalParams;
     }
 
+    /**
+     * Getter for formal params
+     * @return
+     */
     public ArrayList<ASTFormalParam> getFormalParams() {
         return formalParams;
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
         visitor.visit(this);
     }

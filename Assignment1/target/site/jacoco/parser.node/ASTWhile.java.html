@@ -3,27 +3,46 @@
 import exceptions.*;
 import visitor.Visitor;
 
+/**
+ * Class for while node
+ */
 public class ASTWhile extends ASTStatement {
-    ASTExpression expression;
-    ASTBlock block;
+    //expression
+    private ASTExpression expression;
+    //expression
+    private ASTBlock block;
 
+    /**
+     * Constructor
+     * @param expression expression to set
+     * @param block block to set
+     */
     public ASTWhile(ASTExpression expression, ASTBlock block)
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.expression = expression;</span>
-<span class="fc" id="L13">        this.block = block;</span>
-<span class="fc" id="L14">    }</span>
+<span class="fc" id="L21">    {</span>
+<span class="fc" id="L22">        this.expression = expression;</span>
+<span class="fc" id="L23">        this.block = block;</span>
+<span class="fc" id="L24">    }</span>
 
+    /**
+     * Getter for expression
+     * @return expression
+     */
     public ASTExpression getExpression() {
-<span class="fc" id="L17">        return expression;</span>
+<span class="fc" id="L31">        return expression;</span>
     }
 
+    /**
+     * Getter for block
+     * @return block
+     */
     public ASTBlock getBlock() {
-<span class="fc" id="L21">        return block;</span>
+<span class="fc" id="L39">        return block;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L25">        visitor.visit(this);</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L44">        visitor.visit(this);</span>
+<span class="fc" id="L45">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

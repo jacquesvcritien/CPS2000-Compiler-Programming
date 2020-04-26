@@ -1,11 +1,17 @@
 package lexer;
 
-import java.lang.reflect.Type;
-
+/**
+ * Class for transition from state to Category
+ */
 public class Transition {
     private State startingState;
     private Category token;
 
+    /**
+     * Constructor
+     * @param startingState starting state for transition
+     * @param token category where this transition will take you
+     */
     public Transition(State startingState, Category token)
     {
         this.startingState = startingState;

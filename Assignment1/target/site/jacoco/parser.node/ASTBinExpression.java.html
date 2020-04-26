@@ -3,34 +3,57 @@
 import exceptions.*;
 import visitor.Visitor;
 
+/**
+ * Class for binary expression node
+ */
 public class ASTBinExpression extends ASTExpression {
-    ASTExpression left;
-    ASTExpression right;
-//    ASTExpression head;
-    String operand;
+    //left expression
+    private ASTExpression left;
+    //right expression
+    private ASTExpression right;
+    //operand
+    private String operand;
 
-    //constructor
+    /**
+     * Constructor
+     * @param left left expression
+     * @param operand operand to perform on expressions
+     * @param right right expression
+     */
     public ASTBinExpression(ASTExpression left, String operand, ASTExpression right)
-<span class="fc" id="L14">    {</span>
-<span class="fc" id="L15">        this.left = left;</span>
-<span class="fc" id="L16">        this.operand = operand;</span>
-<span class="fc" id="L17">        this.right = right;</span>
-<span class="fc" id="L18">    }</span>
+<span class="fc" id="L24">    {</span>
+<span class="fc" id="L25">        this.left = left;</span>
+<span class="fc" id="L26">        this.operand = operand;</span>
+<span class="fc" id="L27">        this.right = right;</span>
+<span class="fc" id="L28">    }</span>
 
+    /**
+     * Getter for operand
+     * @return operand
+     */
     public String getOperand() {
-<span class="fc" id="L21">        return operand;</span>
+<span class="fc" id="L35">        return operand;</span>
     }
 
+    /**
+     * Getter for left expression
+     * @return left expression
+     */
     public ASTExpression getLeft() {
-<span class="fc" id="L25">        return left;</span>
+<span class="fc" id="L43">        return left;</span>
     }
 
+    /**
+     * Getter for right expression
+     * @return right expression
+     */
     public ASTExpression getRight() {
-<span class="fc" id="L29">        return right;</span>
+<span class="fc" id="L51">        return right;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L33">        visitor.visit(this);</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L56">        visitor.visit(this);</span>
+<span class="fc" id="L57">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

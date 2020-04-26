@@ -4,25 +4,46 @@ import exceptions.*;
 import lexer.Token;
 import visitor.Visitor;
 
+/**
+ * Class for unary node
+ */
 public class ASTUnary extends ASTExpression {
-    String lexeme;
-    ASTExpression next;
 
+    //lexeme
+    private String lexeme;
+    // expression
+    private ASTExpression next;
+
+    /**
+     * Constructor
+     * @param lexeme lexeme
+     * @param next expression
+     */
     public ASTUnary(String lexeme, ASTExpression next)
-<span class="fc" id="L12">    {</span>
-<span class="fc" id="L13">        this.lexeme = lexeme;</span>
-<span class="fc" id="L14">        this.next = next;</span>
-<span class="fc" id="L15">    }</span>
-
-    public ASTExpression getNext() {
-<span class="fc" id="L18">        return next;</span>
-    }
-
-    public String getLexeme() {
-<span class="fc" id="L22">        return lexeme;</span>
-    }
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L25">        visitor.visit(this);</span>
+<span class="fc" id="L23">    {</span>
+<span class="fc" id="L24">        this.lexeme = lexeme;</span>
+<span class="fc" id="L25">        this.next = next;</span>
 <span class="fc" id="L26">    }</span>
+
+    /**
+     * Getter for expression
+     * @return expression
+     */
+    public ASTExpression getNext() {
+<span class="fc" id="L33">        return next;</span>
+    }
+
+    /**
+     * Getter for lexeme
+     * @return lexeme
+     */
+    public String getLexeme() {
+<span class="fc" id="L41">        return lexeme;</span>
+    }
+
+    @Override
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+<span class="fc" id="L46">        visitor.visit(this);</span>
+<span class="fc" id="L47">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -33,7 +33,6 @@ public enum TypeToken {
     COMMENT_MULTI_OPEN,
     COMMENT_MULTI_CLOSE,
     EOF,
-    INVALID,
     NOT,
-    UNARY
+    INVALID
 }

@@ -1,3 +1,4 @@
+/* some comment */
 let z:int = 4;
 let x:int = 5;
 

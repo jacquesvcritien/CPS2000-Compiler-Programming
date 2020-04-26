@@ -6,33 +6,58 @@ import visitor.Visitor;
 
 import java.util.ArrayList;
 
+/**
+ * Class for function declaration node
+ */
 public class ASTFunctionDecl extends ASTStatement {
-    ASTIdentifier identifier;
-    ASTFormalParams formalParams;
-    ASTBlock block;
+    //idenifier
+    private ASTIdentifier identifier;
+    //formal params
+    private ASTFormalParams formalParams;
+    //block
+    private ASTBlock block;
 
+    /**
+     * Constructor
+     * @param identifier identifier to set
+     * @param formalParams formal params to set
+     * @param block block
+     */
     public ASTFunctionDecl(ASTIdentifier identifier, ASTFormalParams formalParams, ASTBlock block)
-<span class="fc" id="L15">    {</span>
-<span class="fc" id="L16">        this.identifier = identifier;</span>
-<span class="fc" id="L17">        this.formalParams = formalParams;</span>
-<span class="fc" id="L18">        this.block = block;</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L27">    {</span>
+<span class="fc" id="L28">        this.identifier = identifier;</span>
+<span class="fc" id="L29">        this.formalParams = formalParams;</span>
+<span class="fc" id="L30">        this.block = block;</span>
+<span class="fc" id="L31">    }</span>
 
+    /**
+     * Getter for block
+     * @return block
+     */
     public ASTBlock getBlock() {
-<span class="fc" id="L22">        return block;</span>
+<span class="fc" id="L38">        return block;</span>
     }
 
+    /**
+     * Getter for formal params
+     * @return formal params
+     */
     public ASTFormalParams getFormalParams() {
-<span class="fc" id="L26">        return formalParams;</span>
+<span class="fc" id="L46">        return formalParams;</span>
     }
 
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
     public ASTIdentifier getIdentifier() {
-<span class="fc" id="L30">        return identifier;</span>
+<span class="fc" id="L54">        return identifier;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException{
-<span class="fc" id="L34">        visitor.visit(this);</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L59">        visitor.visit(this);</span>
+<span class="fc" id="L60">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

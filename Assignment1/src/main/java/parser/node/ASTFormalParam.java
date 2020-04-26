@@ -5,20 +5,31 @@ import exceptions.UndeclaredException;
 import lexer.Token;
 import visitor.Visitor;
 
+/**
+ * Class for formal param node
+ */
 public class ASTFormalParam extends ASTExpression {
-    ASTIdentifier identifier;
-    Token type;
+    //identifier
+    private ASTIdentifier identifier;
 
+    /**
+     * Constructor
+     * @param identifier identifier to set
+     */
     public ASTFormalParam(ASTIdentifier identifier)
     {
         this.identifier = identifier;
     }
 
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
     public ASTIdentifier getIdentifier() {
         return identifier;
     }
 
-
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
         visitor.visit(this);
     }

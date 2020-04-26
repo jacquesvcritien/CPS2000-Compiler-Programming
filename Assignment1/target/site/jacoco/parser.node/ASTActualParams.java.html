@@ -5,23 +5,41 @@ import visitor.Visitor;
 
 import java.util.ArrayList;
 
+/**
+ * Class for actual params
+ */
 public class ASTActualParams implements ASTNode {
-    ArrayList&lt;ASTExpression&gt; expressions;
 
-<span class="fc" id="L11">    public ASTActualParams() {</span>
-<span class="fc" id="L12">        this.expressions = new ArrayList&lt;ASTExpression&gt;();</span>
-<span class="fc" id="L13">    };</span>
+    //list of expressions
+    private ArrayList&lt;ASTExpression&gt; expressions;
+
+    /**
+     * Constructor for empty params
+     */
+<span class="fc" id="L19">    public ASTActualParams() {</span>
+<span class="fc" id="L20">        this.expressions = new ArrayList&lt;ASTExpression&gt;();</span>
+<span class="fc" id="L21">    };</span>
+
+    /**
+     * Constructor
+     * @param expressions expressions to set
+     */
     public ASTActualParams(ArrayList&lt;ASTExpression&gt; expressions)
-<span class="fc" id="L15">    {</span>
-<span class="fc" id="L16">        this.expressions = expressions;</span>
-<span class="fc" id="L17">    }</span>
+<span class="fc" id="L28">    {</span>
+<span class="fc" id="L29">        this.expressions = expressions;</span>
+<span class="fc" id="L30">    }</span>
 
+    /**
+     * Getter for expressions
+     * @return expressions
+     */
     public ArrayList&lt;ASTExpression&gt; getExpressions() {
-<span class="fc" id="L20">        return expressions;</span>
+<span class="fc" id="L37">        return expressions;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L24">        visitor.visit(this);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L42">        visitor.visit(this);</span>
+<span class="fc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

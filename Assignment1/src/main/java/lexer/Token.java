@@ -1,6 +1,5 @@
 package lexer;
 
-import java.lang.reflect.Type;
 
 /**
  * Class for token
@@ -18,7 +17,6 @@ public class Token {
      */
     public Token(TypeToken name, Object value){
         this.name = name;
-//        this.attribute = "<"+name+"::=="+value.toString()+">";
         this.attribute = value.toString();
     }
 

@@ -3,26 +3,45 @@
 import exceptions.*;
 import visitor.Visitor;
 
+/**
+ * Class for function call node
+ */
 public class ASTFunctionCall extends ASTExpression {
-    ASTIdentifier identifier;
-    ASTActualParams params;
+    //identifier
+    private ASTIdentifier identifier;
+    //params
+    private ASTActualParams params;
 
+    /**
+     * Constructor
+     * @param identifier identifier to set
+     * @param params params to set
+     */
     public ASTFunctionCall(ASTIdentifier identifier, ASTActualParams params)
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.identifier = identifier;</span>
-<span class="fc" id="L13">        this.params = params;</span>
-<span class="fc" id="L14">    }</span>
+<span class="fc" id="L21">    {</span>
+<span class="fc" id="L22">        this.identifier = identifier;</span>
+<span class="fc" id="L23">        this.params = params;</span>
+<span class="fc" id="L24">    }</span>
 
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
     public ASTIdentifier getIdentifier() {
-<span class="fc" id="L17">        return identifier;</span>
+<span class="fc" id="L31">        return identifier;</span>
     }
 
+    /**
+     * Getter for params
+     * @return params
+     */
     public ASTActualParams getParams() {
-<span class="fc" id="L21">        return params;</span>
+<span class="fc" id="L39">        return params;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L25">        visitor.visit(this);</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L44">        visitor.visit(this);</span>
+<span class="fc" id="L45">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

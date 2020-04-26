@@ -1,7 +1,7 @@
 package lexer;
 
 /**
- * Enum for type
+ * Enum for category
  */
 public enum Category {
     LETTER,

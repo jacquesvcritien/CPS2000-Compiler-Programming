@@ -6,45 +6,86 @@ import parser.node.Type;
 
 import java.util.HashMap;
 
+/**
+ * Class for scope
+ */
 public class Scope {
+    //map of string to Node to hold declarations
     private HashMap&lt;String, ASTNode&gt; declarations;
+    //map of string to object for values
     private HashMap&lt;String, Object&gt; values;
 
-<span class="fc" id="L13">    public Scope(){</span>
-<span class="fc" id="L14">        this.declarations = new HashMap&lt;String, ASTNode&gt;();</span>
-<span class="fc" id="L15">        this.values = new HashMap&lt;String, Object&gt;();</span>
-<span class="fc" id="L16">    };</span>
+    /**
+     * Constructor
+     */
+<span class="fc" id="L21">    public Scope(){</span>
+<span class="fc" id="L22">        this.declarations = new HashMap&lt;String, ASTNode&gt;();</span>
+<span class="fc" id="L23">        this.values = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L24">    };</span>
 
+    /**
+     * Method to add Declaration
+     * @param identifier identifier to add
+     * @param node node to add
+     */
     public void addDeclaration(String identifier, ASTNode node)
     {
-<span class="fc" id="L20">        this.declarations.put(identifier, node);</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L33">        this.declarations.put(identifier, node);</span>
+<span class="fc" id="L34">    }</span>
+
+    /**
+     * Method to remove delcarations
+     * @param identifier identifier to remove
+     */
     public void removeDeclarations(String identifier)
     {
-<span class="fc" id="L24">        this.declarations.remove(identifier);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L42">        this.declarations.remove(identifier);</span>
+<span class="fc" id="L43">    }</span>
 
+    /**
+     * Method to add Value
+     * @param identifier identifier to add
+     * @param value value to add
+     */
     public void addValue(String identifier, Object value)
     {
-<span class="fc" id="L29">        this.values.put(identifier, value);</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L52">        this.values.put(identifier, value);</span>
+<span class="fc" id="L53">    }</span>
 
+    /**
+     * Method to get declarations
+     * @return declarations
+     */
     public HashMap&lt;String, ASTNode&gt; getDeclarations() {
-<span class="fc" id="L33">        return declarations;</span>
+<span class="fc" id="L60">        return declarations;</span>
     }
 
+    /**
+     * Method to get declarations
+     * @param identifier identifier to get
+     * @return node associated with passed identifier
+     */
     public ASTNode getDeclaration(String identifier)
     {
-<span class="fc" id="L38">        return declarations.get(identifier);</span>
+<span class="fc" id="L70">        return declarations.get(identifier);</span>
     }
 
+    /**
+     * Method to get values
+     * @return values
+     */
     public HashMap&lt;String, Object&gt; getValues() {
-<span class="fc" id="L42">        return values;</span>
+<span class="fc" id="L78">        return values;</span>
     }
 
+    /**
+     * Method to check if an id is set
+     * @param identifier identifier to check
+     * @return true if defined
+     */
     public boolean isDefined(String identifier)
     {
-<span class="fc" id="L47">        return declarations.containsKey(identifier);</span>
+<span class="fc" id="L88">        return declarations.containsKey(identifier);</span>
     }
 
 

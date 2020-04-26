@@ -3,32 +3,57 @@
 import exceptions.*;
 import visitor.Visitor;
 
+/**
+ * Class for if node
+ */
 public class ASTIf extends ASTStatement {
-    ASTExpression expression;
-    ASTBlock block;
-    ASTBlock elseBlock;
+    //expression
+    private ASTExpression expression;
+    //block
+    private ASTBlock block;
+    //else block
+    private ASTBlock elseBlock;
 
+    /**
+     * Constructor
+     * @param expression expression to set
+     * @param block block to set
+     * @param elseBlock else block to set
+     */
     public ASTIf(ASTExpression expression, ASTBlock block, ASTBlock elseBlock)
-<span class="fc" id="L12">    {</span>
-<span class="fc" id="L13">        this.expression = expression;</span>
-<span class="fc" id="L14">        this.block = block;</span>
-<span class="fc" id="L15">        this.elseBlock = elseBlock;</span>
-<span class="fc" id="L16">    }</span>
+<span class="fc" id="L24">    {</span>
+<span class="fc" id="L25">        this.expression = expression;</span>
+<span class="fc" id="L26">        this.block = block;</span>
+<span class="fc" id="L27">        this.elseBlock = elseBlock;</span>
+<span class="fc" id="L28">    }</span>
 
+    /**
+     * Getter for expression
+     * @return expression
+     */
     public ASTExpression getExpression() {
-<span class="fc" id="L19">        return expression;</span>
+<span class="fc" id="L35">        return expression;</span>
     }
 
+    /**
+     * Getter for block
+     * @return block
+     */
     public ASTBlock getBlock() {
-<span class="fc" id="L23">        return block;</span>
+<span class="fc" id="L43">        return block;</span>
     }
 
+    /**
+     * Getter for else block
+     * @return else block
+     */
     public ASTBlock getElseBlock() {
-<span class="fc" id="L27">        return elseBlock;</span>
+<span class="fc" id="L51">        return elseBlock;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L31">        visitor.visit(this);</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L56">        visitor.visit(this);</span>
+<span class="fc" id="L57">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

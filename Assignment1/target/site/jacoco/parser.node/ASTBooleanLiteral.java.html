@@ -3,24 +3,35 @@
 import lexer.Token;
 import visitor.Visitor;
 
+/**
+ * Class for boolean literal
+ */
 public class ASTBooleanLiteral extends ASTExpression {
-    boolean value;
+    //value
+    private boolean value;
 
-    //constructor
+    /**
+     * Constructor
+     * @param token token from which to take value
+     */
     public ASTBooleanLiteral(Token token)
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.value = Boolean.valueOf(token.getAttribute());</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L18">    {</span>
+<span class="fc" id="L19">        this.value = Boolean.valueOf(token.getAttribute());</span>
+<span class="fc" id="L20">    }</span>
 
+    /**
+     * Getter for value
+     * @return value
+     */
     public boolean getValue() {
-<span class="fc" id="L16">        return value;</span>
+<span class="fc" id="L27">        return value;</span>
     }
 
+    @Override
     public void accept(Visitor visitor)
     {
-<span class="fc" id="L21">        visitor.visit(this);</span>
-<span class="fc" id="L22">    }</span>
-
+<span class="fc" id="L33">        visitor.visit(this);</span>
+<span class="fc" id="L34">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

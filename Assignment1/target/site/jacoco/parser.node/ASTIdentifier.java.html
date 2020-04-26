@@ -4,37 +4,61 @@ import exceptions.AlreadyDeclaredException;
 import exceptions.UndeclaredException;
 import visitor.Visitor;
 
+/**
+ * Class for identifier node
+ */
 public class ASTIdentifier extends ASTExpression {
-    String value;
-    String type;
+    //values
+    private String value;
+    //type
+    private String type;
 
-    //constructor
-<span class="fc" id="L12">    public ASTIdentifier(String value)  {</span>
-
-<span class="fc" id="L14">        this.value =value;</span>
-<span class="fc" id="L15">    }</span>
-
-    //constructor
-<span class="fc" id="L18">    public ASTIdentifier(String value, String type)  {</span>
-
-<span class="fc" id="L20">        this.value =value;</span>
-<span class="fc" id="L21">        this.type = type;</span>
+    /**
+     * Constructor
+     * @param value value to set
+     */
+<span class="fc" id="L20">    public ASTIdentifier(String value)  {</span>
+<span class="fc" id="L21">        this.value =value;</span>
 <span class="fc" id="L22">    }</span>
 
+    /**
+     * Constructor with type
+     * @param value value to set
+     * @param type type to set
+     */
+<span class="fc" id="L29">    public ASTIdentifier(String value, String type)  {</span>
+
+<span class="fc" id="L31">        this.value =value;</span>
+<span class="fc" id="L32">        this.type = type;</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Setter for type
+     * @param type type to set
+     */
     public void setType(String type) {
-<span class="fc" id="L25">        this.type = type;</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L40">        this.type = type;</span>
+<span class="fc" id="L41">    }</span>
 
+    /**
+     * Getter for value
+     * @return value
+     */
     public String getValue() {
-<span class="fc" id="L29">        return value;</span>
+<span class="fc" id="L48">        return value;</span>
     }
 
+    /**
+     * Getter for type
+     * @return type
+     */
     public String getType() {
-<span class="fc" id="L33">        return type;</span>
+<span class="fc" id="L56">        return type;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
-<span class="fc" id="L37">        visitor.visit(this);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L61">        visitor.visit(this);</span>
+<span class="fc" id="L62">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

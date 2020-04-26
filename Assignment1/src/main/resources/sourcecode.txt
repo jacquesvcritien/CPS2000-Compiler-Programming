@@ -1,1 +1,6 @@
-let x: ? int = 3;
+let x: float = 1.1
+
+ff getx(): float
+{
+    return x;
+}

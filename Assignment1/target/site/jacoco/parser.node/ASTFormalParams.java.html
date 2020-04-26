@@ -6,20 +6,33 @@ import visitor.Visitor;
 
 import java.util.ArrayList;
 
+/**
+ * Class for formal params node
+ */
 public class ASTFormalParams implements ASTNode {
-    ArrayList&lt;ASTFormalParam&gt; formalParams;
+    //formal params
+    private ArrayList&lt;ASTFormalParam&gt; formalParams;
 
-    public ASTFormalParams(ArrayList&lt;ASTFormalParam&gt; expressions)
-<span class="fc" id="L13">    {</span>
-<span class="fc" id="L14">        this.formalParams = expressions;</span>
-<span class="fc" id="L15">    }</span>
+    /**
+     * Constructor
+     * @param formalParams formalParams
+     */
+    public ASTFormalParams(ArrayList&lt;ASTFormalParam&gt; formalParams)
+<span class="fc" id="L21">    {</span>
+<span class="fc" id="L22">        this.formalParams = formalParams;</span>
+<span class="fc" id="L23">    }</span>
 
+    /**
+     * Getter for formal params
+     * @return
+     */
     public ArrayList&lt;ASTFormalParam&gt; getFormalParams() {
-<span class="fc" id="L18">        return formalParams;</span>
+<span class="fc" id="L30">        return formalParams;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
-<span class="fc" id="L22">        visitor.visit(this);</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L35">        visitor.visit(this);</span>
+<span class="fc" id="L36">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

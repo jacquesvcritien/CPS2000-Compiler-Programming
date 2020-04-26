@@ -7,47 +7,86 @@ import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Stack;
 
+/**
+ * Singleton class for symbol table
+ */
 public class SymbolTable {
-<span class="fc" id="L11">    private static SymbolTable symbolTable = new SymbolTable();</span>
-<span class="fc" id="L12">    private Stack&lt;Scope&gt; scopes = new Stack&lt;&gt;();</span>
+    //for singleton
+<span class="fc" id="L15">    private static SymbolTable symbolTable = new SymbolTable();</span>
+    //stack of scopes
+<span class="fc" id="L17">    private Stack&lt;Scope&gt; scopes = new Stack&lt;&gt;();</span>
+
+    //variable to hold constant value for expressions
     private Object constantValue;
+    //variable to hold constant type for expressions
     private Type constantType;
 
-<span class="fc" id="L16">    private SymbolTable(){</span>
-<span class="fc" id="L17">        this.scopes = new Stack&lt;&gt;();</span>
-<span class="fc" id="L18">    };</span>
+    /**
+     * Private constructor
+     */
+<span class="fc" id="L27">    private SymbolTable(){</span>
+<span class="fc" id="L28">        this.scopes = new Stack&lt;&gt;();</span>
+<span class="fc" id="L29">    };</span>
 
+    /**
+     * Instance getter for symbol table
+     * @return symbol table
+     */
     public static SymbolTable getSymbolTable()
     {
-<span class="fc" id="L22">        return symbolTable;</span>
+<span class="fc" id="L37">        return symbolTable;</span>
     }
 
+    /**
+     * Method to get scopes
+     * @return scopes
+     */
     public Stack&lt;Scope&gt; getScopes() {
-<span class="fc" id="L26">        return scopes;</span>
+<span class="fc" id="L45">        return scopes;</span>
     }
 
+    /**
+     * Method to get current scope
+     * @return current scope
+     */
     public Scope getCurrentScope()
     {
-<span class="fc" id="L31">        return scopes.peek();</span>
+<span class="fc" id="L54">        return scopes.peek();</span>
     }
 
+    /**
+     * Method to pop scope
+     */
     public void popScope()
     {
-<span class="fc" id="L36">        scopes.pop();</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L62">        scopes.pop();</span>
+<span class="fc" id="L63">    }</span>
 
+    /**
+     * Method to insert scope
+     * @param scope scope to insert
+     */
     public void insertScope(Scope scope)
     {
-<span class="fc" id="L41">        scopes.add(scope);</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L71">        scopes.add(scope);</span>
+<span class="fc" id="L72">    }</span>
 
+    /**
+     * Method to insert declaration
+     * @param identifier identifier to insert
+     * @param identifierNode node for identifier
+     * @throws AlreadyDeclaredException
+     */
     public void insertDecl(String identifier, ASTIdentifier identifierNode) throws AlreadyDeclaredException {
-<span class="fc" id="L45">        Scope current = getCurrentScope();</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if(current.isDefined(identifier))</span>
-<span class="fc" id="L47">            throw new AlreadyDeclaredException(identifier+&quot; is already declared&quot;);</span>
+        //get current scope
+<span class="fc" id="L82">        Scope current = getCurrentScope();</span>
+
+        //if defined, throw exception
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(current.isDefined(identifier))</span>
+<span class="fc" id="L86">            throw new AlreadyDeclaredException(identifier+&quot; is already declared&quot;);</span>
         else
-<span class="fc" id="L49">            current.addDeclaration(identifier, identifierNode);</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L88">            current.addDeclaration(identifier, identifierNode);</span>
+<span class="fc" id="L89">    }</span>
 
     /**
      * Method to insert a value in the first scope where it is declared
@@ -55,59 +94,83 @@ public class SymbolTable {
      * @param value value to add
      */
     public void insertValue(String identifier, Object value){
-<span class="fc" id="L58">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
+        //iterator
+<span class="fc" id="L98">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
 
-
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L62">            Scope scope = scopesIterator.previous();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            if(scope.getDeclarations().containsKey(identifier)) {</span>
-<span class="fc" id="L64">                scope.addValue(identifier, value);</span>
-<span class="fc" id="L65">                break;</span>
+        //loop through the iterator
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L102">            Scope scope = scopesIterator.previous();</span>
+            //if scope contains the identifier declared
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if(scope.getDeclarations().containsKey(identifier)) {</span>
+                //add value
+<span class="fc" id="L106">                scope.addValue(identifier, value);</span>
+<span class="fc" id="L107">                break;</span>
             }
-<span class="fc" id="L67">        }</span>
-<span class="fc" id="L68">    }</span>
+<span class="fc" id="L109">        }</span>
+<span class="fc" id="L110">    }</span>
 
+    /**
+     * Method to insert declaration in global scope
+     * @param identifier identifier to insert
+     * @param node node to insert
+     * @throws AlreadyDeclaredException
+     */
     public void insertDeclGlobal(String identifier, ASTNode node) throws AlreadyDeclaredException {
         //get global scope
-<span class="fc" id="L72">        Scope global = scopes.firstElement();</span>
-<span class="fc bfc" id="L73" title="All 4 branches covered.">        if(global.isDefined(identifier) &amp;&amp; identifier != &quot;return&quot;)</span>
-<span class="fc" id="L74">            throw new AlreadyDeclaredException(identifier+&quot; is already declared&quot;);</span>
+<span class="fc" id="L120">        Scope global = scopes.firstElement();</span>
+
+        //if defined, throw an error
+<span class="fc bfc" id="L123" title="All 4 branches covered.">        if(global.isDefined(identifier) &amp;&amp; identifier != &quot;return&quot;)</span>
+<span class="fc" id="L124">            throw new AlreadyDeclaredException(identifier+&quot; is already declared&quot;);</span>
         else
-<span class="fc" id="L76">            global.addDeclaration(identifier, node);</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L126">            global.addDeclaration(identifier, node);</span>
+<span class="fc" id="L127">    }</span>
 
 
-
+    /**
+     * Method to get declaration
+     * @param identifier id to get
+     * @return node of identifier
+     */
     public ASTNode getDeclaration(String identifier)
     {
         //loop though scopes to see if the identifier was declared
-<span class="fc" id="L84">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
+<span class="fc" id="L138">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
 
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L87">            Scope scope = scopesIterator.previous();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L141">            Scope scope = scopesIterator.previous();</span>
             // if is declared in scope, return the identifier
-<span class="fc bfc" id="L89" title="All 2 branches covered.">            if(scope.isDefined(identifier))</span>
-<span class="fc" id="L90">                return scope.getDeclarations().get(identifier);</span>
-<span class="fc" id="L91">        }</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            if(scope.isDefined(identifier))</span>
+<span class="fc" id="L144">                return scope.getDeclarations().get(identifier);</span>
+<span class="fc" id="L145">        }</span>
 
         //else return null
-<span class="fc" id="L94">        return null;</span>
+<span class="fc" id="L148">        return null;</span>
     }
 
+    /**
+     * Method to get value from where it is found firsy
+     * @param identifier identifier to get
+     * @param isFunctionCall boolean to check if it is a functioncall
+     * @return
+     */
     public Object getValue(String identifier, boolean isFunctionCall)
     {
         //loop though scopes to see if the identifier was declared
-<span class="fc" id="L100">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(isFunctionCall)</span>
-<span class="fc" id="L102">            scopesIterator.previous();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L104">            Scope scope = scopesIterator.previous();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
-<span class="fc" id="L106">                return scope.getValues().get(identifier);</span>
-<span class="fc" id="L107">        }</span>
+<span class="fc" id="L160">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
+        //if it is a function call, move one scope in case there is a variable with the same name
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if(isFunctionCall)</span>
+<span class="fc" id="L163">            scopesIterator.previous();</span>
+
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L166">            Scope scope = scopesIterator.previous();</span>
+            //if scope has value, return it
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
+<span class="fc" id="L169">                return scope.getValues().get(identifier);</span>
+<span class="fc" id="L170">        }</span>
 
         //else return null
-<span class="fc" id="L110">        return null;</span>
+<span class="fc" id="L173">        return null;</span>
     }
 
     /**
@@ -116,28 +179,47 @@ public class SymbolTable {
      */
     public Scope getGlobalScope()
     {
-<span class="fc" id="L119">        return scopes.get(0);</span>
+<span class="fc" id="L182">        return scopes.get(0);</span>
     }
 
+    /**
+     * Method to get constant value
+     * @return constant value
+     */
     public Object getConstantValue() {
-<span class="fc" id="L123">        return constantValue;</span>
-    }
-    public void setConstantValue(Object value) {
-<span class="fc" id="L126">        this.constantValue = value;</span>
-<span class="fc" id="L127">    }</span>
-    public Type getConstant() {
-<span class="fc" id="L129">        return constantType;</span>
+<span class="fc" id="L190">        return constantValue;</span>
     }
 
+    /**
+     * Method to set constant value
+     * @param value value to set
+     */
+    public void setConstantValue(Object value) {
+<span class="fc" id="L198">        this.constantValue = value;</span>
+<span class="fc" id="L199">    }</span>
+
+    /**
+     * Method to get constant type
+     * @return
+     */
+    public Type getConstant() {
+<span class="fc" id="L206">        return constantType;</span>
+    }
+
+    /**
+     * Method to set constant
+     * @param constant
+     */
+    public void setConstant(Type constant) {
+<span class="fc" id="L214">        this.constantType = constant;</span>
+<span class="fc" id="L215">    }</span>
+
+    /**
+     * Method to reset symbol table
+     */
     public void reset()
     {
-<span class="fc" id="L134">        symbolTable = new SymbolTable();</span>
-<span class="fc" id="L135">    }</span>
-
-    public void setConstant(Type constant) {
-<span class="fc" id="L138">        this.constantType = constant;</span>
-<span class="fc" id="L139">    }</span>
-
-
+<span class="fc" id="L222">        symbolTable = new SymbolTable();</span>
+<span class="fc" id="L223">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

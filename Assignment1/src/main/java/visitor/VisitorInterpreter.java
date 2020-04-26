@@ -216,7 +216,6 @@ public class VisitorInterpreter implements Visitor {
     public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException {
         //get current scope
         Scope current = symbolTable.getCurrentScope();
-
         //get identifier
         ASTIdentifier identifier = formalParam.getIdentifier();
         //add identifier

@@ -4,21 +4,34 @@ import exceptions.*;
 import lexer.Token;
 import visitor.Visitor;
 
+/**
+ * Class for return node
+ */
 public class ASTReturn extends ASTStatement {
-    ASTExpression expression;
+    //expression
+    private ASTExpression expression;
 
-    public ASTReturn(Token token, ASTExpression expression)
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.expression = expression;</span>
-<span class="fc" id="L13">    }</span>
+    /**
+     * Constructor
+     * @param expression expression to set
+     */
+    public ASTReturn(ASTExpression expression)
+<span class="fc" id="L19">    {</span>
+<span class="fc" id="L20">        this.expression = expression;</span>
+<span class="fc" id="L21">    }</span>
 
+    /**
+     * Getter for expression
+     * @return expression
+     */
     public ASTExpression getExpression() {
-<span class="fc" id="L16">        return expression;</span>
+<span class="fc" id="L28">        return expression;</span>
     }
 
+    @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L20">        visitor.visit(this);</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L33">        visitor.visit(this);</span>
+<span class="fc" id="L34">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

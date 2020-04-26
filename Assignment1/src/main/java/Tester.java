@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 
 public class Tester {
     public static void main(String args[]) throws IOException, InvalidSyntaxException, IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, URISyntaxException {
-        Lexer lexer = new Lexer("xmltest13.txt");
+        Lexer lexer = new Lexer("test3.txt");
         VisitorXMLGenerator xml = new VisitorXMLGenerator();
         VisitorSemanticAnalysis semanticAnalysis = new VisitorSemanticAnalysis();
         VisitorInterpreter interpreter = new VisitorInterpreter();

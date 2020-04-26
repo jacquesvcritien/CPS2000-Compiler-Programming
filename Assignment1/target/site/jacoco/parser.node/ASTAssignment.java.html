@@ -3,26 +3,50 @@
 import exceptions.*;
 import visitor.Visitor;
 
+/**
+ * Class for assignment node
+ */
 public class ASTAssignment extends ASTStatement {
-    ASTIdentifier identifier;
-    ASTExpression expression;
+    //identifier
+    private ASTIdentifier identifier;
+    //expression
+    private ASTExpression expression;
 
-<span class="fc" id="L10">    public ASTAssignment(){};</span>
-<span class="fc" id="L11">    public ASTAssignment(ASTIdentifier identifier, ASTExpression expression) {</span>
-<span class="fc" id="L12">        this.identifier = identifier;</span>
-<span class="fc" id="L13">        this.expression = expression;</span>
-<span class="fc" id="L14">    }</span>
+    /**
+     * Empty constructor
+     */
+<span class="fc" id="L18">    public ASTAssignment(){};</span>
 
+    /**
+     * Constructor
+     * @param identifier identifier to set
+     * @param expression expression to set
+     */
+<span class="fc" id="L25">    public ASTAssignment(ASTIdentifier identifier, ASTExpression expression) {</span>
+<span class="fc" id="L26">        this.identifier = identifier;</span>
+<span class="fc" id="L27">        this.expression = expression;</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
     public ASTIdentifier getIdentifier() {
-<span class="fc" id="L17">        return identifier;</span>
+<span class="fc" id="L35">        return identifier;</span>
     }
 
+    /**
+     * Getter for expression
+     * @return expression
+     */
     public ASTExpression getExpression() {
-<span class="fc" id="L21">        return expression;</span>
+<span class="fc" id="L43">        return expression;</span>
     }
+
+    @Override
     public void accept(Visitor visitor) throws UndeclaredException, AlreadyDeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
-<span class="fc" id="L24">        visitor.visit(this);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L48">        visitor.visit(this);</span>
+<span class="fc" id="L49">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

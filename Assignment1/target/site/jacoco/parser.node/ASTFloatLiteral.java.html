@@ -3,21 +3,34 @@
 import lexer.Token;
 import visitor.Visitor;
 
+/**
+ * Class for float literal
+ */
 public class ASTFloatLiteral extends ASTExpression {
-    float value;
+    //value
+    private float value;
 
-    //constructor
+    /**
+     * Constructor
+     * @param token toke from which to set value
+     */
     public ASTFloatLiteral(Token token)
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.value = Float.valueOf(token.getAttribute());</span>
-<span class="fc" id="L13">    }</span>
+<span class="fc" id="L18">    {</span>
+<span class="fc" id="L19">        this.value = Float.valueOf(token.getAttribute());</span>
+<span class="fc" id="L20">    }</span>
 
+    /**
+     * Getter for value
+     * @return value
+     */
     public float getValue() {
-<span class="fc" id="L16">        return value;</span>
+<span class="fc" id="L27">        return value;</span>
     }
+
+    @Override
     public void accept(Visitor visitor)
     {
-<span class="fc" id="L20">        visitor.visit(this);</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L33">        visitor.visit(this);</span>
+<span class="fc" id="L34">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
