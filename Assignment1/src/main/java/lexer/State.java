@@ -31,5 +31,4 @@ public enum State {
     S27,
     BAD,
     SE
-
 }

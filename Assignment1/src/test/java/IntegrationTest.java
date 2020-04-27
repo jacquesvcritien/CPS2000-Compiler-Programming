@@ -4,8 +4,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import parser.Parser;
 import parser.node.ASTActualParams;
 import parser.node.ASTExpression;
@@ -14,11 +12,9 @@ import parser.node.ASTStatement;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -44,7 +40,7 @@ public class IntegrationTest {
 
     @Test
     public void test1() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test1.txt");
+        lexer = new Lexer("integration/test1.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -55,7 +51,7 @@ public class IntegrationTest {
 
     @Test
     public void test2() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test2.txt");
+        lexer = new Lexer("integration/test2.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -66,7 +62,7 @@ public class IntegrationTest {
 
     @Test
     public void test3() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test3.txt");
+        lexer = new Lexer("integration/test3.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -77,7 +73,7 @@ public class IntegrationTest {
 
     @Test
     public void test4() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test4.txt");
+        lexer = new Lexer("integration/test4.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -99,7 +95,7 @@ public class IntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void test5IncorrectSymbol() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test5.txt");
+        lexer = new Lexer("integration/test5.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -120,7 +116,7 @@ public class IntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void test6IncorrectSyntax() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test6.txt");
+        lexer = new Lexer("integration/test6.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -141,7 +137,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testIncorrectType() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test7.txt");
+        lexer = new Lexer("integration/test7.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -161,7 +157,7 @@ public class IntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testUndeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test8.txt");
+        lexer = new Lexer("integration/test8.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -181,7 +177,7 @@ public class IntegrationTest {
      */
     @Test(expected = AlreadyDeclaredException.class)
     public void testAlreadyDeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test9.txt");
+        lexer = new Lexer("integration/test9.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -201,7 +197,7 @@ public class IntegrationTest {
      */
     @Test(expected = ReturnTypeMismatchException.class)
     public void testBadReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test10.txt");
+        lexer = new Lexer("integration/test10.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -220,7 +216,7 @@ public class IntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testAssignmentUndeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test11.txt");
+        lexer = new Lexer("integration/test11.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -239,7 +235,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongInt() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test12.txt");
+        lexer = new Lexer("integration/test12.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -258,7 +254,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test13.txt");
+        lexer = new Lexer("integration/test13.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -277,7 +273,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test14.txt");
+        lexer = new Lexer("integration/test14.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -296,7 +292,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionDifferentTypes() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test15.txt");
+        lexer = new Lexer("integration/test15.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -315,7 +311,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionBadOperandsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test16.txt");
+        lexer = new Lexer("integration/test16.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -334,7 +330,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionBadOperandsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test17.txt");
+        lexer = new Lexer("integration/test17.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -353,7 +349,7 @@ public class IntegrationTest {
      */
     @Test
     public void testMultipleReturnsWarning() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test18.txt");
+        lexer = new Lexer("integration/test18.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -373,7 +369,7 @@ public class IntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testInexistentFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test19.txt");
+        lexer = new Lexer("integration/test19.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -392,7 +388,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgsSize() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test20.txt");
+        lexer = new Lexer("integration/test20.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -411,7 +407,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgInt() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test21.txt");
+        lexer = new Lexer("integration/test21.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -430,7 +426,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test22.txt");
+        lexer = new Lexer("integration/test22.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -449,7 +445,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgBool() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test23.txt");
+        lexer = new Lexer("integration/test23.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -468,7 +464,7 @@ public class IntegrationTest {
      */
     @Test(expected = ReturnTypeMismatchException.class)
     public void testFunctionNoReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test24.txt");
+        lexer = new Lexer("integration/test24.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -487,7 +483,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testBadVariableDeclFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test25.txt");
+        lexer = new Lexer("integration/test25.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -507,7 +503,7 @@ public class IntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testBadVariableDeclBool() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test26.txt");
+        lexer = new Lexer("integration/test26.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -549,7 +545,7 @@ public class IntegrationTest {
      */
     @Test(expected = ArithmeticException.class)
     public void testDivisionBy0Int() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test27.txt");
+        lexer = new Lexer("integration/test27.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -569,7 +565,7 @@ public class IntegrationTest {
      */
     @Test(expected = ArithmeticException.class)
     public void testDivisionBy0Float() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test28.txt");
+        lexer = new Lexer("integration/test28.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -589,7 +585,7 @@ public class IntegrationTest {
      */
     @Test
     public void testExpressions() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test29.txt");
+        lexer = new Lexer("integration/test29.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -612,7 +608,7 @@ public class IntegrationTest {
      */
     @Test (expected = IncorrectTypeException.class)
     public void testGTWithBooleans() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test30.txt");
+        lexer = new Lexer("integration/test30.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -632,7 +628,7 @@ public class IntegrationTest {
      */
     @Test (expected = AlreadyDeclaredException.class)
     public void testAlreadyDeclaredFucntion() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("test31.txt");
+        lexer = new Lexer("integration/test31.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -691,7 +687,7 @@ public class IntegrationTest {
         Scope scope = new Scope();
         symbolTable.insertScope(scope);
 
-        Object value = symbolTable.getValue("inexistent_variable", false);
+        Object value = symbolTable.getValue("inexistent_variable");
         symbolTable.popScope();
 
         assertNull("Asserting value is null", value);

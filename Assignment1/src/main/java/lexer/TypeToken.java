@@ -30,9 +30,7 @@ public enum TypeToken {
     COLON,
     COMMA,
     COMMENT_1LINE,
-    COMMENT_MULTI_OPEN,
     COMMENT_MULTI_CLOSE,
     EOF,
     NOT,
-    INVALID
 }

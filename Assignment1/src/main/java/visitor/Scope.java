@@ -61,16 +61,6 @@ public class Scope {
     }
 
     /**
-     * Method to get declarations
-     * @param identifier identifier to get
-     * @return node associated with passed identifier
-     */
-    public ASTNode getDeclaration(String identifier)
-    {
-        return declarations.get(identifier);
-    }
-
-    /**
      * Method to get values
      * @return values
      */

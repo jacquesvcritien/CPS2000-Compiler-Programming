@@ -4,7 +4,9 @@
  * Class for transition from state to Category
  */
 public class Transition {
+    //starting state
     private State startingState;
+    //token
     private Category token;
 
     /**
@@ -13,27 +15,27 @@ public class Transition {
      * @param token category where this transition will take you
      */
     public Transition(State startingState, Category token)
-<span class="fc" id="L16">    {</span>
-<span class="fc" id="L17">        this.startingState = startingState;</span>
-<span class="fc" id="L18">        this.token = token;</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L18">    {</span>
+<span class="fc" id="L19">        this.startingState = startingState;</span>
+<span class="fc" id="L20">        this.token = token;</span>
+<span class="fc" id="L21">    }</span>
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (this == obj)</span>
-<span class="fc" id="L24">            return true;</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (!(obj instanceof Transition))</span>
-<span class="fc" id="L26">            return false;</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (this == obj)</span>
+<span class="fc" id="L26">            return true;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (!(obj instanceof Transition))</span>
+<span class="fc" id="L28">            return false;</span>
 
-<span class="fc" id="L28">        Transition transition = (Transition) obj;</span>
-<span class="fc bfc" id="L29" title="All 4 branches covered.">        return startingState == transition.startingState &amp;&amp; token == transition.token;</span>
+<span class="fc" id="L30">        Transition transition = (Transition) obj;</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        return startingState == transition.startingState &amp;&amp; token == transition.token;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L34">        int result = startingState.hashCode();</span>
-<span class="fc" id="L35">        result = 31 * result + token.hashCode();</span>
-<span class="fc" id="L36">        return result;</span>
+<span class="fc" id="L36">        int result = startingState.hashCode();</span>
+<span class="fc" id="L37">        result = 31 * result + token.hashCode();</span>
+<span class="fc" id="L38">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

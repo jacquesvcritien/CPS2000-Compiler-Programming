@@ -128,11 +128,11 @@ public class SymbolTable {
 
 
     /**
-     * Method to get declaration
+     * Method to get declaration - LOOKUP
      * @param identifier id to get
      * @return node of identifier
      */
-    public ASTNode getDeclaration(String identifier)
+    public ASTNode lookup(String identifier)
     {
         //loop though scopes to see if the identifier was declared
         ListIterator<Scope> scopesIterator = scopes.listIterator(scopes.size());
@@ -151,16 +151,12 @@ public class SymbolTable {
     /**
      * Method to get value from where it is found firsy
      * @param identifier identifier to get
-     * @param isFunctionCall boolean to check if it is a functioncall
      * @return
      */
-    public Object getValue(String identifier, boolean isFunctionCall)
+    public Object getValue(String identifier)
     {
         //loop though scopes to see if the identifier was declared
         ListIterator<Scope> scopesIterator = scopes.listIterator(scopes.size());
-        //if it is a function call, move one scope in case there is a variable with the same name
-        if(isFunctionCall)
-            scopesIterator.previous();
 
         while (scopesIterator.hasPrevious()) {
             Scope scope = scopesIterator.previous();

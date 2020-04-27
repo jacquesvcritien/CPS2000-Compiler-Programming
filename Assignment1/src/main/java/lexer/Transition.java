@@ -4,7 +4,9 @@ package lexer;
  * Class for transition from state to Category
  */
 public class Transition {
+    //starting state
     private State startingState;
+    //token
     private Category token;
 
     /**

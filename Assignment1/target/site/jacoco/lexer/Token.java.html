@@ -20,12 +20,32 @@ public class Token {
 <span class="fc" id="L20">        this.attribute = value.toString();</span>
 <span class="fc" id="L21">    }</span>
 
-    public TypeToken getType() {
-<span class="fc" id="L24">        return name;</span>
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (this == obj)</span>
+<span class="fc" id="L26">            return true;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (!(obj instanceof Token))</span>
+<span class="fc" id="L28">            return false;</span>
+
+<span class="fc" id="L30">        Token token = (Token) obj;</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        return name == token.getType() &amp;&amp; attribute.equals(token.getAttribute());</span>
     }
 
-    public String getAttribute() {
-<span class="fc" id="L28">        return attribute;</span>
+    /**
+     * Getter for type
+     * @return type
+     */
+    public TypeToken getType() {
+<span class="fc" id="L39">        return name;</span>
     }
+
+    /**
+     * Getter for attribute
+     * @return attribute
+     */
+    public String getAttribute() {
+<span class="fc" id="L47">        return attribute;</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

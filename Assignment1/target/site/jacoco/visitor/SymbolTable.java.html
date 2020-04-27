@@ -128,11 +128,11 @@ public class SymbolTable {
 
 
     /**
-     * Method to get declaration
+     * Method to get declaration - LOOKUP
      * @param identifier id to get
      * @return node of identifier
      */
-    public ASTNode getDeclaration(String identifier)
+    public ASTNode lookup(String identifier)
     {
         //loop though scopes to see if the identifier was declared
 <span class="fc" id="L138">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
@@ -151,26 +151,22 @@ public class SymbolTable {
     /**
      * Method to get value from where it is found firsy
      * @param identifier identifier to get
-     * @param isFunctionCall boolean to check if it is a functioncall
      * @return
      */
-    public Object getValue(String identifier, boolean isFunctionCall)
+    public Object getValue(String identifier)
     {
         //loop though scopes to see if the identifier was declared
-<span class="fc" id="L160">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
-        //if it is a function call, move one scope in case there is a variable with the same name
-<span class="fc bfc" id="L162" title="All 2 branches covered.">        if(isFunctionCall)</span>
-<span class="fc" id="L163">            scopesIterator.previous();</span>
+<span class="fc" id="L159">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
 
-<span class="fc bfc" id="L165" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L166">            Scope scope = scopesIterator.previous();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L162">            Scope scope = scopesIterator.previous();</span>
             //if scope has value, return it
-<span class="fc bfc" id="L168" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
-<span class="fc" id="L169">                return scope.getValues().get(identifier);</span>
-<span class="fc" id="L170">        }</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
+<span class="fc" id="L165">                return scope.getValues().get(identifier);</span>
+<span class="fc" id="L166">        }</span>
 
         //else return null
-<span class="fc" id="L173">        return null;</span>
+<span class="fc" id="L169">        return null;</span>
     }
 
     /**
@@ -179,7 +175,7 @@ public class SymbolTable {
      */
     public Scope getGlobalScope()
     {
-<span class="fc" id="L182">        return scopes.get(0);</span>
+<span class="fc" id="L178">        return scopes.get(0);</span>
     }
 
     /**
@@ -187,7 +183,7 @@ public class SymbolTable {
      * @return constant value
      */
     public Object getConstantValue() {
-<span class="fc" id="L190">        return constantValue;</span>
+<span class="fc" id="L186">        return constantValue;</span>
     }
 
     /**
@@ -195,15 +191,15 @@ public class SymbolTable {
      * @param value value to set
      */
     public void setConstantValue(Object value) {
-<span class="fc" id="L198">        this.constantValue = value;</span>
-<span class="fc" id="L199">    }</span>
+<span class="fc" id="L194">        this.constantValue = value;</span>
+<span class="fc" id="L195">    }</span>
 
     /**
      * Method to get constant type
      * @return
      */
     public Type getConstant() {
-<span class="fc" id="L206">        return constantType;</span>
+<span class="fc" id="L202">        return constantType;</span>
     }
 
     /**
@@ -211,15 +207,15 @@ public class SymbolTable {
      * @param constant
      */
     public void setConstant(Type constant) {
-<span class="fc" id="L214">        this.constantType = constant;</span>
-<span class="fc" id="L215">    }</span>
+<span class="fc" id="L210">        this.constantType = constant;</span>
+<span class="fc" id="L211">    }</span>
 
     /**
      * Method to reset symbol table
      */
     public void reset()
     {
-<span class="fc" id="L222">        symbolTable = new SymbolTable();</span>
-<span class="fc" id="L223">    }</span>
+<span class="fc" id="L218">        symbolTable = new SymbolTable();</span>
+<span class="fc" id="L219">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

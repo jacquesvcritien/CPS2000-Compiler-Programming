@@ -61,21 +61,11 @@ public class Scope {
     }
 
     /**
-     * Method to get declarations
-     * @param identifier identifier to get
-     * @return node associated with passed identifier
-     */
-    public ASTNode getDeclaration(String identifier)
-    {
-<span class="fc" id="L70">        return declarations.get(identifier);</span>
-    }
-
-    /**
      * Method to get values
      * @return values
      */
     public HashMap&lt;String, Object&gt; getValues() {
-<span class="fc" id="L78">        return values;</span>
+<span class="fc" id="L68">        return values;</span>
     }
 
     /**
@@ -85,7 +75,7 @@ public class Scope {
      */
     public boolean isDefined(String identifier)
     {
-<span class="fc" id="L88">        return declarations.containsKey(identifier);</span>
+<span class="fc" id="L78">        return declarations.containsKey(identifier);</span>
     }
 
 

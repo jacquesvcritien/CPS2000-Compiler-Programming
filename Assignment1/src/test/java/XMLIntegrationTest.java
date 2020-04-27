@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
-import parser.node.ASTActualParams;
 import parser.node.ASTExpression;
 import parser.node.ASTProgram;
 import parser.node.ASTStatement;
@@ -50,7 +49,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testDeclVariable() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest1.txt");
+        lexer = new Lexer("xml/xmltest1.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -79,7 +78,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testPrint() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest2.txt");
+        lexer = new Lexer("xml/xmltest2.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -103,7 +102,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest3.txt");
+        lexer = new Lexer("xml/xmltest3.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -132,7 +131,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testIFStatement() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest4.txt");
+        lexer = new Lexer("xml/xmltest4.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -168,7 +167,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testEmptyBlock() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest5.txt");
+        lexer = new Lexer("xml/xmltest5.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -196,7 +195,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testWhile() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest6.txt");
+        lexer = new Lexer("xml/xmltest6.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -227,7 +226,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclFormalParamsReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest7.txt");
+        lexer = new Lexer("xml/xmltest7.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -264,7 +263,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest10.txt");
+        lexer = new Lexer("xml/xmltest10.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -294,7 +293,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testForLoop() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest8.txt");
+        lexer = new Lexer("xml/xmltest8.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -336,7 +335,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testForLoopNoDeclarationNoAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest9.txt");
+        lexer = new Lexer("xml/xmltest9.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -382,7 +381,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest11.txt");
+        lexer = new Lexer("xml/xmltest11.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -411,7 +410,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionCallNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest12.txt");
+        lexer = new Lexer("xml/xmltest12.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -438,7 +437,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testUnary() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xmltest13.txt");
+        lexer = new Lexer("xml/xmltest13.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 

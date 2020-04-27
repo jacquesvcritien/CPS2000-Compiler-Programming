@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -1617,6 +1618,39 @@ public class Lexer
         else
             return new Token(acceptableStates.get(state), lexeme.toString());
 
+    }
+
+    /**
+     * Method to get tokens
+     */
+    public ArrayList<Token> getTokens() throws IOException, InvalidSyntaxException {
+        ArrayList<Token> tokens = new ArrayList<>();
+        Token nextToken;
+        do{
+            nextToken = nextToken();
+            tokens.add(nextToken);
+        }while(nextToken.getType() != TypeToken.EOF);
+
+        return tokens;
+    }
+
+    /**
+     * Method to compare 2 lists of tokens
+     */
+    public boolean compareTokens(ArrayList<Token> expected, ArrayList<Token> actual) throws IOException, InvalidSyntaxException {
+
+        //check size
+        if(expected.size() != actual.size())
+            return false;
+
+        //loop through and if you find one different return false
+        for(int i=0; i < expected.size(); i++)
+        {
+            if(!expected.get(i).equals(actual.get(i)))
+                return false;
+        }
+
+        return true;
     }
 
 }
