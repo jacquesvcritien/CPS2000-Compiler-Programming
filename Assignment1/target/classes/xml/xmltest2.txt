@@ -1,1 +1,12 @@
 print 1;
+
+/*
+Expected
+
+<Program>
+	<Print>
+		<IntegerLiteral>1</IntegerLiteral>
+	</Print>
+</Program>
+*/
+

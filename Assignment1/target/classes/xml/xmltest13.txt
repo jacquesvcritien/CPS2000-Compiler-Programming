@@ -1,2 +1,16 @@
 //variable declaration with unary
 let x: int = -2;
+
+/*
+Expected
+
+<Program>
+	<VarDecl>
+		<Identifier Type="INT">x</Identifier>
+		<Unary Type="-">
+			<IntegerLiteral>2</IntegerLiteral>
+		</Unary>
+	</VarDecl>
+</Program>
+*/
+

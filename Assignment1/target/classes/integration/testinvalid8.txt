@@ -1,0 +1,3 @@
+//no ending block
+{
+    print 1;

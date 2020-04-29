@@ -203,7 +203,7 @@ public class Parser {
         //make sure the first token is an open bracket
         absorb(TypeToken.BRACKET_OPEN);
         //check the expression
-        ASTExpression node = simpleExpression();
+        ASTExpression node = expression();
         //make sure there is the ending closing bracket
         absorb(TypeToken.BRACKET_CLOSE);
         //return the node returned from expression
@@ -222,6 +222,8 @@ public class Parser {
     private ASTActualParams actualParams() throws IOException, InvalidSyntaxException{
         //create a list of expressions
         ArrayList<ASTExpression> expressions = new ArrayList<ASTExpression>();
+
+
         //check the expression and add it to the list
         expressions.add(expression());
 
@@ -320,7 +322,8 @@ public class Parser {
         }
 
         //set type
-        identifier.setType(type.getAttribute());
+        identifier.setType(getTypeEnum(type.getAttribute()));
+
         //absorb equal sign
         absorb(TypeToken.EQUAL_SIGN);
         //get expression
@@ -345,7 +348,7 @@ public class Parser {
         //get type
         Token type = type();
         //set identifier type to actual type from type got (int, float, bool or auto)
-        identifier.setType(type.getAttribute());
+        identifier.setType(getTypeEnum(type.getAttribute()));
 
         //return new ast formal param with identifier
         return new ASTFormalParam(identifier);
@@ -415,7 +418,7 @@ public class Parser {
         }
 
         //set identifier's type to attribute of type token (int, float, bool or auto)
-        identifier.setType(type.getAttribute());
+        identifier.setType(getTypeEnum(type.getAttribute()));
 
         //get block
         ASTBlock block = block();
@@ -541,7 +544,7 @@ public class Parser {
 
     /**
      * Method for for statement
-     * 'for; '(' [<VARIABLEDECL>] ';' <EXPRESSION> ';' [<ASSIGNMENT>] ')' <BLOCK>
+     * 'for' '(' [<VARIABLEDECL>] ';' <EXPRESSION> ';' [<ASSIGNMENT>] ')' <BLOCK>
      * @return for node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -572,7 +575,7 @@ public class Parser {
 
     /**
      * Method for while
-     * 'while' '(' <EXPRESSION> '); <BLOCK>
+     * 'while' '(' <EXPRESSION> ')' <BLOCK>
      * @return while node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -621,7 +624,7 @@ public class Parser {
 
     /**
      * Method for statement
-     * <VARIABLEDECL> ';' | <ASSIGNMENT> ';' | <PRINTSTMNT> ';' | <IFSTMNT>  | <FORSTMNT> | <WHILESTMNT>  | <RETURNSTMNT> ';' Z
+     * <VARIABLEDECL> ';' | <ASSIGNMENT> ';' | <PRINTSTMNT> ';' | <IFSTMNT>  | <FORSTMNT> | <WHILESTMNT>  | <RETURNSTMNT> ';' |
      * <FUNCTIONDECL> | <BLOCK>
      * @return a statment node
      * @throws IOException
@@ -695,6 +698,8 @@ public class Parser {
         {
             //get statement and add to the list
             ASTStatement statement = statement();
+            if(statement == null)
+                break;
             statements.add(statement);
         }
 
@@ -739,6 +744,23 @@ public class Parser {
      */
     public ASTProgram parse() throws IOException, InvalidSyntaxException{
         return program();
+    }
+
+    /**
+     * Method to get enum type from string
+     * @param type in string
+     * @return type in enum
+     */
+    public static Type getTypeEnum(String type)
+    {
+        //set type
+        switch(type)
+        {
+            case "int" : return Type.INT;
+            case "float" : return Type.FLOAT;
+            case "bool" : return Type.BOOL;
+            default : return Type.AUTO;
+        }
     }
 
 }

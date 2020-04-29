@@ -1,2 +1,2 @@
-//undeclared exception
+//undeclared exception - expected UndeclaredException
 let x:int = y;

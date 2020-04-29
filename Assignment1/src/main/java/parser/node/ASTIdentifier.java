@@ -11,7 +11,7 @@ public class ASTIdentifier extends ASTExpression {
     //values
     private String value;
     //type
-    private String type;
+    private Type type;
 
     /**
      * Constructor
@@ -26,7 +26,7 @@ public class ASTIdentifier extends ASTExpression {
      * @param value value to set
      * @param type type to set
      */
-    public ASTIdentifier(String value, String type)  {
+    public ASTIdentifier(String value, Type type)  {
 
         this.value =value;
         this.type = type;
@@ -36,7 +36,7 @@ public class ASTIdentifier extends ASTExpression {
      * Setter for type
      * @param type type to set
      */
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -52,7 +52,7 @@ public class ASTIdentifier extends ASTExpression {
      * Getter for type
      * @return type
      */
-    public String getType() {
+    public Type getType() {
         return type;
     }
 

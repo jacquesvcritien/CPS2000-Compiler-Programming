@@ -1,2 +1,2 @@
-//bad variable decl bool
+//bad variable decl bool - expected IncorrectTypeException
 let x: bool = 1;

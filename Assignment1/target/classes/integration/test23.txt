@@ -3,5 +3,5 @@ ff andgate(x:bool):bool
     return x and true;
 }
 
-//bad function call
+//bad function call - expected IncorrectTypeException
 let x: bool =  andgate(1);

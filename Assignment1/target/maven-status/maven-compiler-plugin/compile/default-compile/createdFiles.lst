@@ -37,7 +37,6 @@ exceptions\InvalidSyntaxException.class
 exceptions\ReturnTypeMismatchException.class
 exceptions\UndeclaredException.class
 parser\node\ASTWhile.class
-visitor\VisitorSemanticAnalysis$1.class
 lexer\Transition.class
 parser\node\ASTReturn.class
 parser\node\ASTIdentifier.class

@@ -1,4 +1,4 @@
-//function with bad return type
+//function with bad return type - expected ReturnTypeMismatchException
 ff bad_return_type():int
 {
     return 0.1;

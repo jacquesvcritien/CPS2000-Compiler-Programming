@@ -1332,49 +1332,49 @@ public class Lexer
 
         /* ************ S26 ROW ************ */
         transition = new Transition(State.S26, Category.DIGIT);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.DOT);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.LETTER);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.UNDERSCORE);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.MULTIPLY_OPERAND);
         transitionTable.put(transition, State.S26);
         transition = new Transition(State.S26, Category.DIVIDE_OPERAND);
         transitionTable.put(transition, State.S25);
         transition = new Transition(State.S26, Category.ADDITION_OPERAND);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.SUBTRACT_OPERAND);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.ST_OPERAND);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.GT_OPERAND);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.EQUAL_SIGN);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.BRACKET_OPEN);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.BRACKET_CLOSE);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.CURLY_OPEN);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.CURLY_CLOSE);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.COLON);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.SEMI_COLON);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.COMMA);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.NEWLINE);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.SPACE);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.EOF);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S26, Category.OTHER);
-        transitionTable.put(transition, State.S26);
+        transitionTable.put(transition, State.S24);
 
         /* ************ S27 ROW ************ */
         transition = new Transition(State.S27, Category.DIGIT);
@@ -1562,12 +1562,6 @@ public class Lexer
 
             //get category
             Category cat = charCat(nextChar);
-
-            //if you are in a comment, and encounter a star but the next character is not a'/' i.e. end of comment, clear lexeme
-            if(previous ==State.S24 && state == State.S26 && cat != Category.DIVIDE_OPERAND) {
-                lexeme.setLength(0);
-                continue;
-            }
 
             //set transition
             Transition transition = new Transition(state, cat);

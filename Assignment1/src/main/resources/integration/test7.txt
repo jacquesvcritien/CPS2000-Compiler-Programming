@@ -1,2 +1,2 @@
-//incorrect type exception
+//incorrect type exception - expected IncorrectTypeException
 let x:int = 3.2;

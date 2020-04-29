@@ -1,2 +1,2 @@
-//bad assignment - undeclared
+//bad assignment  - expected UndeclaredException
 x = 1;

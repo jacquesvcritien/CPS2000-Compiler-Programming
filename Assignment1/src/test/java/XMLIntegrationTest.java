@@ -56,11 +56,11 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">i</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">i</Identifier>\r\n" +
                 "\t\t<IntegerLiteral>0</IntegerLiteral>\r\n" +
                 "\t</VarDecl>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"bool\">b</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"BOOL\">b</Identifier>\r\n" +
                 "\t\t<BooleanLiteral>true</BooleanLiteral>\r\n" +
                 "\t</VarDecl>\r\n" +
                 "</Program>\r\n", output.toString());
@@ -109,7 +109,7 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"float\">x</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"FLOAT\">x</Identifier>\r\n" +
                 "\t\t<FloatLiteral>3.2</FloatLiteral>\r\n" +
                 "\t</VarDecl>\r\n" +
                 "\t<Assignment>\r\n" +
@@ -233,10 +233,10 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<FuncDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">square</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">square</Identifier>\r\n" +
                 "\t\t<FormalParams>\r\n" +
                 "\t\t\t<FormalParam>\r\n" +
-                "\t\t\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t\t</FormalParam>\r\n" +
                 "\t\t</FormalParams>\r\n" +
                 "\t\t<Block>\r\n" +
@@ -270,7 +270,7 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<FuncDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">square</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">square</Identifier>\r\n" +
                 "\t\t<FormalParams>Empty</FormalParams>\r\n" +
                 "\t\t<Block>\r\n" +
                 "\t\t\t<Return>\r\n" +
@@ -301,7 +301,7 @@ public class XMLIntegrationTest {
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<For>\r\n" +
                 "\t\t<VarDecl>\r\n" +
-                "\t\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t\t<IntegerLiteral>0</IntegerLiteral>\r\n" +
                 "\t\t</VarDecl>\r\n" +
                 "\t\t<BinaryExpr Op=\"<\">\r\n" +
@@ -343,7 +343,7 @@ public class XMLIntegrationTest {
         interpreter.interpret(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t<IntegerLiteral>9</IntegerLiteral>\r\n" +
                 "\t</VarDecl>\r\n" +
                 "\t<For>\r\n" +
@@ -388,7 +388,7 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t<FunctionCall>\r\n" +
                 "\t\t\t<Identifier>square</Identifier>\r\n" +
                 "\t\t\t<ActualParams>\r\n" +
@@ -417,7 +417,7 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t<FunctionCall>\r\n" +
                 "\t\t\t<Identifier>func</Identifier>\r\n" +
                 "\t\t\t<ActualParams>Empty</ActualParams>\r\n" +
@@ -444,7 +444,7 @@ public class XMLIntegrationTest {
         xml.generate(node);
         Assert.assertEquals("Asserting console output", "<Program>\r\n" +
                 "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"int\">x</Identifier>\r\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
                 "\t\t<Unary Type=\"-\">\r\n" +
                 "\t\t\t<IntegerLiteral>2</IntegerLiteral>\r\n" +
                 "\t\t</Unary>\r\n" +

@@ -1,0 +1,5 @@
+//formal params auto
+ff square(x: auto)
+{
+    return x*x;
+}

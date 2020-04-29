@@ -1,2 +1,19 @@
 //function call
 let x: int = square(1);
+
+/*
+Expected
+
+<Program>
+	<VarDecl>
+		<Identifier Type="INT">x</Identifier>
+		<FunctionCall>
+			<Identifier>square</Identifier>
+			<ActualParams>
+				<IntegerLiteral>1</IntegerLiteral>
+			</ActualParams>
+		</FunctionCall>
+	</VarDecl>
+</Program>
+*/
+

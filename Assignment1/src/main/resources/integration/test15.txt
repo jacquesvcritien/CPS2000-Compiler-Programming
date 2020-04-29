@@ -1,2 +1,2 @@
-//expression of not same types
+//expression of not same types - expected IncorrectTypeException
 let x: int = 1 + 1.2;

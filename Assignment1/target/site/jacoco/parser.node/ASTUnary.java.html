@@ -12,25 +12,25 @@ public class ASTUnary extends ASTExpression {
     //lexeme
     private String lexeme;
     // expression
-    private ASTExpression next;
+    private ASTExpression expression;
 
     /**
      * Constructor
      * @param lexeme lexeme
-     * @param next expression
+     * @param expression expression
      */
-    public ASTUnary(String lexeme, ASTExpression next)
+    public ASTUnary(String lexeme, ASTExpression expression)
 <span class="fc" id="L23">    {</span>
 <span class="fc" id="L24">        this.lexeme = lexeme;</span>
-<span class="fc" id="L25">        this.next = next;</span>
+<span class="fc" id="L25">        this.expression = expression;</span>
 <span class="fc" id="L26">    }</span>
 
     /**
      * Getter for expression
      * @return expression
      */
-    public ASTExpression getNext() {
-<span class="fc" id="L33">        return next;</span>
+    public ASTExpression getExpression() {
+<span class="fc" id="L33">        return expression;</span>
     }
 
     /**

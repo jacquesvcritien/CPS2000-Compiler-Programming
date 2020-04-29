@@ -355,7 +355,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent++;
 
         //get unary expression
-        ASTExpression expression = unary.getNext();
+        ASTExpression expression = unary.getExpression();
         System.out.println(indentation+"<Unary Type=\""+unary.getLexeme()+"\">");
         //visit expression
         expression.accept(this);

@@ -355,7 +355,7 @@ import parser.node.*;
 <span class="fc" id="L355">        indent++;</span>
 
         //get unary expression
-<span class="fc" id="L358">        ASTExpression expression = unary.getNext();</span>
+<span class="fc" id="L358">        ASTExpression expression = unary.getExpression();</span>
 <span class="fc" id="L359">        System.out.println(indentation+&quot;&lt;Unary Type=\&quot;&quot;+unary.getLexeme()+&quot;\&quot;&gt;&quot;);</span>
         //visit expression
 <span class="fc" id="L361">        expression.accept(this);</span>

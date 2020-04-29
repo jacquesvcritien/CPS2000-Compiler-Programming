@@ -165,7 +165,7 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
-        //remove return decl
+        //remove return declaration
         symbolTable.getGlobalScope().removeDeclarations("return");
 
         // declare new scope
@@ -275,12 +275,17 @@ public class VisitorInterpreter implements Visitor {
         Scope functionCallScope = new Scope();
         symbolTable.insertScope(functionCallScope);
 
-        //check parameters types
-        for(int i=0; i<actualParamsExpressions.size(); i++)
-        {
+        ArrayList<Object> actualParamsValues = new ArrayList<>();
+        //get actual parameters values
+        for(int i=0; i<actualParamsExpressions.size(); i++) {
             //go into expression to set type constant
             actualParamsExpressions.get(i).accept(this);
+            actualParamsValues.add(symbolTable.getConstantValue());
+        }
 
+        //check parameters types
+        for(int i=0; i<formalParams.size(); i++)
+        {
             //get formalParam
             ASTFormalParam formalParam = formalParams.get(i);
             formalParam.accept(this);
@@ -289,8 +294,10 @@ public class VisitorInterpreter implements Visitor {
             ASTIdentifier formalParamIdentifier = formalParam.getIdentifier();
 
             //insert value
-            symbolTable.insertValue(formalParamIdentifier.getValue(), symbolTable.getConstantValue());
+            functionCallScope.addValue(formalParamIdentifier.getValue(), actualParamsValues.get(i));
         }
+
+
 
         //get block
         ASTBlock functionBlock = actualFunction.getBlock();
@@ -304,24 +311,11 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException{
-
-        //create a scope for formal params
-        Scope functionDeclerationScope = new Scope();
-        symbolTable.insertScope(functionDeclerationScope);
-
-        //get formal params
-        ASTFormalParams formalParams = functionDecl.getFormalParams();
-        //check formal paras
-        formalParams.accept(this);
-
-        //remove formal params scope
-        symbolTable.popScope();
-
         //get identifier
         ASTIdentifier identifier = functionDecl.getIdentifier();
 
         //add the identifier to the global scope
-        symbolTable.insertDeclGlobal(identifier.getValue(), functionDecl);
+        symbolTable.insertDecl(identifier.getValue(), functionDecl);
     }
 
     @Override
@@ -334,15 +328,9 @@ public class VisitorInterpreter implements Visitor {
             identifier = (ASTIdentifier)symbolTable.lookup(variable);
 
         //get type
-        String type = identifier.getType();
-
-        //check type and set constant
-        switch (type)
-        {
-            case "int": symbolTable.setConstant(Type.INT);break;
-            case "float": symbolTable.setConstant(Type.FLOAT);break;
-            default: symbolTable.setConstant(Type.BOOL);break;
-        }
+        Type type = identifier.getType();
+        //set type
+        symbolTable.setConstant(type);
 
         symbolTable.setConstantValue(symbolTable.getValue(variable));
 
@@ -364,27 +352,15 @@ public class VisitorInterpreter implements Visitor {
             //get block if true
             ASTBlock trueBlock = ifNode.getBlock();
 
-            //create a new scope
-            Scope trueBlockScope = new Scope();
-            //push true block scope to top of stack
-            symbolTable.insertScope(trueBlockScope);
             //check block
             trueBlock.accept(this);
-            //pop true block scope from stack
-            symbolTable.popScope();
         }
         else
         {
             //get else block
             ASTBlock elseBlock = ifNode.getElseBlock();
-            //create a new scope
-            Scope elseBlockScope = new Scope();
-            //push else block scope to top of stack
-            symbolTable.insertScope(elseBlockScope);
             //check block
             elseBlock.accept(this);
-            //pop else block scope from stack
-            symbolTable.popScope();
         }
     }
 
@@ -404,8 +380,6 @@ public class VisitorInterpreter implements Visitor {
         expression.accept(this);
 
         System.out.println(symbolTable.getConstantValue());
-        //empty value
-        symbolTable.setConstant(null);
     }
 
     @Override
@@ -438,18 +412,13 @@ public class VisitorInterpreter implements Visitor {
 
         //this is done just temporarily to store the return type
         //add a declaration as a return identifier with the type of return
-        switch(returnType)
-        {
-            case INT: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "int"));break;
-            case FLOAT: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "float"));break;
-            default: symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", "bool"));break;
-        }
+        symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", returnType));
     }
 
     @Override
     public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get unary expression
-        ASTExpression expression = unary.getNext();
+        ASTExpression expression = unary.getExpression();
         //visit expression
         expression.accept(this);
 

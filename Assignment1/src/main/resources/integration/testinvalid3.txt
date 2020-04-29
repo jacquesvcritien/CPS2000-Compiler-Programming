@@ -1,0 +1,5 @@
+//no correct formal param
+ff wjiw(d): int
+{
+
+}

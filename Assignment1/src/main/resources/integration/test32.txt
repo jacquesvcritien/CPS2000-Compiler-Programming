@@ -1,0 +1,18 @@
+let x: int =1;
+let z: int = 2;
+
+ff try(x:int, z:int) : int
+{
+    if( x > z)
+    {
+    return 1;
+    }
+    else
+    {
+    return 2;
+    }
+
+}
+
+let y : int = try(z, x);
+print y;

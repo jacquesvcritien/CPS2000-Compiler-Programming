@@ -1,8 +1,10 @@
-if(1 < 2)
-{
-    print 1;
+ff test():auto {
+
+    ff add():auto {
+        return 5;
+    }
+
+    return add();
 }
-else
-{
-    print 2;
-}
+
+print add();

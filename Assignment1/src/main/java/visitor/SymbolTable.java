@@ -74,10 +74,10 @@ public class SymbolTable {
     /**
      * Method to insert declaration
      * @param identifier identifier to insert
-     * @param identifierNode node for identifier
+     * @param node node for identifier
      * @throws AlreadyDeclaredException
      */
-    public void insertDecl(String identifier, ASTIdentifier identifierNode) throws AlreadyDeclaredException {
+    public void insertDecl(String identifier, ASTNode node) throws AlreadyDeclaredException {
         //get current scope
         Scope current = getCurrentScope();
 
@@ -85,7 +85,7 @@ public class SymbolTable {
         if(current.isDefined(identifier))
             throw new AlreadyDeclaredException(identifier+" is already declared");
         else
-            current.addDeclaration(identifier, identifierNode);
+            current.addDeclaration(identifier, node);
     }
 
     /**
@@ -149,7 +149,7 @@ public class SymbolTable {
     }
 
     /**
-     * Method to get value from where it is found firsy
+     * Method to get value from where it is found first
      * @param identifier identifier to get
      * @return
      */

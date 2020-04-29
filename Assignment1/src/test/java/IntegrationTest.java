@@ -115,6 +115,174 @@ public class IntegrationTest {
      * @throws AlreadyDeclaredException
      */
     @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect1() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid3.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect2() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid4.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect3() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid5.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect4() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid6.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect5() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid7.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect6() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid8.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect7() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid9.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
+    public void testIncorrect8() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid10.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving incorrect syntax
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = InvalidSyntaxException.class)
     public void test6IncorrectSyntax() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         lexer = new Lexer("integration/test6.txt");
         Parser parser = new Parser(lexer);
@@ -450,6 +618,48 @@ public class IntegrationTest {
         ASTProgram node = parser.parse();
 
         semanticAnalysis.analyse(node);
+    }
+
+    /**
+     * Testing function call
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test
+    public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/test32.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+        Assert.assertEquals("Asserting console output", "1\r\n", output.toString());
+    }
+
+    /**
+     * Testing the given source code in the assignment spec
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test
+    public void testGivenCode() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/test33.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+        Assert.assertEquals("Asserting console output", "1667.9874\r\n", output.toString());
     }
 
     /**

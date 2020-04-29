@@ -11,7 +11,7 @@ public class ASTIdentifier extends ASTExpression {
     //values
     private String value;
     //type
-    private String type;
+    private Type type;
 
     /**
      * Constructor
@@ -26,7 +26,7 @@ public class ASTIdentifier extends ASTExpression {
      * @param value value to set
      * @param type type to set
      */
-<span class="fc" id="L29">    public ASTIdentifier(String value, String type)  {</span>
+<span class="fc" id="L29">    public ASTIdentifier(String value, Type type)  {</span>
 
 <span class="fc" id="L31">        this.value =value;</span>
 <span class="fc" id="L32">        this.type = type;</span>
@@ -36,7 +36,7 @@ public class ASTIdentifier extends ASTExpression {
      * Setter for type
      * @param type type to set
      */
-    public void setType(String type) {
+    public void setType(Type type) {
 <span class="fc" id="L40">        this.type = type;</span>
 <span class="fc" id="L41">    }</span>
 
@@ -52,7 +52,7 @@ public class ASTIdentifier extends ASTExpression {
      * Getter for type
      * @return type
      */
-    public String getType() {
+    public Type getType() {
 <span class="fc" id="L56">        return type;</span>
     }
 

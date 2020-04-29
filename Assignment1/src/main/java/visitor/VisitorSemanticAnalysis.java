@@ -45,30 +45,12 @@ public class VisitorSemanticAnalysis implements Visitor {
             expression.accept(this);
 
             //check if there is a symbol for that type
-            String type = actualId.getType();
+            Type type = actualId.getType();
 
-            switch (type) {
-                case "int": {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.INT)
-                        throw new IncorrectTypeException("The value is not of type int");
-                }
-                ;
-                break;
-                case "float": {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.FLOAT)
-                        throw new IncorrectTypeException("The value is not of type float");
-                }
-                ;
-                break;
-                //boolean
-                default: {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.BOOL)
-                        throw new IncorrectTypeException("The value is not of type bool");
-                };break;
-            }
+            //check if the expression led to a correct type
+            if (symbolTable.getConstant() != type)
+                throw new IncorrectTypeException("The value is not of type "+type);
+
             //empty value
             symbolTable.setConstant(null);
         }
@@ -108,6 +90,9 @@ public class VisitorSemanticAnalysis implements Visitor {
                 //if one of the types is a boolean (only check one type since from the check above they should be same
                 if(leftType == Type.BOOL)
                     throw new IncorrectTypeException(operand+" cannot work on type bool");
+
+                //set type to left expression's type (same as right)
+                symbolTable.setConstant(leftType);
             };break;
             case ">":
             case "<":
@@ -161,7 +146,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             ASTStatement statement = block.getStatements().get(i);
             statement.accept(this);
 
-            //if statement is of type return, set alreadye
+            //if statement is of type return, set alreadyreturn
             if(statement.getClass() == ASTReturn.class)
                 alreadyReturn = true;
         }
@@ -173,16 +158,12 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     @Override
     public void visit(ASTBooleanLiteral booleanLiteral) {
-        //get current scope
-        Scope scope = symbolTable.getCurrentScope();
         //set constant type
         symbolTable.setConstant(Type.BOOL);
     }
 
     @Override
     public void visit(ASTFloatLiteral floatLiteral) {
-        //get current scope
-        Scope scope = symbolTable.getCurrentScope();
         //set constant type
         symbolTable.setConstant(Type.FLOAT);
     }
@@ -235,6 +216,7 @@ public class VisitorSemanticAnalysis implements Visitor {
 
         //get actual function
         ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());
+
         //if it doesn't exist
         if(actualFunction == null)
             throw new UndeclaredException(identifier.getValue()+" is not declared");
@@ -266,43 +248,19 @@ public class VisitorSemanticAnalysis implements Visitor {
             //get formalParam
             ASTIdentifier formalParam = formalParams.get(i).getIdentifier();
             //get formal param type
-            String formalParamType = formalParam.getType();
+            Type formalParamType = formalParam.getType();
             //check formal params type
             Type expressionType = symbolTable.getConstant();
 
             //check param type
-            switch (formalParamType)
-            {
-                case "int":
-                {
-                    //if it does not match to actual param
-                    if (!expressionType.equals(Type.INT))
-                        throw new IncorrectTypeException(formalParam.getValue()+" should be passed an int value");
-                };break;
-                case "float":
-                {
-                    //if it does not match to actual param
-                    if (!expressionType.equals(Type.FLOAT))
-                        throw new IncorrectTypeException(formalParam.getValue()+" should be passed a float value");
-                };break;
-                //boolean
-                default:
-                {
-                    //if it does not match to actual param
-                    if (!expressionType.equals(Type.BOOL))
-                        throw new IncorrectTypeException(formalParam.getValue()+" should be passed an bool value");
-                }
-            }
+            //if it does not match to actual param
+            if (!expressionType.equals(formalParamType))
+                throw new IncorrectTypeException(formalParam.getValue()+" should be passed a value of type "+formalParamType);
+
         }
 
         //set constant
-        switch (actualFunction.getIdentifier().getType())
-        {
-            case "int": symbolTable.setConstant(Type.INT);break;
-            case "float": symbolTable.setConstant(Type.FLOAT);break;
-            default: symbolTable.setConstant(Type.BOOL);
-        }
-
+        symbolTable.setConstant(actualFunction.getIdentifier().getType());
     }
 
     @Override
@@ -329,8 +287,6 @@ public class VisitorSemanticAnalysis implements Visitor {
         //start from block to get return type
         block.accept(this);
 
-        ASTIdentifier returnTypeNode;
-
         //if there was no return statement, throw an error
         if(!symbolTable.getGlobalScope().isDefined("return"))
             throw new ReturnTypeMismatchException("Nothing is returned");
@@ -339,9 +295,7 @@ public class VisitorSemanticAnalysis implements Visitor {
         symbolTable.popScope();
 
         //add the identifier to the global scope
-        symbolTable.insertDeclGlobal(identifier.getValue(), functionDecl);
-        //visit identifier
-        identifier.accept(this);
+        symbolTable.insertDecl(identifier.getValue(), functionDecl);
     }
 
     @Override
@@ -360,15 +314,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             throw new UndeclaredException(variable+" is not declared");
 
         //set constant type
-        String type = identifier.getType();
-
-        //check type and set constant type
-        switch (type)
-        {
-            case "int": symbolTable.setConstant(Type.INT);break;
-            case "float": symbolTable.setConstant(Type.FLOAT);break;
-            default: symbolTable.setConstant(Type.BOOL);break;
-        }
+        symbolTable.setConstant(identifier.getType());
     }
 
     @Override
@@ -378,38 +324,20 @@ public class VisitorSemanticAnalysis implements Visitor {
         //check expression
         expression.accept(this);
 
-        //empty constant
-        symbolTable.setConstant(null);
-
         //get block if true
         ASTBlock trueBlock = ifNode.getBlock();
-
-        //create a new scope
-        Scope trueBlockScope = new Scope();
-        //push true block scope to top of stack
-        symbolTable.insertScope(trueBlockScope);
         //check block
         trueBlock.accept(this);
-        //pop true block scope from stack
-        symbolTable.popScope();
 
         //get else block
         ASTBlock elseBlock = ifNode.getElseBlock();
-        //create a new scope
-        Scope elseBlockScope = new Scope();
-        //push else block scope to top of stack
-        symbolTable.insertScope(elseBlockScope);
         //check block
         elseBlock.accept(this);
-        //pop else block scope from stack
-        symbolTable.popScope();
 
     }
 
     @Override
     public void visit(ASTIntegerLiteral integerLiteral) {
-        //get current scope
-        Scope scope = symbolTable.getCurrentScope();
         //set constant type
         symbolTable.setConstant(Type.INT);
     }
@@ -451,42 +379,18 @@ public class VisitorSemanticAnalysis implements Visitor {
 
         //this is done just temporarily to store the return type
         //add a declaration as a return identifier with the type of return
-        switch(returnType)
-        {
-            case INT:
-            {
-                String type = "int";
-                //check return type
-                checkReturnType(type);
-                //insert global decl
-                symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", type));
-            }break;
-            case FLOAT:
-            {
-                String type = "float";
 
-                //check return type
-                checkReturnType(type);
-                //insert global decl
-                symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", type));
-            }break;
-            default:
-            {
-                String type = "bool";
-
-                //check return type
-                checkReturnType(type);
-                //insert global decl
-                symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", type));
-            }break;
-        }
+        //check return type
+        checkReturnType(returnType);
+        //insert global decl
+        symbolTable.insertDeclGlobal("return", new ASTIdentifier("return", returnType));
 
     }
 
     @Override
     public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
-        ASTExpression expression = unary.getNext();
+        ASTExpression expression = unary.getExpression();
         //visit expression
         expression.accept(this);
     }
@@ -505,39 +409,18 @@ public class VisitorSemanticAnalysis implements Visitor {
             ASTIdentifier identifier = variableDecl.getIdentifier();
 
             //check if there is a symbol for that type
-            String type = identifier.getType();
+            Type type = identifier.getType();
 
-            //check type
-            switch (type) {
-                case "int": {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.INT)
-                        throw new IncorrectTypeException("The value is not of type int");
-                };break;
-                case "float": {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.FLOAT)
-                        throw new IncorrectTypeException("The value is not of type float");
-                };break;
-                case "bool": {
-                    //check if the expression led to a correct type
-                    if (symbolTable.getConstant() != Type.BOOL)
-                        throw new IncorrectTypeException("The value is not of type bool");
-                };break;
-                //auto
-                default: {
-                    switch (symbolTable.getConstant()) {
-                        case INT:
-                            identifier.setType("int"); //set type
-                            break;
-                        case FLOAT:
-                            identifier.setType("float"); //set type
-                            break;
-                        default:
-                            identifier.setType("bool"); //set type
-                            break;
-                    }
-                };break;
+            //if type is auto
+            if(type == Type.AUTO)
+            {
+                //set type for identifier
+                identifier.setType(symbolTable.getConstant());
+            }
+            else
+            {
+                if (symbolTable.getConstant() != type)
+                    throw new IncorrectTypeException("The value is not of type "+type);
             }
 
             //add identifier
@@ -563,14 +446,8 @@ public class VisitorSemanticAnalysis implements Visitor {
         //get block if true
         ASTBlock block = whileNode.getBlock();
 
-        //create a new scope
-        Scope blockScope = new Scope();
-        //push true block scope to top of stack
-        symbolTable.insertScope(blockScope);
         //visit true block
         block.accept(this);
-        //pop true block scope from stack
-        symbolTable.popScope();
     }
 
 
@@ -600,16 +477,16 @@ public class VisitorSemanticAnalysis implements Visitor {
      * @param type type from the return statement
      * @throws ReturnTypeMismatchException
      */
-    private void checkReturnType(String type) throws ReturnTypeMismatchException {
+    private void checkReturnType(Type type) throws ReturnTypeMismatchException {
         //get identifier's return type
-        String identifierType = functionIdentifier.getType();
+        Type identifierType = functionIdentifier.getType();
 
         //if the return type of the function does not match the type returned from the block
-        if(!identifierType.equals(type) && !identifierType.equals("auto"))
+        if(!identifierType.equals(type) && identifierType != Type.AUTO)
             throw new ReturnTypeMismatchException(functionIdentifier.getValue()+" should return a value of type "+identifierType);
 
         //if return type is auto, set it to return type from block
-        if( identifierType.equals("auto"))
+        if(identifierType == Type.AUTO)
             functionIdentifier.setType(type);
     }
 }

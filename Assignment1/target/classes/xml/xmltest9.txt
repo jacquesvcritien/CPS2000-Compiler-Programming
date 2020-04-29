@@ -1,7 +1,33 @@
 //for loop no assignment and declaration
 let x : int =9;
-for(; x < 10;)
-{
-print x;
-x = x+1;
-}
+for(; x < 10;){ print x; x = x+1; }
+
+/* Expected
+<Program>
+	<VarDecl>
+		<Identifier Type="INT">x</Identifier>
+		<IntegerLiteral>9</IntegerLiteral>
+	</VarDecl>
+	<For>
+		<VarDecl>Empty</VarDecl>
+		<BinaryExpr Op="<">
+			<Identifier>x</Identifier>
+			<IntegerLiteral>10</IntegerLiteral>
+		</BinaryExpr>
+		<Assignment>Empty</Assignment>
+		<Block>
+			<Print>
+				<Identifier>x</Identifier>
+			</Print>
+			<Assignment>
+				<Identifier>x</Identifier>
+				<BinaryExpr Op="+">
+					<Identifier>x</Identifier>
+					<IntegerLiteral>1</IntegerLiteral>
+				</BinaryExpr>
+			</Assignment>
+		</Block>
+	</For>
+</Program>
+*/
+

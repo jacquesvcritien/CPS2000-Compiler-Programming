@@ -8,7 +8,7 @@ import visitor.Visitor;
 /**
  * Class for formal param node
  */
-public class ASTFormalParam extends ASTExpression {
+public class ASTFormalParam implements ASTNode {
     //identifier
     private ASTIdentifier identifier;
 

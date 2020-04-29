@@ -203,7 +203,7 @@ public class Parser {
         //make sure the first token is an open bracket
 <span class="fc" id="L204">        absorb(TypeToken.BRACKET_OPEN);</span>
         //check the expression
-<span class="fc" id="L206">        ASTExpression node = simpleExpression();</span>
+<span class="fc" id="L206">        ASTExpression node = expression();</span>
         //make sure there is the ending closing bracket
 <span class="fc" id="L208">        absorb(TypeToken.BRACKET_CLOSE);</span>
         //return the node returned from expression
@@ -222,22 +222,24 @@ public class Parser {
     private ASTActualParams actualParams() throws IOException, InvalidSyntaxException{
         //create a list of expressions
 <span class="fc" id="L224">        ArrayList&lt;ASTExpression&gt; expressions = new ArrayList&lt;ASTExpression&gt;();</span>
+
+
         //check the expression and add it to the list
-<span class="fc" id="L226">        expressions.add(expression());</span>
+<span class="fc" id="L228">        expressions.add(expression());</span>
 
         //while there is more commas (more expressions)
-<span class="fc bfc" id="L229" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
         {
             //absorb the comme
-<span class="fc" id="L232">            absorb(TypeToken.COMMA);</span>
+<span class="fc" id="L234">            absorb(TypeToken.COMMA);</span>
 
             //get the next expression and add it to the list
-<span class="fc" id="L235">            ASTExpression newExpression = expression();</span>
-<span class="fc" id="L236">            expressions.add(newExpression);</span>
-<span class="fc" id="L237">        }</span>
+<span class="fc" id="L237">            ASTExpression newExpression = expression();</span>
+<span class="fc" id="L238">            expressions.add(newExpression);</span>
+<span class="fc" id="L239">        }</span>
 
         //return the actual params node with the expressions
-<span class="fc" id="L240">        return new ASTActualParams(expressions);</span>
+<span class="fc" id="L242">        return new ASTActualParams(expressions);</span>
 
     }
 
@@ -252,16 +254,16 @@ public class Parser {
     private ASTFunctionCall functionCall(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
 
         //absorb the opening bracket
-<span class="fc" id="L255">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L257">        absorb(TypeToken.BRACKET_OPEN);</span>
 
         //if the next is a closing bracket, return an empty actual params node, else get the actual params
-<span class="fc bfc" id="L258" title="All 2 branches covered.">        ASTActualParams actualParamsNode = (this.currentToken.getType() != TypeToken.BRACKET_CLOSE) ? actualParams() : new ASTActualParams();</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        ASTActualParams actualParamsNode = (this.currentToken.getType() != TypeToken.BRACKET_CLOSE) ? actualParams() : new ASTActualParams();</span>
 
         //absorb the closing bracker
-<span class="fc" id="L261">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L263">        absorb(TypeToken.BRACKET_CLOSE);</span>
 
         //return new function call node with actual params and identifier
-<span class="fc" id="L264">        return new ASTFunctionCall(identifier, actualParamsNode);</span>
+<span class="fc" id="L266">        return new ASTFunctionCall(identifier, actualParamsNode);</span>
     }
 
     /**
@@ -274,19 +276,19 @@ public class Parser {
     private ASTAssignment assignment() throws IOException, InvalidSyntaxException{
 
         //if the current token is not an identifier (in case of empty assignment in for loop), return empty assignment
-<span class="fc bfc" id="L277" title="All 2 branches covered.">        if((currentToken.getType()!= TypeToken.IDENTIFIER))</span>
-<span class="fc" id="L278">            return new ASTAssignment();</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        if((currentToken.getType()!= TypeToken.IDENTIFIER))</span>
+<span class="fc" id="L280">            return new ASTAssignment();</span>
 
         //get identifier
-<span class="fc" id="L281">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L283">        ASTIdentifier identifier = identifier();</span>
         //absorb equal sign
-<span class="fc" id="L283">        absorb(TypeToken.EQUAL_SIGN);</span>
+<span class="fc" id="L285">        absorb(TypeToken.EQUAL_SIGN);</span>
         //get expression
-<span class="fc" id="L285">        ASTExpression expression = expression();</span>
+<span class="fc" id="L287">        ASTExpression expression = expression();</span>
 
 
         //create assignment node with identifier and expression
-<span class="fc" id="L289">        return new ASTAssignment(identifier, expression);</span>
+<span class="fc" id="L291">        return new ASTAssignment(identifier, expression);</span>
     }
 
     /**
@@ -299,35 +301,36 @@ public class Parser {
     private ASTVariableDecl variableDeclaration() throws IOException, InvalidSyntaxException{
 
         //if the current token is not a LET (in case of empty variable declaration in for loop), return empty variable declaration
-<span class="fc bfc" id="L302" title="All 2 branches covered.">        if(currentToken.getType()!= TypeToken.LET)</span>
-<span class="fc" id="L303">            return new ASTVariableDecl();</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if(currentToken.getType()!= TypeToken.LET)</span>
+<span class="fc" id="L305">            return new ASTVariableDecl();</span>
 
         //absorb let
-<span class="fc" id="L306">        absorb(TypeToken.LET);</span>
+<span class="fc" id="L308">        absorb(TypeToken.LET);</span>
         //get identifier
-<span class="fc" id="L308">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L310">        ASTIdentifier identifier = identifier();</span>
         //absorb colon
-<span class="fc" id="L310">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L312">        absorb(TypeToken.COLON);</span>
 
         //get current token
-<span class="fc" id="L313">        Token type = this.currentToken;</span>
+<span class="fc" id="L315">        Token type = this.currentToken;</span>
 
         //absorv type
-<span class="fc bfc" id="L316" title="All 2 branches covered.">        switch(type.getType())</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        switch(type.getType())</span>
         {
-<span class="fc" id="L318">            case TYPE: absorb(TypeToken.TYPE);break;</span>
-<span class="fc" id="L319">            default: absorb(TypeToken.AUTO);break; //auto</span>
+<span class="fc" id="L320">            case TYPE: absorb(TypeToken.TYPE);break;</span>
+<span class="fc" id="L321">            default: absorb(TypeToken.AUTO);break; //auto</span>
         }
 
         //set type
-<span class="fc" id="L323">        identifier.setType(type.getAttribute());</span>
+<span class="fc" id="L325">        identifier.setType(getTypeEnum(type.getAttribute()));</span>
+
         //absorb equal sign
-<span class="fc" id="L325">        absorb(TypeToken.EQUAL_SIGN);</span>
+<span class="fc" id="L328">        absorb(TypeToken.EQUAL_SIGN);</span>
         //get expression
-<span class="fc" id="L327">        ASTExpression expression = expression();</span>
+<span class="fc" id="L330">        ASTExpression expression = expression();</span>
 
         //return variable declaration node with identifier and expression
-<span class="fc" id="L330">        return new ASTVariableDecl(identifier, expression);</span>
+<span class="fc" id="L333">        return new ASTVariableDecl(identifier, expression);</span>
     }
 
     /**
@@ -339,16 +342,16 @@ public class Parser {
      */
     private ASTFormalParam formalParam() throws IOException, InvalidSyntaxException{
         //get identifier
-<span class="fc" id="L342">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L345">        ASTIdentifier identifier = identifier();</span>
         //absorb colon
-<span class="fc" id="L344">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L347">        absorb(TypeToken.COLON);</span>
         //get type
-<span class="fc" id="L346">        Token type = type();</span>
+<span class="fc" id="L349">        Token type = type();</span>
         //set identifier type to actual type from type got (int, float, bool or auto)
-<span class="fc" id="L348">        identifier.setType(type.getAttribute());</span>
+<span class="fc" id="L351">        identifier.setType(getTypeEnum(type.getAttribute()));</span>
 
         //return new ast formal param with identifier
-<span class="fc" id="L351">        return new ASTFormalParam(identifier);</span>
+<span class="fc" id="L354">        return new ASTFormalParam(identifier);</span>
     }
 
     /**
@@ -360,29 +363,29 @@ public class Parser {
      */
     private ASTFormalParams formalParams() throws IOException, InvalidSyntaxException{
         //init list to hold params
-<span class="fc" id="L363">        ArrayList&lt;ASTFormalParam&gt; params = new ArrayList&lt;ASTFormalParam&gt;();</span>
+<span class="fc" id="L366">        ArrayList&lt;ASTFormalParam&gt; params = new ArrayList&lt;ASTFormalParam&gt;();</span>
 
         //if current token is close bracket, it means there is no params
-<span class="fc bfc" id="L366" title="All 2 branches covered.">        if(this.currentToken.getType() == TypeToken.BRACKET_CLOSE)</span>
-<span class="fc" id="L367">            return new ASTFormalParams(params);</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">        if(this.currentToken.getType() == TypeToken.BRACKET_CLOSE)</span>
+<span class="fc" id="L370">            return new ASTFormalParams(params);</span>
 
         //else, get formal param and add it to the list
-<span class="fc" id="L370">        params.add(formalParam());</span>
+<span class="fc" id="L373">        params.add(formalParam());</span>
 
         //while there is a comma (more params)
-<span class="fc bfc" id="L373" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.COMMA)</span>
         {
 
             //absorb the comma
-<span class="fc" id="L377">            absorb(TypeToken.COMMA);</span>
+<span class="fc" id="L380">            absorb(TypeToken.COMMA);</span>
 
             //get param and add it to the list
-<span class="fc" id="L380">            ASTFormalParam newParam = formalParam();</span>
-<span class="fc" id="L381">            params.add(newParam);</span>
-<span class="fc" id="L382">        }</span>
+<span class="fc" id="L383">            ASTFormalParam newParam = formalParam();</span>
+<span class="fc" id="L384">            params.add(newParam);</span>
+<span class="fc" id="L385">        }</span>
 
         //return new formal params node with params
-<span class="fc" id="L385">        return new ASTFormalParams(params);</span>
+<span class="fc" id="L388">        return new ASTFormalParams(params);</span>
     }
 
     /**
@@ -394,34 +397,34 @@ public class Parser {
      */
     private ASTFunctionDecl functionDeclaration() throws IOException, InvalidSyntaxException{
         //absorb ff
-<span class="fc" id="L397">        absorb(TypeToken.FF);</span>
+<span class="fc" id="L400">        absorb(TypeToken.FF);</span>
         //get identifier
-<span class="fc" id="L399">        ASTIdentifier identifier = identifier();</span>
+<span class="fc" id="L402">        ASTIdentifier identifier = identifier();</span>
         //absorb open bracker
-<span class="fc" id="L401">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L404">        absorb(TypeToken.BRACKET_OPEN);</span>
         //get formal params
-<span class="fc" id="L403">        ASTFormalParams formalParamsNode = formalParams();</span>
+<span class="fc" id="L406">        ASTFormalParams formalParamsNode = formalParams();</span>
         //absorb closing bracket
-<span class="fc" id="L405">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L408">        absorb(TypeToken.BRACKET_CLOSE);</span>
         //absorb colon
-<span class="fc" id="L407">        absorb(TypeToken.COLON);</span>
+<span class="fc" id="L410">        absorb(TypeToken.COLON);</span>
 
-<span class="fc" id="L409">        Token type = this.currentToken;</span>
+<span class="fc" id="L412">        Token type = this.currentToken;</span>
         //absorb type
-<span class="fc bfc" id="L411" title="All 2 branches covered.">        switch(type.getType())</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        switch(type.getType())</span>
         {
-<span class="fc" id="L413">            case TYPE: absorb(TypeToken.TYPE);break;</span>
-<span class="fc" id="L414">            default: absorb(TypeToken.AUTO);break;</span>
+<span class="fc" id="L416">            case TYPE: absorb(TypeToken.TYPE);break;</span>
+<span class="fc" id="L417">            default: absorb(TypeToken.AUTO);break;</span>
         }
 
         //set identifier's type to attribute of type token (int, float, bool or auto)
-<span class="fc" id="L418">        identifier.setType(type.getAttribute());</span>
+<span class="fc" id="L421">        identifier.setType(getTypeEnum(type.getAttribute()));</span>
 
         //get block
-<span class="fc" id="L421">        ASTBlock block = block();</span>
+<span class="fc" id="L424">        ASTBlock block = block();</span>
 
         //return new function declaration node with identifier, formalParamsNode and block
-<span class="fc" id="L424">        return new ASTFunctionDecl(identifier, formalParamsNode, block);</span>
+<span class="fc" id="L427">        return new ASTFunctionDecl(identifier, formalParamsNode, block);</span>
     }
 
     /**
@@ -433,10 +436,10 @@ public class Parser {
      */
     private ASTPrint printStatement() throws IOException, InvalidSyntaxException{
         //absorb print
-<span class="fc" id="L436">        absorb(TypeToken.PRINT);</span>
+<span class="fc" id="L439">        absorb(TypeToken.PRINT);</span>
         //get expression
-<span class="fc" id="L438">        ASTExpression expression = expression();</span>
-<span class="fc" id="L439">        return new ASTPrint( expression);</span>
+<span class="fc" id="L441">        ASTExpression expression = expression();</span>
+<span class="fc" id="L442">        return new ASTPrint( expression);</span>
     }
 
     /**
@@ -448,10 +451,10 @@ public class Parser {
      */
     private ASTReturn returnStatement() throws IOException, InvalidSyntaxException{
         //get return
-<span class="fc" id="L451">        absorb(TypeToken.RETURN);</span>
+<span class="fc" id="L454">        absorb(TypeToken.RETURN);</span>
         //get expression
-<span class="fc" id="L453">        ASTExpression expression = expression();</span>
-<span class="fc" id="L454">        return new ASTReturn(expression);</span>
+<span class="fc" id="L456">        ASTExpression expression = expression();</span>
+<span class="fc" id="L457">        return new ASTReturn(expression);</span>
     }
 
     /**
@@ -464,15 +467,15 @@ public class Parser {
     private ASTUnary unary() throws IOException, InvalidSyntaxException{
 
         //get current token
-<span class="fc" id="L467">        Token token = this.currentToken;</span>
+<span class="fc" id="L470">        Token token = this.currentToken;</span>
         //get type of token
-<span class="fc bfc" id="L469" title="All 2 branches covered.">        switch(token.getType())</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">        switch(token.getType())</span>
         {
-<span class="fc" id="L471">            case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break; // case of '-'</span>
-<span class="fc" id="L472">            default: absorb(TypeToken.NOT);break; // case of '-'</span>
+<span class="fc" id="L474">            case ADDITIVE_OP: absorb(TypeToken.ADDITIVE_OP);break; // case of '-'</span>
+<span class="fc" id="L475">            default: absorb(TypeToken.NOT);break; // case of '-'</span>
         }
 
-<span class="fc" id="L475">        return new ASTUnary(token.getAttribute(), expression());</span>
+<span class="fc" id="L478">        return new ASTUnary(token.getAttribute(), expression());</span>
     }
 
     /**
@@ -484,21 +487,21 @@ public class Parser {
      */
     private ASTExpression simpleExpression() throws IOException, InvalidSyntaxException{
         //get term
-<span class="fc" id="L487">        ASTExpression node = term();</span>
+<span class="fc" id="L490">        ASTExpression node = term();</span>
 
         //while there is an additive op
-<span class="fc bfc" id="L490" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.ADDITIVE_OP)</span>
+<span class="fc bfc" id="L493" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.ADDITIVE_OP)</span>
         {
             //get current token
-<span class="fc" id="L493">            Token token = this.currentToken;</span>
+<span class="fc" id="L496">            Token token = this.currentToken;</span>
             //absorb the additive operand
-<span class="fc" id="L495">            absorb(TypeToken.ADDITIVE_OP);</span>
+<span class="fc" id="L498">            absorb(TypeToken.ADDITIVE_OP);</span>
             //create the bin expr node with term, operand and he right term
-<span class="fc" id="L497">            node = new ASTBinExpression(node, token.getAttribute(), term());</span>
-<span class="fc" id="L498">        }</span>
+<span class="fc" id="L500">            node = new ASTBinExpression(node, token.getAttribute(), term());</span>
+<span class="fc" id="L501">        }</span>
 
         //return node
-<span class="fc" id="L501">        return node;</span>
+<span class="fc" id="L504">        return node;</span>
 
     }
 
@@ -511,86 +514,86 @@ public class Parser {
      */
     private ASTIf ifStatement() throws IOException, InvalidSyntaxException{
         //absorb if
-<span class="fc" id="L514">        absorb(TypeToken.IF);</span>
+<span class="fc" id="L517">        absorb(TypeToken.IF);</span>
         //absorb bracket open
-<span class="fc" id="L516">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L519">        absorb(TypeToken.BRACKET_OPEN);</span>
         //get expression
-<span class="fc" id="L518">        ASTExpression expression = expression();</span>
+<span class="fc" id="L521">        ASTExpression expression = expression();</span>
         //absorb bracket close
-<span class="fc" id="L520">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L523">        absorb(TypeToken.BRACKET_CLOSE);</span>
         //get block
-<span class="fc" id="L522">        ASTBlock block = block();</span>
+<span class="fc" id="L525">        ASTBlock block = block();</span>
 
         //init block for else
         ASTBlock elseBlock;
         //if the current token is else, there is an else block
-<span class="fc bfc" id="L527" title="All 2 branches covered.">        if(currentToken.getType() == TypeToken.ELSE)</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if(currentToken.getType() == TypeToken.ELSE)</span>
         {
             //absorb else
-<span class="fc" id="L530">            absorb(TypeToken.ELSE);</span>
+<span class="fc" id="L533">            absorb(TypeToken.ELSE);</span>
             //get else block
-<span class="fc" id="L532">            elseBlock = block();</span>
+<span class="fc" id="L535">            elseBlock = block();</span>
         }
         //else leave the else block empty
         else
-<span class="fc" id="L536">            elseBlock = new ASTBlock();</span>
+<span class="fc" id="L539">            elseBlock = new ASTBlock();</span>
 
         //return if node with expression, block and elseblock
-<span class="fc" id="L539">        return new ASTIf(expression, block, elseBlock);</span>
+<span class="fc" id="L542">        return new ASTIf(expression, block, elseBlock);</span>
     }
 
     /**
      * Method for for statement
-     * 'for; '(' [&lt;VARIABLEDECL&gt;] ';' &lt;EXPRESSION&gt; ';' [&lt;ASSIGNMENT&gt;] ')' &lt;BLOCK&gt;
+     * 'for' '(' [&lt;VARIABLEDECL&gt;] ';' &lt;EXPRESSION&gt; ';' [&lt;ASSIGNMENT&gt;] ')' &lt;BLOCK&gt;
      * @return for node
      * @throws IOException
      * @throws InvalidSyntaxException
      */
     private ASTFor forStatement() throws IOException, InvalidSyntaxException{
         //absorb for
-<span class="fc" id="L551">        absorb(TypeToken.FOR);</span>
+<span class="fc" id="L554">        absorb(TypeToken.FOR);</span>
         //absorb bracket open
-<span class="fc" id="L553">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L556">        absorb(TypeToken.BRACKET_OPEN);</span>
         //get variable declaration
-<span class="fc" id="L555">        ASTVariableDecl variableDecl = variableDeclaration();</span>
+<span class="fc" id="L558">        ASTVariableDecl variableDecl = variableDeclaration();</span>
         //absorb semi colon
-<span class="fc" id="L557">        absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L560">        absorb(TypeToken.SEMI_COLON);</span>
         //get expression
-<span class="fc" id="L559">        ASTExpression expression = expression();</span>
+<span class="fc" id="L562">        ASTExpression expression = expression();</span>
         //absorb semi colon
-<span class="fc" id="L561">        absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L564">        absorb(TypeToken.SEMI_COLON);</span>
         //get assignment
-<span class="fc" id="L563">        ASTAssignment assignment = assignment();</span>
+<span class="fc" id="L566">        ASTAssignment assignment = assignment();</span>
         //absorb bracket close
-<span class="fc" id="L565">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L568">        absorb(TypeToken.BRACKET_CLOSE);</span>
         //get block
-<span class="fc" id="L567">        ASTBlock block = block();</span>
+<span class="fc" id="L570">        ASTBlock block = block();</span>
 
         //return for node with variable declaration, expression, assignment and block
-<span class="fc" id="L570">        return new ASTFor(variableDecl, expression, assignment, block);</span>
+<span class="fc" id="L573">        return new ASTFor(variableDecl, expression, assignment, block);</span>
     }
 
     /**
      * Method for while
-     * 'while' '(' &lt;EXPRESSION&gt; '); &lt;BLOCK&gt;
+     * 'while' '(' &lt;EXPRESSION&gt; ')' &lt;BLOCK&gt;
      * @return while node
      * @throws IOException
      * @throws InvalidSyntaxException
      */
     private ASTWhile whileStatement() throws IOException, InvalidSyntaxException{
         //absorb while
-<span class="fc" id="L582">        absorb(TypeToken.WHILE);</span>
+<span class="fc" id="L585">        absorb(TypeToken.WHILE);</span>
         //absorb bracket open
-<span class="fc" id="L584">        absorb(TypeToken.BRACKET_OPEN);</span>
+<span class="fc" id="L587">        absorb(TypeToken.BRACKET_OPEN);</span>
         //get expression
-<span class="fc" id="L586">        ASTExpression expression = expression();</span>
+<span class="fc" id="L589">        ASTExpression expression = expression();</span>
         //absorb bracket close
-<span class="fc" id="L588">        absorb(TypeToken.BRACKET_CLOSE);</span>
+<span class="fc" id="L591">        absorb(TypeToken.BRACKET_CLOSE);</span>
         //get block
-<span class="fc" id="L590">        ASTBlock block = block();</span>
+<span class="fc" id="L593">        ASTBlock block = block();</span>
 
         //return new while node with expression and block
-<span class="fc" id="L593">        return new ASTWhile(expression, block);</span>
+<span class="fc" id="L596">        return new ASTWhile(expression, block);</span>
     }
 
     /**
@@ -602,26 +605,26 @@ public class Parser {
      */
     private ASTExpression expression() throws IOException, InvalidSyntaxException{
         //get simple expression
-<span class="fc" id="L605">        ASTExpression node = simpleExpression();</span>
+<span class="fc" id="L608">        ASTExpression node = simpleExpression();</span>
 
         //while there is a relational op
-<span class="fc bfc" id="L608" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.RELATIONAL_OP)</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.RELATIONAL_OP)</span>
         {
             //get current token
-<span class="fc" id="L611">            Token token = this.currentToken;</span>
+<span class="fc" id="L614">            Token token = this.currentToken;</span>
             //absorb the operand
-<span class="fc" id="L613">            absorb(TypeToken.RELATIONAL_OP);</span>
+<span class="fc" id="L616">            absorb(TypeToken.RELATIONAL_OP);</span>
 
             //set node to binary expression node with left simple expression, operand and right simple expression
-<span class="fc" id="L616">            node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());</span>
-<span class="fc" id="L617">        }</span>
+<span class="fc" id="L619">            node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());</span>
+<span class="fc" id="L620">        }</span>
 
-<span class="fc" id="L619">        return node;</span>
+<span class="fc" id="L622">        return node;</span>
     }
 
     /**
      * Method for statement
-     * &lt;VARIABLEDECL&gt; ';' | &lt;ASSIGNMENT&gt; ';' | &lt;PRINTSTMNT&gt; ';' | &lt;IFSTMNT&gt;  | &lt;FORSTMNT&gt; | &lt;WHILESTMNT&gt;  | &lt;RETURNSTMNT&gt; ';' Z
+     * &lt;VARIABLEDECL&gt; ';' | &lt;ASSIGNMENT&gt; ';' | &lt;PRINTSTMNT&gt; ';' | &lt;IFSTMNT&gt;  | &lt;FORSTMNT&gt; | &lt;WHILESTMNT&gt;  | &lt;RETURNSTMNT&gt; ';' |
      * &lt;FUNCTIONDECL&gt; | &lt;BLOCK&gt;
      * @return a statment node
      * @throws IOException
@@ -629,52 +632,52 @@ public class Parser {
      */
     private ASTStatement statement() throws IOException, InvalidSyntaxException{
         //get current token
-<span class="fc" id="L632">        Token token = this.currentToken;</span>
+<span class="fc" id="L635">        Token token = this.currentToken;</span>
         //init node to return
-<span class="fc" id="L634">        ASTStatement toReturn = null;</span>
+<span class="fc" id="L637">        ASTStatement toReturn = null;</span>
 
         //get type
-<span class="fc bfc" id="L637" title="All 10 branches covered.">        switch(token.getType())</span>
+<span class="fc bfc" id="L640" title="All 10 branches covered.">        switch(token.getType())</span>
         {
             //variable declaration
             case LET:
             {
                 //get variable declaration
-<span class="fc" id="L643">                toReturn = variableDeclaration();</span>
+<span class="fc" id="L646">                toReturn = variableDeclaration();</span>
                 //absorb semi colon
-<span class="fc" id="L645">                absorb(TypeToken.SEMI_COLON);</span>
-<span class="fc" id="L646">            };break;</span>
+<span class="fc" id="L648">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L649">            };break;</span>
             case IDENTIFIER:
             {
                 //get assignment
-<span class="fc" id="L650">                toReturn = assignment();</span>
+<span class="fc" id="L653">                toReturn = assignment();</span>
                 //absorb semi colon
-<span class="fc" id="L652">                absorb(TypeToken.SEMI_COLON);</span>
-<span class="fc" id="L653">            };break;</span>
+<span class="fc" id="L655">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L656">            };break;</span>
             case PRINT:
             {
                 //get print
-<span class="fc" id="L657">                toReturn = printStatement();</span>
+<span class="fc" id="L660">                toReturn = printStatement();</span>
                 //absorb semi colon
-<span class="fc" id="L659">                absorb(TypeToken.SEMI_COLON);</span>
-<span class="fc" id="L660">            };break;</span>
-<span class="fc" id="L661">            case IF: return ifStatement();</span>
-<span class="fc" id="L662">            case FOR: return forStatement();</span>
-<span class="fc" id="L663">            case WHILE: return whileStatement();</span>
+<span class="fc" id="L662">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L663">            };break;</span>
+<span class="fc" id="L664">            case IF: return ifStatement();</span>
+<span class="fc" id="L665">            case FOR: return forStatement();</span>
+<span class="fc" id="L666">            case WHILE: return whileStatement();</span>
             case RETURN:
             {
                 //get return statment
-<span class="fc" id="L667">                toReturn = returnStatement();</span>
+<span class="fc" id="L670">                toReturn = returnStatement();</span>
                 //absorb semi colon
-<span class="fc" id="L669">                absorb(TypeToken.SEMI_COLON);</span>
-<span class="fc" id="L670">            };break;</span>
-<span class="fc" id="L671">            case FF: return functionDeclaration();</span>
-<span class="fc" id="L672">            case CURLY_OPEN: return block();</span>
-<span class="fc" id="L673">            default: return null;//EOF</span>
+<span class="fc" id="L672">                absorb(TypeToken.SEMI_COLON);</span>
+<span class="fc" id="L673">            };break;</span>
+<span class="fc" id="L674">            case FF: return functionDeclaration();</span>
+<span class="fc" id="L675">            case CURLY_OPEN: return block();</span>
+<span class="fc" id="L676">            default: return null;//EOF</span>
         }
 
         //return statement set
-<span class="fc" id="L677">        return toReturn;</span>
+<span class="fc" id="L680">        return toReturn;</span>
     }
 
     /**
@@ -686,23 +689,25 @@ public class Parser {
      */
     public ASTBlock block() throws IOException, InvalidSyntaxException{
         //absorb open curly
-<span class="fc" id="L689">        absorb(TypeToken.CURLY_OPEN);</span>
+<span class="fc" id="L692">        absorb(TypeToken.CURLY_OPEN);</span>
         //init list to store statements
-<span class="fc" id="L691">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+<span class="fc" id="L694">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
 
         //while it is not an ending curly bracket
-<span class="fc bfc" id="L694" title="All 2 branches covered.">        while(this.currentToken.getType() != TypeToken.CURLY_CLOSE)</span>
+<span class="fc bfc" id="L697" title="All 2 branches covered.">        while(this.currentToken.getType() != TypeToken.CURLY_CLOSE)</span>
         {
             //get statement and add to the list
-<span class="fc" id="L697">            ASTStatement statement = statement();</span>
-<span class="fc" id="L698">            statements.add(statement);</span>
-<span class="fc" id="L699">        }</span>
+<span class="fc" id="L700">            ASTStatement statement = statement();</span>
+<span class="fc bfc" id="L701" title="All 2 branches covered.">            if(statement == null)</span>
+<span class="fc" id="L702">                break;</span>
+<span class="fc" id="L703">            statements.add(statement);</span>
+<span class="fc" id="L704">        }</span>
 
         //absorb closing curly bracket
-<span class="fc" id="L702">        absorb(TypeToken.CURLY_CLOSE);</span>
+<span class="fc" id="L707">        absorb(TypeToken.CURLY_CLOSE);</span>
 
         //return block node with list of statments
-<span class="fc" id="L705">        return new ASTBlock(statements);</span>
+<span class="fc" id="L710">        return new ASTBlock(statements);</span>
     }
 
     /**
@@ -714,20 +719,20 @@ public class Parser {
      */
     public ASTProgram program() throws IOException, InvalidSyntaxException{
         //init list to store statements
-<span class="fc" id="L717">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+<span class="fc" id="L722">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
         //get statement
-<span class="fc" id="L719">        ASTStatement statement = statement();</span>
+<span class="fc" id="L724">        ASTStatement statement = statement();</span>
 
         //while statement is not null
-<span class="fc bfc" id="L722" title="All 2 branches covered.">        while(statement != null)</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">        while(statement != null)</span>
         {
             //add statement to list and get the next one
-<span class="fc" id="L725">            statements.add(statement);</span>
-<span class="fc" id="L726">            statement = statement();</span>
+<span class="fc" id="L730">            statements.add(statement);</span>
+<span class="fc" id="L731">            statement = statement();</span>
         }
 
         //return new program node with statements
-<span class="fc" id="L730">        return new ASTProgram(statements);</span>
+<span class="fc" id="L735">        return new ASTProgram(statements);</span>
     }
 
 
@@ -738,7 +743,24 @@ public class Parser {
      * @throws InvalidSyntaxException
      */
     public ASTProgram parse() throws IOException, InvalidSyntaxException{
-<span class="fc" id="L741">        return program();</span>
+<span class="fc" id="L746">        return program();</span>
+    }
+
+    /**
+     * Method to get enum type from string
+     * @param type in string
+     * @return type in enum
+     */
+    public static Type getTypeEnum(String type)
+    {
+        //set type
+<span class="fc bfc" id="L757" title="All 4 branches covered.">        switch(type)</span>
+        {
+<span class="fc" id="L759">            case &quot;int&quot; : return Type.INT;</span>
+<span class="fc" id="L760">            case &quot;float&quot; : return Type.FLOAT;</span>
+<span class="fc" id="L761">            case &quot;bool&quot; : return Type.BOOL;</span>
+<span class="fc" id="L762">            default : return Type.AUTO;</span>
+        }
     }
 
 }

@@ -1332,49 +1332,49 @@ public class Lexer
 
         /* ************ S26 ROW ************ */
 <span class="fc" id="L1334">        transition = new Transition(State.S26, Category.DIGIT);</span>
-<span class="fc" id="L1335">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1335">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1336">        transition = new Transition(State.S26, Category.DOT);</span>
-<span class="fc" id="L1337">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1337">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1338">        transition = new Transition(State.S26, Category.LETTER);</span>
-<span class="fc" id="L1339">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1339">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1340">        transition = new Transition(State.S26, Category.UNDERSCORE);</span>
-<span class="fc" id="L1341">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1341">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1342">        transition = new Transition(State.S26, Category.MULTIPLY_OPERAND);</span>
 <span class="fc" id="L1343">        transitionTable.put(transition, State.S26);</span>
 <span class="fc" id="L1344">        transition = new Transition(State.S26, Category.DIVIDE_OPERAND);</span>
 <span class="fc" id="L1345">        transitionTable.put(transition, State.S25);</span>
 <span class="fc" id="L1346">        transition = new Transition(State.S26, Category.ADDITION_OPERAND);</span>
-<span class="fc" id="L1347">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1347">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1348">        transition = new Transition(State.S26, Category.SUBTRACT_OPERAND);</span>
-<span class="fc" id="L1349">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1349">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1350">        transition = new Transition(State.S26, Category.ST_OPERAND);</span>
-<span class="fc" id="L1351">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1351">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1352">        transition = new Transition(State.S26, Category.GT_OPERAND);</span>
-<span class="fc" id="L1353">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1353">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1354">        transition = new Transition(State.S26, Category.EQUAL_SIGN);</span>
-<span class="fc" id="L1355">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1355">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1356">        transition = new Transition(State.S26, Category.BRACKET_OPEN);</span>
-<span class="fc" id="L1357">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1357">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1358">        transition = new Transition(State.S26, Category.BRACKET_CLOSE);</span>
-<span class="fc" id="L1359">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1359">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1360">        transition = new Transition(State.S26, Category.CURLY_OPEN);</span>
-<span class="fc" id="L1361">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1361">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1362">        transition = new Transition(State.S26, Category.CURLY_CLOSE);</span>
-<span class="fc" id="L1363">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1363">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1364">        transition = new Transition(State.S26, Category.COLON);</span>
-<span class="fc" id="L1365">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1365">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1366">        transition = new Transition(State.S26, Category.SEMI_COLON);</span>
-<span class="fc" id="L1367">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1367">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1368">        transition = new Transition(State.S26, Category.COMMA);</span>
-<span class="fc" id="L1369">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1369">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1370">        transition = new Transition(State.S26, Category.NEWLINE);</span>
-<span class="fc" id="L1371">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1371">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1372">        transition = new Transition(State.S26, Category.SPACE);</span>
-<span class="fc" id="L1373">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1373">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1374">        transition = new Transition(State.S26, Category.EOF);</span>
 <span class="fc" id="L1375">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1376">        transition = new Transition(State.S26, Category.OTHER);</span>
-<span class="fc" id="L1377">        transitionTable.put(transition, State.S26);</span>
+<span class="fc" id="L1377">        transitionTable.put(transition, State.S24);</span>
 
         /* ************ S27 ROW ************ */
 <span class="fc" id="L1380">        transition = new Transition(State.S27, Category.DIGIT);</span>
@@ -1563,60 +1563,54 @@ public class Lexer
             //get category
 <span class="fc" id="L1564">            Category cat = charCat(nextChar);</span>
 
-            //if you are in a comment, and encounter a star but the next character is not a'/' i.e. end of comment, clear lexeme
-<span class="fc bfc" id="L1567" title="All 6 branches covered.">            if(previous ==State.S24 &amp;&amp; state == State.S26 &amp;&amp; cat != Category.DIVIDE_OPERAND) {</span>
-<span class="fc" id="L1568">                lexeme.setLength(0);</span>
-<span class="fc" id="L1569">                continue;</span>
-            }
-
             //set transition
-<span class="fc" id="L1573">            Transition transition = new Transition(state, cat);</span>
+<span class="fc" id="L1567">            Transition transition = new Transition(state, cat);</span>
             //set previous state
-<span class="fc" id="L1575">            previous = state;</span>
+<span class="fc" id="L1569">            previous = state;</span>
             //get state
-<span class="fc" id="L1577">            state = transitionTable.get(transition);</span>
+<span class="fc" id="L1571">            state = transitionTable.get(transition);</span>
 
             //if start of comment or end of comment
-<span class="fc bfc" id="L1580" title="All 6 branches covered.">            if(state == State.S23 ||  state == State.S24 || state == State.S25)</span>
+<span class="fc bfc" id="L1574" title="All 6 branches covered.">            if(state == State.S23 ||  state == State.S24 || state == State.S25)</span>
             {
                 //clear lexeme and continue, i.e. do not add character to lexeme
-<span class="fc" id="L1583">                lexeme.setLength(0);</span>
-<span class="fc" id="L1584">                continue;</span>
+<span class="fc" id="L1577">                lexeme.setLength(0);</span>
+<span class="fc" id="L1578">                continue;</span>
             }
 
             //If there was a whitespace or a newline at the start
-<span class="fc bfc" id="L1588" title="All 10 branches covered.">            if((previous == State.START &amp;&amp; state == State.START) ||</span>
+<span class="fc bfc" id="L1582" title="All 10 branches covered.">            if((previous == State.START &amp;&amp; state == State.START) ||</span>
             //OR end of comment
             ((previous == State.S25)  &amp;&amp; state == State.START) || previous == State.S23)
             {
                 //do not add character to lexeme
-<span class="fc" id="L1593">                continue;</span>
+<span class="fc" id="L1587">                continue;</span>
             }
 
             //add character to lexeme
-<span class="fc" id="L1597">            lexeme.append(nextChar);</span>
-<span class="fc" id="L1598">        }</span>
+<span class="fc" id="L1591">            lexeme.append(nextChar);</span>
+<span class="fc" id="L1592">        }</span>
 
         //rollback loop
-<span class="fc bfc" id="L1601" title="All 2 branches covered.">        while(!acceptableStates.containsKey(state))</span>
+<span class="fc bfc" id="L1595" title="All 2 branches covered.">        while(!acceptableStates.containsKey(state))</span>
         {
             //pop stack
-<span class="fc" id="L1604">            state = stack.pop();</span>
+<span class="fc" id="L1598">            state = stack.pop();</span>
 
             //if cannot reduce length, there must be an error
-<span class="fc bfc" id="L1607" title="All 2 branches covered.">            if(lexeme.length()-1 &lt; 0)</span>
-<span class="fc" id="L1608">                throw new InvalidSyntaxException(&quot;LINE &quot;+currentLine+&quot;: Syntax is invalid - Unexpected &quot;+nextChar());</span>
+<span class="fc bfc" id="L1601" title="All 2 branches covered.">            if(lexeme.length()-1 &lt; 0)</span>
+<span class="fc" id="L1602">                throw new InvalidSyntaxException(&quot;LINE &quot;+currentLine+&quot;: Syntax is invalid - Unexpected &quot;+nextChar());</span>
 
             //trim lexeme
-<span class="fc" id="L1611">            lexeme.setLength(lexeme.length()-1);</span>
-<span class="fc" id="L1612">            rollback();</span>
+<span class="fc" id="L1605">            lexeme.setLength(lexeme.length()-1);</span>
+<span class="fc" id="L1606">            rollback();</span>
         }
 
         // if identifier, check if keyword
-<span class="fc bfc" id="L1616" title="All 2 branches covered.">        if(acceptableStates.get(state) == TypeToken.IDENTIFIER)</span>
-<span class="fc bfc" id="L1617" title="All 2 branches covered.">            return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());</span>
+<span class="fc bfc" id="L1610" title="All 2 branches covered.">        if(acceptableStates.get(state) == TypeToken.IDENTIFIER)</span>
+<span class="fc bfc" id="L1611" title="All 2 branches covered.">            return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());</span>
         else
-<span class="fc" id="L1619">            return new Token(acceptableStates.get(state), lexeme.toString());</span>
+<span class="fc" id="L1613">            return new Token(acceptableStates.get(state), lexeme.toString());</span>
 
     }
 
@@ -1624,14 +1618,14 @@ public class Lexer
      * Method to get tokens
      */
     public ArrayList&lt;Token&gt; getTokens() throws IOException, InvalidSyntaxException {
-<span class="fc" id="L1627">        ArrayList&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L1621">        ArrayList&lt;Token&gt; tokens = new ArrayList&lt;&gt;();</span>
         Token nextToken;
         do{
-<span class="fc" id="L1630">            nextToken = nextToken();</span>
-<span class="fc" id="L1631">            tokens.add(nextToken);</span>
-<span class="fc bfc" id="L1632" title="All 2 branches covered.">        }while(nextToken.getType() != TypeToken.EOF);</span>
+<span class="fc" id="L1624">            nextToken = nextToken();</span>
+<span class="fc" id="L1625">            tokens.add(nextToken);</span>
+<span class="fc bfc" id="L1626" title="All 2 branches covered.">        }while(nextToken.getType() != TypeToken.EOF);</span>
 
-<span class="fc" id="L1634">        return tokens;</span>
+<span class="fc" id="L1628">        return tokens;</span>
     }
 
     /**
@@ -1640,17 +1634,17 @@ public class Lexer
     public boolean compareTokens(ArrayList&lt;Token&gt; expected, ArrayList&lt;Token&gt; actual) throws IOException, InvalidSyntaxException {
 
         //check size
-<span class="fc bfc" id="L1643" title="All 2 branches covered.">        if(expected.size() != actual.size())</span>
-<span class="fc" id="L1644">            return false;</span>
+<span class="fc bfc" id="L1637" title="All 2 branches covered.">        if(expected.size() != actual.size())</span>
+<span class="fc" id="L1638">            return false;</span>
 
         //loop through and if you find one different return false
-<span class="fc bfc" id="L1647" title="All 2 branches covered.">        for(int i=0; i &lt; expected.size(); i++)</span>
+<span class="fc bfc" id="L1641" title="All 2 branches covered.">        for(int i=0; i &lt; expected.size(); i++)</span>
         {
-<span class="fc bfc" id="L1649" title="All 2 branches covered.">            if(!expected.get(i).equals(actual.get(i)))</span>
-<span class="fc" id="L1650">                return false;</span>
+<span class="fc bfc" id="L1643" title="All 2 branches covered.">            if(!expected.get(i).equals(actual.get(i)))</span>
+<span class="fc" id="L1644">                return false;</span>
         }
 
-<span class="fc" id="L1653">        return true;</span>
+<span class="fc" id="L1647">        return true;</span>
     }
 
 }

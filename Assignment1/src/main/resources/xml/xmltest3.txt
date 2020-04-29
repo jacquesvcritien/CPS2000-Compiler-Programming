@@ -1,2 +1,18 @@
 let x:float = 3.2;
 x = 5.0;
+
+/*
+Expected
+
+<Program>
+	<VarDecl>
+		<Identifier Type="FLOAT">x</Identifier>
+		<FloatLiteral>3.2</FloatLiteral>
+	</VarDecl>
+	<Assignment>
+		<Identifier>x</Identifier>
+		<FloatLiteral>5.0</FloatLiteral>
+	</Assignment>
+</Program>
+*/
+
