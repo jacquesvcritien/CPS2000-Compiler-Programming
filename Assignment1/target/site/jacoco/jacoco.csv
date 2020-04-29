@@ -21,11 +21,11 @@ Assignment1,parser.node,ASTActualParams,0,21,0,0,0,9,0,4,0,4
 Assignment1,parser.node,ASTPrint,0,13,0,0,0,6,0,3,0,3
 Assignment1,parser.node,ASTIdentifier,0,29,0,0,0,13,0,6,0,6
 Assignment1,parser.node,ASTProgram,0,13,0,0,0,6,0,3,0,3
-Assignment1,visitor,VisitorInterpreter,17,928,2,97,3,195,2,77,1,23
+Assignment1,visitor,VisitorInterpreter,0,929,0,97,0,196,0,78,0,24
 Assignment1,visitor,Scope,0,44,0,0,0,13,0,7,0,7
 Assignment1,visitor,VisitorXMLGenerator,0,990,0,22,0,185,0,36,0,25
 Assignment1,visitor,VisitorSemanticAnalysis,0,704,0,56,0,171,0,54,0,25
-Assignment1,visitor,SymbolTable,12,185,1,17,1,52,1,26,0,18
+Assignment1,visitor,SymbolTable,0,178,0,14,0,51,0,25,0,18
 Assignment1,lexer,Keyword,0,96,0,0,0,17,0,2,0,2
 Assignment1,lexer,State,0,304,0,0,0,31,0,1,0,1
 Assignment1,lexer,Lexer,0,7486,0,62,0,1390,0,51,0,11

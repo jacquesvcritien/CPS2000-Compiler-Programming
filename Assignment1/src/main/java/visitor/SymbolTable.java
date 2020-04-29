@@ -119,11 +119,7 @@ public class SymbolTable {
         //get global scope
         Scope global = scopes.firstElement();
 
-        //if defined, throw an error
-        if(global.isDefined(identifier) && identifier != "return")
-            throw new AlreadyDeclaredException(identifier+" is already declared");
-        else
-            global.addDeclaration(identifier, node);
+        global.addDeclaration(identifier, node);
     }
 
 

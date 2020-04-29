@@ -119,12 +119,8 @@ public class SymbolTable {
         //get global scope
 <span class="fc" id="L120">        Scope global = scopes.firstElement();</span>
 
-        //if defined, throw an error
-<span class="pc bpc" id="L123" title="1 of 4 branches missed.">        if(global.isDefined(identifier) &amp;&amp; identifier != &quot;return&quot;)</span>
-<span class="nc" id="L124">            throw new AlreadyDeclaredException(identifier+&quot; is already declared&quot;);</span>
-        else
-<span class="fc" id="L126">            global.addDeclaration(identifier, node);</span>
-<span class="fc" id="L127">    }</span>
+<span class="fc" id="L122">        global.addDeclaration(identifier, node);</span>
+<span class="fc" id="L123">    }</span>
 
 
     /**
@@ -135,17 +131,17 @@ public class SymbolTable {
     public ASTNode lookup(String identifier)
     {
         //loop though scopes to see if the identifier was declared
-<span class="fc" id="L138">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
+<span class="fc" id="L134">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L141">            Scope scope = scopesIterator.previous();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L137">            Scope scope = scopesIterator.previous();</span>
             // if is declared in scope, return the identifier
-<span class="fc bfc" id="L143" title="All 2 branches covered.">            if(scope.isDefined(identifier))</span>
-<span class="fc" id="L144">                return scope.getDeclarations().get(identifier);</span>
-<span class="fc" id="L145">        }</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            if(scope.isDefined(identifier))</span>
+<span class="fc" id="L140">                return scope.getDeclarations().get(identifier);</span>
+<span class="fc" id="L141">        }</span>
 
         //else return null
-<span class="fc" id="L148">        return null;</span>
+<span class="fc" id="L144">        return null;</span>
     }
 
     /**
@@ -156,17 +152,17 @@ public class SymbolTable {
     public Object getValue(String identifier)
     {
         //loop though scopes to see if the identifier was declared
-<span class="fc" id="L159">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
+<span class="fc" id="L155">        ListIterator&lt;Scope&gt; scopesIterator = scopes.listIterator(scopes.size());</span>
 
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
-<span class="fc" id="L162">            Scope scope = scopesIterator.previous();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        while (scopesIterator.hasPrevious()) {</span>
+<span class="fc" id="L158">            Scope scope = scopesIterator.previous();</span>
             //if scope has value, return it
-<span class="fc bfc" id="L164" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
-<span class="fc" id="L165">                return scope.getValues().get(identifier);</span>
-<span class="fc" id="L166">        }</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if(scope.getValues().containsKey(identifier))</span>
+<span class="fc" id="L161">                return scope.getValues().get(identifier);</span>
+<span class="fc" id="L162">        }</span>
 
         //else return null
-<span class="fc" id="L169">        return null;</span>
+<span class="fc" id="L165">        return null;</span>
     }
 
     /**
@@ -175,7 +171,7 @@ public class SymbolTable {
      */
     public Scope getGlobalScope()
     {
-<span class="fc" id="L178">        return scopes.get(0);</span>
+<span class="fc" id="L174">        return scopes.get(0);</span>
     }
 
     /**
@@ -183,7 +179,7 @@ public class SymbolTable {
      * @return constant value
      */
     public Object getConstantValue() {
-<span class="fc" id="L186">        return constantValue;</span>
+<span class="fc" id="L182">        return constantValue;</span>
     }
 
     /**
@@ -191,15 +187,15 @@ public class SymbolTable {
      * @param value value to set
      */
     public void setConstantValue(Object value) {
-<span class="fc" id="L194">        this.constantValue = value;</span>
-<span class="fc" id="L195">    }</span>
+<span class="fc" id="L190">        this.constantValue = value;</span>
+<span class="fc" id="L191">    }</span>
 
     /**
      * Method to get constant type
      * @return
      */
     public Type getConstant() {
-<span class="fc" id="L202">        return constantType;</span>
+<span class="fc" id="L198">        return constantType;</span>
     }
 
     /**
@@ -207,15 +203,15 @@ public class SymbolTable {
      * @param constant
      */
     public void setConstant(Type constant) {
-<span class="fc" id="L210">        this.constantType = constant;</span>
-<span class="fc" id="L211">    }</span>
+<span class="fc" id="L206">        this.constantType = constant;</span>
+<span class="fc" id="L207">    }</span>
 
     /**
      * Method to reset symbol table
      */
     public void reset()
     {
-<span class="fc" id="L218">        symbolTable = new SymbolTable();</span>
-<span class="fc" id="L219">    }</span>
+<span class="fc" id="L214">        symbolTable = new SymbolTable();</span>
+<span class="fc" id="L215">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

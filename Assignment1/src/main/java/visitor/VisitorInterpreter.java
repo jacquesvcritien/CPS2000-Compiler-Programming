@@ -246,13 +246,6 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
-        //loop through formal params
-        for(int i=0; i <formalParams.getFormalParams().size(); i++)
-        {
-            //get and visit param
-            formalParams.getFormalParams().get(i).accept(this);
-        }
-
     }
 
     @Override

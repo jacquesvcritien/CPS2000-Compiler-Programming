@@ -66,8 +66,8 @@
   </properties>
   <testcase classname="TokenTest" name="testEqualsWhenEqual" time="0"/>
   <testcase classname="TokenTest" name="testEqualsWhenNotEqual" time="0"/>
-  <testcase classname="TokenTest" name="testEqualsWhenNotEqualBoth" time="0"/>
   <testcase classname="TokenTest" name="testEqualsSameObject" time="0"/>
   <testcase classname="TokenTest" name="testEqualsWhenNotEqual2" time="0"/>
+  <testcase classname="TokenTest" name="testEqualsWhenNotEqualBoth" time="0"/>
   <testcase classname="TokenTest" name="testEqualsNull" time="0"/>
 </testsuite>

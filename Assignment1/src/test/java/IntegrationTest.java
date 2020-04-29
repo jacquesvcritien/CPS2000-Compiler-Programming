@@ -5,16 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
-import parser.node.ASTActualParams;
-import parser.node.ASTExpression;
-import parser.node.ASTProgram;
-import parser.node.ASTStatement;
+import parser.node.*;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -736,11 +734,13 @@ public class IntegrationTest {
         ASTExpression expression = new ASTExpression();
         ASTStatement statement = new ASTStatement();
         ASTActualParams actualParams = new ASTActualParams();
+        ASTFormalParams formalParams = new ASTFormalParams(new ArrayList<>());
         expression.accept(semanticAnalysis);
         statement.accept(semanticAnalysis);
         expression.accept(interpreter);
         statement.accept(interpreter);
         actualParams.accept(interpreter);
+        formalParams.accept(interpreter);
     }
 
     /**
