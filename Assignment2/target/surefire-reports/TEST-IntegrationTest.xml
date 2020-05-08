@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="44" failures="0" name="IntegrationTest" time="0.449" errors="0" skipped="0">
+<testsuite tests="44" failures="0" name="IntegrationTest" time="0.204" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\bin"/>
     <property name="java.vm.version" value="25.241-b07"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1"/>
+    <property name="user.dir" value="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2"/>
     <property name="java.runtime.version" value="1.8.0_241-b07"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\endorsed"/>
@@ -64,48 +64,48 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="IntegrationTest" name="test2" time="0.252"/>
-  <testcase classname="IntegrationTest" name="test3" time="0.014"/>
-  <testcase classname="IntegrationTest" name="test4" time="0.013"/>
-  <testcase classname="IntegrationTest" name="testIncorrect1" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testIncorrect2" time="0.006"/>
-  <testcase classname="IntegrationTest" name="test1" time="0.01"/>
-  <testcase classname="IntegrationTest" name="testExpressionBadOperandsNotBoolean" time="0.007"/>
-  <testcase classname="IntegrationTest" name="testIncorrect3" time="0.007"/>
-  <testcase classname="IntegrationTest" name="testIncorrect4" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testIncorrect8" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testExpressions" time="0.02"/>
-  <testcase classname="IntegrationTest" name="testFunctionCall" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testUndeclared" time="0.003"/>
+  <testcase classname="IntegrationTest" name="test2" time="0.099"/>
+  <testcase classname="IntegrationTest" name="test3" time="0.008"/>
+  <testcase classname="IntegrationTest" name="test4" time="0.004"/>
+  <testcase classname="IntegrationTest" name="testIncorrect1" time="0.003"/>
+  <testcase classname="IntegrationTest" name="testIncorrect2" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testIncorrect3" time="0.002"/>
+  <testcase classname="IntegrationTest" name="test1" time="0.006"/>
+  <testcase classname="IntegrationTest" name="testIncorrect5" time="0.001"/>
   <testcase classname="IntegrationTest" name="testIncorrect6" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testIncorrect7" time="0.001"/>
-  <testcase classname="IntegrationTest" name="testBadReturn" time="0.007"/>
+  <testcase classname="IntegrationTest" name="testIncorrect7" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testIncorrect4" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testBadReturn" time="0.003"/>
   <testcase classname="IntegrationTest" name="testGivenCode" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testIncorrect5" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testExpressionBadOperandsBoolean" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testBadVariableDeclFloat" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testForInsertValue" time="0"/>
-  <testcase classname="IntegrationTest" name="test6IncorrectSyntax" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testForGetValueNoVariable" time="0"/>
-  <testcase classname="IntegrationTest" name="testDivisionBy0Int" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testIncorrect8" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testUndeclared" time="0.003"/>
+  <testcase classname="IntegrationTest" name="testFunctionCall" time="0.004"/>
+  <testcase classname="IntegrationTest" name="testExpressions" time="0.005"/>
+  <testcase classname="IntegrationTest" name="testExpressionBadOperandsNotBoolean" time="0.003"/>
   <testcase classname="IntegrationTest" name="testFunctionCallBadArgsSize" time="0.002"/>
-  <testcase classname="IntegrationTest" name="testFunctionCallBadArgBool" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testAssignmentWrongBoolean" time="0.008"/>
-  <testcase classname="IntegrationTest" name="testAssignmentUndeclared" time="0.001"/>
-  <testcase classname="IntegrationTest" name="testInexistentFunctionCall" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testIncorrectType" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testAlreadyDeclared" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testBadVariableDeclBool" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testAssignmentWrongInt" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testDivisionBy0Float" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testJustForCoverage" time="0"/>
-  <testcase classname="IntegrationTest" name="testAssignmentWrongFloat" time="0.001"/>
-  <testcase classname="IntegrationTest" name="testFunctionCallBadArgFloat" time="0.008"/>
+  <testcase classname="IntegrationTest" name="testForGetValueNoVariable" time="0"/>
+  <testcase classname="IntegrationTest" name="testBadVariableDeclBool" time="0.002"/>
+  <testcase classname="IntegrationTest" name="test5IncorrectSymbol" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testAssignmentWrongInt" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testAlreadyDeclared" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testFunctionNoReturn" time="0.002"/>
+  <testcase classname="IntegrationTest" name="test6IncorrectSyntax" time="0.002"/>
   <testcase classname="IntegrationTest" name="testAlreadyDeclaredFucntion" time="0.002"/>
-  <testcase classname="IntegrationTest" name="test5IncorrectSymbol" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testFunctionNoReturn" time="0.003"/>
-  <testcase classname="IntegrationTest" name="testGTWithBooleans" time="0.007"/>
-  <testcase classname="IntegrationTest" name="testFunctionCallBadArgInt" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testMultipleReturnsWarning" time="0.004"/>
-  <testcase classname="IntegrationTest" name="testExpressionDifferentTypes" time="0.012"/>
+  <testcase classname="IntegrationTest" name="testMultipleReturnsWarning" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testForInsertValue" time="0"/>
+  <testcase classname="IntegrationTest" name="testAssignmentWrongFloat" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testFunctionCallBadArgInt" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testJustForCoverage" time="0.001"/>
+  <testcase classname="IntegrationTest" name="testFunctionCallBadArgBool" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testIncorrectType" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testDivisionBy0Float" time="0.003"/>
+  <testcase classname="IntegrationTest" name="testInexistentFunctionCall" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testGTWithBooleans" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testFunctionCallBadArgFloat" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testExpressionDifferentTypes" time="0.003"/>
+  <testcase classname="IntegrationTest" name="testBadVariableDeclFloat" time="0.003"/>
+  <testcase classname="IntegrationTest" name="testDivisionBy0Int" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testAssignmentUndeclared" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testExpressionBadOperandsBoolean" time="0.002"/>
+  <testcase classname="IntegrationTest" name="testAssignmentWrongBoolean" time="0.001"/>
 </testsuite>

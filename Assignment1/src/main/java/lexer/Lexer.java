@@ -1234,7 +1234,7 @@ public class Lexer
         transition = new Transition(State.S23, Category.SPACE);
         transitionTable.put(transition, State.S23);
         transition = new Transition(State.S23, Category.EOF);
-        transitionTable.put(transition, State.BAD);
+        transitionTable.put(transition, State.S27);
         transition = new Transition(State.S23, Category.OTHER);
         transitionTable.put(transition, State.S23);
         

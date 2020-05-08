@@ -16,3 +16,6 @@ ff try(x:int, z:int) : int
 
 let y : int = try(z, x);
 print y;
+
+//expected 2
+

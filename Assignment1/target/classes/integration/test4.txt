@@ -33,3 +33,8 @@ if(x == -(-1))
 }
 
 let y: int = print1();
+
+//expected - 1, 1
+
+
+

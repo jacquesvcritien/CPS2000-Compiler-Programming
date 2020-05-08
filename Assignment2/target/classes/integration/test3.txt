@@ -40,3 +40,5 @@ let y: int = _try(z,x);
 print y;
 print floatplus1(2.0);
 print andgate(true);
+
+//expected - 16, 3.0, true
