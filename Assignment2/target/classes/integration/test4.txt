@@ -1,0 +1,35 @@
+
+/* comment at start */
+let x:auto =1;
+{
+    let x: int = 2+2;
+}
+
+ff inf(): auto
+{
+
+    let num:int = 1;
+    for(;num < 10;)
+    {
+        print num;
+    }
+    return 1;
+}
+
+//auto declarations
+let num: auto = 1;
+let f:auto = 2.0;
+let b:auto = false;
+
+ff print1(): auto
+{
+    print 1;
+    return 1;
+}
+
+if(x == -(-1))
+{
+    print x;
+}
+
+let y: int = print1();

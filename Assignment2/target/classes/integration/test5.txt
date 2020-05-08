@@ -1,0 +1,2 @@
+//incorrect declaration
+let x: ? int = 3;

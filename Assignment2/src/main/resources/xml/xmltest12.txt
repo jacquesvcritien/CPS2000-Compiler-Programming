@@ -1,0 +1,17 @@
+//function call no params
+let x: int = func();
+
+/*
+Expected
+
+<Program>
+	<VarDecl>
+		<Identifier Type="INT">x</Identifier>
+		<FunctionCall>
+			<Identifier>func</Identifier>
+			<ActualParams>Empty</ActualParams>
+		</FunctionCall>
+	</VarDecl>
+</Program>
+*/
+

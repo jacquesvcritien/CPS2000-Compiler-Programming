@@ -1,0 +1,9 @@
+ff square(x:int):int
+{
+return x*x;
+}
+//already declared - expected AlreadyDeclaredException
+ff square(x:int):int
+{
+return x*x;
+}

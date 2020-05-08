@@ -1,0 +1,2 @@
+//bad variable decl float - expected IncorrectTypeException
+let x: float = 1;

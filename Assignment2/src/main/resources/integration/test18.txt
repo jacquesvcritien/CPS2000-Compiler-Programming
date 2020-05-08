@@ -1,0 +1,6 @@
+//function wih multiple returns
+ff try():int
+{
+    return 1;
+    return 2;
+}

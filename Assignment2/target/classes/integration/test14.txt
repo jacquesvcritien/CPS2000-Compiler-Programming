@@ -1,0 +1,3 @@
+let x : bool =false;
+//bad assignment - expected IncorrectTypeException
+x = 1;

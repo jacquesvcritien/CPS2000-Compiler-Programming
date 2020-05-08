@@ -1,0 +1,22 @@
+//function with no formal params
+ff square(): int
+{
+    return 1;
+}
+
+/*
+Expected
+
+<Program>
+	<FuncDecl>
+		<Identifier Type="INT">square</Identifier>
+		<FormalParams>Empty</FormalParams>
+		<Block>
+			<Return>
+				<IntegerLiteral>1</IntegerLiteral>
+			</Return>
+		</Block>
+	</FuncDecl>
+</Program>
+*/
+

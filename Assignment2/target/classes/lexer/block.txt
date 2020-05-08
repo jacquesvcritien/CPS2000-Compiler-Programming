@@ -1,0 +1,7 @@
+//hello
+/* just
+    a
+    comment */
+{
+    let x: int = 2;
+}

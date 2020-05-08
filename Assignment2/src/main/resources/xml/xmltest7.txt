@@ -1,0 +1,28 @@
+//function with formal params
+ff square(x: int): int
+{
+    return x*x;
+}
+
+/*
+expected
+
+<Program>
+	<FuncDecl>
+		<Identifier Type="INT">square</Identifier>
+		<FormalParams>
+			<FormalParam>
+				<Identifier Type="INT">x</Identifier>
+			</FormalParam>
+		</FormalParams>
+		<Block>
+			<Return>
+				<BinaryExpr Op="*">
+					<Identifier>x</Identifier>
+					<Identifier>x</Identifier>
+				</BinaryExpr>
+			</Return>
+		</Block>
+	</FuncDecl>
+</Program>
+*/

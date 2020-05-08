@@ -1,0 +1,7 @@
+ff plus1(x:float):float
+{
+    return x+1.0;
+}
+
+//bad function call - expected IncorrectTypeException
+let x: int =  plus1(1);

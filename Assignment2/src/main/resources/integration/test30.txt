@@ -1,0 +1,2 @@
+//bad expression - expected IncorrectTypeException
+let x: bool = true > true;

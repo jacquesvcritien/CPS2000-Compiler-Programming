@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Token.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment1</a> &gt; <a href="index.source.html" class="el_package">lexer</a> &gt; <span class="el_source">Token.java</span></div><h1>Token.java</h1><pre class="source lang-java linenums">package lexer;
+
+
+/**
+ * Class for token
+ */
+public class Token {
+    //enum holding type
+    public TypeToken name;
+    // String holding an identifier for the token
+    public String attribute;
+
+    /**
+     * Constructor
+     * @param name enum type
+     * @param value value to add to the identifier
+     */
+<span class="fc" id="L18">    public Token(TypeToken name, Object value){</span>
+<span class="fc" id="L19">        this.name = name;</span>
+<span class="fc" id="L20">        this.attribute = value.toString();</span>
+<span class="fc" id="L21">    }</span>
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (this == obj)</span>
+<span class="fc" id="L26">            return true;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (!(obj instanceof Token))</span>
+<span class="fc" id="L28">            return false;</span>
+
+<span class="fc" id="L30">        Token token = (Token) obj;</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        return name == token.getType() &amp;&amp; attribute.equals(token.getAttribute());</span>
+    }
+
+    /**
+     * Getter for type
+     * @return type
+     */
+    public TypeToken getType() {
+<span class="fc" id="L39">        return name;</span>
+    }
+
+    /**
+     * Getter for attribute
+     * @return attribute
+     */
+    public String getAttribute() {
+<span class="fc" id="L47">        return attribute;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

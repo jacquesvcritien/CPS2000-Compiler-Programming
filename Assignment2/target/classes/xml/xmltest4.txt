@@ -1,0 +1,29 @@
+if(1 == 1)
+{
+    print 1;
+}
+else
+{
+    print 0;
+}
+
+/*Expected
+<Program>
+	<If>
+		<BinaryExpr Op="==">
+			<IntegerLiteral>1</IntegerLiteral>
+			<IntegerLiteral>1</IntegerLiteral>
+		</BinaryExpr>
+		<Block>
+			<Print>
+				<IntegerLiteral>1</IntegerLiteral>
+			</Print>
+		</Block>
+		<Block>
+			<Print>
+				<IntegerLiteral>0</IntegerLiteral>
+			</Print>
+		</Block>
+	</If>
+</Program>
+*/

@@ -1,0 +1,3 @@
+//function no return - expected ReturnTypeMismatchException
+ff andgate(x:bool):bool
+{}

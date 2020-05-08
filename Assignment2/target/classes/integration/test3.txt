@@ -1,0 +1,42 @@
+/* some comment */
+let z:int = 4;
+let x:int = 5;
+
+ff square(x: int): int
+{
+    return x*x;
+}
+
+//float function
+ff floatplus1(x: float): float
+{
+    return x+1.0;
+}
+
+//boolfunc
+ff andgate(x:bool):bool
+{
+    return x and true;
+}
+
+
+ff _try(x: int, y:int):auto
+{
+    let z : int = square(x);
+    if(z>y)
+    {
+        return z;
+    }
+    else
+    {
+        return y;
+    }
+
+    return 1;
+
+}
+
+let y: int = _try(z,x);
+print y;
+print floatplus1(2.0);
+print andgate(true);

@@ -1,0 +1,10 @@
+ff test():auto {
+
+    ff add():auto {
+        return 5;
+    }
+
+    return add();
+}
+
+print add();

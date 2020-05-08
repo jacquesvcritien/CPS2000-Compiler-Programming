@@ -1,0 +1,29 @@
+//for loop
+for(let x:int =0; x < 10; x = x+1)
+{ print x;}
+/*Expected
+<Program>
+	<For>
+		<VarDecl>
+			<Identifier Type="INT">x</Identifier>
+			<IntegerLiteral>0</IntegerLiteral>
+		</VarDecl>
+		<BinaryExpr Op="<">
+			<Identifier>x</Identifier>
+			<IntegerLiteral>10</IntegerLiteral>
+		</BinaryExpr>
+		<Assignment>
+			<Identifier>x</Identifier>
+			<BinaryExpr Op="+">
+				<Identifier>x</Identifier>
+				<IntegerLiteral>1</IntegerLiteral>
+			</BinaryExpr>
+		</Assignment>
+		<Block>
+			<Print>
+				<Identifier>x</Identifier>
+			</Print>
+		</Block>
+	</For>
+</Program>
+*/

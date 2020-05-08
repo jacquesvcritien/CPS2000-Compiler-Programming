@@ -1,0 +1,1 @@
+let x: int = plus(2,5);
