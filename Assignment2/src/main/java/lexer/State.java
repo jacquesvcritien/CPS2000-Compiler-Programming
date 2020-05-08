@@ -29,6 +29,11 @@ public enum State {
     S25,
     S26,
     S27,
+    S28,
+    S29,
+    S30,
+    S31,
+    S32,
     BAD,
     SE
 }

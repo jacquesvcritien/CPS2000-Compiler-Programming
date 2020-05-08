@@ -19,6 +19,8 @@ public enum Category {
     CURLY_OPEN,
     CURLY_CLOSE,
     SEMI_COLON,
+    SQUARE_OPEN,
+    SQUARE_CLOSE,
     COLON,
     COMMA,
     UNDERSCORE,

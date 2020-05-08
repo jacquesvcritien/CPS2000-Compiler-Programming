@@ -17,6 +17,7 @@ public class Keyword extends Token{
     public static final Keyword INT = new Keyword(TypeToken.TYPE, "int");
     public static final Keyword FLOAT = new Keyword(TypeToken.TYPE, "float");
     public static final Keyword BOOL = new Keyword(TypeToken.TYPE, "bool");
+    public static final Keyword CHAR = new Keyword(TypeToken.TYPE, "char");
     public static final Keyword AUTO = new Keyword(TypeToken.AUTO, "auto");
     public static final Keyword IF = new Keyword(TypeToken.IF, "if");
     public static final Keyword ELSE = new Keyword(TypeToken.ELSE, "else");

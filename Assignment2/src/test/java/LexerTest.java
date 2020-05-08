@@ -402,4 +402,32 @@ public class LexerTest {
         Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
     }
 
+    /**
+     * Test for array decl
+     */
+    @Test
+    public void testArrayDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("lexer/arraydecl.txt");
+
+        ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
+                new Token(TypeToken.LET, "let"),
+                new Token(TypeToken.IDENTIFIER, "x"),
+                new Token(TypeToken.SQUARE_OPEN, "["),
+                new Token(TypeToken.INTEGER_LITERAL, "w"),
+                new Token(TypeToken.SQUARE_CLOSE, "]"),
+                new Token(TypeToken.COLON, ":"),
+                new Token(TypeToken.TYPE, "int"),
+                new Token(TypeToken.EQUAL_SIGN, "="),
+                new Token(TypeToken.CURLY_OPEN, "{"),
+                new Token(TypeToken.INTEGER_LITERAL, "1"),
+                new Token(TypeToken.COMMA, ","),
+                new Token(TypeToken.INTEGER_LITERAL, "1"),
+                new Token(TypeToken.CURLY_CLOSE, "}"),
+                new Token(TypeToken.SEMI_COLON, ";"),
+                new Token(TypeToken.EOF, "\uFFFF")
+        ));
+
+        Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
+    }
+
 }

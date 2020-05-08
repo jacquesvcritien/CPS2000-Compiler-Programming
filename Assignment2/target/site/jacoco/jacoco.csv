@@ -26,13 +26,13 @@ Assignment2,visitor,Scope,0,44,0,0,0,13,0,7,0,7
 Assignment2,visitor,VisitorXMLGenerator,0,990,0,22,0,185,0,36,0,25
 Assignment2,visitor,VisitorSemanticAnalysis,0,704,0,56,0,171,0,54,0,25
 Assignment2,visitor,SymbolTable,0,178,0,14,0,51,0,25,0,18
-Assignment2,lexer,Keyword,0,96,0,0,0,17,0,2,0,2
-Assignment2,lexer,State,0,304,0,0,0,31,0,1,0,1
-Assignment2,lexer,Lexer,0,7486,0,62,0,1390,0,51,0,11
-Assignment2,lexer,TypeToken,0,294,0,0,0,30,0,1,0,1
-Assignment2,lexer,Category,0,224,0,0,0,23,0,1,0,1
+Assignment2,lexer,Keyword,0,102,0,0,0,18,0,2,0,2
+Assignment2,lexer,State,0,354,0,0,0,36,0,1,0,1
+Assignment2,lexer,Lexer,0,8413,0,64,0,1560,0,53,0,11
+Assignment2,lexer,TypeToken,0,324,0,0,0,33,0,1,0,1
+Assignment2,lexer,Category,0,244,0,0,0,25,0,1,0,1
 Assignment2,lexer,Operand,0,78,0,0,0,14,0,2,0,2
-Assignment2,lexer,Lexer.new HashMap() {...},0,141,0,0,0,29,0,1,0,1
+Assignment2,lexer,Lexer.new HashMap() {...},0,146,0,0,0,30,0,1,0,1
 Assignment2,lexer,Transition,0,50,0,8,0,13,0,7,0,3
 Assignment2,lexer,Token,0,44,0,8,0,12,0,8,0,4
 Assignment2,exceptions,ReturnTypeMismatchException,0,4,0,0,0,2,0,1,0,1
