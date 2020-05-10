@@ -84,7 +84,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for formal params
@@ -94,7 +94,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for function call
@@ -124,7 +124,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for ifnode

@@ -35,7 +35,15 @@ public class VisitorSemanticAnalysis implements Visitor {
             //get identifier
             ASTIdentifier identifier = assignment.getIdentifier();
             //get actual identifier
-            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+            ASTIdentifier actualId = null;
+            //check whether this id can be assigned, i.e. is not a function decl
+            try{
+                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+            }
+            catch(ClassCastException exception)
+            {
+                throw new IncorrectTypeException("The identifier "+identifier.getValue()+" cannot be assigned a value");
+            }
 
             //check if id exists
             if (actualId == null)
@@ -200,7 +208,7 @@ public class VisitorSemanticAnalysis implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //loop through formal params
         for(int i=0; i <formalParams.getFormalParams().size(); i++)
         {
@@ -299,7 +307,7 @@ public class VisitorSemanticAnalysis implements Visitor {
     }
 
     @Override
-    public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //store variable name
         String variable = identifier.getValue();
 
@@ -307,7 +315,16 @@ public class VisitorSemanticAnalysis implements Visitor {
         //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getValue());
         //if identifier does not have a type get that identifier from table
         if(identifier.getType() == null)
-            identifier = (ASTIdentifier)symbolTable.lookup(variable);
+        {
+            //make sure that this cna be printed
+            try{
+                identifier = (ASTIdentifier) symbolTable.lookup(variable);
+            }
+            catch(ClassCastException exception)
+            {
+                throw new IncorrectTypeException("The identifier "+variable+" is a function");
+            }
+        }
 
         //if the identifier does not exist
         if(identifier == null)

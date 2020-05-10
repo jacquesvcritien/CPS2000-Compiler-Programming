@@ -1,6 +1,7 @@
 package parser.node;
 
 import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
 import visitor.Visitor;
 
@@ -31,7 +32,7 @@ public class ASTFormalParams implements ASTNode {
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         visitor.visit(this);
     }
 }

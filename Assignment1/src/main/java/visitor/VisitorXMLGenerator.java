@@ -163,7 +163,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //get indent
         String indentation = getIndent();
         //increment indent
@@ -182,7 +182,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //get indent
         String indentation = getIndent();
         //increment indent

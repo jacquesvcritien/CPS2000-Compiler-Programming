@@ -11,12 +11,12 @@ public class TokenTest {
 
     Token token;
     @Before
-    public void setUpStreams() {
+    public void setup() {
         token = new Token(TypeToken.IDENTIFIER, "x");
     }
 
     @After
-    public void restoreStreams() {
+    public void teardown() {
         token = null;
     }
 

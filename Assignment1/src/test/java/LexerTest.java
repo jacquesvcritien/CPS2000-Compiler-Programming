@@ -15,11 +15,11 @@ public class LexerTest {
 
     Lexer lexer;
     @Before
-    public void setUpStreams() {
+    public void setup() {
     }
 
     @After
-    public void restoreStreams() {
+    public void teardown() {
         lexer = null;
     }
 

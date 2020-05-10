@@ -1,6 +1,7 @@
 package parser.node;
 
 import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
 import visitor.Visitor;
 
@@ -57,7 +58,7 @@ public class ASTIdentifier extends ASTExpression {
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         visitor.visit(this);
     }
 }

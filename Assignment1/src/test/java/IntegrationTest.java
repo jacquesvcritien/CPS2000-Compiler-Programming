@@ -903,6 +903,48 @@ public class IntegrationTest {
         assertNull("Asserting value is null", value);
     }
 
+    /**
+     * Test involving assignment to a function
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = IncorrectTypeException.class)
+    public void testAssignmentToFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid11.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving printing a function
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = IncorrectTypeException.class)
+    public void testPrintFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid12.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
 
 
 
