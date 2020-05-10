@@ -1,8 +1,9 @@
 package visitor;
 
 import exceptions.*;
-import lexer.Token;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 /**
  * Visitor class for XML generator

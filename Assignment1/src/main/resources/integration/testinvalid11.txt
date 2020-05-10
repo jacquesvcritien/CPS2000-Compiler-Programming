@@ -19,4 +19,5 @@ ff Pow(x : float , n : int ) : auto
     return y ; // return y as the result
 }
 
+//this throws an incorrect type exception since a function cannot be assigned a value
 Pow =3;

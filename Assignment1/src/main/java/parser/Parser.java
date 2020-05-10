@@ -5,6 +5,8 @@ import lexer.Lexer;
 import lexer.Token;
 import lexer.TypeToken;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

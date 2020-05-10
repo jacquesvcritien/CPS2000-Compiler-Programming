@@ -2,493 +2,495 @@
 
 import exceptions.*;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.util.ArrayList;
 
 /**
  * Visitor class for interpreter
  */
-<span class="fc" id="L11">public class VisitorInterpreter implements Visitor {</span>
+<span class="fc" id="L13">public class VisitorInterpreter implements Visitor {</span>
     //symbol table
-<span class="fc" id="L13">    private SymbolTable symbolTable = SymbolTable.getSymbolTable();</span>
+<span class="fc" id="L15">    private SymbolTable symbolTable = SymbolTable.getSymbolTable();</span>
 
     @Override
     public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
-<span class="fc" id="L17">    }</span>
+<span class="fc" id="L19">    }</span>
 
     @Override
     public void visit(ASTAssignment assignment) throws UndeclaredException, AlreadyDeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //check if empty in case of for loop with no assignment
-<span class="fc bfc" id="L22" title="All 2 branches covered.">        if(assignment.getExpression() != null)</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if(assignment.getExpression() != null)</span>
         {
             //get expression
-<span class="fc" id="L25">            ASTExpression expression = assignment.getExpression();</span>
+<span class="fc" id="L27">            ASTExpression expression = assignment.getExpression();</span>
             //get identifier
-<span class="fc" id="L27">            ASTIdentifier identifier = assignment.getIdentifier();</span>
+<span class="fc" id="L29">            ASTIdentifier identifier = assignment.getIdentifier();</span>
             //get actual identifier
-<span class="fc" id="L29">            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());</span>
+<span class="fc" id="L31">            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());</span>
 
             //get expression type
-<span class="fc" id="L32">            expression.accept(this);</span>
+<span class="fc" id="L34">            expression.accept(this);</span>
 
             //insert value
-<span class="fc" id="L35">            symbolTable.insertValue(actualId.getValue(), symbolTable.getConstantValue());</span>
+<span class="fc" id="L37">            symbolTable.insertValue(actualId.getValue(), symbolTable.getConstantValue());</span>
 
         }
 
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L41">    }</span>
 
     @Override
     public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get left expression
-<span class="fc" id="L44">        ASTExpression left = expression.getLeft();</span>
+<span class="fc" id="L46">        ASTExpression left = expression.getLeft();</span>
         //get right expression
-<span class="fc" id="L46">        ASTExpression right = expression.getRight();</span>
+<span class="fc" id="L48">        ASTExpression right = expression.getRight();</span>
 
         //visit left
-<span class="fc" id="L49">        left.accept(this);</span>
+<span class="fc" id="L51">        left.accept(this);</span>
         //set value for left
-<span class="fc" id="L51">        Object leftValue = symbolTable.getConstantValue();</span>
+<span class="fc" id="L53">        Object leftValue = symbolTable.getConstantValue();</span>
         //visit right
-<span class="fc" id="L53">        right.accept(this);</span>
+<span class="fc" id="L55">        right.accept(this);</span>
         //set value for right
-<span class="fc" id="L55">        Object rightValue = symbolTable.getConstantValue();</span>
+<span class="fc" id="L57">        Object rightValue = symbolTable.getConstantValue();</span>
         //get type
-<span class="fc" id="L57">        Type type = symbolTable.getConstant();</span>
+<span class="fc" id="L59">        Type type = symbolTable.getConstant();</span>
 
         //get operand
-<span class="fc" id="L60">        String operand = expression.getOperand();</span>
+<span class="fc" id="L62">        String operand = expression.getOperand();</span>
         //check operations
-<span class="fc bfc" id="L62" title="All 12 branches covered.">        switch(operand)</span>
+<span class="fc bfc" id="L64" title="All 12 branches covered.">        switch(operand)</span>
         {
             case &quot;*&quot;:
             {
                 //if int
-<span class="fc bfc" id="L67" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc" id="L68">                    symbolTable.setConstantValue((Integer)leftValue * (Integer)rightValue);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc" id="L70">                    symbolTable.setConstantValue((Integer)leftValue * (Integer)rightValue);</span>
                 else //if float
-<span class="fc" id="L70">                    symbolTable.setConstantValue((Float)leftValue * (Float)rightValue);</span>
-<span class="fc" id="L71">            };break;</span>
+<span class="fc" id="L72">                    symbolTable.setConstantValue((Float)leftValue * (Float)rightValue);</span>
+<span class="fc" id="L73">            };break;</span>
             case &quot;/&quot;:
             {
                 //if int
-<span class="fc bfc" id="L75" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                if(type == Type.INT)</span>
                 {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">                    if((Integer)rightValue == 0)</span>
-<span class="fc" id="L78">                        throw new ArithmeticException(&quot;Cannot divide by 0&quot;);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                    if((Integer)rightValue == 0)</span>
+<span class="fc" id="L80">                        throw new ArithmeticException(&quot;Cannot divide by 0&quot;);</span>
 
-<span class="fc" id="L80">                    symbolTable.setConstantValue((Integer)leftValue / (Integer)rightValue);</span>
+<span class="fc" id="L82">                    symbolTable.setConstantValue((Integer)leftValue / (Integer)rightValue);</span>
                 }
                 else //if float
                 {
-<span class="fc bfc" id="L84" title="All 2 branches covered.">                    if((Float)rightValue == 0)</span>
-<span class="fc" id="L85">                        throw new ArithmeticException(&quot;Cannot divide by 0&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">                    if((Float)rightValue == 0)</span>
+<span class="fc" id="L87">                        throw new ArithmeticException(&quot;Cannot divide by 0&quot;);</span>
 
-<span class="fc" id="L87">                    symbolTable.setConstantValue((Float)leftValue / (Float)rightValue);</span>
+<span class="fc" id="L89">                    symbolTable.setConstantValue((Float)leftValue / (Float)rightValue);</span>
                 }
-<span class="fc" id="L89">            };break;</span>
+<span class="fc" id="L91">            };break;</span>
             case &quot;+&quot;:
             {
                 //if int
-<span class="fc bfc" id="L93" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc" id="L94">                    symbolTable.setConstantValue((Integer)leftValue + (Integer)rightValue);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc" id="L96">                    symbolTable.setConstantValue((Integer)leftValue + (Integer)rightValue);</span>
                 else //if float
-<span class="fc" id="L96">                    symbolTable.setConstantValue((Float)leftValue + (Float)rightValue);</span>
-<span class="fc" id="L97">            };break;</span>
+<span class="fc" id="L98">                    symbolTable.setConstantValue((Float)leftValue + (Float)rightValue);</span>
+<span class="fc" id="L99">            };break;</span>
             case &quot;-&quot;:
             {
                 //if int
-<span class="fc bfc" id="L101" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc" id="L102">                    symbolTable.setConstantValue((Integer)leftValue - (Integer)rightValue);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc" id="L104">                    symbolTable.setConstantValue((Integer)leftValue - (Integer)rightValue);</span>
                 else //if float
-<span class="fc" id="L104">                    symbolTable.setConstantValue((Float)leftValue - (Float)rightValue);</span>
-<span class="fc" id="L105">            };break;</span>
+<span class="fc" id="L106">                    symbolTable.setConstantValue((Float)leftValue - (Float)rightValue);</span>
+<span class="fc" id="L107">            };break;</span>
             case &quot;&gt;&quot;:
             {
                 //if int
-<span class="fc bfc" id="L109" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &gt; (Integer)rightValue);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &gt; (Integer)rightValue);</span>
                 else //if float
-<span class="fc bfc" id="L112" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &gt; (Float)rightValue);</span>
-<span class="fc" id="L113">            };break;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &gt; (Float)rightValue);</span>
+<span class="fc" id="L115">            };break;</span>
             case &quot;&lt;&quot;:
             {
                 //if int
-<span class="fc bfc" id="L117" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &lt; (Integer)rightValue);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &lt; (Integer)rightValue);</span>
                 else //if float
-<span class="fc bfc" id="L120" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &lt; (Float)rightValue);</span>
-<span class="fc" id="L121">            };break;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &lt; (Float)rightValue);</span>
+<span class="fc" id="L123">            };break;</span>
             case &quot;&lt;=&quot;:
             {
                 //if int
-<span class="fc bfc" id="L125" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &lt;= (Integer)rightValue);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &lt;= (Integer)rightValue);</span>
                 else //if float
-<span class="fc bfc" id="L128" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &lt;= (Float)rightValue);</span>
-<span class="fc" id="L129">            };break;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                    symbolTable.setConstantValue((Float)leftValue &lt;= (Float)rightValue);</span>
+<span class="fc" id="L131">            };break;</span>
             case &quot;&gt;=&quot;:
             {
                 //if int
-<span class="fc bfc" id="L133" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &gt;= (Integer)rightValue);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">                    symbolTable.setConstantValue((Integer)leftValue &gt;= (Integer)rightValue);</span>
                 else //if float
-<span class="fc bfc" id="L136" title="All 2 branches covered.">                    symbolTable.setConstantValue(((Float)leftValue) &gt;= (Float)rightValue);</span>
-<span class="fc" id="L137">            };break;</span>
-<span class="fc bfc" id="L138" title="All 4 branches covered.">            case &quot;and&quot;: symbolTable.setConstantValue((Boolean)leftValue &amp;&amp; (Boolean)rightValue);break;</span>
-<span class="fc bfc" id="L139" title="All 4 branches covered.">            case &quot;or&quot;: symbolTable.setConstantValue((Boolean)leftValue || (Boolean)rightValue);break;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">                    symbolTable.setConstantValue(((Float)leftValue) &gt;= (Float)rightValue);</span>
+<span class="fc" id="L139">            };break;</span>
+<span class="fc bfc" id="L140" title="All 4 branches covered.">            case &quot;and&quot;: symbolTable.setConstantValue((Boolean)leftValue &amp;&amp; (Boolean)rightValue);break;</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">            case &quot;or&quot;: symbolTable.setConstantValue((Boolean)leftValue || (Boolean)rightValue);break;</span>
             case &quot;==&quot;:
             {
                 //if int
-<span class="fc bfc" id="L143" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc" id="L144">                    symbolTable.setConstantValue(((Integer)leftValue).equals((Integer)rightValue));</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc" id="L146">                    symbolTable.setConstantValue(((Integer)leftValue).equals((Integer)rightValue));</span>
                 //if float
-<span class="fc bfc" id="L146" title="All 2 branches covered.">                else if(type == Type.FLOAT)</span>
-<span class="fc" id="L147">                    symbolTable.setConstantValue(((Float)leftValue).equals((Float)rightValue));</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">                else if(type == Type.FLOAT)</span>
+<span class="fc" id="L149">                    symbolTable.setConstantValue(((Float)leftValue).equals((Float)rightValue));</span>
                 else //if bool
-<span class="fc" id="L149">                    symbolTable.setConstantValue(((Boolean)leftValue).equals((Boolean)rightValue));</span>
-<span class="fc" id="L150">            };break;</span>
+<span class="fc" id="L151">                    symbolTable.setConstantValue(((Boolean)leftValue).equals((Boolean)rightValue));</span>
+<span class="fc" id="L152">            };break;</span>
             //&lt;&gt;
             default:
             {
                 //if int
-<span class="fc bfc" id="L155" title="All 2 branches covered.">                if(type == Type.INT)</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Integer)leftValue).equals((Integer)rightValue));</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">                if(type == Type.INT)</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Integer)leftValue).equals((Integer)rightValue));</span>
                 //if float
-<span class="fc bfc" id="L158" title="All 2 branches covered.">                else if(type == Type.FLOAT)</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Float)leftValue).equals((Float)rightValue));</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                else if(type == Type.FLOAT)</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Float)leftValue).equals((Float)rightValue));</span>
                 else //if bool
-<span class="fc bfc" id="L161" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Boolean)leftValue).equals((Boolean)rightValue));</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">                    symbolTable.setConstantValue(!((Boolean)leftValue).equals((Boolean)rightValue));</span>
             };break;
         }
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L166">    }</span>
 
     @Override
     public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         //remove return declaration
-<span class="fc" id="L169">        symbolTable.getGlobalScope().removeDeclarations(&quot;return&quot;);</span>
+<span class="fc" id="L171">        symbolTable.getGlobalScope().removeDeclarations(&quot;return&quot;);</span>
 
         // declare new scope
-<span class="fc" id="L172">        Scope scope = new Scope();</span>
-<span class="fc" id="L173">        symbolTable.insertScope(scope);</span>
+<span class="fc" id="L174">        Scope scope = new Scope();</span>
+<span class="fc" id="L175">        symbolTable.insertScope(scope);</span>
 
         //go through all statements
-<span class="fc bfc" id="L176" title="All 2 branches covered.">        for(int i=0; i &lt;block.getStatements().size(); i++)</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        for(int i=0; i &lt;block.getStatements().size(); i++)</span>
         {
             //visit statement
-<span class="fc" id="L179">            block.getStatements().get(i).accept(this);</span>
+<span class="fc" id="L181">            block.getStatements().get(i).accept(this);</span>
             //if there is already a return break
-<span class="fc bfc" id="L181" title="All 2 branches covered.">            if(symbolTable.getGlobalScope().isDefined(&quot;return&quot;))</span>
-<span class="fc" id="L182">                break;</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">            if(symbolTable.getGlobalScope().isDefined(&quot;return&quot;))</span>
+<span class="fc" id="L184">                break;</span>
         }
 
         //pop scope
-<span class="fc" id="L186">        symbolTable.popScope();</span>
+<span class="fc" id="L188">        symbolTable.popScope();</span>
 
-<span class="fc" id="L188">    }</span>
+<span class="fc" id="L190">    }</span>
 
     @Override
     public void visit(ASTBooleanLiteral booleanLiteral) {
         //set constant type
-<span class="fc" id="L193">        symbolTable.setConstant(Type.BOOL);</span>
+<span class="fc" id="L195">        symbolTable.setConstant(Type.BOOL);</span>
         //set constant value
-<span class="fc" id="L195">        symbolTable.setConstantValue(booleanLiteral.getValue());</span>
-<span class="fc" id="L196">    }</span>
+<span class="fc" id="L197">        symbolTable.setConstantValue(booleanLiteral.getValue());</span>
+<span class="fc" id="L198">    }</span>
 
     @Override
     public void visit(ASTFloatLiteral floatLiteral) {
         //set constant type
-<span class="fc" id="L201">        symbolTable.setConstant(Type.FLOAT);</span>
+<span class="fc" id="L203">        symbolTable.setConstant(Type.FLOAT);</span>
         //set constant value
-<span class="fc" id="L203">        symbolTable.setConstantValue(floatLiteral.getValue());</span>
-<span class="fc" id="L204">    }</span>
+<span class="fc" id="L205">        symbolTable.setConstantValue(floatLiteral.getValue());</span>
+<span class="fc" id="L206">    }</span>
 
     @Override
     public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         //get variable declaration
-<span class="fc" id="L209">        ASTVariableDecl variableDecl = forNode.getVariableDecl();</span>
+<span class="fc" id="L211">        ASTVariableDecl variableDecl = forNode.getVariableDecl();</span>
         //visit variable declaration
-<span class="fc" id="L211">        variableDecl.accept(this);</span>
+<span class="fc" id="L213">        variableDecl.accept(this);</span>
 
         //get expression
-<span class="fc" id="L214">        ASTExpression expression = forNode.getExpression();</span>
+<span class="fc" id="L216">        ASTExpression expression = forNode.getExpression();</span>
         //visit expression
-<span class="fc" id="L216">        expression.accept(this);</span>
+<span class="fc" id="L218">        expression.accept(this);</span>
 
         //get constant value
-<span class="fc" id="L219">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
+<span class="fc" id="L221">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
 
         // while there is value
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        while(value)</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        while(value)</span>
         {
             //get block
-<span class="fc" id="L225">            ASTBlock block = forNode.getBlock();</span>
+<span class="fc" id="L227">            ASTBlock block = forNode.getBlock();</span>
             //visit block
-<span class="fc" id="L227">            block.accept(this);</span>
+<span class="fc" id="L229">            block.accept(this);</span>
             //get assignment
-<span class="fc" id="L229">            ASTAssignment assignment = forNode.getAssignment();</span>
+<span class="fc" id="L231">            ASTAssignment assignment = forNode.getAssignment();</span>
             //visit assignment
-<span class="fc" id="L231">            assignment.accept(this);</span>
+<span class="fc" id="L233">            assignment.accept(this);</span>
             //visit expression
-<span class="fc" id="L233">            expression.accept(this);</span>
+<span class="fc" id="L235">            expression.accept(this);</span>
             //get value
-<span class="fc" id="L235">            value = (Boolean) symbolTable.getConstantValue();</span>
-<span class="fc" id="L236">        }</span>
-<span class="fc" id="L237">    }</span>
+<span class="fc" id="L237">            value = (Boolean) symbolTable.getConstantValue();</span>
+<span class="fc" id="L238">        }</span>
+<span class="fc" id="L239">    }</span>
 
     @Override
     public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException {
         //get identifier
-<span class="fc" id="L242">        ASTIdentifier identifier = formalParam.getIdentifier();</span>
+<span class="fc" id="L244">        ASTIdentifier identifier = formalParam.getIdentifier();</span>
         //add identifier
-<span class="fc" id="L244">        symbolTable.insertDecl(identifier.getValue(), identifier);</span>
-<span class="fc" id="L245">    }</span>
+<span class="fc" id="L246">        symbolTable.insertDecl(identifier.getValue(), identifier);</span>
+<span class="fc" id="L247">    }</span>
 
     @Override
     public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
-<span class="fc" id="L249">    }</span>
+<span class="fc" id="L251">    }</span>
 
     @Override
     public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //get identifier
-<span class="fc" id="L254">        ASTIdentifier identifier = functionCall.getIdentifier();</span>
+<span class="fc" id="L256">        ASTIdentifier identifier = functionCall.getIdentifier();</span>
         //get actual function
-<span class="fc" id="L256">        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());</span>
+<span class="fc" id="L258">        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());</span>
 
         //get params
-<span class="fc" id="L259">        ASTActualParams params = functionCall.getParams();</span>
+<span class="fc" id="L261">        ASTActualParams params = functionCall.getParams();</span>
 
         //get actual parameters expressions
-<span class="fc" id="L262">        ArrayList&lt;ASTExpression&gt; actualParamsExpressions = params.getExpressions();</span>
+<span class="fc" id="L264">        ArrayList&lt;ASTExpression&gt; actualParamsExpressions = params.getExpressions();</span>
 
         //get formal parameters
-<span class="fc" id="L265">        ArrayList&lt;ASTFormalParam&gt; formalParams = actualFunction.getFormalParams().getFormalParams();</span>
+<span class="fc" id="L267">        ArrayList&lt;ASTFormalParam&gt; formalParams = actualFunction.getFormalParams().getFormalParams();</span>
 
         //add new scope
-<span class="fc" id="L268">        Scope functionCallScope = new Scope();</span>
-<span class="fc" id="L269">        symbolTable.insertScope(functionCallScope);</span>
+<span class="fc" id="L270">        Scope functionCallScope = new Scope();</span>
+<span class="fc" id="L271">        symbolTable.insertScope(functionCallScope);</span>
 
-<span class="fc" id="L271">        ArrayList&lt;Object&gt; actualParamsValues = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L273">        ArrayList&lt;Object&gt; actualParamsValues = new ArrayList&lt;&gt;();</span>
         //get actual parameters values
-<span class="fc bfc" id="L273" title="All 2 branches covered.">        for(int i=0; i&lt;actualParamsExpressions.size(); i++) {</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        for(int i=0; i&lt;actualParamsExpressions.size(); i++) {</span>
             //go into expression to set type constant
-<span class="fc" id="L275">            actualParamsExpressions.get(i).accept(this);</span>
-<span class="fc" id="L276">            actualParamsValues.add(symbolTable.getConstantValue());</span>
+<span class="fc" id="L277">            actualParamsExpressions.get(i).accept(this);</span>
+<span class="fc" id="L278">            actualParamsValues.add(symbolTable.getConstantValue());</span>
         }
 
         //check parameters types
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        for(int i=0; i&lt;formalParams.size(); i++)</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        for(int i=0; i&lt;formalParams.size(); i++)</span>
         {
             //get formalParam
-<span class="fc" id="L283">            ASTFormalParam formalParam = formalParams.get(i);</span>
-<span class="fc" id="L284">            formalParam.accept(this);</span>
+<span class="fc" id="L285">            ASTFormalParam formalParam = formalParams.get(i);</span>
+<span class="fc" id="L286">            formalParam.accept(this);</span>
 
             //get formalParam Identifier
-<span class="fc" id="L287">            ASTIdentifier formalParamIdentifier = formalParam.getIdentifier();</span>
+<span class="fc" id="L289">            ASTIdentifier formalParamIdentifier = formalParam.getIdentifier();</span>
 
             //insert value
-<span class="fc" id="L290">            functionCallScope.addValue(formalParamIdentifier.getValue(), actualParamsValues.get(i));</span>
+<span class="fc" id="L292">            functionCallScope.addValue(formalParamIdentifier.getValue(), actualParamsValues.get(i));</span>
         }
 
 
 
         //get block
-<span class="fc" id="L296">        ASTBlock functionBlock = actualFunction.getBlock();</span>
+<span class="fc" id="L298">        ASTBlock functionBlock = actualFunction.getBlock();</span>
         //visit block
-<span class="fc" id="L298">        functionBlock.accept(this);</span>
+<span class="fc" id="L300">        functionBlock.accept(this);</span>
 
         //remove function call scope
-<span class="fc" id="L301">        symbolTable.popScope();</span>
+<span class="fc" id="L303">        symbolTable.popScope();</span>
 
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L305">    }</span>
 
     @Override
     public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException{
         //get identifier
-<span class="fc" id="L308">        ASTIdentifier identifier = functionDecl.getIdentifier();</span>
+<span class="fc" id="L310">        ASTIdentifier identifier = functionDecl.getIdentifier();</span>
 
         //add the identifier to the global scope
-<span class="fc" id="L311">        symbolTable.insertDecl(identifier.getValue(), functionDecl);</span>
-<span class="fc" id="L312">    }</span>
+<span class="fc" id="L313">        symbolTable.insertDecl(identifier.getValue(), functionDecl);</span>
+<span class="fc" id="L314">    }</span>
 
     @Override
     public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException {
         //store variable name
-<span class="fc" id="L317">        String variable = identifier.getValue();</span>
+<span class="fc" id="L319">        String variable = identifier.getValue();</span>
 
         //if identifier's type is not null, lookup variable
-<span class="fc bfc" id="L320" title="All 2 branches covered.">        if(identifier.getType() == null)</span>
-<span class="fc" id="L321">            identifier = (ASTIdentifier)symbolTable.lookup(variable);</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">        if(identifier.getType() == null)</span>
+<span class="fc" id="L323">            identifier = (ASTIdentifier)symbolTable.lookup(variable);</span>
 
         //get type
-<span class="fc" id="L324">        Type type = identifier.getType();</span>
+<span class="fc" id="L326">        Type type = identifier.getType();</span>
         //set type
-<span class="fc" id="L326">        symbolTable.setConstant(type);</span>
+<span class="fc" id="L328">        symbolTable.setConstant(type);</span>
 
-<span class="fc" id="L328">        symbolTable.setConstantValue(symbolTable.getValue(variable));</span>
+<span class="fc" id="L330">        symbolTable.setConstantValue(symbolTable.getValue(variable));</span>
 
-<span class="fc" id="L330">    }</span>
+<span class="fc" id="L332">    }</span>
 
     @Override
     public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         //get expression
-<span class="fc" id="L335">        ASTExpression expression = ifNode.getExpression();</span>
+<span class="fc" id="L337">        ASTExpression expression = ifNode.getExpression();</span>
         //check expression
-<span class="fc" id="L337">        expression.accept(this);</span>
+<span class="fc" id="L339">        expression.accept(this);</span>
 
         //get value
-<span class="fc" id="L340">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
+<span class="fc" id="L342">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
 
         //if the value is true
-<span class="fc bfc" id="L343" title="All 2 branches covered.">        if(value)</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        if(value)</span>
         {
             //get block if true
-<span class="fc" id="L346">            ASTBlock trueBlock = ifNode.getBlock();</span>
+<span class="fc" id="L348">            ASTBlock trueBlock = ifNode.getBlock();</span>
 
             //check block
-<span class="fc" id="L349">            trueBlock.accept(this);</span>
-<span class="fc" id="L350">        }</span>
+<span class="fc" id="L351">            trueBlock.accept(this);</span>
+<span class="fc" id="L352">        }</span>
         else
         {
             //get else block
-<span class="fc" id="L354">            ASTBlock elseBlock = ifNode.getElseBlock();</span>
+<span class="fc" id="L356">            ASTBlock elseBlock = ifNode.getElseBlock();</span>
             //check block
-<span class="fc" id="L356">            elseBlock.accept(this);</span>
+<span class="fc" id="L358">            elseBlock.accept(this);</span>
         }
-<span class="fc" id="L358">    }</span>
+<span class="fc" id="L360">    }</span>
 
     @Override
     public void visit(ASTIntegerLiteral integerLiteral) {
         //set constant type
-<span class="fc" id="L363">        symbolTable.setConstant(Type.INT);</span>
+<span class="fc" id="L365">        symbolTable.setConstant(Type.INT);</span>
         //set value
-<span class="fc" id="L365">        symbolTable.setConstantValue(integerLiteral.getValue());</span>
-<span class="fc" id="L366">    }</span>
+<span class="fc" id="L367">        symbolTable.setConstantValue(integerLiteral.getValue());</span>
+<span class="fc" id="L368">    }</span>
 
     @Override
     public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
-<span class="fc" id="L371">        ASTExpression expression = printNode.getExpression();</span>
+<span class="fc" id="L373">        ASTExpression expression = printNode.getExpression();</span>
         //visit expression
-<span class="fc" id="L373">        expression.accept(this);</span>
+<span class="fc" id="L375">        expression.accept(this);</span>
 
-<span class="fc" id="L375">        System.out.println(symbolTable.getConstantValue());</span>
-<span class="fc" id="L376">    }</span>
+<span class="fc" id="L377">        System.out.println(symbolTable.getConstantValue());</span>
+<span class="fc" id="L378">    }</span>
 
     @Override
     public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
         // declare new scope
-<span class="fc" id="L381">        Scope scope = new Scope();</span>
-<span class="fc" id="L382">        symbolTable.insertScope(scope);</span>
+<span class="fc" id="L383">        Scope scope = new Scope();</span>
+<span class="fc" id="L384">        symbolTable.insertScope(scope);</span>
 
         //loop through all statements
-<span class="fc bfc" id="L385" title="All 2 branches covered.">        for(int i=0; i &lt;programNode.getStatements().size(); i++)</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">        for(int i=0; i &lt;programNode.getStatements().size(); i++)</span>
         {
             //get statement and visit statement
-<span class="fc" id="L388">            programNode.getStatements().get(i).accept(this);</span>
+<span class="fc" id="L390">            programNode.getStatements().get(i).accept(this);</span>
         }
 
         //pop scope
-<span class="fc" id="L392">        symbolTable.popScope();</span>
-<span class="fc" id="L393">    }</span>
+<span class="fc" id="L394">        symbolTable.popScope();</span>
+<span class="fc" id="L395">    }</span>
 
 
     @Override
     public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
-<span class="fc" id="L399">        ASTExpression expression = returnNode.getExpression();</span>
+<span class="fc" id="L401">        ASTExpression expression = returnNode.getExpression();</span>
         //check expression
-<span class="fc" id="L401">        expression.accept(this);</span>
+<span class="fc" id="L403">        expression.accept(this);</span>
 
         //get expression type
-<span class="fc" id="L404">        Type returnType = symbolTable.getConstant();</span>
+<span class="fc" id="L406">        Type returnType = symbolTable.getConstant();</span>
 
         //this is done just temporarily to store the return type
         //add a declaration as a return identifier with the type of return
-<span class="fc" id="L408">        symbolTable.insertDeclGlobal(&quot;return&quot;, new ASTIdentifier(&quot;return&quot;, returnType));</span>
-<span class="fc" id="L409">    }</span>
+<span class="fc" id="L410">        symbolTable.insertDeclGlobal(&quot;return&quot;, new ASTIdentifier(&quot;return&quot;, returnType));</span>
+<span class="fc" id="L411">    }</span>
 
     @Override
     public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
         //get unary expression
-<span class="fc" id="L414">        ASTExpression expression = unary.getExpression();</span>
+<span class="fc" id="L416">        ASTExpression expression = unary.getExpression();</span>
         //visit expression
-<span class="fc" id="L416">        expression.accept(this);</span>
+<span class="fc" id="L418">        expression.accept(this);</span>
 
         //get type
-<span class="fc" id="L419">        Type type = symbolTable.getConstant();</span>
+<span class="fc" id="L421">        Type type = symbolTable.getConstant();</span>
         //get value
-<span class="fc" id="L421">        Object value = symbolTable.getConstantValue();</span>
+<span class="fc" id="L423">        Object value = symbolTable.getConstantValue();</span>
 
         //set value
-<span class="fc bfc" id="L424" title="All 3 branches covered.">        switch (type)</span>
+<span class="fc bfc" id="L426" title="All 3 branches covered.">        switch (type)</span>
         {
-<span class="fc" id="L426">            case INT: symbolTable.setConstantValue(-1 * (int)value);break;</span>
-<span class="fc" id="L427">            case FLOAT: symbolTable.setConstantValue(-1.0 * (float)value);break;</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">            default: symbolTable.setConstantValue(!(boolean)value);break;</span>
+<span class="fc" id="L428">            case INT: symbolTable.setConstantValue(-1 * (int)value);break;</span>
+<span class="fc" id="L429">            case FLOAT: symbolTable.setConstantValue(-1.0 * (float)value);break;</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">            default: symbolTable.setConstantValue(!(boolean)value);break;</span>
         }
-<span class="fc" id="L430">    }</span>
+<span class="fc" id="L432">    }</span>
 
     @Override
     public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         //if not an empty declaration (example in for loop)
-<span class="fc bfc" id="L435" title="All 2 branches covered.">        if(variableDecl.getExpression() != null)</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">        if(variableDecl.getExpression() != null)</span>
         {
             //get expression
-<span class="fc" id="L438">            ASTExpression expression = variableDecl.getExpression();</span>
+<span class="fc" id="L440">            ASTExpression expression = variableDecl.getExpression();</span>
             //visit expression
-<span class="fc" id="L440">            expression.accept(this);</span>
+<span class="fc" id="L442">            expression.accept(this);</span>
 
-<span class="fc" id="L442">            ASTIdentifier identifier = variableDecl.getIdentifier();</span>
+<span class="fc" id="L444">            ASTIdentifier identifier = variableDecl.getIdentifier();</span>
 
             //add identity
-<span class="fc" id="L445">            symbolTable.insertDecl(identifier.getValue(), identifier);</span>
+<span class="fc" id="L447">            symbolTable.insertDecl(identifier.getValue(), identifier);</span>
 
             //insert value
-<span class="fc" id="L448">            symbolTable.insertValue(identifier.getValue(), symbolTable.getConstantValue());</span>
+<span class="fc" id="L450">            symbolTable.insertValue(identifier.getValue(), symbolTable.getConstantValue());</span>
 
-<span class="fc" id="L450">            identifier.accept(this);</span>
+<span class="fc" id="L452">            identifier.accept(this);</span>
 
             //empty value and type
-<span class="fc" id="L453">            symbolTable.setConstant(null);</span>
-<span class="fc" id="L454">            symbolTable.setConstantValue(null);</span>
+<span class="fc" id="L455">            symbolTable.setConstant(null);</span>
+<span class="fc" id="L456">            symbolTable.setConstantValue(null);</span>
 
             //if there was a function call, remove the return
-<span class="fc" id="L457">            symbolTable.getGlobalScope().removeDeclarations(&quot;return&quot;);</span>
+<span class="fc" id="L459">            symbolTable.getGlobalScope().removeDeclarations(&quot;return&quot;);</span>
         }
-<span class="fc" id="L459">    }</span>
+<span class="fc" id="L461">    }</span>
 
     @Override
     public void visit(ASTWhile whileNode) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         //get expression
-<span class="fc" id="L464">        ASTExpression expression = whileNode.getExpression();</span>
+<span class="fc" id="L466">        ASTExpression expression = whileNode.getExpression();</span>
         //check expression
-<span class="fc" id="L466">        expression.accept(this);</span>
+<span class="fc" id="L468">        expression.accept(this);</span>
 
         //get value
-<span class="fc" id="L469">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
+<span class="fc" id="L471">        boolean value = (Boolean) symbolTable.getConstantValue();</span>
 
         //while value is true
-<span class="fc bfc" id="L472" title="All 2 branches covered.">        while(value)</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">        while(value)</span>
         {
             //get block if true
-<span class="fc" id="L475">            ASTBlock trueBlock = whileNode.getBlock();</span>
+<span class="fc" id="L477">            ASTBlock trueBlock = whileNode.getBlock();</span>
 
             //check block
-<span class="fc" id="L478">            trueBlock.accept(this);</span>
+<span class="fc" id="L480">            trueBlock.accept(this);</span>
 
-<span class="fc" id="L480">            expression.accept(this);</span>
-<span class="fc" id="L481">            value = (Boolean) symbolTable.getConstantValue();</span>
-<span class="fc" id="L482">        }</span>
+<span class="fc" id="L482">            expression.accept(this);</span>
+<span class="fc" id="L483">            value = (Boolean) symbolTable.getConstantValue();</span>
+<span class="fc" id="L484">        }</span>
         //empty constant
-<span class="fc" id="L484">        symbolTable.setConstant(null);</span>
-<span class="fc" id="L485">    }</span>
+<span class="fc" id="L486">        symbolTable.setConstant(null);</span>
+<span class="fc" id="L487">    }</span>
 
 
     @Override
-<span class="fc" id="L489">    public void visit(ASTExpression astExpression) {}</span>
+<span class="fc" id="L491">    public void visit(ASTExpression astExpression) {}</span>
     @Override
-<span class="fc" id="L491">    public void visit(ASTStatement astStatement) {}</span>
+<span class="fc" id="L493">    public void visit(ASTStatement astStatement) {}</span>
 
     /**
      * Method to interpret
@@ -500,9 +502,9 @@ import java.util.ArrayList;
      */
     public void interpret(ASTProgram program) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         //reset table
-<span class="fc" id="L503">        symbolTable.reset();</span>
+<span class="fc" id="L505">        symbolTable.reset();</span>
         //visit program
-<span class="fc" id="L505">        program.accept(this);</span>
-<span class="fc" id="L506">    }</span>
+<span class="fc" id="L507">        program.accept(this);</span>
+<span class="fc" id="L508">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

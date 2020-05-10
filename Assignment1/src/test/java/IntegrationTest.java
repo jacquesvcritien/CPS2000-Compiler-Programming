@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
 import parser.node.*;
+import parser.node.expression.ASTActualParams;
+import parser.node.expression.ASTExpression;
+import parser.node.statement.ASTFormalParams;
+import parser.node.statement.ASTStatement;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;

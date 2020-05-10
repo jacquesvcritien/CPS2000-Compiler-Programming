@@ -1,6 +1,7 @@
 package parser.node;
 
 import exceptions.*;
+import parser.node.statement.ASTStatement;
 import visitor.Visitor;
 
 import java.util.ArrayList;

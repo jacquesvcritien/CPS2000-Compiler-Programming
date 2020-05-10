@@ -2,6 +2,8 @@ package visitor;
 
 import exceptions.*;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.util.ArrayList;
 

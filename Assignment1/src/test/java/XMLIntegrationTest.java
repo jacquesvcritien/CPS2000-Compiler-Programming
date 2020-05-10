@@ -5,9 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
-import parser.node.ASTExpression;
+import parser.node.expression.ASTExpression;
 import parser.node.ASTProgram;
-import parser.node.ASTStatement;
+import parser.node.statement.ASTStatement;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;

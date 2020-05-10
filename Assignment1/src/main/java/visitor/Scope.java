@@ -1,8 +1,6 @@
 package visitor;
 
-import parser.node.ASTExpression;
 import parser.node.ASTNode;
-import parser.node.Type;
 
 import java.util.HashMap;
 
