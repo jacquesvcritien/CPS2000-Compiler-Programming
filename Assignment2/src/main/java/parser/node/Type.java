@@ -7,5 +7,6 @@ public enum Type {
     INT,
     FLOAT,
     BOOL,
+    CHAR,
     AUTO
 }

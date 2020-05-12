@@ -1,10 +1,8 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
-import lexer.Token;
+import parser.node.expression.ASTIdentifier;
 import visitor.Visitor;
-
-import java.util.ArrayList;
 
 /**
  * Class for function declaration node

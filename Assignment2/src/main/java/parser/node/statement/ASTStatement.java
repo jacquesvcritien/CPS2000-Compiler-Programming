@@ -1,7 +1,8 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
 import lexer.Token;
+import parser.node.ASTNode;
 import visitor.Visitor;
 
 /**

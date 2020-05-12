@@ -1,0 +1,6 @@
+DIGIT=1
+LETTER=2
+TYPE=3
+BooleanLiteral=4
+IntegerLiteral=5
+FloatLiteral=6

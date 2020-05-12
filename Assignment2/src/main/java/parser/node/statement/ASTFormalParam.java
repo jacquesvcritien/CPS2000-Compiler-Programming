@@ -1,9 +1,10 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
-import lexer.Token;
+import parser.node.ASTNode;
+import parser.node.expression.ASTIdentifier;
 import visitor.Visitor;
 
 /**

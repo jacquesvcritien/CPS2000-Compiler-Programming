@@ -2,6 +2,8 @@ package visitor;
 
 import exceptions.*;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,15 @@ public class VisitorSemanticAnalysis implements Visitor {
             //get identifier
             ASTIdentifier identifier = assignment.getIdentifier();
             //get actual identifier
-            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+            ASTIdentifier actualId = null;
+            //check whether this id can be assigned, i.e. is not a function decl
+            try{
+                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+            }
+            catch(ClassCastException exception)
+            {
+                throw new IncorrectTypeException("The identifier "+identifier.getValue()+" cannot be assigned a value");
+            }
 
             //check if id exists
             if (actualId == null)
@@ -170,10 +180,10 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     @Override
     public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
-        //get variable declaration
-        ASTVariableDecl variableDecl = forNode.getVariableDecl();
-        //check variable declaration
-        variableDecl.accept(this);
+        //get declaration
+        ASTDecl declaration = forNode.getDeclaration();
+        //check declaration
+        declaration.accept(this);
 
         //get expression
         ASTExpression expression = forNode.getExpression();
@@ -200,7 +210,7 @@ public class VisitorSemanticAnalysis implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //loop through formal params
         for(int i=0; i <formalParams.getFormalParams().size(); i++)
         {
@@ -299,7 +309,7 @@ public class VisitorSemanticAnalysis implements Visitor {
     }
 
     @Override
-    public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //store variable name
         String variable = identifier.getValue();
 
@@ -307,7 +317,16 @@ public class VisitorSemanticAnalysis implements Visitor {
         //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getValue());
         //if identifier does not have a type get that identifier from table
         if(identifier.getType() == null)
-            identifier = (ASTIdentifier)symbolTable.lookup(variable);
+        {
+            //make sure that this cna be printed
+            try{
+                identifier = (ASTIdentifier) symbolTable.lookup(variable);
+            }
+            catch(ClassCastException exception)
+            {
+                throw new IncorrectTypeException("The identifier "+variable+" is a function");
+            }
+        }
 
         //if the identifier does not exist
         if(identifier == null)
@@ -397,39 +416,35 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     @Override
     public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
-        //if not an empty declaration (example in for loop)
-        if(variableDecl.getExpression() != null)
+        //get expression
+        ASTExpression expression = variableDecl.getExpression();
+        //visit expression
+        expression.accept(this);
+
+        //get identifier
+        ASTIdentifier identifier = variableDecl.getIdentifier();
+
+        //check if there is a symbol for that type
+        Type type = identifier.getType();
+
+        //if type is auto
+        if(type == Type.AUTO)
         {
-            //get expression
-            ASTExpression expression = variableDecl.getExpression();
-            //visit expression
-            expression.accept(this);
-
-            //get identifier
-            ASTIdentifier identifier = variableDecl.getIdentifier();
-
-            //check if there is a symbol for that type
-            Type type = identifier.getType();
-
-            //if type is auto
-            if(type == Type.AUTO)
-            {
-                //set type for identifier
-                identifier.setType(symbolTable.getConstant());
-            }
-            else
-            {
-                if (symbolTable.getConstant() != type)
-                    throw new IncorrectTypeException("The value is not of type "+type);
-            }
-
-            //add identifier
-            symbolTable.insertDecl(identifier.getValue(), identifier);
-            //visit identifier
-            identifier.accept(this);
-            //empty value
-            symbolTable.setConstant(null);
+            //set type for identifier
+            identifier.setType(symbolTable.getConstant());
         }
+        else
+        {
+            if (symbolTable.getConstant() != type)
+                throw new IncorrectTypeException("The value is not of type "+type);
+        }
+
+        //add identifier
+        symbolTable.insertDecl(identifier.getValue(), identifier);
+        //visit identifier
+        identifier.accept(this);
+        //empty value
+        symbolTable.setConstant(null);
 
     }
 
@@ -455,6 +470,17 @@ public class VisitorSemanticAnalysis implements Visitor {
     public void visit(ASTExpression astExpression) {}
     @Override
     public void visit(ASTStatement astStatement) {}
+
+    @Override
+    public void visit(ASTArrayValue astArrayValue) {
+
+    }
+
+
+    @Override
+    public void visit(ASTDecl astDecl) {
+
+    }
 
     /**
      * Method to analyse the program

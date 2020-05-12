@@ -1,4 +1,4 @@
-package parser.node;
+package parser.node.expression;
 
 import lexer.Token;
 import visitor.Visitor;

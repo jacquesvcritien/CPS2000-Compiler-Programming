@@ -1,8 +1,9 @@
-package parser.node;
+package parser.node.expression;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
+import parser.node.Type;
 import visitor.Visitor;
 
 /**

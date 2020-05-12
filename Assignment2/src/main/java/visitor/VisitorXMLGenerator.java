@@ -1,8 +1,9 @@
 package visitor;
 
 import exceptions.*;
-import lexer.Token;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 /**
  * Visitor class for XML generator
@@ -139,8 +140,8 @@ public class VisitorXMLGenerator implements Visitor {
         //increment indent
         indent++;
 
-        //get variable declaration
-        ASTVariableDecl variableDecl = forNode.getVariableDecl();
+        //get declaration
+        ASTDecl declaration = forNode.getDeclaration();
         //get expression
         ASTExpression expression = forNode.getExpression();
         //get assignment
@@ -149,8 +150,8 @@ public class VisitorXMLGenerator implements Visitor {
         ASTBlock block = forNode.getBlock();
 
         System.out.println(indentation+"<For>");
-        //visit variable declaration
-        variableDecl.accept(this);
+        //check declaration
+        declaration.accept(this);
         //visit expression
         expression.accept(this);
         //visit assignment
@@ -163,7 +164,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //get indent
         String indentation = getIndent();
         //increment indent
@@ -182,7 +183,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //get indent
         String indentation = getIndent();
         //increment indent
@@ -377,20 +378,13 @@ public class VisitorXMLGenerator implements Visitor {
         //get expression
         ASTExpression expression = variableDecl.getExpression();
 
-        //if there is no identifier - in case of for loop with no variable declaration
-        if(identifier == null)
-        {
-            System.out.println(indentation+"<VarDecl>Empty</VarDecl>");
-        }
-        else
-        {
-            System.out.println(indentation+"<VarDecl>");
-            //visit identifier
-            identifier.accept(this);
-            //visit expression
-            expression.accept(this);
-            System.out.println(indentation+"</VarDecl>");
-        }
+
+        System.out.println(indentation+"<VarDecl>");
+        //visit identifier
+        identifier.accept(this);
+        //visit expression
+        expression.accept(this);
+        System.out.println(indentation+"</VarDecl>");
         
         //decrement indentation
         indent--;
@@ -423,6 +417,19 @@ public class VisitorXMLGenerator implements Visitor {
     public void visit(ASTExpression astExpression) {}
     @Override
     public void visit(ASTStatement astStatement) {}
+
+    @Override
+    public void visit(ASTArrayValue astArrayValue) {
+
+    }
+
+    @Override
+    public void visit(ASTDecl astDecl) {
+        String indentation = getIndent();
+
+        //if there is no identifier - in case of for loop with no variable declaration
+        System.out.println(indentation+"<Decl>Empty</Decl>");
+    }
 
     /**
      * Method to get indent

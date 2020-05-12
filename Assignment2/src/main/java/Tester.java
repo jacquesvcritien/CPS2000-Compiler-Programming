@@ -17,16 +17,14 @@ public class Tester {
     public static void main(String args[]) throws IOException, InvalidSyntaxException, IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, URISyntaxException {
         Lexer lexer = new Lexer("sourcecode.txt");
         VisitorXMLGenerator xml = new VisitorXMLGenerator();
-        VisitorSemanticAnalysis semanticAnalysis = new VisitorSemanticAnalysis();
-        VisitorInterpreter interpreter = new VisitorInterpreter();
+//        for(Token token: lexer.getTokens())
+//        {
+//            System.out.println(token.getType()+" : "+token.getAttribute());
+//        }
 
         Parser parser = new Parser(lexer);
-        ASTProgram node = parser.parse();
-
-        xml.visit(node);
-        semanticAnalysis.visit(node);
-
-        interpreter.visit(node);
+        ASTProgram program = parser.parse();
+        xml.generate(program);
 
     }
 }

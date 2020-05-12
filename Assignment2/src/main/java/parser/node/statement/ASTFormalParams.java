@@ -1,8 +1,9 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
+import parser.node.ASTNode;
 import visitor.Visitor;
 
 import java.util.ArrayList;

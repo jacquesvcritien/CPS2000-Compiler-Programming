@@ -5,9 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
-import parser.node.ASTExpression;
+import parser.node.expression.ASTExpression;
 import parser.node.ASTProgram;
-import parser.node.ASTStatement;
+import parser.node.statement.ASTStatement;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
@@ -347,7 +347,7 @@ public class XMLIntegrationTest {
                 "\t\t<IntegerLiteral>9</IntegerLiteral>\r\n" +
                 "\t</VarDecl>\r\n" +
                 "\t<For>\r\n" +
-                "\t\t<VarDecl>Empty</VarDecl>\r\n" +
+                "\t\t<Decl>Empty</Decl>\r\n" +
                 "\t\t<BinaryExpr Op=\"<\">\r\n" +
                 "\t\t\t<Identifier>x</Identifier>\r\n" +
                 "\t\t\t<IntegerLiteral>10</IntegerLiteral>\r\n" +

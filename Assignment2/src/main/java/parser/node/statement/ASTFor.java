@@ -1,6 +1,7 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
+import parser.node.expression.ASTExpression;
 import visitor.Visitor;
 
 /**
@@ -10,7 +11,7 @@ public class ASTFor extends ASTStatement {
     //declaration
     private ASTDecl declaration;
     //expression
-    private  ASTExpression expression;
+    private ASTExpression expression;
     //assignment
     private ASTAssignment assignment;
     //block

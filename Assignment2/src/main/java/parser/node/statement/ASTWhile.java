@@ -1,6 +1,7 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
+import parser.node.expression.ASTExpression;
 import visitor.Visitor;
 
 /**

@@ -1,7 +1,6 @@
-package parser.node;
+package parser.node.expression;
 
 import exceptions.*;
-import lexer.Token;
 import visitor.Visitor;
 
 /**

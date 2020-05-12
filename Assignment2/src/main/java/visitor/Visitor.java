@@ -2,6 +2,8 @@ package visitor;
 
 import exceptions.*;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 public interface Visitor {
 
@@ -84,7 +86,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for formal params
@@ -94,7 +96,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for function call
@@ -124,7 +126,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException;
+    void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
 
     /**
      * Visitor method for ifnode
@@ -225,4 +227,17 @@ public interface Visitor {
      * @throws ReturnTypeMismatchException
      */
     void visit(ASTStatement astStatement);
+
+    /**
+     * Visitor method for array value
+     * @param astArrayValue array value node to visit
+     */
+    void visit(ASTArrayValue astArrayValue);
+
+
+    /**
+     * Visitor method for declaration
+     * @param astDecl declaration node to visit
+     */
+    void visit(ASTDecl astDecl);
 }

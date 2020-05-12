@@ -1,11 +1,15 @@
 import exceptions.*;
 import lexer.Lexer;
+import lexer.Token;
+import lexer.TypeToken;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parser.Parser;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
@@ -735,12 +739,32 @@ public class IntegrationTest {
         ASTStatement statement = new ASTStatement();
         ASTActualParams actualParams = new ASTActualParams();
         ASTFormalParams formalParams = new ASTFormalParams(new ArrayList<>());
+        ASTArrayValue arrayValue = new ASTArrayValue();
+        ASTCharacterLiteral characterLiteral = new ASTCharacterLiteral(new Token(TypeToken.CHARACTER_LITERAL, 'c'));
+        ASTArrayDecl arrayDecl = new ASTArrayDecl();
+        ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier("id");
+        //for coverage
+        ASTVariableDecl variableDecl = new ASTVariableDecl();
+
         expression.accept(semanticAnalysis);
         statement.accept(semanticAnalysis);
         expression.accept(interpreter);
         statement.accept(interpreter);
         actualParams.accept(interpreter);
         formalParams.accept(interpreter);
+        arrayValue.accept(semanticAnalysis);
+        arrayValue.accept(interpreter);
+        arrayValue.accept(xml);
+        characterLiteral.accept(semanticAnalysis);
+        characterLiteral.accept(interpreter);
+        characterLiteral.accept(xml);
+        arrayDecl.accept(semanticAnalysis);
+        arrayDecl.accept(interpreter);
+        arrayDecl.accept(xml);
+        arrayIdentifier.accept(semanticAnalysis);
+        arrayIdentifier.accept(interpreter);
+        arrayIdentifier.accept(xml);
+
     }
 
     /**
@@ -901,6 +925,48 @@ public class IntegrationTest {
         symbolTable.popScope();
 
         assertNull("Asserting value is null", value);
+    }
+
+    /**
+     * Test involving assignment to a function
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = IncorrectTypeException.class)
+    public void testAssignmentToFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid11.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
+    }
+
+    /**
+     * Test involving printing a function
+     * @throws IOException
+     * @throws URISyntaxException
+     * @throws InvalidSyntaxException
+     * @
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    @Test(expected = IncorrectTypeException.class)
+    public void testPrintFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("integration/testinvalid12.txt");
+        Parser parser = new Parser(lexer);
+        ASTProgram node = parser.parse();
+
+        semanticAnalysis.analyse(node);
+        interpreter.interpret(node);
     }
 
 

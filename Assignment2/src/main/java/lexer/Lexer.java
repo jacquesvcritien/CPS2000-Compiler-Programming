@@ -72,6 +72,8 @@ public class Lexer
     public Lexer(String filename) throws FileNotFoundException, URISyntaxException {
         //get absolute path from resources path
         URL url = Lexer.class.getClassLoader().getResource(filename);
+        if(url == null)
+            throw new FileNotFoundException(filename+" not found");
         File file = Paths.get(url.toURI()).toFile();
         String absolutePath = file.getAbsolutePath();
 
@@ -124,6 +126,8 @@ public class Lexer
         transitionTable.put(transition, State.S28);
         transition = new Transition(State.START, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.S29);
+        transition = new Transition(State.START, Category.APOSTROPHE);
+        transitionTable.put(transition, State.S30);
         transition = new Transition(State.START, Category.COLON);
         transitionTable.put(transition, State.S20);
         transition = new Transition(State.START, Category.SEMI_COLON);
@@ -167,6 +171,8 @@ public class Lexer
         transition = new Transition(State.S1, Category.BRACKET_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S1, Category.BRACKET_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S1, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S1, Category.CURLY_OPEN);
         transitionTable.put(transition, State.BAD);
@@ -226,6 +232,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S2, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S2, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S2, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S2, Category.SEMI_COLON);
@@ -267,6 +275,8 @@ public class Lexer
         transition = new Transition(State.S3, Category.BRACKET_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S3, Category.BRACKET_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S3, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S3, Category.CURLY_OPEN);
         transitionTable.put(transition, State.BAD);
@@ -326,6 +336,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S4, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S4, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S4, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S4, Category.SEMI_COLON);
@@ -378,6 +390,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S5, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S5, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S5, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S5, Category.COMMA);
@@ -425,6 +439,8 @@ public class Lexer
         transition = new Transition(State.S6, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S6, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S6, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S6, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -476,6 +492,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S7, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S7, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S7, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S7, Category.SEMI_COLON);
@@ -525,6 +543,8 @@ public class Lexer
         transition = new Transition(State.S8, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S8, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S8, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S8, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -576,6 +596,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S9, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S9, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S9, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S9, Category.SEMI_COLON);
@@ -625,6 +647,8 @@ public class Lexer
         transition = new Transition(State.S10, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S10, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S10, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S10, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -676,6 +700,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S11, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S11, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S11, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S11, Category.SEMI_COLON);
@@ -725,6 +751,8 @@ public class Lexer
         transition = new Transition(State.S12, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S12, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S12, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S12, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -777,6 +805,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S13, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S13, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S13, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S13, Category.SEMI_COLON);
@@ -826,6 +856,8 @@ public class Lexer
         transition = new Transition(State.S14, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S14, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S14, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S14, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -877,6 +909,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S15, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S15, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S15, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S15, Category.SEMI_COLON);
@@ -926,6 +960,8 @@ public class Lexer
         transition = new Transition(State.S16, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S16, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S16, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S16, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -977,6 +1013,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S17, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S17, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S17, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S17, Category.SEMI_COLON);
@@ -1026,6 +1064,8 @@ public class Lexer
         transition = new Transition(State.S18, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S18, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S18, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S18, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -1077,6 +1117,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S19, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S19, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S19, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S19, Category.SEMI_COLON);
@@ -1126,6 +1168,8 @@ public class Lexer
         transition = new Transition(State.S20, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S20, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S20, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S20, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -1177,6 +1221,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S21, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S21, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S21, Category.COLON);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S21, Category.SEMI_COLON);
@@ -1226,6 +1272,8 @@ public class Lexer
         transition = new Transition(State.S22, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S22, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S22, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S22, Category.COLON);
         transitionTable.put(transition, State.BAD);
@@ -1277,6 +1325,8 @@ public class Lexer
         transitionTable.put(transition, State.S23);
         transition = new Transition(State.S23, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.S23);
+        transition = new Transition(State.S23, Category.APOSTROPHE);
+        transitionTable.put(transition, State.S23);
         transition = new Transition(State.S23, Category.COLON);
         transitionTable.put(transition, State.S23);
         transition = new Transition(State.S23, Category.SEMI_COLON);
@@ -1326,6 +1376,8 @@ public class Lexer
         transition = new Transition(State.S24, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.S24);
         transition = new Transition(State.S24, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.S24);
+        transition = new Transition(State.S24, Category.APOSTROPHE);
         transitionTable.put(transition, State.S24);
         transition = new Transition(State.S24, Category.COLON);
         transitionTable.put(transition, State.S24);
@@ -1377,6 +1429,8 @@ public class Lexer
         transitionTable.put(transition, State.S28);
         transition = new Transition(State.S25, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.S29);
+        transition = new Transition(State.S25, Category.APOSTROPHE);
+        transitionTable.put(transition, State.S30);
         transition = new Transition(State.S25, Category.COLON);
         transitionTable.put(transition, State.S20);
         transition = new Transition(State.S25, Category.SEMI_COLON);
@@ -1427,6 +1481,8 @@ public class Lexer
         transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.S24);
+        transition = new Transition(State.S26, Category.APOSTROPHE);
+        transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.COLON);
         transitionTable.put(transition, State.S24);
         transition = new Transition(State.S26, Category.SEMI_COLON);
@@ -1472,6 +1528,8 @@ public class Lexer
         transition = new Transition(State.S27, Category.SQUARE_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S27, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S27, Category.APOSTROPHE);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S27, Category.CURLY_OPEN);
         transitionTable.put(transition, State.BAD);
@@ -1523,6 +1581,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S28, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S28, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S28, Category.CURLY_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S28, Category.CURLY_CLOSE);
@@ -1573,6 +1633,8 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S29, Category.SQUARE_CLOSE);
         transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S29, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S29, Category.CURLY_OPEN);
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S29, Category.CURLY_CLOSE);
@@ -1591,7 +1653,165 @@ public class Lexer
         transitionTable.put(transition, State.BAD);
         transition = new Transition(State.S29, Category.OTHER);
         transitionTable.put(transition, State.BAD);
+
+        /* ************ S30 ROW ************ */
+        transition = new Transition(State.S30, Category.DIGIT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.DOT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.LETTER);
+        transitionTable.put(transition, State.S31);
+        transition = new Transition(State.S30, Category.UNDERSCORE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.MULTIPLY_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.DIVIDE_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.ADDITION_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.SUBTRACT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.ST_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.GT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.EQUAL_SIGN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.BRACKET_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.BRACKET_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.SQUARE_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.CURLY_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.CURLY_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.SEMI_COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.COMMA);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.NEWLINE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.SPACE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.EOF);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S30, Category.OTHER);
+        transitionTable.put(transition, State.BAD);
+
+        /* ************ S31 ROW ************ */
+        transition = new Transition(State.S31, Category.DIGIT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.DOT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.LETTER);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.UNDERSCORE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.MULTIPLY_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.DIVIDE_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.ADDITION_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.SUBTRACT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.ST_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.GT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.EQUAL_SIGN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.BRACKET_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.BRACKET_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.SQUARE_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.APOSTROPHE);
+        transitionTable.put(transition, State.S32);
+        transition = new Transition(State.S31, Category.CURLY_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.CURLY_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.SEMI_COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.COMMA);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.NEWLINE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.SPACE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.EOF);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S31, Category.OTHER);
+        transitionTable.put(transition, State.BAD);
+
+        /* ************ S32 ROW ************ */
+        transition = new Transition(State.S32, Category.DIGIT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.DOT);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.LETTER);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.UNDERSCORE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.MULTIPLY_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.DIVIDE_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.ADDITION_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.SUBTRACT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.ST_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.GT_OPERAND);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.EQUAL_SIGN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.BRACKET_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.BRACKET_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.SQUARE_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.SQUARE_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.APOSTROPHE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.CURLY_OPEN);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.CURLY_CLOSE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.SEMI_COLON);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.COMMA);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.NEWLINE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.SPACE);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.EOF);
+        transitionTable.put(transition, State.BAD);
+        transition = new Transition(State.S32, Category.OTHER);
+        transitionTable.put(transition, State.BAD);
     }
+    
+    
 
     /**
      * Method to set the acceptable states
@@ -1616,8 +1836,9 @@ public class Lexer
         acceptableStates.put(State.S17, TypeToken.BRACKET_CLOSE);
         acceptableStates.put(State.S18, TypeToken.CURLY_OPEN);
         acceptableStates.put(State.S19, TypeToken.CURLY_CLOSE);
-        acceptableStates.put(State.S28, TypeToken.CURLY_OPEN);
-        acceptableStates.put(State.S29, TypeToken.CURLY_CLOSE);
+        acceptableStates.put(State.S28, TypeToken.SQUARE_OPEN);
+        acceptableStates.put(State.S29, TypeToken.SQUARE_CLOSE);
+        acceptableStates.put(State.S32, TypeToken.CHARACTER_LITERAL);
         acceptableStates.put(State.S20, TypeToken.COLON);
         acceptableStates.put(State.S21, TypeToken.SEMI_COLON);
         acceptableStates.put(State.S22, TypeToken.COMMA);
@@ -1693,6 +1914,7 @@ public class Lexer
             case '}' : return Category.CURLY_CLOSE;
             case '[' : return Category.SQUARE_OPEN;
             case ']' : return Category.SQUARE_CLOSE;
+            case '\'' : return Category.APOSTROPHE;
             case ';' : return Category.SEMI_COLON;
             case ':' : return Category.COLON;
             case ',' : return Category.COMMA;
@@ -1783,6 +2005,9 @@ public class Lexer
         // if identifier, check if keyword
         if(acceptableStates.get(state) == TypeToken.IDENTIFIER)
             return (keywords.containsKey(lexeme.toString())) ?  keywords.get(lexeme.toString()) : new Token(acceptableStates.get(state), lexeme.toString());
+        //if it is a character remove the apostrophes
+        else if(acceptableStates.get(state) == TypeToken.CHARACTER_LITERAL)
+            return new Token(acceptableStates.get(state), lexeme.toString().substring(1,2));
         else
             return new Token(acceptableStates.get(state), lexeme.toString());
 

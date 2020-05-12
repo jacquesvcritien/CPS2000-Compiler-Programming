@@ -21,6 +21,7 @@ public enum Category {
     SEMI_COLON,
     SQUARE_OPEN,
     SQUARE_CLOSE,
+    APOSTROPHE,
     COLON,
     COMMA,
     UNDERSCORE,

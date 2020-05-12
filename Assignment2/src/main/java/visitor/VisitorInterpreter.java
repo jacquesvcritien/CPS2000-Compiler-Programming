@@ -2,6 +2,8 @@ package visitor;
 
 import exceptions.*;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.util.ArrayList;
 
@@ -205,10 +207,10 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
-        //get variable declaration
-        ASTVariableDecl variableDecl = forNode.getVariableDecl();
-        //visit variable declaration
-        variableDecl.accept(this);
+        //get declaration
+        ASTDecl declaration = forNode.getDeclaration();
+        //check declaration
+        declaration.accept(this);
 
         //get expression
         ASTExpression expression = forNode.getExpression();
@@ -431,31 +433,27 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
-        //if not an empty declaration (example in for loop)
-        if(variableDecl.getExpression() != null)
-        {
-            //get expression
-            ASTExpression expression = variableDecl.getExpression();
-            //visit expression
-            expression.accept(this);
+        //get expression
+        ASTExpression expression = variableDecl.getExpression();
+        //visit expression
+        expression.accept(this);
 
-            ASTIdentifier identifier = variableDecl.getIdentifier();
+        ASTIdentifier identifier = variableDecl.getIdentifier();
 
-            //add identity
-            symbolTable.insertDecl(identifier.getValue(), identifier);
+        //add identity
+        symbolTable.insertDecl(identifier.getValue(), identifier);
 
-            //insert value
-            symbolTable.insertValue(identifier.getValue(), symbolTable.getConstantValue());
+        //insert value
+        symbolTable.insertValue(identifier.getValue(), symbolTable.getConstantValue());
 
-            identifier.accept(this);
+        identifier.accept(this);
 
-            //empty value and type
-            symbolTable.setConstant(null);
-            symbolTable.setConstantValue(null);
+        //empty value and type
+        symbolTable.setConstant(null);
+        symbolTable.setConstantValue(null);
 
-            //if there was a function call, remove the return
-            symbolTable.getGlobalScope().removeDeclarations("return");
-        }
+        //if there was a function call, remove the return
+        symbolTable.getGlobalScope().removeDeclarations("return");
     }
 
     @Override
@@ -489,6 +487,17 @@ public class VisitorInterpreter implements Visitor {
     public void visit(ASTExpression astExpression) {}
     @Override
     public void visit(ASTStatement astStatement) {}
+
+    @Override
+    public void visit(ASTArrayValue astArrayValue) {
+
+    }
+
+
+    @Override
+    public void visit(ASTDecl astDecl) {
+
+    }
 
     /**
      * Method to interpret

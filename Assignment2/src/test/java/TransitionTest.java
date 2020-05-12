@@ -1,23 +1,10 @@
-import exceptions.*;
 import lexer.Category;
-import lexer.Lexer;
 import lexer.State;
 import lexer.Transition;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import parser.Parser;
-import parser.node.ASTExpression;
-import parser.node.ASTProgram;
-import parser.node.ASTStatement;
-import visitor.VisitorInterpreter;
-import visitor.VisitorXMLGenerator;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.URISyntaxException;
 
 public class TransitionTest {
 

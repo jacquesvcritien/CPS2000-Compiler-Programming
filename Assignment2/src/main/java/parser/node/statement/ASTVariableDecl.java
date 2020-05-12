@@ -1,8 +1,8 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
-import lexer.Token;
-import lexer.TypeToken;
+import parser.node.expression.ASTExpression;
+import parser.node.expression.ASTIdentifier;
 import visitor.Visitor;
 
 /**
@@ -11,6 +11,9 @@ import visitor.Visitor;
 public class ASTVariableDecl extends ASTDecl {
     //expression
     ASTExpression expression;
+
+    //identifier
+    protected ASTIdentifier identifier;
 
     /**
      * Empty constructor
@@ -24,8 +27,16 @@ public class ASTVariableDecl extends ASTDecl {
      */
     public ASTVariableDecl(ASTIdentifier identifier, ASTExpression expression)
     {
-        super.identifier = identifier;
+        this.identifier = identifier;
         this.expression = expression;
+    }
+
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
+    public ASTIdentifier getIdentifier() {
+        return identifier;
     }
 
     /**

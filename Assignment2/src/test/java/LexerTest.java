@@ -15,11 +15,11 @@ public class LexerTest {
 
     Lexer lexer;
     @Before
-    public void setUpStreams() {
+    public void setup() {
     }
 
     @After
-    public void restoreStreams() {
+    public void teardown() {
         lexer = null;
     }
 
@@ -403,7 +403,7 @@ public class LexerTest {
     }
 
     /**
-     * Test for array decl
+     * Test for array declaration
      */
     @Test
     public void testArrayDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
@@ -423,6 +423,27 @@ public class LexerTest {
                 new Token(TypeToken.COMMA, ","),
                 new Token(TypeToken.INTEGER_LITERAL, "1"),
                 new Token(TypeToken.CURLY_CLOSE, "}"),
+                new Token(TypeToken.SEMI_COLON, ";"),
+                new Token(TypeToken.EOF, "\uFFFF")
+        ));
+
+        Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
+    }
+
+    /**
+     * Test for variable declaration of type char
+     */
+    @Test
+    public void testCharVarDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("lexer/chardecl.txt");
+
+        ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
+                new Token(TypeToken.LET, "let"),
+                new Token(TypeToken.IDENTIFIER, "x"),
+                new Token(TypeToken.COLON, ":"),
+                new Token(TypeToken.TYPE, "char"),
+                new Token(TypeToken.EQUAL_SIGN, "="),
+                new Token(TypeToken.CHARACTER_LITERAL, "'x'"),
                 new Token(TypeToken.SEMI_COLON, ";"),
                 new Token(TypeToken.EOF, "\uFFFF")
         ));

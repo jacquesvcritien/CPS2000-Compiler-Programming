@@ -5,6 +5,8 @@ import lexer.Lexer;
 import lexer.Token;
 import lexer.TypeToken;
 import parser.node.*;
+import parser.node.expression.*;
+import parser.node.statement.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class Parser {
 
     /**
      * Method for literal
-     * <INTEGERLITERAL> | <FLOATLITERAL> | <BOOLLITERAL>
+     * <INTEGERLITERAL> | <FLOATLITERAL> | <BOOLLITERAL> | <CHARLITERAL>
      * @return an Expression
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -60,22 +62,48 @@ public class Parser {
 
         //check type of current token
         switch(token.getType()) {
-            //if literal
-            case INTEGER_LITERAL: {
-                absorb(TypeToken.INTEGER_LITERAL);
-                return new ASTIntegerLiteral(token);
+            //if boolean
+            case BOOLEAN_LITERAL: {
+                absorb(TypeToken.BOOLEAN_LITERAL);
+                return new ASTBooleanLiteral(token);
             }
             //if float
             case FLOAT_LITERAL: {
                 absorb(TypeToken.FLOAT_LITERAL);
                 return new ASTFloatLiteral(token);
             }
-            //if boolean
+            //if character
+            case CHARACTER_LITERAL: {
+                absorb(TypeToken.CHARACTER_LITERAL);
+                return new ASTCharacterLiteral(token);
+            }
+            //if integer
             default: {
-                absorb(TypeToken.BOOLEAN_LITERAL);
-                return new ASTBooleanLiteral(token);
+                absorb(TypeToken.INTEGER_LITERAL);
+                return new ASTIntegerLiteral(token);
             }
         }
+    }
+
+    /**
+     * Method to parse an array index
+     * '[' <INTEGERLITERAL> ']'
+     * @return identifier node
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTExpression arraySizeIndex() throws IOException, InvalidSyntaxException{
+        //absorb opening square bracket
+        absorb(TypeToken.SQUARE_OPEN);
+
+        //get integer literal
+        ASTExpression index = literal();
+
+        //absorb closing square bracket
+        absorb(TypeToken.SQUARE_CLOSE);
+
+        //return new expression
+        return index;
     }
 
     /**
@@ -90,9 +118,25 @@ public class Parser {
         Token identifier = this.currentToken;
         //check it
         absorb(TypeToken.IDENTIFIER);
-
         //return new identifier token
         return new ASTIdentifier(identifier.getAttribute());
+    }
+
+
+    /**
+     * Method to parse an identifier
+     * <IDENTIFIER> '[' <EXPRESSION> ']'
+     * @return array identifier node
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTArrayIdentifier arrayIdentifier(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
+
+        //get size or index
+        ASTExpression sizeIndex = arraySizeIndex();
+
+        //return new identifier token
+        return new ASTArrayIdentifier(identifier.getValue(), sizeIndex);
     }
 
     /**
@@ -129,6 +173,7 @@ public class Parser {
             case INTEGER_LITERAL:
             case FLOAT_LITERAL:
             case BOOLEAN_LITERAL:
+            case CHARACTER_LITERAL:
             {
                 return literal();
             }
@@ -137,12 +182,15 @@ public class Parser {
             {
                 //get identifier
                 ASTIdentifier identifier = identifier();
-                //if it is does not have an open bracket(it must be an identifier)
-                if(this.currentToken.getType() != TypeToken.BRACKET_OPEN)
-                    return identifier;
-                //else its a functioncall
-                else
+                //if it has an open bracket(it must be a function call)
+                if(this.currentToken.getType() == TypeToken.BRACKET_OPEN)
                     return functionCall(identifier);
+                //else if square open, it must be an array declaration
+                else if(this.currentToken.getType() == TypeToken.SQUARE_OPEN)
+                    return arrayIdentifier(identifier);
+                //else its an identifier
+                else
+                    return identifier;
             }
             //subexpression
             case BRACKET_OPEN:
@@ -244,6 +292,51 @@ public class Parser {
     }
 
     /**
+     * Method for array value
+     * '{' [ <EXPRESSION> { ',' <EXPRESSION> } ] '}'
+     * @return an actual params node
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTArrayValue arrayValue() throws IOException, InvalidSyntaxException{
+        //create a list of expressions
+        ArrayList<ASTExpression> values = new ArrayList<ASTExpression>();
+
+        //absorb opening curly
+        absorb(TypeToken.CURLY_OPEN);
+
+        //check if next is a curly close
+        if(currentToken.getType() == TypeToken.CURLY_CLOSE)
+        {
+            //absorb curly close
+            absorb(TypeToken.CURLY_CLOSE);
+            return new ASTArrayValue(values);
+        }
+
+
+        //check the expression and add it to the list
+        values.add(expression());
+
+        //while there is more commas (more expressions)
+        while(this.currentToken.getType() == TypeToken.COMMA)
+        {
+            //absorb the comma
+            absorb(TypeToken.COMMA);
+
+            //get the next value and add it to the list
+            ASTExpression newExpression = expression();
+            values.add(newExpression);
+        }
+
+        //absorb curly close
+        absorb(TypeToken.CURLY_CLOSE);
+
+        //return the array value node with the expressions
+        return new ASTArrayValue(values);
+
+    }
+
+    /**
      * Method for functionCall
      * <IDENTIFIER> '(' [<ACTUALPARAMS>] ')'
      * @param identifier identifier of the function call
@@ -259,7 +352,7 @@ public class Parser {
         //if the next is a closing bracket, return an empty actual params node, else get the actual params
         ASTActualParams actualParamsNode = (this.currentToken.getType() != TypeToken.BRACKET_CLOSE) ? actualParams() : new ASTActualParams();
 
-        //absorb the closing bracker
+        //absorb the closing bracket
         absorb(TypeToken.BRACKET_CLOSE);
 
         //return new function call node with actual params and identifier
@@ -292,29 +385,49 @@ public class Parser {
     }
 
     /**
-     * Method for variable declaration
-     * 'let' <IDENTIFIER> ':' ( <TYPE> | <AUTO> ) '=' <EXPRESSION>
+     * Method for declaration
+     * <VARIABLEDECL> | <ARRAYDECL>
      * @return a variable declaration node
      * @throws IOException
      * @throws InvalidSyntaxException
      */
-    private ASTVariableDecl variableDeclaration() throws IOException, InvalidSyntaxException{
+    private ASTDecl declaration() throws IOException, InvalidSyntaxException{
 
         //if the current token is not a LET (in case of empty variable declaration in for loop), return empty variable declaration
         if(currentToken.getType()!= TypeToken.LET)
-            return new ASTVariableDecl();
+            return new ASTDecl();
 
         //absorb let
         absorb(TypeToken.LET);
         //get identifier
         ASTIdentifier identifier = identifier();
+
+        //if current token is an opening square bracket it must be an array declaration
+        if(currentToken.getType() == TypeToken.SQUARE_OPEN)
+            return arrayDeclaration(identifier);
+        //if not an array declaration, it is a variable declaration
+        else
+            return variableDeclaration(identifier);
+
+    }
+
+    /**
+     * Method for variable declaration
+     * 'let' <IDENTIFIER> ':' ( <TYPE> | <AUTO> ) '=' <EXPRESSION>
+     * @param identifier identifier of for the declaration
+     * @return a variable declaration node
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTVariableDecl variableDeclaration(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
+
         //absorb colon
         absorb(TypeToken.COLON);
 
         //get current token
         Token type = this.currentToken;
 
-        //absorv type
+        //absorb type
         switch(type.getType())
         {
             case TYPE: absorb(TypeToken.TYPE);break;
@@ -334,8 +447,56 @@ public class Parser {
     }
 
     /**
+     * Method for array declaration
+     * 'let' <IDENTIFIER> <ARRAYINDEX> ':' <TYPE> [ '=' <ARRAYVALUE> ]
+     * @param identifier identifier of for the declaration
+     * @return a variable declaration node
+     * @throws IOException
+     * @throws InvalidSyntaxException
+     */
+    private ASTArrayDecl arrayDeclaration(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
+
+        //get array size
+        ASTExpression arraySize = arraySizeIndex();
+
+        ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier(identifier.getValue());
+        //absorb colon
+        absorb(TypeToken.COLON);
+
+        //get current token
+        Token type = this.currentToken;
+
+        //set type
+        arrayIdentifier.setType(getTypeEnum(type.getAttribute()));
+
+        //set array size
+        arrayIdentifier.setSizeIndex(arraySize);
+
+        //absorb type
+        absorb(TypeToken.TYPE);
+
+        ASTArrayValue arrayValue;
+
+        //check if there is an equals, if so, there must be a value
+        if(currentToken.getType() == TypeToken.EQUAL_SIGN)
+        {
+            //absorb equal sign
+            absorb(TypeToken.EQUAL_SIGN);
+            arrayValue = arrayValue();
+        }
+        //no value
+        else
+        {
+            arrayValue = new ASTArrayValue();
+        }
+
+        //return array declaration node with identifier, size and value
+        return new ASTArrayDecl(arrayIdentifier, arrayValue);
+    }
+
+    /**
      * Method for formal params
-     * <IDENTIFIER> ':' <TYPE>
+     * ( <IDENTIFIER> | <ARRAYIDENTIFIER> ) ':' <TYPE>
      * @return formal param node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -347,8 +508,10 @@ public class Parser {
         absorb(TypeToken.COLON);
         //get type
         Token type = type();
+
         //set identifier type to actual type from type got (int, float, bool or auto)
         identifier.setType(getTypeEnum(type.getAttribute()));
+
 
         //return new ast formal param with identifier
         return new ASTFormalParam(identifier);
@@ -417,7 +580,7 @@ public class Parser {
             default: absorb(TypeToken.AUTO);break;
         }
 
-        //set identifier's type to attribute of type token (int, float, bool or auto)
+        //set identifier's type to attribute of type token (int, float, bool, char or auto)
         identifier.setType(getTypeEnum(type.getAttribute()));
 
         //get block
@@ -554,8 +717,8 @@ public class Parser {
         absorb(TypeToken.FOR);
         //absorb bracket open
         absorb(TypeToken.BRACKET_OPEN);
-        //get variable declaration
-        ASTVariableDecl variableDecl = variableDeclaration();
+        //get declaration
+        ASTDecl declaration = declaration();
         //absorb semi colon
         absorb(TypeToken.SEMI_COLON);
         //get expression
@@ -570,7 +733,7 @@ public class Parser {
         ASTBlock block = block();
 
         //return for node with variable declaration, expression, assignment and block
-        return new ASTFor(variableDecl, expression, assignment, block);
+        return new ASTFor(declaration, expression, assignment, block);
     }
 
     /**
@@ -642,8 +805,9 @@ public class Parser {
             //variable declaration
             case LET:
             {
+
                 //get variable declaration
-                toReturn = variableDeclaration();
+                toReturn = declaration();
                 //absorb semi colon
                 absorb(TypeToken.SEMI_COLON);
             };break;
@@ -759,6 +923,7 @@ public class Parser {
             case "int" : return Type.INT;
             case "float" : return Type.FLOAT;
             case "bool" : return Type.BOOL;
+            case "char" : return Type.CHAR;
             default : return Type.AUTO;
         }
     }

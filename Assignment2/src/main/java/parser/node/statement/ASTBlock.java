@@ -1,4 +1,4 @@
-package parser.node;
+package parser.node.statement;
 
 import exceptions.*;
 import visitor.Visitor;
