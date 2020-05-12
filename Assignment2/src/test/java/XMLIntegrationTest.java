@@ -54,16 +54,17 @@ public class XMLIntegrationTest {
         ASTProgram node = parser.parse();
 
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">i</Identifier>\r\n" +
-                "\t\t<IntegerLiteral>0</IntegerLiteral>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"BOOL\">b</Identifier>\r\n" +
-                "\t\t<BooleanLiteral>true</BooleanLiteral>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">i</Identifier>\n" +
+                "\t\t<IntegerLiteral>0</IntegerLiteral>\n" +
+                "\t</VarDecl>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"BOOL\">b</Identifier>\n" +
+                "\t\t<BooleanLiteral>true</BooleanLiteral>\n" +
+                "\t</VarDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -82,12 +83,15 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<Print>\n" +
+                "\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t</Print>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<Print>\r\n" +
-                "\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t</Print>\r\n" +
-                "</Program>\r\n", output.toString());
+
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -106,17 +110,19 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"FLOAT\">x</Identifier>\n" +
+                "\t\t<FloatLiteral>3.2</FloatLiteral>\n" +
+                "\t</VarDecl>\n" +
+                "\t<Assignment>\n" +
+                "\t\t<Identifier>x</Identifier>\n" +
+                "\t\t<FloatLiteral>5.0</FloatLiteral>\n" +
+                "\t</Assignment>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"FLOAT\">x</Identifier>\r\n" +
-                "\t\t<FloatLiteral>3.2</FloatLiteral>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "\t<Assignment>\r\n" +
-                "\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t<FloatLiteral>5.0</FloatLiteral>\r\n" +
-                "\t</Assignment>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -135,27 +141,29 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<If>\n" +
+                "\t\t<BinaryExpr Op=\"==\">\n" +
+                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t</BinaryExpr>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Print>\n" +
+                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t</Print>\n" +
+                "\t\t</Block>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Print>\n" +
+                "\t\t\t\t<IntegerLiteral>0</IntegerLiteral>\n" +
+                "\t\t\t</Print>\n" +
+                "\t\t</Block>\n" +
+                "\t</If>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<If>\r\n" +
-                "\t\t<BinaryExpr Op=\"==\">\r\n" +
-                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t</BinaryExpr>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Print>\r\n" +
-                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t</Print>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Print>\r\n" +
-                "\t\t\t\t<IntegerLiteral>0</IntegerLiteral>\r\n" +
-                "\t\t\t</Print>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</If>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
-    
+
     /** Test XML for empty block
      * @throws IOException
      * @throws URISyntaxException
@@ -171,17 +179,19 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<If>\n" +
+                "\t\t<BinaryExpr Op=\"==\">\n" +
+                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t</BinaryExpr>\n" +
+                "\t\t<Block>Empty</Block>\n" +
+                "\t\t<Block>Empty</Block>\n" +
+                "\t</If>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<If>\r\n" +
-                "\t\t<BinaryExpr Op=\"==\">\r\n" +
-                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t</BinaryExpr>\r\n" +
-                "\t\t<Block>Empty</Block>\r\n" +
-                "\t\t<Block>Empty</Block>\r\n" +
-                "\t</If>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /** Test XML for while statement
@@ -199,20 +209,22 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<While>\n" +
+                "\t\t<BinaryExpr Op=\"<\">\n" +
+                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t<IntegerLiteral>3</IntegerLiteral>\n" +
+                "\t\t</BinaryExpr>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Print>\n" +
+                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t</Print>\n" +
+                "\t\t</Block>\n" +
+                "\t</While>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<While>\r\n" +
-                "\t\t<BinaryExpr Op=\"<\">\r\n" +
-                "\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t<IntegerLiteral>3</IntegerLiteral>\r\n" +
-                "\t\t</BinaryExpr>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Print>\r\n" +
-                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t</Print>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</While>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /** Test XML for function declaration including formal params and return
@@ -230,25 +242,27 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<FuncDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">square</Identifier>\n" +
+                "\t\t<FormalParams>\n" +
+                "\t\t\t<FormalParam>\n" +
+                "\t\t\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t\t</FormalParam>\n" +
+                "\t\t</FormalParams>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Return>\n" +
+                "\t\t\t\t<BinaryExpr Op=\"*\">\n" +
+                "\t\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t\t</BinaryExpr>\n" +
+                "\t\t\t</Return>\n" +
+                "\t\t</Block>\n" +
+                "\t</FuncDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<FuncDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">square</Identifier>\r\n" +
-                "\t\t<FormalParams>\r\n" +
-                "\t\t\t<FormalParam>\r\n" +
-                "\t\t\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t\t</FormalParam>\r\n" +
-                "\t\t</FormalParams>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Return>\r\n" +
-                "\t\t\t\t<BinaryExpr Op=\"*\">\r\n" +
-                "\t\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t\t</BinaryExpr>\r\n" +
-                "\t\t\t</Return>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</FuncDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
 
@@ -267,21 +281,23 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<FuncDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">square</Identifier>\n" +
+                "\t\t<FormalParams>Empty</FormalParams>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Return>\n" +
+                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t</Return>\n" +
+                "\t\t</Block>\n" +
+                "\t</FuncDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<FuncDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">square</Identifier>\r\n" +
-                "\t\t<FormalParams>Empty</FormalParams>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Return>\r\n" +
-                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t</Return>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</FuncDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
-    
+
     /** Test XML for loop
      * @throws IOException
      * @throws URISyntaxException
@@ -297,31 +313,33 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<For>\n" +
+                "\t\t<VarDecl>\n" +
+                "\t\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t\t<IntegerLiteral>0</IntegerLiteral>\n" +
+                "\t\t</VarDecl>\n" +
+                "\t\t<BinaryExpr Op=\"<\">\n" +
+                "\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t<IntegerLiteral>10</IntegerLiteral>\n" +
+                "\t\t</BinaryExpr>\n" +
+                "\t\t<Assignment>\n" +
+                "\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t<BinaryExpr Op=\"+\">\n" +
+                "\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t</BinaryExpr>\n" +
+                "\t\t</Assignment>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Print>\n" +
+                "\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t</Print>\n" +
+                "\t\t</Block>\n" +
+                "\t</For>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<For>\r\n" +
-                "\t\t<VarDecl>\r\n" +
-                "\t\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t\t<IntegerLiteral>0</IntegerLiteral>\r\n" +
-                "\t\t</VarDecl>\r\n" +
-                "\t\t<BinaryExpr Op=\"<\">\r\n" +
-                "\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t<IntegerLiteral>10</IntegerLiteral>\r\n" +
-                "\t\t</BinaryExpr>\r\n" +
-                "\t\t<Assignment>\r\n" +
-                "\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t<BinaryExpr Op=\"+\">\r\n" +
-                "\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t</BinaryExpr>\r\n" +
-                "\t\t</Assignment>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Print>\r\n" +
-                "\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t</Print>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</For>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output",expected , output.toString().trim());
     }
 
     /** Test XML for loop with no declaration and assignment
@@ -339,35 +357,37 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t<IntegerLiteral>9</IntegerLiteral>\n" +
+                "\t</VarDecl>\n" +
+                "\t<For>\n" +
+                "\t\t<Decl>Empty</Decl>\n" +
+                "\t\t<BinaryExpr Op=\"<\">\n" +
+                "\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t<IntegerLiteral>10</IntegerLiteral>\n" +
+                "\t\t</BinaryExpr>\n" +
+                "\t\t<Assignment>Empty</Assignment>\n" +
+                "\t\t<Block>\n" +
+                "\t\t\t<Print>\n" +
+                "\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t</Print>\n" +
+                "\t\t\t<Assignment>\n" +
+                "\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t\t<BinaryExpr Op=\"+\">\n" +
+                "\t\t\t\t\t<Identifier>x</Identifier>\n" +
+                "\t\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t\t</BinaryExpr>\n" +
+                "\t\t\t</Assignment>\n" +
+                "\t\t</Block>\n" +
+                "\t</For>\n" +
+                "</Program>\n" +
+                "9").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t<IntegerLiteral>9</IntegerLiteral>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "\t<For>\r\n" +
-                "\t\t<Decl>Empty</Decl>\r\n" +
-                "\t\t<BinaryExpr Op=\"<\">\r\n" +
-                "\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t<IntegerLiteral>10</IntegerLiteral>\r\n" +
-                "\t\t</BinaryExpr>\r\n" +
-                "\t\t<Assignment>Empty</Assignment>\r\n" +
-                "\t\t<Block>\r\n" +
-                "\t\t\t<Print>\r\n" +
-                "\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t</Print>\r\n" +
-                "\t\t\t<Assignment>\r\n" +
-                "\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t\t<BinaryExpr Op=\"+\">\r\n" +
-                "\t\t\t\t\t<Identifier>x</Identifier>\r\n" +
-                "\t\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t\t</BinaryExpr>\r\n" +
-                "\t\t\t</Assignment>\r\n" +
-                "\t\t</Block>\r\n" +
-                "\t</For>\r\n" +
-                "</Program>\r\n" +
-                "9\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /** Test XML for function call
@@ -385,18 +405,20 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t<FunctionCall>\n" +
+                "\t\t\t<Identifier>square</Identifier>\n" +
+                "\t\t\t<ActualParams>\n" +
+                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\n" +
+                "\t\t\t</ActualParams>\n" +
+                "\t\t</FunctionCall>\n" +
+                "\t</VarDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t<FunctionCall>\r\n" +
-                "\t\t\t<Identifier>square</Identifier>\r\n" +
-                "\t\t\t<ActualParams>\r\n" +
-                "\t\t\t\t<IntegerLiteral>1</IntegerLiteral>\r\n" +
-                "\t\t\t</ActualParams>\r\n" +
-                "\t\t</FunctionCall>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /** Test XML for function call with no params
@@ -414,16 +436,18 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t<FunctionCall>\n" +
+                "\t\t\t<Identifier>func</Identifier>\n" +
+                "\t\t\t<ActualParams>Empty</ActualParams>\n" +
+                "\t\t</FunctionCall>\n" +
+                "\t</VarDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t<FunctionCall>\r\n" +
-                "\t\t\t<Identifier>func</Identifier>\r\n" +
-                "\t\t\t<ActualParams>Empty</ActualParams>\r\n" +
-                "\t\t</FunctionCall>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /** Test XML for unary
@@ -441,15 +465,17 @@ public class XMLIntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("<Program>\n" +
+                "\t<VarDecl>\n" +
+                "\t\t<Identifier Type=\"INT\">x</Identifier>\n" +
+                "\t\t<Unary Type=\"-\">\n" +
+                "\t\t\t<IntegerLiteral>2</IntegerLiteral>\n" +
+                "\t\t</Unary>\n" +
+                "\t</VarDecl>\n" +
+                "</Program>").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         xml.generate(node);
-        Assert.assertEquals("Asserting console output", "<Program>\r\n" +
-                "\t<VarDecl>\r\n" +
-                "\t\t<Identifier Type=\"INT\">x</Identifier>\r\n" +
-                "\t\t<Unary Type=\"-\">\r\n" +
-                "\t\t\t<IntegerLiteral>2</IntegerLiteral>\r\n" +
-                "\t\t</Unary>\r\n" +
-                "\t</VarDecl>\r\n" +
-                "</Program>\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
