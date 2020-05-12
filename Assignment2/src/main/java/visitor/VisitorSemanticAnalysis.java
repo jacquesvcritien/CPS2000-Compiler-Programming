@@ -416,35 +416,35 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     @Override
     public void visit(ASTVariableDecl variableDecl) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
-        //get expression
-        ASTExpression expression = variableDecl.getExpression();
-        //visit expression
-        expression.accept(this);
+        //if not an empty declaration (example in for loop)
+        if(variableDecl.getExpression() != null) {
+            //get expression
+            ASTExpression expression = variableDecl.getExpression();
+            //visit expression
+            expression.accept(this);
 
-        //get identifier
-        ASTIdentifier identifier = variableDecl.getIdentifier();
+            //get identifier
+            ASTIdentifier identifier = variableDecl.getIdentifier();
 
-        //check if there is a symbol for that type
-        Type type = identifier.getType();
+            //check if there is a symbol for that type
+            Type type = identifier.getType();
 
-        //if type is auto
-        if(type == Type.AUTO)
-        {
-            //set type for identifier
-            identifier.setType(symbolTable.getConstant());
+            //if type is auto
+            if (type == Type.AUTO) {
+                //set type for identifier
+                identifier.setType(symbolTable.getConstant());
+            } else {
+                if (symbolTable.getConstant() != type)
+                    throw new IncorrectTypeException("The value is not of type " + type);
+            }
+
+            //add identifier
+            symbolTable.insertDecl(identifier.getValue(), identifier);
+            //visit identifier
+            identifier.accept(this);
+            //empty value
+            symbolTable.setConstant(null);
         }
-        else
-        {
-            if (symbolTable.getConstant() != type)
-                throw new IncorrectTypeException("The value is not of type "+type);
-        }
-
-        //add identifier
-        symbolTable.insertDecl(identifier.getValue(), identifier);
-        //visit identifier
-        identifier.accept(this);
-        //empty value
-        symbolTable.setConstant(null);
 
     }
 

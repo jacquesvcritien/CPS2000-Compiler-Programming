@@ -1,4 +1,4 @@
-for(; x < 10; x= x+1)
+ff test(x :int): int
 {
-    print x;
+    return x*2;
 }

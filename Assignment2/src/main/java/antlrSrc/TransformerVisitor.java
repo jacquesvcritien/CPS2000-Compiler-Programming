@@ -7,13 +7,11 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import parser.node.ASTProgram;
 import parser.node.Type;
-import parser.node.expression.ASTExpression;
-import parser.node.expression.ASTFloatLiteral;
-import parser.node.expression.ASTIdentifier;
-import parser.node.expression.ASTIntegerLiteral;
+import parser.node.expression.*;
 import parser.node.statement.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
     SmallLangLexer lexer;
@@ -36,6 +34,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
         //get actual name from vocabulary
         String type = this.lexer.getVocabulary().getSymbolicName(terminalNode.getSymbol().getType());
 
+        //get type of literal to return
         switch (type)
         {
             case "IntegerLiteral" : return new ASTIntegerLiteral(new Token(TypeToken.INTEGER_LITERAL, terminalNode.toString()));
@@ -50,56 +49,276 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitActualParams(SmallLangParser.ActualParamsContext ctx) { return visitChildren(ctx); }
+    @Override public Object visitActualParams(SmallLangParser.ActualParamsContext ctx) {
+        int counter = 0;
+        List<ParseTree> trees = ctx.children;
+
+        //arraylist of expressions(params) to return
+        ArrayList<ASTExpression> actualParams = new ArrayList<ASTExpression>();
+
+        //get param
+        ParseTree expressionNode = ctx.children.get(counter);
+        ASTExpression actualParam = (ASTExpression) expressionNode.accept(this);
+
+        //add param to list of params
+        actualParams.add(actualParam);
+
+        //increment counter
+        counter++;
+
+        if(counter < trees.size())
+        {
+            //get next node
+            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+            //get the type of the next token
+            int type = currentNode.getSymbol().getType();
+
+            //while there is a relational op
+            while (this.lexer.getVocabulary().getSymbolicName(type).equals("COMMA")) {
+                //increment counter
+                counter++;
+
+                //get another param
+                expressionNode = ctx.children.get(counter);
+                actualParam = (ASTExpression) expressionNode.accept(this);
+
+                //add param to list of params
+                actualParams.add(actualParam);
+
+                //increment counter
+                counter++;
+
+                //check size
+                if(counter >= trees.size())
+                    break;
+
+                //get expression
+                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+                //get the type of the next token
+                type = currentNode.getSymbol().getType();
+            }
+        }
+
+        return new ASTActualParams(actualParams);
+    }
+
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitFunctionCall(SmallLangParser.FunctionCallContext ctx) { return visitChildren(ctx); }
+    @Override public ASTFunctionCall visitFunctionCall(SmallLangParser.FunctionCallContext ctx) {
+        //get identifier
+        ParseTree identifierNode = ctx.children.get(0);
+        ASTIdentifier identifier = new ASTIdentifier(identifierNode.toString());
+
+        //variable to hold actual params
+        ASTActualParams actualParams = null;
+
+        //check if it has actual params, if the third node has children, it must be that there are params
+        if(ctx.children.get(2).getChildCount() > 0)
+        {
+            //get actual params
+            actualParams = (ASTActualParams)visitActualParams((SmallLangParser.ActualParamsContext) ctx.children.get(2));
+        }
+        //else if there are no params
+        else
+        {
+            actualParams = new ASTActualParams();
+        }
+
+        return new ASTFunctionCall(identifier, actualParams);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitSubExpression(SmallLangParser.SubExpressionContext ctx) { return visitChildren(ctx); }
+    @Override public ASTExpression visitSubExpression(SmallLangParser.SubExpressionContext ctx) {
+        //get expression and return it
+        ParseTree expressionNode = ctx.children.get(1);
+        return (ASTExpression) expressionNode.accept(this);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitUnary(SmallLangParser.UnaryContext ctx) { return visitChildren(ctx); }
+    @Override public ASTUnary visitUnary(SmallLangParser.UnaryContext ctx) {
+        //get lexeme
+        ParseTree lexeme = ctx.children.get(0);
+
+        //get expression
+        ParseTree expressionNode = ctx.children.get(1);
+        ASTExpression expression = (ASTExpression)expressionNode.accept(this);
+
+        return new ASTUnary(lexeme.toString(), expression);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitFactor(SmallLangParser.FactorContext ctx) { return visitChildren(ctx); }
+    @Override public ASTExpression visitFactor(SmallLangParser.FactorContext ctx) {
+
+        //get node
+        ParseTree node = ctx.children.get(0);
+
+        ASTExpression toReturn = null;
+
+        //if the node has no children it must be an identifier
+        if(node.getChildCount() == 0)
+            toReturn = createIdentifier(null, node.toString());
+        else
+            toReturn = (ASTExpression)visitChildren(ctx);
+
+        return toReturn;
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitTerm(SmallLangParser.TermContext ctx) { return visitChildren(ctx); }
+    @Override public ASTExpression visitTerm(SmallLangParser.TermContext ctx) {
+        int counter = 0;
+        List<ParseTree> trees = ctx.children;
+
+        //get expression
+        ASTExpression node = (ASTExpression) visitFactor((SmallLangParser.FactorContext) trees.get(counter));
+        //increment counter
+        counter++;
+
+        if(counter < trees.size())
+        {
+            //get next node
+            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+            //get the type of the next token
+            int type = currentNode.getSymbol().getType();
+
+            //while there is a relational op
+            while (this.lexer.getVocabulary().getSymbolicName(type).equals("MultiplicativeOp")) {
+                //increment counter
+                counter++;
+                //get the expression on the right
+                ASTExpression right = (ASTExpression) visitFactor((SmallLangParser.FactorContext) trees.get(counter));
+                node = new ASTBinExpression(node, currentNode.toString(), right);
+
+                //increment counter
+                counter++;
+
+                //check size
+                if(counter >= trees.size())
+                    break;
+
+                //get expression
+                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+                //get the type of the next token
+                type = currentNode.getSymbol().getType();
+            }
+        }
+
+
+        return node;
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitSimpleExpression(SmallLangParser.SimpleExpressionContext ctx) { return visitChildren(ctx); }
+    @Override public ASTExpression visitSimpleExpression(SmallLangParser.SimpleExpressionContext ctx) {
+        int counter = 0;
+        List<ParseTree> trees = ctx.children;
+
+        //get expression
+        ASTExpression node = (ASTExpression) visitTerm((SmallLangParser.TermContext) trees.get(counter));
+        //increment counter
+        counter++;
+
+        if(counter < trees.size())
+        {
+            //get next node
+            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+            //get the type of the next token
+            int type = currentNode.getSymbol().getType();
+
+            //while there is a relational op
+            while (this.lexer.getVocabulary().getSymbolicName(type).equals("AdditiveOp")) {
+                //increment counter
+                counter++;
+                //get the expression on the right
+                ASTExpression right = (ASTExpression) visitTerm((SmallLangParser.TermContext) trees.get(counter));
+                node = new ASTBinExpression(node, currentNode.toString(), right);
+
+                //increment counter
+                counter++;
+
+                //check size
+                if(counter >= trees.size())
+                    break;
+
+                //get expression
+                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+                //get the type of the next token
+                type = currentNode.getSymbol().getType();
+            }
+        }
+
+
+        return node;
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitExpression(SmallLangParser.ExpressionContext ctx) { return visitChildren(ctx); }
+    @Override public ASTExpression visitExpression(SmallLangParser.ExpressionContext ctx) {
+        int counter = 0;
+        List<ParseTree> trees = ctx.children;
+
+        //get expression
+        ASTExpression node = (ASTExpression) visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(counter));
+        //increment counter
+        counter++;
+
+        if(counter < trees.size())
+        {
+            //get next node
+            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+            //get the type of the next token
+            int type = currentNode.getSymbol().getType();
+
+            //while there is a relational op
+            while (this.lexer.getVocabulary().getSymbolicName(type).equals("RelationalOp")) {
+                //increment counter
+                counter++;
+                //get the expression on the right
+                ASTExpression right = (ASTExpression) visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(counter));
+                node = new ASTBinExpression(node, currentNode.toString(), right);
+
+                //increment counter
+                counter++;
+
+                //check size
+                if(counter >= trees.size())
+                    break;
+
+                //get expression
+                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+                //get the type of the next token
+                type = currentNode.getSymbol().getType();
+            }
+
+        }
+
+        return node;
+    }
     /**
      * {@inheritDoc}
      *
@@ -127,7 +346,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
     @Override public ASTVariableDecl visitVariableDecl(SmallLangParser.VariableDeclContext ctx) {
         //get identifier name
         TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(1);
-        //get identifier's name
+        //get identifier's type
         TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(3);
 
         //get expression
@@ -225,6 +444,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
             variableDecl =  (ASTVariableDecl)variableDeclarationNode.accept(this);
         }
         //else if there is no declaration
+        else
         {
             expressionIndex = 3;
             assignmentIndex = 5;
@@ -248,7 +468,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
         }
 
         //get block
-        ParseTree blockNode = ctx.children.get(4);
+        ParseTree blockNode = ctx.children.get(blockIndex);
         ASTBlock block = (ASTBlock) blockNode.accept(this);
 
         return new ASTFor(variableDecl, expression, assignment, block);
@@ -259,28 +479,115 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitWhileStatement(SmallLangParser.WhileStatementContext ctx) { return visitChildren(ctx); }
+    @Override public ASTWhile visitWhileStatement(SmallLangParser.WhileStatementContext ctx) {
+        //get expression
+        ParseTree expressionNode = ctx.children.get(2);
+        ASTExpression expression = (ASTExpression) expressionNode.accept(this);
+
+        //get block
+        ParseTree blockNode = ctx.children.get(4);
+        ASTBlock block = (ASTBlock) blockNode.accept(this);
+
+        return new ASTWhile(expression, block);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitFormalParam(SmallLangParser.FormalParamContext ctx) { return visitChildren(ctx); }
+    @Override public Object visitFormalParam(SmallLangParser.FormalParamContext ctx) {
+        //get identifier name
+        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(0);
+        //get identifier's type
+        TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(2);
+
+        ASTIdentifier identifier = createIdentifier(typeToken.toString(), identifierToken.toString());
+        return new ASTFormalParam(identifier);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitFormalParams(SmallLangParser.FormalParamsContext ctx) { return visitChildren(ctx); }
+    @Override public Object visitFormalParams(SmallLangParser.FormalParamsContext ctx) {
+        int counter = 0;
+        List<ParseTree> trees = ctx.children;
+
+        //arraylist of formal params to return
+        ArrayList<ASTFormalParam> formalParams = new ArrayList<ASTFormalParam>();
+
+        //get param
+        ParseTree formalParamNode = ctx.children.get(counter);
+        ASTFormalParam formalParam = (ASTFormalParam) formalParamNode.accept(this);
+
+        //add param to list of params
+        formalParams.add(formalParam);
+
+        //increment counter
+        counter++;
+
+        if(counter < trees.size())
+        {
+            //get next node
+            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+            //get the type of the next token
+            int type = currentNode.getSymbol().getType();
+
+            //while there is a relational op
+            while (this.lexer.getVocabulary().getSymbolicName(type).equals("COMMA")) {
+                //increment counter
+                counter++;
+
+                //get another param
+                formalParamNode = ctx.children.get(counter);
+                formalParam = (ASTFormalParam) formalParamNode.accept(this);
+
+                //add param to list of params
+                formalParams.add(formalParam);
+
+                //increment counter
+                counter++;
+
+                //check size
+                if(counter >= trees.size())
+                    break;
+
+                //get expression
+                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+                //get the type of the next token
+                type = currentNode.getSymbol().getType();
+            }
+        }
+
+        return new ASTFormalParams(formalParams);
+    }
     /**
      * {@inheritDoc}
      *
      * <p>The default implementation returns the result of calling
      * {@link #visitChildren} on {@code ctx}.</p>
      */
-    @Override public Object visitFunctionDecl(SmallLangParser.FunctionDeclContext ctx) { return visitChildren(ctx); }
+    @Override public ASTFunctionDecl visitFunctionDecl(SmallLangParser.FunctionDeclContext ctx) {
+        //get identifier
+        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(1);
+        //get type
+        TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(6);
+
+        //set identifier
+        ASTIdentifier identifier = createIdentifier(typeToken.toString(), identifierToken.toString());
+
+        //get formal params
+        ParseTree formalParamsNode = ctx.children.get(3);
+        ASTFormalParams formalParams = (ASTFormalParams) formalParamsNode.accept(this);
+
+        //get block
+        ParseTree blockNode = ctx.children.get(7);
+        ASTBlock block = (ASTBlock) blockNode.accept(this);
+
+        return new ASTFunctionDecl(identifier, formalParams, block);
+    }
     /**
      * {@inheritDoc}
      *

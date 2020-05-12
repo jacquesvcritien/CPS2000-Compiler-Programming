@@ -5,6 +5,7 @@
 			\usepackage{titlepic}
 			\usepackage{float}
 			\usepackage{hyperref}
+\usepackage{xcolor}
 			\newcommand\tab[1][1cm]{\hspace*{#1}}
 			\usepackage{multicol}
 			\renewcommand{\labelenumii}{\theenumii}
@@ -670,77 +671,130 @@
 				
 				\begin{enumerate}
 				\item 
-				\begin{lstlisting}
-				//incorrect declaration
-				let x: ? int = 3;
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//incorrect declaration
+let x: ? int = 3;
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				/* try */
-				let x: float = 1234.a;
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+/* try */
+let x: float = 1234.a;
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//no correct formal param
-				ff wjiw(d): int
-				{
-			
-				}
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//no correct formal param
+ff wjiw(d): int
+{
+}
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//no brackets
-				if 1==1
-				{
-					print 1;
-				}
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//no brackets
+if 1==1
+{
+	print 1;
+}
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				// no semi colon
-				print 1
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+// no semi colon
+print 1
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//incorrect type
-				let var : wrong = 5;
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//incorrect type
+let var : wrong = 5;
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//while no bracket
-				while 1 == 1
-				{
-					print 1;
-				}
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//while no bracket
+while 1 == 1
+{
+	print 1;
+}
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//no ending block
-				{
-			    	print 1;
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//no ending block
+{
+print 1;
 				\end{lstlisting}
 				
 				\item 
-				\begin{lstlisting}
-				//incorrect assignment
-				x 2;
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//incorrect assignment
+x 2;
 				\end{lstlisting}
 				
 					\item 
-				\begin{lstlisting}
-				//formal params auto
-				ff square(x: auto)
-				{
-			 	   return x*x;
-				}
+				\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+//formal params auto
+ff square(x: auto)
+{
+ 	   return x*x;		
+}
 				\end{lstlisting}
+				
+\item 
+\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+// Function definition for Power
+ff Pow(x : float , n : int ) : auto
+{
+    let y : float = 1.0 ; // Declare y and set it to 1.0
+    if( n>0 )
+    {
+        for (; n>0 ; n=n\minus1)
+        {
+            y = y*x; //Assignment y = y*x;
+        }
+    }
+    else
+    {
+        for (; n<0 ; n=n+1)
+        {
+            y = y/x; //Assignment y = y/x;
+        }
+    }
+    return y ; // return y as the result
+}
+
+//this throws an incorrect type exception since a \\function cannot be assigned a value
+Pow =3;
+\end{lstlisting}
+
+\item 
+\begin{lstlisting}[backgroundcolor=\color{lightgray}]
+// Function definition for Power
+ff Pow(x : float , n : int ) : auto
+{
+    let y : float = 1.0 ; // Declare y and set it to 1.0
+    if( n>0 )
+    {
+        for (; n>0 ; n=n\minus1)
+        {
+            y = y*x; //Assignment y = y*x;
+        }
+    }
+    else
+    {
+        for (; n<0 ; n=n+1)
+        {
+            y = y/x; //Assignment y = y/x;
+        }
+    }
+    return y ; // return y as the result
+}
+
+//this throws an incorrect type exception since a function cannot be printed
+print Pow;
+\end{lstlisting}
 				
 				
 				
