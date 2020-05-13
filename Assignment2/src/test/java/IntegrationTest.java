@@ -9,7 +9,10 @@ import org.junit.Test;
 import parser.Parser;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;

@@ -3,7 +3,12 @@ package visitor;
 import exceptions.*;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 /**
  * Visitor class for XML generator
@@ -171,7 +176,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent++;
 
         //get identifier
-        ASTIdentifier identifier = formalParam.getIdentifier();
+        ASTAbstractIdentifier identifier = formalParam.getIdentifier();
 
         System.out.println(indentation+"<FormalParam>");
         //visit identifier
@@ -259,7 +264,7 @@ public class VisitorXMLGenerator implements Visitor {
         
         //check type, if there is no type, leave it empty
         String type = (identifier.getType() != null) ? " Type=\""+identifier.getType()+"\"" : "";
-        System.out.println(indentation+"<Identifier"+type+">"+identifier.getValue()+"</Identifier>");
+        System.out.println(indentation+"<Identifier"+type+">"+identifier.getName()+"</Identifier>");
     }
 
     @Override
@@ -437,6 +442,16 @@ public class VisitorXMLGenerator implements Visitor {
 
         //if there is no identifier - in case of for loop with no variable declaration
         System.out.println(indentation+"<Decl>Empty</Decl>");
+    }
+
+    @Override
+    public void visit(ASTArrayIdentifier arrayIdentifier) {
+        //get indent
+        String indentation = getIndent();
+
+        //check type, if there is no type, leave it empty
+        String type = (arrayIdentifier.getType() != null) ? " Type=\""+arrayIdentifier.getType()+"\"" : "";
+        System.out.println(indentation+"<ArrayIdentifier"+type+">"+arrayIdentifier.getName()+"</ArrayIdentifier>");
     }
 
     /**

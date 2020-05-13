@@ -3,7 +3,11 @@ package visitor;
 import exceptions.*;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 public interface Visitor {
 
@@ -234,10 +238,17 @@ public interface Visitor {
      */
     void visit(ASTArrayValue astArrayValue);
 
-
     /**
      * Visitor method for declaration
      * @param astDecl declaration node to visit
      */
     void visit(ASTDecl astDecl);
+
+    /**
+     * Visitor method for array identifier
+     * @param arrayIdentifier declaration node to visit
+     */
+    void visit(ASTArrayIdentifier arrayIdentifier);
+
+
 }

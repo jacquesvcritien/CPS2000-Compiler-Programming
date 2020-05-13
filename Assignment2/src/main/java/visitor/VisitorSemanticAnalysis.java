@@ -3,7 +3,12 @@ package visitor;
 import exceptions.*;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 import java.util.ArrayList;
 
@@ -40,16 +45,16 @@ public class VisitorSemanticAnalysis implements Visitor {
             ASTIdentifier actualId = null;
             //check whether this id can be assigned, i.e. is not a function decl
             try{
-                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getName());
             }
             catch(ClassCastException exception)
             {
-                throw new IncorrectTypeException("The identifier "+identifier.getValue()+" cannot be assigned a value");
+                throw new IncorrectTypeException("The identifier "+identifier.getName()+" cannot be assigned a value");
             }
 
             //check if id exists
             if (actualId == null)
-                throw new UndeclaredException(identifier.getValue() + " is not declared");
+                throw new UndeclaredException(identifier.getName() + " is not declared");
 
             //get expression type
             expression.accept(this);
@@ -204,9 +209,9 @@ public class VisitorSemanticAnalysis implements Visitor {
     @Override
     public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException {
         //get identifier
-        ASTIdentifier identifier = formalParam.getIdentifier();
+        ASTAbstractIdentifier identifier = formalParam.getIdentifier();
         //add identifier
-        symbolTable.insertDecl(identifier.getValue(), identifier);
+        symbolTable.insertDecl(identifier.getName(), identifier);
     }
 
     @Override
@@ -225,11 +230,11 @@ public class VisitorSemanticAnalysis implements Visitor {
         ASTIdentifier identifier = functionCall.getIdentifier();
 
         //get actual function
-        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());
+        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getName());
 
         //if it doesn't exist
         if(actualFunction == null)
-            throw new UndeclaredException(identifier.getValue()+" is not declared");
+            throw new UndeclaredException(identifier.getName()+" is not declared");
 
         //get params
         ASTActualParams params = functionCall.getParams();
@@ -245,7 +250,7 @@ public class VisitorSemanticAnalysis implements Visitor {
         //check expressions with formal params
         //check amount of parameters
         if(actualParamsExpressions.size() != formalParams.size())
-            throw new IncorrectTypeException("Function '"+identifier.getValue()+"' should have "+
+            throw new IncorrectTypeException("Function '"+identifier.getName()+"' should have "+
                     actualFunction.getFormalParams().getFormalParams().size() + " but was given "+
                     params.getExpressions().size()+" parameters");
 
@@ -256,7 +261,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             //go into expression to set type constant
             actualParamsExpressions.get(i).accept(this);
             //get formalParam
-            ASTIdentifier formalParam = formalParams.get(i).getIdentifier();
+            ASTAbstractIdentifier formalParam = formalParams.get(i).getIdentifier();
             //get formal param type
             Type formalParamType = formalParam.getType();
             //check formal params type
@@ -265,7 +270,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             //check param type
             //if it does not match to actual param
             if (!expressionType.equals(formalParamType))
-                throw new IncorrectTypeException(formalParam.getValue()+" should be passed a value of type "+formalParamType);
+                throw new IncorrectTypeException(formalParam.getName()+" should be passed a value of type "+formalParamType);
 
         }
 
@@ -305,16 +310,16 @@ public class VisitorSemanticAnalysis implements Visitor {
         symbolTable.popScope();
 
         //add the identifier to the global scope
-        symbolTable.insertDecl(identifier.getValue(), functionDecl);
+        symbolTable.insertDecl(identifier.getName(), functionDecl);
     }
 
     @Override
     public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //store variable name
-        String variable = identifier.getValue();
+        String variable = identifier.getName();
 
         //get that identifier from table
-        //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getValue());
+        //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getName());
         //if identifier does not have a type get that identifier from table
         if(identifier.getType() == null)
         {
@@ -439,7 +444,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             }
 
             //add identifier
-            symbolTable.insertDecl(identifier.getValue(), identifier);
+            symbolTable.insertDecl(identifier.getName(), identifier);
             //visit identifier
             identifier.accept(this);
             //empty value
@@ -482,6 +487,11 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     }
 
+    @Override
+    public void visit(ASTArrayIdentifier arrayIdentifier) {
+
+    }
+
     /**
      * Method to analyse the program
      * @param program program node to start from
@@ -509,7 +519,7 @@ public class VisitorSemanticAnalysis implements Visitor {
 
         //if the return type of the function does not match the type returned from the block
         if(!identifierType.equals(type) && identifierType != Type.AUTO)
-            throw new ReturnTypeMismatchException(functionIdentifier.getValue()+" should return a value of type "+identifierType);
+            throw new ReturnTypeMismatchException(functionIdentifier.getName()+" should return a value of type "+identifierType);
 
         //if return type is auto, set it to return type from block
         if(identifierType == Type.AUTO)

@@ -6,7 +6,13 @@ import lexer.Token;
 import lexer.TypeToken;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,7 +128,6 @@ public class Parser {
         return new ASTIdentifier(identifier.getAttribute());
     }
 
-
     /**
      * Method to parse an identifier
      * <IDENTIFIER> '[' <EXPRESSION> ']'
@@ -136,7 +141,7 @@ public class Parser {
         ASTExpression sizeIndex = arraySizeIndex();
 
         //return new identifier token
-        return new ASTArrayIdentifier(identifier.getValue(), sizeIndex);
+        return new ASTArrayIdentifier(identifier.getName(), sizeIndex);
     }
 
     /**
@@ -459,7 +464,7 @@ public class Parser {
         //get array size
         ASTExpression arraySize = arraySizeIndex();
 
-        ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier(identifier.getValue());
+        ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier(identifier.getName());
         //absorb colon
         absorb(TypeToken.COLON);
 
@@ -496,14 +501,26 @@ public class Parser {
 
     /**
      * Method for formal params
-     * ( <IDENTIFIER> | <ARRAYIDENTIFIER> ) ':' <TYPE>
+     * ( <IDENTIFIER> | <ARRAYIDENTIFIER> )  [ '[' ']' ] ':' <TYPE>
      * @return formal param node
      * @throws IOException
      * @throws InvalidSyntaxException
      */
     private ASTFormalParam formalParam() throws IOException, InvalidSyntaxException{
         //get identifier
-        ASTIdentifier identifier = identifier();
+        ASTAbstractIdentifier identifier = identifier();
+
+        //check if it is an array type
+        if(this.currentToken.getType() == TypeToken.SQUARE_OPEN)
+        {
+            //absorb open square
+            absorb(TypeToken.SQUARE_OPEN);
+            //absorb closing
+            absorb(TypeToken.SQUARE_CLOSE);
+            //set identifier as an array identifier
+            identifier = new ASTArrayIdentifier(identifier.getName());
+        }
+
         //absorb colon
         absorb(TypeToken.COLON);
         //get type
@@ -511,7 +528,6 @@ public class Parser {
 
         //set identifier type to actual type from type got (int, float, bool or auto)
         identifier.setType(getTypeEnum(type.getAttribute()));
-
 
         //return new ast formal param with identifier
         return new ASTFormalParam(identifier);

@@ -3,7 +3,12 @@ package visitor;
 import exceptions.*;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 import java.util.ArrayList;
 
@@ -28,13 +33,13 @@ public class VisitorInterpreter implements Visitor {
             //get identifier
             ASTIdentifier identifier = assignment.getIdentifier();
             //get actual identifier
-            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());
+            ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getName());
 
             //get expression type
             expression.accept(this);
 
             //insert value
-            symbolTable.insertValue(actualId.getValue(), symbolTable.getConstantValue());
+            symbolTable.insertValue(actualId.getName(), symbolTable.getConstantValue());
 
         }
 
@@ -241,9 +246,9 @@ public class VisitorInterpreter implements Visitor {
     @Override
     public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException {
         //get identifier
-        ASTIdentifier identifier = formalParam.getIdentifier();
+        ASTAbstractIdentifier identifier = formalParam.getIdentifier();
         //add identifier
-        symbolTable.insertDecl(identifier.getValue(), identifier);
+        symbolTable.insertDecl(identifier.getName(), identifier);
     }
 
     @Override
@@ -255,7 +260,7 @@ public class VisitorInterpreter implements Visitor {
         //get identifier
         ASTIdentifier identifier = functionCall.getIdentifier();
         //get actual function
-        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());
+        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getName());
 
         //get params
         ASTActualParams params = functionCall.getParams();
@@ -286,10 +291,10 @@ public class VisitorInterpreter implements Visitor {
             formalParam.accept(this);
 
             //get formalParam Identifier
-            ASTIdentifier formalParamIdentifier = formalParam.getIdentifier();
+            ASTAbstractIdentifier formalParamIdentifier = formalParam.getIdentifier();
 
             //insert value
-            functionCallScope.addValue(formalParamIdentifier.getValue(), actualParamsValues.get(i));
+            functionCallScope.addValue(formalParamIdentifier.getName(), actualParamsValues.get(i));
         }
 
 
@@ -310,13 +315,13 @@ public class VisitorInterpreter implements Visitor {
         ASTIdentifier identifier = functionDecl.getIdentifier();
 
         //add the identifier to the global scope
-        symbolTable.insertDecl(identifier.getValue(), functionDecl);
+        symbolTable.insertDecl(identifier.getName(), functionDecl);
     }
 
     @Override
     public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException {
         //store variable name
-        String variable = identifier.getValue();
+        String variable = identifier.getName();
 
         //if identifier's type is not null, lookup variable
         if(identifier.getType() == null)
@@ -443,10 +448,10 @@ public class VisitorInterpreter implements Visitor {
             ASTIdentifier identifier = variableDecl.getIdentifier();
 
             //add identity
-            symbolTable.insertDecl(identifier.getValue(), identifier);
+            symbolTable.insertDecl(identifier.getName(), identifier);
 
             //insert value
-            symbolTable.insertValue(identifier.getValue(), symbolTable.getConstantValue());
+            symbolTable.insertValue(identifier.getName(), symbolTable.getConstantValue());
 
             identifier.accept(this);
 
@@ -499,6 +504,11 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTDecl astDecl) {
+
+    }
+
+    @Override
+    public void visit(ASTArrayIdentifier arrayIdentifier) {
 
     }
 

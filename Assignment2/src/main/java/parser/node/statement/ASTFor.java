@@ -2,6 +2,7 @@ package parser.node.statement;
 
 import exceptions.*;
 import parser.node.expression.ASTExpression;
+import parser.node.statement.declaration.ASTDecl;
 import visitor.Visitor;
 
 /**

@@ -2,13 +2,14 @@ package antlrSrc;
 
 import lexer.Token;
 import lexer.TypeToken;
-import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import parser.node.ASTProgram;
 import parser.node.Type;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTVariableDecl;
 
 import java.util.ArrayList;
 import java.util.List;

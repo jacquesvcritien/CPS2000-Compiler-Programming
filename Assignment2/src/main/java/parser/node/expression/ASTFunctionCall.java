@@ -1,6 +1,7 @@
 package parser.node.expression;
 
 import exceptions.*;
+import parser.node.expression.identifier.ASTIdentifier;
 import visitor.Visitor;
 
 /**

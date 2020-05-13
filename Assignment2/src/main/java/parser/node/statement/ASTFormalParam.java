@@ -4,7 +4,8 @@ import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
 import parser.node.ASTNode;
-import parser.node.expression.ASTIdentifier;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import visitor.Visitor;
 
 /**
@@ -12,13 +13,13 @@ import visitor.Visitor;
  */
 public class ASTFormalParam implements ASTNode {
     //identifier
-    private ASTIdentifier identifier;
+    private ASTAbstractIdentifier identifier;
 
     /**
      * Constructor
      * @param identifier identifier to set
      */
-    public ASTFormalParam(ASTIdentifier identifier)
+    public ASTFormalParam(ASTAbstractIdentifier identifier)
     {
         this.identifier = identifier;
     }
@@ -27,7 +28,7 @@ public class ASTFormalParam implements ASTNode {
      * Getter for identifier
      * @return identifier
      */
-    public ASTIdentifier getIdentifier() {
+    public ASTAbstractIdentifier getIdentifier() {
         return identifier;
     }
 

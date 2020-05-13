@@ -10,19 +10,15 @@ import visitor.Visitor;
  * Class for array identifier node
  */
 public class ASTArrayIdentifier extends ASTAbstractIdentifier {
-    //values
-    private String name;
     //expression to hold size or index
     private ASTExpression sizeIndex;
-    //type
-    private Type type;
 
     /**
      * Constructor
      * @param name name to set
      */
     public ASTArrayIdentifier(String name)  {
-        this.name =name;
+        super(name);
     }
 
     /**
@@ -31,17 +27,8 @@ public class ASTArrayIdentifier extends ASTAbstractIdentifier {
      * @param expression type to set
      */
     public ASTArrayIdentifier(String name, ASTExpression expression)  {
-
-        this.name =name;
+        super(name);
         this.sizeIndex = expression;
-    }
-
-    /**
-     * Setter for type
-     * @param type type to set
-     */
-    public void setType(Type type) {
-        this.type = type;
     }
 
     /**

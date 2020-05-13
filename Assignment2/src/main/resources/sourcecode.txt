@@ -1,4 +1,4 @@
-ff test(x :int): int
+ff test(x :int, y[] : int): int
 {
     return x*2;
 }
