@@ -259,7 +259,7 @@ import parser.node.statement.*;
         
         //check type, if there is no type, leave it empty
 <span class="fc bfc" id="L261" title="All 2 branches covered.">        String type = (identifier.getType() != null) ? &quot; Type=\&quot;&quot;+identifier.getType()+&quot;\&quot;&quot; : &quot;&quot;;</span>
-<span class="fc" id="L262">        System.out.println(indentation+&quot;&lt;Identifier&quot;+type+&quot;&gt;&quot;+identifier.getValue()+&quot;&lt;/Identifier&gt;&quot;);</span>
+<span class="fc" id="L262">        System.out.println(indentation+&quot;&lt;Identifier&quot;+type+&quot;&gt;&quot;+identifier.getName()+&quot;&lt;/Identifier&gt;&quot;);</span>
 <span class="fc" id="L263">    }</span>
 
     @Override

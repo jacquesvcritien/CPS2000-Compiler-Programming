@@ -11,27 +11,27 @@ import visitor.Visitor;
  * Class for identifier node
  */
 public class ASTIdentifier extends ASTExpression {
-    //values
-    private String value;
+    //name
+    private String name;
     //type
     private Type type;
 
     /**
      * Constructor
-     * @param value value to set
+     * @param name value to set
      */
-    public ASTIdentifier(String value)  {
-        this.value =value;
+    public ASTIdentifier(String name)  {
+        this.name =name;
     }
 
     /**
      * Constructor with type
-     * @param value value to set
+     * @param name value to set
      * @param type type to set
      */
-    public ASTIdentifier(String value, Type type)  {
+    public ASTIdentifier(String name, Type type)  {
 
-        this.value =value;
+        this.name =name;
         this.type = type;
     }
 
@@ -47,8 +47,8 @@ public class ASTIdentifier extends ASTExpression {
      * Getter for value
      * @return value
      */
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     /**

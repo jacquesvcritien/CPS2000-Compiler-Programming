@@ -1,14 +1,15 @@
-package parser.node.expression;
+package parser.node.expression.identifier;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.UndeclaredException;
 import parser.node.Type;
+import parser.node.expression.ASTExpression;
 import visitor.Visitor;
 
 /**
  * Class for array identifier node
  */
-public class ASTArrayIdentifier extends ASTExpression {
+public class ASTArrayIdentifier extends ASTAbstractIdentifier {
     //values
     private String name;
     //expression to hold size or index

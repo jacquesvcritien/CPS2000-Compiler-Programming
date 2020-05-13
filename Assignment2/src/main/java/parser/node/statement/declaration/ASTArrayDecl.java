@@ -1,11 +1,11 @@
-package parser.node.statement;
+package parser.node.statement.declaration;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
-import parser.node.expression.ASTArrayIdentifier;
-import parser.node.expression.ASTIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.statement.ASTArrayValue;
 import visitor.Visitor;
 
 /**

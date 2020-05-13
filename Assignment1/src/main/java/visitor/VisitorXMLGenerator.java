@@ -259,7 +259,7 @@ public class VisitorXMLGenerator implements Visitor {
         
         //check type, if there is no type, leave it empty
         String type = (identifier.getType() != null) ? " Type=\""+identifier.getType()+"\"" : "";
-        System.out.println(indentation+"<Identifier"+type+">"+identifier.getValue()+"</Identifier>");
+        System.out.println(indentation+"<Identifier"+type+">"+identifier.getName()+"</Identifier>");
     }
 
     @Override

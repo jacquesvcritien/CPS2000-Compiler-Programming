@@ -1,9 +1,10 @@
-package parser.node.expression;
+package parser.node.expression.identifier;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.UndeclaredException;
 import parser.node.Type;
+import parser.node.expression.ASTExpression;
 import visitor.Visitor;
 
 /**
@@ -11,16 +12,16 @@ import visitor.Visitor;
  */
 public class ASTIdentifier extends ASTExpression {
     //values
-    private String value;
+    private String name;
     //type
     private Type type;
 
     /**
      * Constructor
-     * @param value value to set
+     * @param name value to set
      */
-    public ASTIdentifier(String value)  {
-        this.value =value;
+    public ASTIdentifier(String name)  {
+        this.name =name;
     }
 
     /**

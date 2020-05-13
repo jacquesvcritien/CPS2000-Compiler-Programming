@@ -1,8 +1,8 @@
-package parser.node.statement;
+package parser.node.statement.declaration;
 
 import exceptions.*;
 import parser.node.expression.ASTExpression;
-import parser.node.expression.ASTIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
 import visitor.Visitor;
 
 /**

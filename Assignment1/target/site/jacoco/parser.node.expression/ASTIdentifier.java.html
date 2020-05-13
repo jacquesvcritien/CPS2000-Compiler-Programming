@@ -11,27 +11,27 @@ import visitor.Visitor;
  * Class for identifier node
  */
 public class ASTIdentifier extends ASTExpression {
-    //values
-    private String value;
+    //name
+    private String name;
     //type
     private Type type;
 
     /**
      * Constructor
-     * @param value value to set
+     * @param name value to set
      */
-<span class="fc" id="L23">    public ASTIdentifier(String value)  {</span>
-<span class="fc" id="L24">        this.value =value;</span>
+<span class="fc" id="L23">    public ASTIdentifier(String name)  {</span>
+<span class="fc" id="L24">        this.name =name;</span>
 <span class="fc" id="L25">    }</span>
 
     /**
      * Constructor with type
-     * @param value value to set
+     * @param name value to set
      * @param type type to set
      */
-<span class="fc" id="L32">    public ASTIdentifier(String value, Type type)  {</span>
+<span class="fc" id="L32">    public ASTIdentifier(String name, Type type)  {</span>
 
-<span class="fc" id="L34">        this.value =value;</span>
+<span class="fc" id="L34">        this.name =name;</span>
 <span class="fc" id="L35">        this.type = type;</span>
 <span class="fc" id="L36">    }</span>
 
@@ -47,8 +47,8 @@ public class ASTIdentifier extends ASTExpression {
      * Getter for value
      * @return value
      */
-    public String getValue() {
-<span class="fc" id="L51">        return value;</span>
+    public String getName() {
+<span class="fc" id="L51">        return name;</span>
     }
 
     /**

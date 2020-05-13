@@ -40,16 +40,16 @@ import java.util.ArrayList;
 <span class="fc" id="L40">            ASTIdentifier actualId = null;</span>
             //check whether this id can be assigned, i.e. is not a function decl
             try{
-<span class="fc" id="L43">                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getValue());</span>
+<span class="fc" id="L43">                actualId = (ASTIdentifier) symbolTable.lookup(identifier.getName());</span>
             }
 <span class="fc" id="L45">            catch(ClassCastException exception)</span>
             {
-<span class="fc" id="L47">                throw new IncorrectTypeException(&quot;The identifier &quot;+identifier.getValue()+&quot; cannot be assigned a value&quot;);</span>
+<span class="fc" id="L47">                throw new IncorrectTypeException(&quot;The identifier &quot;+identifier.getName()+&quot; cannot be assigned a value&quot;);</span>
 <span class="fc" id="L48">            }</span>
 
             //check if id exists
 <span class="fc bfc" id="L51" title="All 2 branches covered.">            if (actualId == null)</span>
-<span class="fc" id="L52">                throw new UndeclaredException(identifier.getValue() + &quot; is not declared&quot;);</span>
+<span class="fc" id="L52">                throw new UndeclaredException(identifier.getName() + &quot; is not declared&quot;);</span>
 
             //get expression type
 <span class="fc" id="L55">            expression.accept(this);</span>
@@ -206,7 +206,7 @@ import java.util.ArrayList;
         //get identifier
 <span class="fc" id="L207">        ASTIdentifier identifier = formalParam.getIdentifier();</span>
         //add identifier
-<span class="fc" id="L209">        symbolTable.insertDecl(identifier.getValue(), identifier);</span>
+<span class="fc" id="L209">        symbolTable.insertDecl(identifier.getName(), identifier);</span>
 <span class="fc" id="L210">    }</span>
 
     @Override
@@ -225,11 +225,11 @@ import java.util.ArrayList;
 <span class="fc" id="L225">        ASTIdentifier identifier = functionCall.getIdentifier();</span>
 
         //get actual function
-<span class="fc" id="L228">        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getValue());</span>
+<span class="fc" id="L228">        ASTFunctionDecl actualFunction = (ASTFunctionDecl)symbolTable.lookup(identifier.getName());</span>
 
         //if it doesn't exist
 <span class="fc bfc" id="L231" title="All 2 branches covered.">        if(actualFunction == null)</span>
-<span class="fc" id="L232">            throw new UndeclaredException(identifier.getValue()+&quot; is not declared&quot;);</span>
+<span class="fc" id="L232">            throw new UndeclaredException(identifier.getName()+&quot; is not declared&quot;);</span>
 
         //get params
 <span class="fc" id="L235">        ASTActualParams params = functionCall.getParams();</span>
@@ -245,7 +245,7 @@ import java.util.ArrayList;
         //check expressions with formal params
         //check amount of parameters
 <span class="fc bfc" id="L247" title="All 2 branches covered.">        if(actualParamsExpressions.size() != formalParams.size())</span>
-<span class="fc" id="L248">            throw new IncorrectTypeException(&quot;Function '&quot;+identifier.getValue()+&quot;' should have &quot;+</span>
+<span class="fc" id="L248">            throw new IncorrectTypeException(&quot;Function '&quot;+identifier.getName()+&quot;' should have &quot;+</span>
 <span class="fc" id="L249">                    actualFunction.getFormalParams().getFormalParams().size() + &quot; but was given &quot;+</span>
 <span class="fc" id="L250">                    params.getExpressions().size()+&quot; parameters&quot;);</span>
 
@@ -265,7 +265,7 @@ import java.util.ArrayList;
             //check param type
             //if it does not match to actual param
 <span class="fc bfc" id="L267" title="All 2 branches covered.">            if (!expressionType.equals(formalParamType))</span>
-<span class="fc" id="L268">                throw new IncorrectTypeException(formalParam.getValue()+&quot; should be passed a value of type &quot;+formalParamType);</span>
+<span class="fc" id="L268">                throw new IncorrectTypeException(formalParam.getName()+&quot; should be passed a value of type &quot;+formalParamType);</span>
 
         }
 
@@ -305,16 +305,16 @@ import java.util.ArrayList;
 <span class="fc" id="L305">        symbolTable.popScope();</span>
 
         //add the identifier to the global scope
-<span class="fc" id="L308">        symbolTable.insertDecl(identifier.getValue(), functionDecl);</span>
+<span class="fc" id="L308">        symbolTable.insertDecl(identifier.getName(), functionDecl);</span>
 <span class="fc" id="L309">    }</span>
 
     @Override
     public void visit(ASTIdentifier identifier) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
         //store variable name
-<span class="fc" id="L314">        String variable = identifier.getValue();</span>
+<span class="fc" id="L314">        String variable = identifier.getName();</span>
 
         //get that identifier from table
-        //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getValue());
+        //ASTIdentifier actualId = (ASTIdentifier)symbolTable.lookup(identifier.getName());
         //if identifier does not have a type get that identifier from table
 <span class="fc bfc" id="L319" title="All 2 branches covered.">        if(identifier.getType() == null)</span>
         {
@@ -443,7 +443,7 @@ import java.util.ArrayList;
             }
 
             //add identifier
-<span class="fc" id="L446">            symbolTable.insertDecl(identifier.getValue(), identifier);</span>
+<span class="fc" id="L446">            symbolTable.insertDecl(identifier.getName(), identifier);</span>
             //visit identifier
 <span class="fc" id="L448">            identifier.accept(this);</span>
             //empty value
@@ -502,7 +502,7 @@ import java.util.ArrayList;
 
         //if the return type of the function does not match the type returned from the block
 <span class="fc bfc" id="L504" title="All 4 branches covered.">        if(!identifierType.equals(type) &amp;&amp; identifierType != Type.AUTO)</span>
-<span class="fc" id="L505">            throw new ReturnTypeMismatchException(functionIdentifier.getValue()+&quot; should return a value of type &quot;+identifierType);</span>
+<span class="fc" id="L505">            throw new ReturnTypeMismatchException(functionIdentifier.getName()+&quot; should return a value of type &quot;+identifierType);</span>
 
         //if return type is auto, set it to return type from block
 <span class="fc bfc" id="L508" title="All 2 branches covered.">        if(identifierType == Type.AUTO)</span>

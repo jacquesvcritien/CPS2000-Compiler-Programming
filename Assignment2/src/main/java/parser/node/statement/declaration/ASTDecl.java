@@ -1,10 +1,10 @@
-package parser.node.statement;
+package parser.node.statement.declaration;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
 import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
-import parser.node.expression.ASTIdentifier;
+import parser.node.statement.ASTStatement;
 import visitor.Visitor;
 
 /**
