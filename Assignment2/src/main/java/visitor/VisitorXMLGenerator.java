@@ -49,7 +49,7 @@ public class VisitorXMLGenerator implements Visitor {
         indent++;
 
         //get identifier
-        ASTIdentifier identifier = assignment.getIdentifier();
+        ASTAbstractIdentifier identifier = assignment.getIdentifier();
         //get expression
         ASTExpression expression = assignment.getExpression();
 
@@ -384,21 +384,13 @@ public class VisitorXMLGenerator implements Visitor {
         ASTExpression expression = variableDecl.getExpression();
 
 
-        //if there is no identifier - in case of for loop with no variable declaration
-        if(identifier == null)
-        {
-            System.out.println(indentation+"<VarDecl>Empty</VarDecl>");
-        }
-        else
-        {
-            System.out.println(indentation+"<VarDecl>");
-            //visit identifier
-            identifier.accept(this);
-            //visit expression
-            expression.accept(this);
-            System.out.println(indentation+"</VarDecl>");
-        }
-        
+        System.out.println(indentation+"<VarDecl>");
+        //visit identifier
+        identifier.accept(this);
+        //visit expression
+        expression.accept(this);
+        System.out.println(indentation+"</VarDecl>");
+
         //decrement indentation
         indent--;
     }
@@ -449,8 +441,8 @@ public class VisitorXMLGenerator implements Visitor {
         //get indent
         String indentation = getIndent();
 
-        //check type, if there is no type, leave it empty
-        String type = (arrayIdentifier.getType() != null) ? " Type=\""+arrayIdentifier.getType()+"\"" : "";
+        //check type
+        String type = " Type=\""+arrayIdentifier.getType()+"\"";
         System.out.println(indentation+"<ArrayIdentifier"+type+">"+arrayIdentifier.getName()+"</ArrayIdentifier>");
     }
 

@@ -42,7 +42,9 @@
                     <excludes>
                         <exclude>parser/node/ASTExpression.*</exclude>
                         <exclude>parser/node/ASTStatement.*</exclude>
+                        <exclude>antlrSrc/SmallLang*</exclude>
                         <exclude>Tester.*</exclude>
+                        <exclude>AntlrTester.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -69,18 +71,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>antlr4</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 

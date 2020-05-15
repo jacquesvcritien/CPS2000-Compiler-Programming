@@ -19,6 +19,24 @@ public interface SmallLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLiteral(SmallLangParser.LiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SmallLangParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SmallLangParser#additiveOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditiveOp(SmallLangParser.AdditiveOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SmallLangParser#relationalOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalOp(SmallLangParser.RelationalOpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SmallLangParser#actualParams}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

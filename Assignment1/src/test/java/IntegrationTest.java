@@ -803,11 +803,13 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("false\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n" +
+                "true\nfalse\nfalse\nfalse\ntrue\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n"+
+                "false\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\n-1.0").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "false\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\n" +
-                "true\r\nfalse\r\nfalse\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\n"+
-                "false\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\n-1.0\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**

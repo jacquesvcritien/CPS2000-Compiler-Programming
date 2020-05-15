@@ -9,6 +9,7 @@ import org.junit.Test;
 import parser.Parser;
 import parser.node.*;
 import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
 import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.statement.*;
 import parser.node.statement.declaration.ASTArrayDecl;
@@ -49,9 +50,12 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+
+        String expected = ("1\n2\n0.1\n0.2\n0.3\n0.4\n0.5\n1\n2\n3\n4\n5\ntrue").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "1\r\n2\r\n0.1\r\n0.2\r\n0.3\r\n0.4\r\n0.5\r\n1\r\n2\r\n3\r\n4\r\n5\r\ntrue\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     @Test
@@ -60,9 +64,11 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("12\n4\n2\n15.200001\nfalse").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "12\r\n4\r\n2\r\n15.200001\r\nfalse\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     @Test
@@ -71,9 +77,11 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("16\n3.0\ntrue").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "16\r\n3.0\r\ntrue\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     @Test
@@ -82,9 +90,11 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("1\n1").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "1\r\n1\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -641,9 +651,11 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("1").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "1\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -662,9 +674,11 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("1667.9874").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "1667.9874\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**
@@ -746,6 +760,7 @@ public class IntegrationTest {
         ASTCharacterLiteral characterLiteral = new ASTCharacterLiteral(new Token(TypeToken.CHARACTER_LITERAL, 'c'));
         ASTArrayDecl arrayDecl = new ASTArrayDecl();
         ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier("id");
+        ASTAbstractIdentifier abstractIdentifier = new ASTAbstractIdentifier("try");
         //for coverage
         ASTVariableDecl variableDecl = new ASTVariableDecl();
 
@@ -767,6 +782,9 @@ public class IntegrationTest {
         arrayIdentifier.accept(semanticAnalysis);
         arrayIdentifier.accept(interpreter);
         arrayIdentifier.accept(xml);
+        abstractIdentifier.accept(semanticAnalysis);
+        abstractIdentifier.accept(interpreter);
+        abstractIdentifier.accept(xml);
 
     }
 
@@ -826,11 +844,13 @@ public class IntegrationTest {
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
+        String expected = ("false\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n" +
+                "true\nfalse\nfalse\nfalse\ntrue\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n"+
+                "false\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\n-1.0").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
+        
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
-        Assert.assertEquals("Asserting console output", "false\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\n" +
-                "true\r\nfalse\r\nfalse\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\ntrue\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\n"+
-                "false\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\nfalse\r\ntrue\r\n-1.0\r\n", output.toString());
+        Assert.assertEquals("Asserting console output", expected, output.toString().trim());
     }
 
     /**

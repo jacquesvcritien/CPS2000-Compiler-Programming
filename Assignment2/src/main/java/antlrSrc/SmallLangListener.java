@@ -20,6 +20,36 @@ public interface SmallLangListener extends ParseTreeListener {
 	 */
 	void exitLiteral(SmallLangParser.LiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SmallLangParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmallLangParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmallLangParser#additiveOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveOp(SmallLangParser.AdditiveOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmallLangParser#additiveOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveOp(SmallLangParser.AdditiveOpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SmallLangParser#relationalOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalOp(SmallLangParser.RelationalOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SmallLangParser#relationalOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalOp(SmallLangParser.RelationalOpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SmallLangParser#actualParams}.
 	 * @param ctx the parse tree
 	 */

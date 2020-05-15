@@ -41,7 +41,7 @@
 				
 				\subsection{Deterministic finite automaton}
 				
-				I started off by designing a DFA bit by bit, starting from the most simple classifiers such as digits. I continued building onto it by creating transitions to all states, which represent possible tokens. The DFA generated can be seen in the figure below and this was used to help in determinign whether an can be classified into a token or not. Then, from this automaton, three tables could be formed which are known as the Transition table, The Classifier table and the Token Type table.
+				I started off by designing a DFA bit by bit, starting from the most simple classifiers such as digits. I continued building onto it by creating transitions to all states, which represent possible tokens. The DFA generated can be seen in the figure below and this was used to help in determining whether an can be classified into a token or not. Then, from this automaton, three tables could be formed which are known as the Transition table, The Classifier table and the Token Type table. \textbf{It is important to note that for each state, any other character inserted which are not visible in the paths going out from that state ALL lead to the bad state. This is not included in the diagram just to keep the diagram clear.}
 				
 				\begin{center}
 					\begin{figure}[H]
@@ -55,7 +55,7 @@
 				\subsection{Tables}
 				
 				\subsubsection{Classifier Table}
-				This table shows relates the specific characters of input to the classifiers. Classifiers can also be called categories and these are then used to match them to states to create transitions as you can see in the next section. This table can be seen in the figure below.
+				This table relates the specific characters of input to the classifiers. Classifiers can also be called categories and these are then used to match them to states to create transitions as you can see in the next section. This table can be seen in the figure below.
 				
 				\begin{center}
 					\begin{figure}[H]
@@ -216,9 +216,9 @@
 						\item \textbf{setAcceptableStates()}: This function populates the acceptable states hashmap explained above to have all the acceptable states as in the automaton and Type Token table.
 						\item \textbf{getCurrentLine()}: This function would return the current line at which the reader is at.
 						\item \textbf{rollback()}: This function rollbacks the reading from a file back to the marked position.
-						\item \textbf{charCat()}: This function uses if statments and a switch to return the ctaegory of a particular character. This is based on the Classifier Table in section 1.2.1.
+						\item \textbf{charCat()}: This function uses if statements and a switch to return the category of a particular character. This is based on the Classifier Table in section 1.2.1.
 						\item \textbf{getTokens()}: This function returns an arraylist of tokens from a file input. This is used for testing.
-						\item \textbf{compareTokens()}: This functon accepst two arraylists of tokens and compares them. If they are equal, true is returned, otherwise false is returned. This is also used in testing
+						\item \textbf{compareTokens()}: This function accepts two arraylists of tokens and compares them. If they are equal, true is returned, otherwise false is returned. This is also used in testing
 						\item \textbf{nextToken()}: This method is called by the parser to return the next token and it uses all the aforementioned functions. 
 						This function was implemented and divided into 4 steps as follows:
 						\begin{enumerate}

@@ -1,0 +1,8 @@
+// Function definition for plus
+ff plus(x : int , n : int, a :int ) : auto
+{
+    return x + n + a;
+}
+let x : auto = plus(1,2,3);
+print x; //prints to console 6
+

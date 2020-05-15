@@ -45,22 +45,23 @@ factor : literal | Identifier | functionCall | subExpression | unary;
 term : factor (MultiplicativeOp factor)*;
 simpleExpression : term (AdditiveOp term)*;
 expression : simpleExpression (RelationalOp simpleExpression)*;
-assignment : Identifier EQUAL_SIGN expression;
+assignment : abstractIdentifier EQUAL_SIGN expression;
 arrayIndex : SQUARE_OPEN expression SQUARE_CLOSE;
-variableDecl : LET Identifier COLON (Type | Auto) EQUAL_SIGN expression;
-arrayDecl : LET arrayIdentifier COLON TYPE EQUAL_SIGN arrayValue;
+variableDecl : Identifier COLON (Type | Auto) EQUAL_SIGN expression;
+arrayDecl : arrayIdentifier COLON TYPE EQUAL_SIGN arrayValue;
 arrayIdentifier : Identifier arrayIndex;
+abstractIdentifier: Identifier | arrayIdentifier;
 arrayValue : CURLY_OPEN expression (COMMA expression)* CURLY_CLOSE;
-decleration : variableDecl | arrayDecl;
+declaration : 'let' (variableDecl | arrayDecl);
 printStatement : PRINT expression;
 rtrnStatement : RETURN expression;
 ifStatement : IF BRACKET_OPEN expression BRACKET_CLOSE block (ELSE block)?;
 forStatement : FOR BRACKET_OPEN variableDecl? SEMI_COLON expression SEMI_COLON assignment? BRACKET_CLOSE block;
 whileStatement : WHILE BRACKET_OPEN expression BRACKET_CLOSE block;
-formalParam : (Identifier | arrayIdentifier) COLON Type;
+formalParam : Identifier (SQUARE_OPEN SQUARE_CLOSE)? COLON Type;
 formalParams : formalParam (COMMA formalParam)*;
 functionDecl : FF Identifier BRACKET_OPEN formalParams? BRACKET_CLOSE COLON (Type | Auto) block;
-statement : decleration SEMI_COLON
+statement : declaration SEMI_COLON
           | assignment SEMI_COLON
           | printStatement SEMI_COLON
           | ifStatement

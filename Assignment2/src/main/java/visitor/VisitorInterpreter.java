@@ -31,7 +31,7 @@ public class VisitorInterpreter implements Visitor {
             //get expression
             ASTExpression expression = assignment.getExpression();
             //get identifier
-            ASTIdentifier identifier = assignment.getIdentifier();
+            ASTAbstractIdentifier identifier = assignment.getIdentifier();
             //get actual identifier
             ASTIdentifier actualId = (ASTIdentifier) symbolTable.lookup(identifier.getName());
 

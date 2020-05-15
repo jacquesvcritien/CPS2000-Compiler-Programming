@@ -89,8 +89,32 @@ public class ParserTest {
      * Test for using an array element
      */
     @Test
-    public void tetsUseArrayElement() throws IOException, URISyntaxException, InvalidSyntaxException {
+    public void testUseArrayElement() throws IOException, URISyntaxException, InvalidSyntaxException {
         lexer = new Lexer("parser/usearrayelement.txt");
+        parser = new Parser(lexer);
+        ASTProgram program = parser.parse();
+        Assert.assertNotNull("Asserting program is not null", program);
+
+    }
+
+    /**
+     * Test for using an assignment for an array value
+     */
+    @Test
+    public void testArrayAssignment() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("parser/arrayassignment.txt");
+        parser = new Parser(lexer);
+        ASTProgram program = parser.parse();
+        Assert.assertNotNull("Asserting program is not null", program);
+
+    }
+
+    /**
+     * Test for using an an array formal parameter
+     */
+    @Test
+    public void testArrayFormalParam() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("parser/arrayformalparam.txt");
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
         Assert.assertNotNull("Asserting program is not null", program);

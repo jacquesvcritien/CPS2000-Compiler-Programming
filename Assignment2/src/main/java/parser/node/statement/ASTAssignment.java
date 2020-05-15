@@ -2,6 +2,7 @@ package parser.node.statement;
 
 import exceptions.*;
 import parser.node.expression.ASTExpression;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
 import parser.node.expression.identifier.ASTIdentifier;
 import visitor.Visitor;
 
@@ -10,7 +11,7 @@ import visitor.Visitor;
  */
 public class ASTAssignment extends ASTStatement {
     //identifier
-    private ASTIdentifier identifier;
+    private ASTAbstractIdentifier identifier;
     //expression
     private ASTExpression expression;
 
@@ -24,7 +25,7 @@ public class ASTAssignment extends ASTStatement {
      * @param identifier identifier to set
      * @param expression expression to set
      */
-    public ASTAssignment(ASTIdentifier identifier, ASTExpression expression) {
+    public ASTAssignment(ASTAbstractIdentifier identifier, ASTExpression expression) {
         this.identifier = identifier;
         this.expression = expression;
     }
@@ -33,7 +34,7 @@ public class ASTAssignment extends ASTStatement {
      * Getter for identifier
      * @return identifier
      */
-    public ASTIdentifier getIdentifier() {
+    public ASTAbstractIdentifier getIdentifier() {
         return identifier;
     }
 

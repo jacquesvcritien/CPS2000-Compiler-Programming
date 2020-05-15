@@ -71,6 +71,10 @@ public class Lexer
     public Lexer(String filename) throws FileNotFoundException, URISyntaxException {
         //get absolute path from resources path
         URL url = Lexer.class.getClassLoader().getResource(filename);
+
+        //if the file does not exist
+        if(url == null)
+            throw new FileNotFoundException(filename+" not found");
         File file = Paths.get(url.toURI()).toFile();
         String absolutePath = file.getAbsolutePath();
 

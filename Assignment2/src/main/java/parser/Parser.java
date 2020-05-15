@@ -378,7 +378,12 @@ public class Parser {
             return new ASTAssignment();
 
         //get identifier
-        ASTIdentifier identifier = identifier();
+        ASTAbstractIdentifier identifier = identifier();
+
+        //else if square open, it must be an array declaration
+        if(this.currentToken.getType() == TypeToken.SQUARE_OPEN)
+            identifier =  arrayIdentifier((ASTIdentifier)identifier);
+
         //absorb equal sign
         absorb(TypeToken.EQUAL_SIGN);
         //get expression

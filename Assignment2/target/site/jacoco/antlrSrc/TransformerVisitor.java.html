@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransformerVisitor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment2</a> &gt; <a href="index.source.html" class="el_package">antlrSrc</a> &gt; <span class="el_source">TransformerVisitor.java</span></div><h1>TransformerVisitor.java</h1><pre class="source lang-java linenums">package antlrSrc;
+
+import lexer.Token;
+import lexer.TypeToken;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNodeImpl;
+import parser.node.ASTProgram;
+import parser.node.Type;
+import parser.node.expression.*;
+import parser.node.expression.identifier.ASTIdentifier;
+import parser.node.statement.*;
+import parser.node.statement.declaration.ASTVariableDecl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
+    SmallLangLexer lexer;
+
+    public TransformerVisitor(SmallLangLexer lexer)
+<span class="fc" id="L21">    {</span>
+<span class="fc" id="L22">        this.lexer = lexer;</span>
+<span class="fc" id="L23">    }</span>
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     * @return
+     */
+    @Override public ASTExpression visitLiteral(SmallLangParser.LiteralContext ctx) {
+
+        //get type of literal
+<span class="fc" id="L34">        TerminalNodeImpl terminalNode = (TerminalNodeImpl) ctx.children.get(0);</span>
+        //get actual name from vocabulary
+<span class="fc" id="L36">        String type = this.lexer.getVocabulary().getSymbolicName(terminalNode.getSymbol().getType());</span>
+
+        //get type of literal to return
+<span class="fc bfc" id="L39" title="All 3 branches covered.">        switch (type)</span>
+        {
+<span class="fc" id="L41">            case &quot;IntegerLiteral&quot; : return new ASTIntegerLiteral(new Token(TypeToken.INTEGER_LITERAL, terminalNode.toString()));</span>
+<span class="fc" id="L42">            case &quot;FloatLiteral&quot; : return new ASTFloatLiteral(new Token(TypeToken.FLOAT_LITERAL, terminalNode.toString()));</span>
+<span class="fc" id="L43">            default: return new ASTBooleanLiteral(new Token(TypeToken.BOOLEAN_LITERAL, terminalNode.toString()));</span>
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public Object visitActualParams(SmallLangParser.ActualParamsContext ctx) {
+<span class="fc" id="L54">        int counter = 0;</span>
+<span class="fc" id="L55">        List&lt;ParseTree&gt; trees = ctx.children;</span>
+
+        //arraylist of expressions(params) to return
+<span class="fc" id="L58">        ArrayList&lt;ASTExpression&gt; actualParams = new ArrayList&lt;ASTExpression&gt;();</span>
+
+        //get param
+<span class="fc" id="L61">        ParseTree expressionNode = ctx.children.get(counter);</span>
+<span class="fc" id="L62">        ASTExpression actualParam = (ASTExpression) expressionNode.accept(this);</span>
+
+        //add param to list of params
+<span class="fc" id="L65">        actualParams.add(actualParam);</span>
+
+        //increment counter
+<span class="fc" id="L68">        counter++;</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while(counter &lt; trees.size())</span>
+        {
+            //get next node
+<span class="fc" id="L73">            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);</span>
+            //get the type of the next token
+<span class="fc" id="L75">            int type = currentNode.getSymbol().getType();</span>
+
+                //increment counter
+<span class="fc" id="L78">                counter++;</span>
+
+                //get another param
+<span class="fc" id="L81">                expressionNode = ctx.children.get(counter);</span>
+<span class="fc" id="L82">                actualParam = (ASTExpression) expressionNode.accept(this);</span>
+
+                //add param to list of params
+<span class="fc" id="L85">                actualParams.add(actualParam);</span>
+
+                //increment counter
+<span class="fc" id="L88">                counter++;</span>
+
+                //check size
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                if(counter &gt;= trees.size())</span>
+<span class="fc" id="L92">                    break;</span>
+
+<span class="fc" id="L94">        }</span>
+
+<span class="fc" id="L96">        return new ASTActualParams(actualParams);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTFunctionCall visitFunctionCall(SmallLangParser.FunctionCallContext ctx) {
+        //get identifier
+<span class="fc" id="L107">        ParseTree identifierNode = ctx.children.get(0);</span>
+<span class="fc" id="L108">        ASTIdentifier identifier = new ASTIdentifier(identifierNode.toString());</span>
+
+        //variable to hold actual params
+<span class="fc" id="L111">        ASTActualParams actualParams = null;</span>
+
+        //check if it has actual params, if the third node has children, it must be that there are params
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if(ctx.children.get(2).getChildCount() &gt; 0)</span>
+        {
+            //get actual params
+<span class="fc" id="L117">            actualParams = (ASTActualParams)visitActualParams((SmallLangParser.ActualParamsContext) ctx.children.get(2));</span>
+        }
+        //else if there are no params
+        else
+        {
+<span class="fc" id="L122">            actualParams = new ASTActualParams();</span>
+        }
+
+<span class="fc" id="L125">        return new ASTFunctionCall(identifier, actualParams);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTExpression visitSubExpression(SmallLangParser.SubExpressionContext ctx) {
+        //get expression and return it
+<span class="fc" id="L135">        ParseTree expressionNode = ctx.children.get(1);</span>
+<span class="fc" id="L136">        return (ASTExpression) expressionNode.accept(this);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTUnary visitUnary(SmallLangParser.UnaryContext ctx) {
+        //get lexeme
+<span class="fc" id="L146">        ParseTree lexeme = ctx.children.get(0);</span>
+
+        //get expression
+<span class="fc" id="L149">        ParseTree expressionNode = ctx.children.get(1);</span>
+<span class="fc" id="L150">        ASTExpression expression = (ASTExpression)expressionNode.accept(this);</span>
+
+<span class="fc" id="L152">        return new ASTUnary(lexeme.toString(), expression);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTExpression visitFactor(SmallLangParser.FactorContext ctx) {
+
+        //get node
+<span class="fc" id="L163">        ParseTree node = ctx.children.get(0);</span>
+
+<span class="fc" id="L165">        ASTExpression toReturn = null;</span>
+
+        //if the node has no children it must be an identifier
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if(node.getChildCount() == 0)</span>
+<span class="fc" id="L169">            toReturn = createIdentifier(null, node.toString());</span>
+        else
+<span class="fc" id="L171">            toReturn = (ASTExpression)visitChildren(ctx);</span>
+
+<span class="fc" id="L173">        return toReturn;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public String visitMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx) {
+        //return operand
+<span class="fc" id="L184">        return ctx.children.get(0).toString();</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public String visitAdditiveOp(SmallLangParser.AdditiveOpContext ctx) {
+        //return operand
+<span class="fc" id="L194">        return ctx.children.get(0).toString();</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public String visitRelationalOp(SmallLangParser.RelationalOpContext ctx) {
+        //return operand
+<span class="fc" id="L204">        return ctx.children.get(0).toString();</span>
+    }
+
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTExpression visitTerm(SmallLangParser.TermContext ctx) {
+<span class="fc" id="L215">        List&lt;ParseTree&gt; trees = ctx.children;</span>
+
+        //get expression
+<span class="fc" id="L218">        ASTExpression node =visitFactor((SmallLangParser.FactorContext) trees.get(0));</span>
+
+
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
+        {
+<span class="fc" id="L223">            String operand = visitMultiplicativeOp((SmallLangParser.MultiplicativeOpContext) trees.get(i));</span>
+<span class="fc" id="L224">            i++;</span>
+<span class="fc" id="L225">            ASTExpression right = (ASTExpression) visitFactor((SmallLangParser.FactorContext) trees.get(i));</span>
+<span class="fc" id="L226">            node = new ASTBinExpression(node, operand, right);</span>
+        }
+
+<span class="fc" id="L229">        return node;</span>
+    }
+
+
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * &lt;p&gt;The default implementation returns the result of calling
+//     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+//     */
+//    @Override public ASTExpression visitTerm(SmallLangParser.TermContext ctx) {
+//        int counter = 0;
+//        List&lt;ParseTree&gt; trees = ctx.children;
+//
+//        //get expression
+//        ASTExpression node = (ASTExpression) visitFactor((SmallLangParser.FactorContext) trees.get(counter));
+//        //increment counter
+//        counter++;
+//
+//        if(counter &lt; trees.size())
+//        {
+//            //get next node
+//            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//            //get the type of the next token
+//            int type = currentNode.getSymbol().getType();
+//
+//            //while there is a relational op
+//            while (this.lexer.getVocabulary().getSymbolicName(type).equals(&quot;MultiplicativeOp&quot;)) {
+//                //increment counter
+//                counter++;
+//                //get the expression on the right
+//                ASTExpression right = (ASTExpression) visitFactor((SmallLangParser.FactorContext) trees.get(counter));
+//                node = new ASTBinExpression(node, currentNode.toString(), right);
+//
+//                //increment counter
+//                counter++;
+//
+//                //check size
+//                if(counter &gt;= trees.size())
+//                    break;
+//
+//                //get expression
+//                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//                //get the type of the next token
+//                type = currentNode.getSymbol().getType();
+//            }
+//        }
+//
+//
+//        return node;
+//    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * &lt;p&gt;The default implementation returns the result of calling
+//     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+//     */
+//    @Override public ASTExpression visitSimpleExpression(SmallLangParser.SimpleExpressionContext ctx) {
+//        int counter = 0;
+//        List&lt;ParseTree&gt; trees = ctx.children;
+//
+//        //get expression
+//        ASTExpression node = (ASTExpression) visitTerm((SmallLangParser.TermContext) trees.get(counter));
+//        //increment counter
+//        counter++;
+//
+//        if(counter &lt; trees.size())
+//        {
+//            //get next node
+//            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//            //get the type of the next token
+//            int type = currentNode.getSymbol().getType();
+//
+//            //while there is a relational op
+//            while (this.lexer.getVocabulary().getSymbolicName(type).equals(&quot;AdditiveOp&quot;)) {
+//                //increment counter
+//                counter++;
+//                //get the expression on the right
+//                ASTExpression right = (ASTExpression) visitTerm((SmallLangParser.TermContext) trees.get(counter));
+//                node = new ASTBinExpression(node, currentNode.toString(), right);
+//
+//                //increment counter
+//                counter++;
+//
+//                //check size
+//                if(counter &gt;= trees.size())
+//                    break;
+//
+//                //get expression
+//                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//                //get the type of the next token
+//                type = currentNode.getSymbol().getType();
+//            }
+//        }
+//
+//
+//        return node;
+//    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override
+    public ASTExpression visitSimpleExpression(SmallLangParser.SimpleExpressionContext ctx) {
+<span class="fc" id="L336">        List&lt;ParseTree&gt; trees = ctx.children;</span>
+
+        //get expression
+<span class="fc" id="L339">        ASTExpression node = visitTerm((SmallLangParser.TermContext) trees.get(0));</span>
+
+
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
+        {
+<span class="fc" id="L344">            String operand = visitAdditiveOp((SmallLangParser.AdditiveOpContext) trees.get(i));</span>
+<span class="fc" id="L345">            i++;</span>
+<span class="fc" id="L346">            ASTExpression right = visitTerm((SmallLangParser.TermContext) trees.get(i));</span>
+<span class="fc" id="L347">            node = new ASTBinExpression(node, operand, right);</span>
+        }
+
+<span class="fc" id="L350">        return node;</span>
+    }
+
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * &lt;p&gt;The default implementation returns the result of calling
+//     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+//     */
+//    @Override public ASTExpression visitExpression(SmallLangParser.ExpressionContext ctx) {
+//        int counter = 0;
+//        List&lt;ParseTree&gt; trees = ctx.children;
+//
+//        //get expression
+//        ASTExpression node = (ASTExpression) visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(counter));
+//        //increment counter
+//        counter++;
+//
+//        if(counter &lt; trees.size())
+//        {
+//            //get next node
+//            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//            //get the type of the next token
+//            int type = currentNode.getSymbol().getType();
+//
+//            //while there is a relational op
+//            while (this.lexer.getVocabulary().getSymbolicName(type).equals(&quot;RelationalOp&quot;)) {
+//                //increment counter
+//                counter++;
+//                //get the expression on the right
+//                ASTExpression right = (ASTExpression) visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(counter));
+//                node = new ASTBinExpression(node, currentNode.toString(), right);
+//
+//                //increment counter
+//                counter++;
+//
+//                //check size
+//                if(counter &gt;= trees.size())
+//                    break;
+//
+//                //get expression
+//                currentNode = (TerminalNodeImpl) ctx.children.get(counter);
+//                //get the type of the next token
+//                type = currentNode.getSymbol().getType();
+//            }
+//
+//        }
+//
+//        return node;
+//    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override
+    public ASTExpression visitExpression(SmallLangParser.ExpressionContext ctx) {
+<span class="fc" id="L409">        List&lt;ParseTree&gt; trees = ctx.children;</span>
+
+        //get expression
+<span class="fc" id="L412">        ASTExpression node = visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(0));;</span>
+
+
+<span class="fc bfc" id="L415" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
+        {
+<span class="fc" id="L417">            String operand = visitRelationalOp((SmallLangParser.RelationalOpContext) trees.get(i));</span>
+<span class="fc" id="L418">            i++;</span>
+<span class="fc" id="L419">            ASTExpression right = visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(i));;</span>
+<span class="fc" id="L420">            node = new ASTBinExpression(node, operand, right);</span>
+        }
+
+<span class="fc" id="L423">        return node;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTAssignment visitAssignment(SmallLangParser.AssignmentContext ctx) {
+        //get identifier name
+<span class="fc" id="L434">        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(0);</span>
+        //get expression
+<span class="fc" id="L436">        ParseTree expressionNode = ctx.children.get(2);</span>
+<span class="fc" id="L437">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+        //create identifier
+<span class="fc" id="L440">        ASTIdentifier identifier = createIdentifier(null, identifierToken.toString());</span>
+
+<span class="fc" id="L442">        return new ASTAssignment(identifier, expression);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTVariableDecl visitVariableDecl(SmallLangParser.VariableDeclContext ctx) {
+        //get identifier name
+<span class="fc" id="L452">        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(1);</span>
+        //get identifier's type
+<span class="fc" id="L454">        TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(3);</span>
+
+        //get expression
+<span class="fc" id="L457">        ParseTree expressionNode = ctx.children.get(5);</span>
+<span class="fc" id="L458">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+        //create identifier
+<span class="fc" id="L461">        ASTIdentifier identifier = createIdentifier(typeToken.toString(), identifierToken.toString());</span>
+<span class="fc" id="L462">        return new ASTVariableDecl(identifier, expression);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTPrint visitPrintStatement(SmallLangParser.PrintStatementContext ctx) {
+        //get expression
+<span class="fc" id="L472">        ParseTree expressionNode = ctx.children.get(1);</span>
+<span class="fc" id="L473">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+<span class="fc" id="L475">        return new ASTPrint(expression);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTReturn visitRtrnStatement(SmallLangParser.RtrnStatementContext ctx) {
+        //get expression
+<span class="fc" id="L485">        ParseTree expressionNode = ctx.children.get(1);</span>
+<span class="fc" id="L486">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+<span class="fc" id="L488">        return new ASTReturn(expression);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTIf visitIfStatement(SmallLangParser.IfStatementContext ctx) {
+        //get expression
+<span class="fc" id="L498">        ParseTree expressionNode = ctx.children.get(2);</span>
+<span class="fc" id="L499">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+        //get block
+<span class="fc" id="L502">        ParseTree blockNode = ctx.children.get(4);</span>
+<span class="fc" id="L503">        ASTBlock block = (ASTBlock) blockNode.accept(this);</span>
+
+<span class="fc" id="L505">        ASTBlock elseBlock = new ASTBlock();</span>
+        //check if there is else, if there are more than 5 means that there is an else block
+<span class="fc bfc" id="L507" title="All 2 branches covered.">        if(ctx.children.size() &gt; 5)</span>
+        {
+            //get else block
+<span class="fc" id="L510">            ParseTree elseBlockNode = ctx.children.get(6);</span>
+<span class="fc" id="L511">            elseBlock = (ASTBlock) elseBlockNode.accept(this);</span>
+        }
+
+<span class="fc" id="L514">        return new ASTIf(expression, block, elseBlock);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public Object visitForStatement(SmallLangParser.ForStatementContext ctx) {
+        //variable to hold the index of the expression
+<span class="fc" id="L524">        int expressionIndex = -1;</span>
+        //variable to hold the index of the assignment
+<span class="fc" id="L526">        int assignmentIndex = -1;</span>
+        //variable to hold the index of the block
+<span class="fc" id="L528">        int blockIndex = -1;</span>
+
+        //variable to hold the declaration
+<span class="fc" id="L531">        ASTVariableDecl variableDecl = new ASTVariableDecl();</span>
+        //variable to hold the expression
+<span class="fc" id="L533">        ASTExpression expression = new ASTExpression();</span>
+        //variable to hold the assignment
+<span class="fc" id="L535">        ASTAssignment assignment = new ASTAssignment();</span>
+
+
+        //check if there is a declaration
+        //if there is a declaration
+<span class="fc bfc" id="L540" title="All 2 branches covered.">        if(ctx.children.get(2).getChildCount() &gt; 0)</span>
+        {
+<span class="fc" id="L542">            expressionIndex = 4;</span>
+<span class="fc" id="L543">            assignmentIndex = 6;</span>
+<span class="fc" id="L544">            blockIndex = 8;</span>
+
+            //get variable decl
+<span class="fc" id="L547">            ParseTree variableDeclarationNode = ctx.children.get(2);</span>
+<span class="fc" id="L548">            variableDecl =  (ASTVariableDecl)variableDeclarationNode.accept(this);</span>
+<span class="fc" id="L549">        }</span>
+        //else if there is no declaration
+        else
+        {
+<span class="fc" id="L553">            expressionIndex = 3;</span>
+<span class="fc" id="L554">            assignmentIndex = 5;</span>
+<span class="fc" id="L555">            blockIndex = 7;</span>
+        }
+
+        //get expression
+<span class="fc" id="L559">        ParseTree expressionNode = ctx.children.get(expressionIndex);</span>
+<span class="fc" id="L560">        expression =  (ASTExpression)expressionNode.accept(this);</span>
+
+        //check if there is an assignment, and if so get it
+<span class="fc bfc" id="L563" title="All 2 branches covered.">        if(ctx.children.get(assignmentIndex).getChildCount() &gt; 0) {</span>
+            //get assignment
+<span class="fc" id="L565">            ParseTree assignmentNode = ctx.children.get(assignmentIndex);</span>
+<span class="fc" id="L566">            assignment =  (ASTAssignment) assignmentNode.accept(this);</span>
+<span class="fc" id="L567">        }</span>
+        //if there is not, reduce block index
+        else
+        {
+<span class="fc" id="L571">            blockIndex--;</span>
+        }
+
+        //get block
+<span class="fc" id="L575">        ParseTree blockNode = ctx.children.get(blockIndex);</span>
+<span class="fc" id="L576">        ASTBlock block = (ASTBlock) blockNode.accept(this);</span>
+
+<span class="fc" id="L578">        return new ASTFor(variableDecl, expression, assignment, block);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTWhile visitWhileStatement(SmallLangParser.WhileStatementContext ctx) {
+        //get expression
+<span class="fc" id="L588">        ParseTree expressionNode = ctx.children.get(2);</span>
+<span class="fc" id="L589">        ASTExpression expression = (ASTExpression) expressionNode.accept(this);</span>
+
+        //get block
+<span class="fc" id="L592">        ParseTree blockNode = ctx.children.get(4);</span>
+<span class="fc" id="L593">        ASTBlock block = (ASTBlock) blockNode.accept(this);</span>
+
+<span class="fc" id="L595">        return new ASTWhile(expression, block);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public Object visitFormalParam(SmallLangParser.FormalParamContext ctx) {
+        //get identifier name
+<span class="fc" id="L605">        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(0);</span>
+        //get identifier's type
+<span class="fc" id="L607">        TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(2);</span>
+
+<span class="fc" id="L609">        ASTIdentifier identifier = createIdentifier(typeToken.toString(), identifierToken.toString());</span>
+<span class="fc" id="L610">        return new ASTFormalParam(identifier);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public Object visitFormalParams(SmallLangParser.FormalParamsContext ctx) {
+<span class="fc" id="L619">        int counter = 0;</span>
+<span class="fc" id="L620">        List&lt;ParseTree&gt; trees = ctx.children;</span>
+
+        //arraylist of formal params to return
+<span class="fc" id="L623">        ArrayList&lt;ASTFormalParam&gt; formalParams = new ArrayList&lt;ASTFormalParam&gt;();</span>
+
+        //get param
+<span class="fc" id="L626">        ParseTree formalParamNode = ctx.children.get(counter);</span>
+<span class="fc" id="L627">        ASTFormalParam formalParam = (ASTFormalParam) formalParamNode.accept(this);</span>
+
+        //add param to list of params
+<span class="fc" id="L630">        formalParams.add(formalParam);</span>
+
+        //increment counter
+<span class="fc" id="L633">        counter++;</span>
+
+<span class="fc bfc" id="L635" title="All 2 branches covered.">        while(counter &lt; trees.size())</span>
+        {
+            //get next node
+<span class="fc" id="L638">            TerminalNodeImpl currentNode = (TerminalNodeImpl) ctx.children.get(counter);</span>
+            //get the type of the next token
+<span class="fc" id="L640">            int type = currentNode.getSymbol().getType();</span>
+
+                //increment counter
+<span class="fc" id="L643">                counter++;</span>
+
+                //get another param
+<span class="fc" id="L646">                formalParamNode = ctx.children.get(counter);</span>
+<span class="fc" id="L647">                formalParam = (ASTFormalParam) formalParamNode.accept(this);</span>
+
+                //add param to list of params
+<span class="fc" id="L650">                formalParams.add(formalParam);</span>
+
+                //increment counter
+<span class="fc" id="L653">                counter++;</span>
+
+                //check size
+<span class="fc bfc" id="L656" title="All 2 branches covered.">                if(counter &gt;= trees.size())</span>
+<span class="fc" id="L657">                    break;</span>
+<span class="fc" id="L658">        }</span>
+
+<span class="fc" id="L660">        return new ASTFormalParams(formalParams);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTFunctionDecl visitFunctionDecl(SmallLangParser.FunctionDeclContext ctx) {
+        //get identifier
+<span class="fc" id="L670">        TerminalNodeImpl identifierToken = (TerminalNodeImpl) ctx.children.get(1);</span>
+
+        //this variable holds the index where the type will be
+<span class="fc" id="L673">        int typeIndex = -1;</span>
+        //this variable holds the index where the block will be
+<span class="fc" id="L675">        int blockIndex = -1;</span>
+
+        //check third child node to see if its a ')' of a formal params node
+<span class="fc" id="L678">        ParseTree thirdChildNode = ctx.children.get(3);</span>
+
+        //variable to hold formal params
+<span class="fc" id="L681">        ASTFormalParams formalParams = new ASTFormalParams(new ArrayList&lt;ASTFormalParam&gt;());</span>
+
+        //if a '('
+<span class="fc bfc" id="L684" title="All 2 branches covered.">        if(thirdChildNode.getChildCount() == 0)</span>
+        {
+<span class="fc" id="L686">            typeIndex = 5;</span>
+<span class="fc" id="L687">            blockIndex = 6;</span>
+        }
+        //if params
+        else
+        {
+<span class="fc" id="L692">            typeIndex = 6;</span>
+<span class="fc" id="L693">            blockIndex = 7;</span>
+            //get formal params
+<span class="fc" id="L695">            formalParams = (ASTFormalParams) thirdChildNode.accept(this);</span>
+        }
+        //get type
+<span class="fc" id="L698">        TerminalNodeImpl typeToken = (TerminalNodeImpl) ctx.children.get(typeIndex);</span>
+
+        //set identifier
+<span class="fc" id="L701">        ASTIdentifier identifier = createIdentifier(typeToken.toString(), identifierToken.toString());</span>
+
+
+        //get block
+<span class="fc" id="L705">        ParseTree blockNode = ctx.children.get(blockIndex);</span>
+<span class="fc" id="L706">        ASTBlock block = (ASTBlock) blockNode.accept(this);</span>
+
+<span class="fc" id="L708">        return new ASTFunctionDecl(identifier, formalParams, block);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTStatement visitStatement(SmallLangParser.StatementContext ctx) {
+        //get actual statement
+<span class="fc" id="L718">        ParseTree statement = ctx.children.get(0);</span>
+<span class="fc" id="L719">        return (ASTStatement)statement.accept(this);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTBlock visitBlock(SmallLangParser.BlockContext ctx) {
+        //holds statements
+<span class="fc" id="L729">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+
+        //get the statements by not going through the first and last elements since they are used for curly brackets only
+<span class="fc bfc" id="L732" title="All 2 branches covered.">        for(int i =1; i &lt; ctx.children.size()-1; i++)</span>
+        {
+<span class="fc" id="L734">            ParseTree child = ctx.children.get(i);</span>
+<span class="fc" id="L735">            ASTStatement statement = (ASTStatement)child.accept(this);</span>
+<span class="fc" id="L736">            statements.add(statement);</span>
+        }
+
+<span class="fc" id="L739">        return new ASTBlock(statements);</span>
+    }
+    /**
+     * {@inheritDoc}
+     *
+     * &lt;p&gt;The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
+     */
+    @Override public ASTProgram visitProgram(SmallLangParser.ProgramContext ctx) {
+        //holds statements
+<span class="fc" id="L749">        ArrayList&lt;ASTStatement&gt; statements = new ArrayList&lt;ASTStatement&gt;();</span>
+
+<span class="fc bfc" id="L751" title="All 2 branches covered.">        for(int i =0; i &lt; ctx.children.size(); i++)</span>
+        {
+<span class="fc" id="L753">            ParseTree child = ctx.children.get(i);</span>
+<span class="fc" id="L754">            ASTStatement statement = (ASTStatement)child.accept(this);</span>
+<span class="fc" id="L755">            statements.add(statement);</span>
+        }
+
+<span class="fc" id="L758">        return new ASTProgram(statements);</span>
+
+    }
+
+    /**
+     * Method to create an identifier node
+     * @param type type of identifier
+     * @param value value of identifier
+     * @return
+     */
+    public ASTIdentifier createIdentifier(String type, String value)
+    {
+        //variable to hold actual type
+<span class="fc" id="L771">        Type actualType = null;</span>
+
+        //if a type is passed, get actual type enum
+<span class="fc bfc" id="L774" title="All 2 branches covered.">        if(type != null)</span>
+<span class="fc" id="L775">            actualType = getTypeEnum(type);</span>
+
+        //return identifier
+<span class="fc" id="L778">        return new ASTIdentifier(value, actualType);</span>
+    }
+
+    /**
+     * Method to get enum type from string
+     * @param type in string
+     * @return type in enum
+     */
+    public static Type getTypeEnum(String type)
+    {
+        //set type
+<span class="fc bfc" id="L789" title="All 4 branches covered.">        switch(type)</span>
+        {
+<span class="fc" id="L791">            case &quot;int&quot; : return Type.INT;</span>
+<span class="fc" id="L792">            case &quot;float&quot; : return Type.FLOAT;</span>
+<span class="fc" id="L793">            case &quot;bool&quot; : return Type.BOOL;</span>
+<span class="fc" id="L794">            default : return Type.AUTO;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

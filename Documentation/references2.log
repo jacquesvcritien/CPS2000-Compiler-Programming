@@ -1,0 +1,53 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdftex 2020.2.21)  13 MAY 2020 15:08
+entering extended mode
+**"C:/Users/dell/Documents/School/Year 2/Compiler Theory/CPS2000/Documentation/
+references2.bib"
+
+("C:/Users/dell/Documents/School/Year 2/Compiler Theory/CPS2000/Documentation/r
+eferences2.bib"
+Overfull \hbox (8.57709pt too wide) in paragraph at lines 2--7
+[]\tenrm @MISCref1, HOW-PUB-LISHED = https://www.baeldung.com/java-antlr, TI-TL
+E = "Java with ANTLR",|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm @
+.\tenrm M
+.\tenrm I
+.\tenrm S
+.etc.
+
+
+Overfull \hbox (2.4394pt too wide) in paragraph at lines 8--13
+[]\tenrm @MISCref2, HOW-PUB-LISHED = https://github.com/antlr/antlr4/blob/maste
+r/doc/index.md, TI-TLE|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm @
+.\tenrm M
+.\tenrm I
+.\tenrm S
+.etc.
+
+
+Overfull \hbox (7.31322pt too wide) in paragraph at lines 14--19
+[]\tenrm @MISCref3, HOW-PUB-LISHED = https://www.youtube.com/watch?v=itajbtWKPG
+Q, TI-TLE = "Antlr|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm @
+.\tenrm M
+.\tenrm I
+.\tenrm S
+.etc.
+
+)
+*
+! Emergency stop.
+<*> ...eory/CPS2000/Documentation/references2.bib"
+                                                  
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!

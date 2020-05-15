@@ -1,0 +1,7 @@
+TransitionTest.class
+ParserTest.class
+TokenTest.class
+AntlrIntegrationTest.class
+IntegrationTest.class
+XMLIntegrationTest.class
+LexerTest.class

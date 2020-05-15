@@ -40,7 +40,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             //get expression
             ASTExpression expression = assignment.getExpression();
             //get identifier
-            ASTIdentifier identifier = assignment.getIdentifier();
+            ASTAbstractIdentifier identifier = assignment.getIdentifier();
             //get actual identifier
             ASTIdentifier actualId = null;
             //check whether this id can be assigned, i.e. is not a function decl
@@ -450,7 +450,6 @@ public class VisitorSemanticAnalysis implements Visitor {
             //empty value
             symbolTable.setConstant(null);
         }
-
     }
 
     @Override

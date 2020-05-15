@@ -402,4 +402,12 @@ public class LexerTest {
         Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
     }
 
+    /**
+     * Test for file which does not exist
+     */
+    @Test(expected = FileNotFoundException.class)
+    public void testForBadFile() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("lexer/badfilename.txt");
+    }
+
 }

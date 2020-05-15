@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Operand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment2</a> &gt; <a href="index.source.html" class="el_package">lexer</a> &gt; <span class="el_source">Operand.java</span></div><h1>Operand.java</h1><pre class="source lang-java linenums">package lexer;
+
+/**
+ * Class for operands extending Token
+ */
+public class Operand extends Token{
+
+    /**
+     * Constructor for operand
+     * @param name type of operand
+     * @param lexeme value
+     */
+    public Operand(TypeToken name, String lexeme) {
+<span class="fc" id="L14">        super(name, lexeme);</span>
+<span class="fc" id="L15">    }</span>
+
+<span class="fc" id="L17">    public static final Operand MULTIPLY = new Operand(TypeToken.MULTIPLICATIVE_OP, &quot;*&quot;);</span>
+<span class="fc" id="L18">    public static final Operand DIVIDE = new Operand(TypeToken.MULTIPLICATIVE_OP, &quot;/&quot;);</span>
+<span class="fc" id="L19">    public static final Operand SUBTRACT = new Operand(TypeToken.ADDITIVE_OP, &quot;-&quot;);</span>
+<span class="fc" id="L20">    public static final Operand ADDITION = new Operand(TypeToken.ADDITIVE_OP, &quot;+&quot;);</span>
+<span class="fc" id="L21">    public static final Operand AND_OP = new Operand(TypeToken.MULTIPLICATIVE_OP, &quot;and&quot;);</span>
+<span class="fc" id="L22">    public static final Operand OR_OP = new Operand(TypeToken.ADDITIVE_OP, &quot;or&quot;);</span>
+<span class="fc" id="L23">    public static final Operand GT = new Operand(TypeToken.RELATIONAL_OP, &quot;&gt;&quot;);</span>
+<span class="fc" id="L24">    public static final Operand LT = new Operand(TypeToken.RELATIONAL_OP, &quot;&lt;&quot;);</span>
+<span class="fc" id="L25">    public static final Operand GTE = new Operand(TypeToken.RELATIONAL_OP, &quot;&gt;=&quot;);</span>
+<span class="fc" id="L26">    public static final Operand LTE = new Operand(TypeToken.RELATIONAL_OP, &quot;&lt;=&quot;);</span>
+<span class="fc" id="L27">    public static final Operand EQUAL = new Operand(TypeToken.RELATIONAL_OP, &quot;==&quot;);</span>
+<span class="fc" id="L28">    public static final Operand NOTEQUAL = new Operand(TypeToken.RELATIONAL_OP, &quot;&lt;&gt;&quot;);</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
