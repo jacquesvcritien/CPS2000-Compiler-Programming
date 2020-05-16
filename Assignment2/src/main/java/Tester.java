@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 
 public class Tester {
     public static void main(String args[]) throws IOException, InvalidSyntaxException, IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, URISyntaxException {
-        Lexer lexer = new Lexer("sourcecode.txt");
+        Lexer lexer = new Lexer("lexer/funcdecl.txt");
         VisitorXMLGenerator xml = new VisitorXMLGenerator();
 //        for(Token token: lexer.getTokens())
 //        {

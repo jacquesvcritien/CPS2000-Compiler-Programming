@@ -1,54 +1,28 @@
 grammar SmallLangV2;
 
+/*
+Done to add package on top of generated files
+*/
 @header {
 package antlrSrc;
 }
 
 literal : BooleanLiteral | IntegerLiteral | FloatLiteral | CharLiteral;
-fragment DIGIT : [0-9];
-fragment LETTER : [A-Za-z];
-LET : 'let';
-NOT : 'not';
-MINUS : '-';
-EQUAL_SIGN : '=';
-COLON : ':';
-SEMI_COLON : ';';
-BRACKET_OPEN : '(';
-BRACKET_CLOSE : ')';
-CURLY_OPEN : '{';
-CURLY_CLOSE : '}';
-SQUARE_OPEN : '[';
-SQUARE_CLOSE : ']';
-COMMA : ',';
-IF: 'if';
-ELSE: 'else';
-FOR : 'for';
-FF : 'ff';
-PRINT : 'print';
-RETURN : 'return';
-WHILE : 'while';
-Type : 'float' | 'int' | 'bool';
-Auto : 'auto';
-BooleanLiteral : 'true' | 'false';
-IntegerLiteral : DIGIT+;
-FloatLiteral : DIGIT+ '.' DIGIT+;
-CharLiteral : '\'' LETTER '\'';
-Identifier : ('_' | LETTER) ('_' | LETTER | DIGIT)*;
-MultiplicativeOp : '*' | '/' | 'and';
-AdditiveOp : '+' | '-' | 'or';
-RelationalOp : '<' | '>' | '==' | '<>' | '<=' | '>=';
+multiplicativeOp : TIMES | DIVIDE | AND;
+additiveOp : PLUS | MINUS | OR;
+relationalOp : LT | GT | EQUAL | NOT_EQUAL | LTE | GTE;
 actualParams :  expression (COMMA expression)*;
 functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
 subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
 unary : (MINUS | NOT) expression;
-factor : literal | Identifier | functionCall | subExpression | unary;
-term : factor (MultiplicativeOp factor)*;
-simpleExpression : term (AdditiveOp term)*;
-expression : simpleExpression (RelationalOp simpleExpression)*;
+factor : literal | abstractIdentifier | functionCall | subExpression | unary;
+term : factor (multiplicativeOp factor)*;
+simpleExpression : term (additiveOp term)*;
+expression : simpleExpression (relationalOp simpleExpression)*;
 assignment : abstractIdentifier EQUAL_SIGN expression;
 arrayIndex : SQUARE_OPEN expression SQUARE_CLOSE;
 variableDecl : Identifier COLON (Type | Auto) EQUAL_SIGN expression;
-arrayDecl : arrayIdentifier COLON TYPE EQUAL_SIGN arrayValue;
+arrayDecl : arrayIdentifier COLON Type EQUAL_SIGN arrayValue;
 arrayIdentifier : Identifier arrayIndex;
 abstractIdentifier: Identifier | arrayIdentifier;
 arrayValue : CURLY_OPEN expression (COMMA expression)* CURLY_CLOSE;
@@ -72,6 +46,47 @@ statement : declaration SEMI_COLON
           | block;
 block : CURLY_OPEN statement* CURLY_CLOSE;
 program : statement*;
+
+fragment DIGIT : [0-9];
+fragment LETTER : [A-Za-z];
+LET : 'let';
+NOT : 'not';
+MINUS : '-';
+EQUAL_SIGN : '=';
+COLON : ':';
+SEMI_COLON : ';';
+BRACKET_OPEN : '(';
+BRACKET_CLOSE : ')';
+CURLY_OPEN : '{';
+CURLY_CLOSE : '}';
+SQUARE_OPEN : '[';
+SQUARE_CLOSE : ']';
+COMMA : ',';
+IF: 'if';
+ELSE: 'else';
+FOR : 'for';
+FF : 'ff';
+PRINT : 'print';
+RETURN : 'return';
+WHILE : 'while';
+Type : 'float' | 'int' | 'bool' | 'char';
+Auto : 'auto';
+AND : 'and';
+OR : 'or';
+TIMES : '*';
+DIVIDE : '/';
+PLUS : '+';
+LT : '<';
+GT : '>';
+EQUAL : '==';
+NOT_EQUAL : '<>';
+LTE : '<=';
+GTE: '>=';
+BooleanLiteral : 'true' | 'false';
+IntegerLiteral : DIGIT+;
+FloatLiteral : DIGIT+ '.' DIGIT+;
+CharLiteral : '\'' LETTER '\'';
+Identifier : ('_' | LETTER) ('_' | LETTER | DIGIT)*;
 WS : [ \r\t\n]+ -> skip ;
 COMMENT : '//' .*? [\n] -> skip;
 MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ; // .*?

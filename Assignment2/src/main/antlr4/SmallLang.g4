@@ -5,6 +5,39 @@ package antlrSrc;
 }
 
 literal : BooleanLiteral | IntegerLiteral | FloatLiteral;
+multiplicativeOp : TIMES | DIVIDE | AND;
+additiveOp : PLUS | MINUS | OR;
+relationalOp : LT | GT | EQUAL | NOT_EQUAL | LTE | GTE;
+actualParams :  expression (COMMA expression)*;
+functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
+subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
+unary : (MINUS | NOT) expression;
+factor : literal | Identifier | functionCall | subExpression | unary;
+term : factor (multiplicativeOp factor)*;
+simpleExpression : term (additiveOp term)*;
+expression : simpleExpression (relationalOp simpleExpression)*;
+assignment : Identifier EQUAL_SIGN expression;
+variableDecl : LET Identifier COLON (Type | Auto) EQUAL_SIGN expression;
+printStatement : PRINT expression;
+rtrnStatement : RETURN expression;
+ifStatement : IF BRACKET_OPEN expression BRACKET_CLOSE block (ELSE block)?;
+forStatement : FOR BRACKET_OPEN variableDecl? SEMI_COLON expression SEMI_COLON assignment? BRACKET_CLOSE block;
+whileStatement : WHILE BRACKET_OPEN expression BRACKET_CLOSE block;
+formalParam : Identifier COLON Type;
+formalParams : formalParam (COMMA formalParam)*;
+functionDecl : FF Identifier BRACKET_OPEN formalParams? BRACKET_CLOSE COLON (Type | Auto) block;
+statement : variableDecl SEMI_COLON
+          | assignment SEMI_COLON
+          | printStatement SEMI_COLON
+          | ifStatement
+          | forStatement
+          | whileStatement
+          | rtrnStatement SEMI_COLON
+          | functionDecl
+          | block;
+block : CURLY_OPEN statement* CURLY_CLOSE;
+program : statement*;
+
 fragment DIGIT : [0-9];
 fragment LETTER : [A-Za-z];
 LET : 'let';
@@ -29,42 +62,19 @@ Type : 'float' | 'int' | 'bool';
 Auto : 'auto';
 AND : 'and';
 OR : 'or';
+TIMES : '*';
+DIVIDE : '/';
+PLUS : '+';
+LT : '<';
+GT : '>';
+EQUAL : '==';
+NOT_EQUAL : '<>';
+LTE : '<=';
+GTE: '>=';
 BooleanLiteral : 'true' | 'false';
 IntegerLiteral : DIGIT+;
 FloatLiteral : DIGIT+ '.' DIGIT+;
 Identifier : ('_' | LETTER) ('_' | LETTER | DIGIT)*;
-MultiplicativeOp : 'and';
-additiveOp : '+' | '-' | OR;
-relationalOp : '<' | '>' | '==' | '<>' | '<=' | '>=';
-actualParams :  expression (COMMA expression)*;
-functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
-subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
-unary : (MINUS | NOT) expression;
-factor : literal | Identifier | functionCall | subExpression | unary;
-term : factor (MultiplicativeOp factor)*;
-simpleExpression : term (additiveOp term)*;
-expression : simpleExpression (relationalOp simpleExpression)*;
-assignment : Identifier EQUAL_SIGN expression;
-variableDecl : LET Identifier COLON (Type | Auto) EQUAL_SIGN expression;
-printStatement : PRINT expression;
-rtrnStatement : RETURN expression;
-ifStatement : IF BRACKET_OPEN expression BRACKET_CLOSE block (ELSE block)?;
-forStatement : FOR BRACKET_OPEN variableDecl? SEMI_COLON expression SEMI_COLON assignment? BRACKET_CLOSE block;
-whileStatement : WHILE BRACKET_OPEN expression BRACKET_CLOSE block;
-formalParam : Identifier COLON Type;
-formalParams : formalParam (COMMA formalParam)*;
-functionDecl : FF Identifier BRACKET_OPEN formalParams? BRACKET_CLOSE COLON (Type | Auto) block;
-statement : variableDecl SEMI_COLON
-          | assignment SEMI_COLON
-          | printStatement SEMI_COLON
-          | ifStatement
-          | forStatement
-          | whileStatement
-          | rtrnStatement SEMI_COLON
-          | functionDecl
-          | block;
-block : CURLY_OPEN statement* CURLY_CLOSE;
-program : statement*;
 WS : [ \r\t\n]+ -> skip ;
 COMMENT : '//' .*? [\n] -> skip;
 MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ; // .*?

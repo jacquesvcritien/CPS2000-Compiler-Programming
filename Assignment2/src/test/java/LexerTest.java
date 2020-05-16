@@ -354,6 +354,8 @@ public class LexerTest {
                 new Token(TypeToken.COLON, ":"),
                 new Token(TypeToken.TYPE, "int"),
                 new Token(TypeToken.BRACKET_CLOSE, ")"),
+                new Token(TypeToken.COLON, ":"),
+                new Token(TypeToken.TYPE, "int"),
                 new Token(TypeToken.CURLY_OPEN, "{"),
                 new Token(TypeToken.RETURN, "return"),
                 new Token(TypeToken.IDENTIFIER, "x"),
