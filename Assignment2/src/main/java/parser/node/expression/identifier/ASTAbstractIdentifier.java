@@ -2,6 +2,7 @@ package parser.node.expression.identifier;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
+import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
 import parser.node.Type;
 import parser.node.expression.ASTExpression;
@@ -60,7 +61,7 @@ public class ASTAbstractIdentifier extends ASTExpression {
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 }

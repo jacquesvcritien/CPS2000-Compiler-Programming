@@ -7,6 +7,7 @@ import parser.node.expression.identifier.ASTAbstractIdentifier;
 import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
 import parser.node.statement.declaration.ASTDecl;
 import parser.node.statement.declaration.ASTVariableDecl;
 
@@ -169,7 +170,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //get indent
         String indentation = getIndent();
         //increment indent
@@ -188,7 +189,7 @@ public class VisitorXMLGenerator implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //get indent
         String indentation = getIndent();
         //increment indent
@@ -422,11 +423,12 @@ public class VisitorXMLGenerator implements Visitor {
     public void visit(ASTExpression astExpression) {}
     @Override
     public void visit(ASTStatement astStatement) {}
-
     @Override
-    public void visit(ASTArrayValue astArrayValue) {
-
-    }
+    public void visit(ASTArrayValue astArrayValue) {}
+    @Override
+    public void visit(ASTArrayDecl arrayDecl) {}
+    @Override
+    public void visit(ASTCharacterLiteral characterLiteral) {}
 
     @Override
     public void visit(ASTDecl astDecl) {
@@ -445,6 +447,7 @@ public class VisitorXMLGenerator implements Visitor {
         String type = " Type=\""+arrayIdentifier.getType()+"\"";
         System.out.println(indentation+"<ArrayIdentifier"+type+">"+arrayIdentifier.getName()+"</ArrayIdentifier>");
     }
+
 
     /**
      * Method to get indent

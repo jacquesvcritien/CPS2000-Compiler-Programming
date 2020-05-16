@@ -2,6 +2,7 @@
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
+import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
 import parser.node.ASTNode;
 import visitor.Visitor;
@@ -20,21 +21,21 @@ public class ASTFormalParams implements ASTNode {
      * @param formalParams formalParams
      */
     public ASTFormalParams(ArrayList&lt;ASTFormalParam&gt; formalParams)
-<span class="fc" id="L23">    {</span>
-<span class="fc" id="L24">        this.formalParams = formalParams;</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L24">    {</span>
+<span class="fc" id="L25">        this.formalParams = formalParams;</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      * Getter for formal params
      * @return
      */
     public ArrayList&lt;ASTFormalParam&gt; getFormalParams() {
-<span class="fc" id="L32">        return formalParams;</span>
+<span class="fc" id="L33">        return formalParams;</span>
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
-<span class="fc" id="L37">        visitor.visit(this);</span>
-<span class="fc" id="L38">    }</span>
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
+<span class="fc" id="L38">        visitor.visit(this);</span>
+<span class="fc" id="L39">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

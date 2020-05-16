@@ -7,6 +7,7 @@ import parser.node.expression.identifier.ASTAbstractIdentifier;
 import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
 import parser.node.statement.declaration.ASTDecl;
 import parser.node.statement.declaration.ASTVariableDecl;
 
@@ -509,6 +510,16 @@ public class VisitorInterpreter implements Visitor {
 
     @Override
     public void visit(ASTArrayIdentifier arrayIdentifier) {
+
+    }
+
+    @Override
+    public void visit(ASTArrayDecl arrayDecl) {
+
+    }
+
+    @Override
+    public void visit(ASTCharacterLiteral characterLiteral) {
 
     }
 

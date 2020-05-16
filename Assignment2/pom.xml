@@ -42,6 +42,7 @@
                     <excludes>
                         <exclude>parser/node/ASTExpression.*</exclude>
                         <exclude>parser/node/ASTStatement.*</exclude>
+                        <exclude>visitor/VisitorChecker.*</exclude>
                         <exclude>antlrSrc/SmallLang*</exclude>
                         <exclude>Tester.*</exclude>
                         <exclude>AntlrTester.*</exclude>

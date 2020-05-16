@@ -91,7 +91,7 @@
 				
 				\subsubsection{\textless ArraySizeIndex\textgreater}
 				
-				This rule represents the size of the array in the case of a declaration while it represents the index to assign in an assignment. It consists of an expression in the middle of square brackets.
+				This rule represents the size of the array in the case of a declaration while it represents the index to assign in an assignment. It consists of an expression in the middle of square brackets. The expression would then be checked by the semantic analyser to make sure that it is of type int.
 				
 				\subsubsection{\textless ArrayIdentifier\textgreater}
 				
@@ -384,9 +384,101 @@
 			  			\caption{ASTCharacterLiteral node}
 			  			\label{fig:astcharlit}
 					\end{figure}
+					
+									\subsubsection{Parser.java}
+				
+				This is the class in which one can find methods for parsing the input program. Below contains all the list of of new methods and  methods that were changed and how:
+				
+				\begin{enumerate}
+				
+				\item \textbf{literal()}: This function checks the current token and returns an AST node according to its type. In order to cater for the new feature to allow for character literals, a new switch case was added to this method to return an ASTCharacterLiteral node if the type of the token is CHARATCER\_LITERAL.
+				
+								\item \textbf{arraySizeIndex()}: This function is used to parse an array size or index. The EBNF rule for this is defined as \textbf{`[` \textless EXPRESSION\textgreater `]'}, hence, this function first absorbs a token of the type SQUARE\_OPEN, then gets the expression and finally, absorbs a SQUARE\_CLOSE token before returning the expression obtained.
+								
+				\item \textbf{arrayIdentifier(ASTIdentifier)}: This function is used to parse an array identifier. The EBNF rule for this is defined as \textbf{\textless IDENTIFIER\textgreater \textless ARRAYSIZEINDEX\textgreater}. Moreover, this function accepts an ASTIdentifier as a parameter. The function first gets the expression by calling arraySizeIndex() and then returns a new ASTArrayIdentifier node by passing the identifier passed as a parameter and the expression obtained.
+				
+\item \textbf{factor()}: This function is used to parse a factor. This was created in part 1 of the assignment but was changed in order to cater for character literals and arrays functionalities. This was done by adding a a case to the switch where the type of the token is checked. If the type is of type CHARACTER\_LITERAL, the function literal() is called. To cater for array identifiers, the case for when the token type is an identifier was modified by checking if the token after the identifier is of type SQUARE\_OPEN, because if so, it must mean that it is an array identifier. In fact, if this is the case the function arrayIdentifier() explained above, is called.
+		
+	\item \textbf{arrayValue()}: This function was created to parse an array value which may be used when declaring an array. The EBNF rules defines this as \textbf{'\{' \textless EXPRESSION\textgreater \{ ',' \textless EXPRESSION\textgreater \} '\}'}. In order to follow this rule, this function starts by defining an arraylist of expressions of type ASTExpression to hold values in it. After this, a \{' token is absorbed and the first expression is obtained and added to the array list. After this, there is a loop which goes on until as long as there are more commas to be parsed. Inside this loop, a new expression is obtained and added to the list of values. 
+	
+	\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.55\textwidth]{astarrayvaluewhile.png}
+			  			\caption{While loop in method}
+			  			\label{fig:astassignment}
+					\end{figure}
+					
+	After all the values are obtained by not finding any more commas, a `\}' token is absorbed and a new ASTArrayValue node is returned with the values found.
+	
+
+				\item \textbf{assignment()}: This function is used to parse an assignment and it was changed in order to also support an array identifier to be assigned. This was done by creating two new node explained above named \textbf{ASTAbstractIdentifier} and \textbf{ASTArrayIdentifier}. Rather than only calling identifier() and using only an ASTIdentifier, now this function makes use of an ASTAbstractIdentifier object to hold the identifier so that both an ASTIdentifier and an ASTArrayIdentifier could be held. Moroever, this method changed to first call identifier() and store this in the variable holding the identifier and then checking if there is a `[` token after the identifier which indicates that it is an array identifier. If this is the case, the identifier is passed as a parameter to the call made to the arrayIdentifier() method to obtain the arrayIdentifier. Finally, a new ASTAssignment node is created, this time with the new ASTAbstractIdentifier.
+				
+								\item \textbf{declaration()}: Since a new ASTDecl class was created in order to represent both a variable declaration and an array declaration, this function was created as an entry point to the functions variableDeclaration(ASTIdentifier) and arrayDeclaration(ASTIdentifier). In fact, this is confirmed by the newly created EBNF rule to define a declaration which is defined as \textbf{\textless VARIABLEDECL\textgreater | \textless ARRAYDECL\textgreater}. This function first checks if there is a LET token and if not an empty ASTDecl node is returned, as may happen in a for loop with no declaration. Otherwise, the LET token is absorbed, the identifier is obtained by calling identifier() and then it is checked if the next token is of type SQUARE\_OPEN. If it is, it means that it is an array declaration hence a call to the arrayDeclaration() method is done with the identifier passed as parameter. Otherwise, a call to the variableDeclaration() method is done with the identifier passed as a parameter.
+							
+				\item \textbf{variableDeclaration(ASTIdentifier)}: This function is used to parse a variable declaration and it was changed by adding an the identifier as a parameter rather than obtaining it in the function itself. This is done since the function declaration(), explained above, will be called first and then this function is called from it.
+				
+				\item \textbf{arrayDeclaration(ASTIdentifier)}: This function was created to parse an array declaration and it takes in an identifier as a parameter. The EBNF rule for an array declaration is defined as \textbf{'let' \textless IDENTIFIER\textgreater \textless ARRAYINDEX\textgreater ':' \textless TYPE\textgreater [ '=' \textless ARRAYVALUE\textgreater ]}. The LET token and the identifier are obtained by the declaration() function explained above which initiates this function. Then to continue following the rule, this function gets the array's size by calling arraySizeIndex(), then absorbs the COLON token, gets and sets the type to the identifier and absorbs the TYPE token. Then, it is checked if there is a value by checking if the next token is of type `='. If there is, it is absorbed and the value is obtained by calling arrayValue(). Otherwise, the ASTArrayValue node is left empty. Finally, a new ASTArrayDeclaration node is returned with the identifier and the value nodes.
+				
+				\item \textbf{formalParam()}: This function is used to parse a formal parameter and it was updated to match its update EBNF rule which is defined as \textbf{( \textgreater IDENTIFIER\textgreater | \textgreater ARRAYIDENTIFIER\textgreater )  [ '[' ']' ] ':' \textgreater TYPE\textgreater}. This function now starts by getting the identifier and storing it into an ASTAbstractIdentifier object since it can be both a normal identifier and an array identifier. Then, it is checked if the next token is of type SQUARE\_OPEN, because if it is, it means that the formal parameter is an array. If so, `[` and `]' tokens are 
+							absorbed. After that, as used to happen before, a COLON token is absorbed and the type is obtained and set to the identifier. Finally, a new ASTFormalParam node is returned with the identifier of type ASTAbstractIdentifier.
+							
+		
+					\item \textbf{statement()}: This function is used to parse a statement and it was updated to be able to parse an array declaration. This was done by calling the newly created declaration() function instead of variableDeclaration() in the case of a LET token. Then, as explained above, the declaration() function would decide whether to call variableDeclaration() or arrayDeclaration() itself.
+				
+			
+				\end{enumerate}
+				
+				
+				\subsection{Unrequired Changes}
+				
+				The following contains explanation to simple changes made to the visitor classes for completion. It is important to note that these changes were not required in the assignment specification and were only done for completion of the visitor classes.
+				
+				\subsubsection{Visitor.java}
+				
+				This interface was changed to include all visit methods for newly created AST classes.
+				
+				\subsubsection{VisitorXMLGenerator.java}
+				
+				In this class the visit methods for \textbf{ASTCharacterLiteral, ASTArrayValue, ASTArrayDecl, ASTDecl} and \textbf{ASTArrayIdentifier} were added for completion. The visit method for the ASTDecl class was implemented to just cater for when the declaration is empty for the case of for loops with no declaration as this was changed from the parser to return an empty ASTDecl class rather than an empty ASTVariableDecl class. Moreover, the visit method for an ASTArrayIdentifier class was also implemented since it was easy and similar to the one of a variableDeclaration. It is important to note that some other changes had to be performed since some of the ASTClasses member variables' types changed and hence some variables used in this class had to be updated, such as ASTIdentifer to ASTAbstractIdentifier and ASTVariableDeclaration to ASTDecl.
+				
+				\subsubsection{VisitorSemanticAnalysis.java}
+				
+				In this class the visit methods for \textbf{ASTCharacterLiteral, ASTArrayValue, ASTArrayDecl, ASTDecl} and \textbf{ASTArrayIdentifier} were added for completion but were not implemented. It is important to note that some other changes had to be performed since some of the ASTClasses member variables' types changed and hence some variables' types used in this class had to be updated, such as ASTIdentifer to ASTAbstractIdentifier and ASTVariableDeclaration to ASTDecl.
+				
+								\subsubsection{VisitorInterpreter.java}
+				
+				Similarly, In this class the visit methods for \textbf{ASTCharacterLiteral, ASTArrayValue, ASTArrayDecl, ASTDecl} and \textbf{ASTArrayIdentifier} were added for completion but were not implemented. Moreover, some other changes had to be performed since some of the ASTClasses member variables' types changed and hence some variables' types used in this class had to be updated, such as ASTIdentifer to ASTAbstractIdentifier and ASTVariableDeclaration to ASTDecl.
+				
+				\subsection{Testing}
+				
+				In order to test my updated versions of the lexer and parser so that they can cater for the SmallLangV2 syntax, I continued to add to the tests I had prepared for part 1 of the assignment as can be seen below.
+				
+				\subsubsection{Lexer testing}
+				
+				In order to test my changes to the lexer, I added 3 new tests to test a character declaration, an array declaration and an array assignment. Moreover, I changed my input file for the function call test by adding an extra array formal parameter. These tests are performed by preparing a list of expected tokens and then this is compared to the list of tokens returned by the lexer and the test passes or fails whether the two lists would be exactly equal to each other.
+				
+				\subsubsection{Parser testing}
+				
+				On the other hand to test the changes to the parser, I had to create the following classes.
+				
+				\begin{enumerate}
+				\item \textbf{VisitorChecker.java} : This is a visitor class which extends the Visitor interface. This was created in order to test each node in the resultant AST tree produced by the parser. This class contains these two member variables:
+				\begin{itemize}
+				\item \textbf{sum}: This is a variable of type int which is used to hold the running sum.
+				\item \textbf{visitedIndexes}: This is an arraylist of type Integer which holds all the visited indexes which represents nodes.
+				\end{itemize}
+				
+				This works by having a visit method for each AST class and each node contains a unique index. Every time a node is visited, its index is added to the running sum and is inserted to the list containing the visited indexes. Obviously in each visitor method, the sub-nodes of that node are also visited.
+				
+				\item \textbf{ParserTest.java} : This is a test class which tests new input program snippets which I created. These snippets were made sure to target all new target features. In fact, these include an array assignment, an correct array declaration, an incorrect array declaration, an array declaration with no initialisation, array as a formal parameter a character declaration and an array assignment. This works by first parsing the input program, then the VisitorChecker class mentioned above is used by making it visit all the nodes of the tree returned by the parser. Finally, the sum member variable and the size of the visited indexes arraylist of the VisitorChecker instance are asserted.
+		
 				
 				
 				
+				\end{enumerate}
+				
+				
+				The input programs for the lexer and parser test can be found in the resources folder as can be seen i the image below.
 				
 				
 				

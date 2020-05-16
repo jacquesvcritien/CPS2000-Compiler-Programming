@@ -2,6 +2,7 @@
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
+import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
 import parser.node.Type;
 import parser.node.expression.ASTExpression;
@@ -20,35 +21,35 @@ public class ASTAbstractIdentifier extends ASTExpression {
      * Constructor
      * @param name value to set
      */
-<span class="fc" id="L23">    public ASTAbstractIdentifier(String name)  {</span>
-<span class="fc" id="L24">        this.name =name;</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L24">    public ASTAbstractIdentifier(String name)  {</span>
+<span class="fc" id="L25">        this.name =name;</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      * Constructor with type
      * @param name value to set
      * @param type type to set
      */
-<span class="fc" id="L32">    public ASTAbstractIdentifier(String name, Type type)  {</span>
+<span class="fc" id="L33">    public ASTAbstractIdentifier(String name, Type type)  {</span>
 
-<span class="fc" id="L34">        this.name =name;</span>
-<span class="fc" id="L35">        this.type = type;</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L35">        this.name =name;</span>
+<span class="fc" id="L36">        this.type = type;</span>
+<span class="fc" id="L37">    }</span>
 
     /**
      * Setter for type
      * @param type type to set
      */
     public void setType(Type type) {
-<span class="fc" id="L43">        this.type = type;</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L44">        this.type = type;</span>
+<span class="fc" id="L45">    }</span>
 
     /**
      * Getter for value
      * @return value
      */
     public String getName() {
-<span class="fc" id="L51">        return name;</span>
+<span class="fc" id="L52">        return name;</span>
     }
 
     /**
@@ -56,12 +57,12 @@ public class ASTAbstractIdentifier extends ASTExpression {
      * @return type
      */
     public Type getType() {
-<span class="fc" id="L59">        return type;</span>
+<span class="fc" id="L60">        return type;</span>
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
-<span class="fc" id="L64">        visitor.visit(this);</span>
-<span class="fc" id="L65">    }</span>
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
+<span class="fc" id="L65">        visitor.visit(this);</span>
+<span class="fc" id="L66">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

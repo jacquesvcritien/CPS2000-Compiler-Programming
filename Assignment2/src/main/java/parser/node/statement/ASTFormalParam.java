@@ -2,6 +2,7 @@ package parser.node.statement;
 
 import exceptions.AlreadyDeclaredException;
 import exceptions.IncorrectTypeException;
+import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
 import parser.node.ASTNode;
 import parser.node.expression.identifier.ASTAbstractIdentifier;
@@ -33,7 +34,7 @@ public class ASTFormalParam implements ASTNode {
     }
 
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         visitor.visit(this);
     }
 

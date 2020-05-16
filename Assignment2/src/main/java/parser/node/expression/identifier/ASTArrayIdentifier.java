@@ -1,6 +1,8 @@
 package parser.node.expression.identifier;
 
 import exceptions.AlreadyDeclaredException;
+import exceptions.IncorrectTypeException;
+import exceptions.ReturnTypeMismatchException;
 import exceptions.UndeclaredException;
 import parser.node.Type;
 import parser.node.expression.ASTExpression;
@@ -39,8 +41,16 @@ public class ASTArrayIdentifier extends ASTAbstractIdentifier {
         this.sizeIndex = expression;
     }
 
+    /**
+     * Getter for size or index
+     * @return size or index
+     */
+    public ASTExpression getSizeIndex() {
+        return sizeIndex;
+    }
+
     @Override
-    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException {
+    public void accept(Visitor visitor) throws AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException, IncorrectTypeException {
         visitor.visit(this);
     }
 }

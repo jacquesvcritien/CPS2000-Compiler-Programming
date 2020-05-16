@@ -347,6 +347,12 @@ public class LexerTest {
                 new Token(TypeToken.IDENTIFIER, "y"),
                 new Token(TypeToken.COLON, ":"),
                 new Token(TypeToken.TYPE, "int"),
+                new Token(TypeToken.COMMA, ","),
+                new Token(TypeToken.IDENTIFIER, "z"),
+                new Token(TypeToken.SQUARE_OPEN, "["),
+                new Token(TypeToken.SQUARE_CLOSE, "]"),
+                new Token(TypeToken.COLON, ":"),
+                new Token(TypeToken.TYPE, "int"),
                 new Token(TypeToken.BRACKET_CLOSE, ")"),
                 new Token(TypeToken.CURLY_OPEN, "{"),
                 new Token(TypeToken.RETURN, "return"),
@@ -413,7 +419,7 @@ public class LexerTest {
                 new Token(TypeToken.LET, "let"),
                 new Token(TypeToken.IDENTIFIER, "x"),
                 new Token(TypeToken.SQUARE_OPEN, "["),
-                new Token(TypeToken.INTEGER_LITERAL, "w"),
+                new Token(TypeToken.INTEGER_LITERAL, "2"),
                 new Token(TypeToken.SQUARE_CLOSE, "]"),
                 new Token(TypeToken.COLON, ":"),
                 new Token(TypeToken.TYPE, "int"),
@@ -421,13 +427,13 @@ public class LexerTest {
                 new Token(TypeToken.CURLY_OPEN, "{"),
                 new Token(TypeToken.INTEGER_LITERAL, "1"),
                 new Token(TypeToken.COMMA, ","),
-                new Token(TypeToken.INTEGER_LITERAL, "1"),
+                new Token(TypeToken.INTEGER_LITERAL, "2"),
                 new Token(TypeToken.CURLY_CLOSE, "}"),
                 new Token(TypeToken.SEMI_COLON, ";"),
                 new Token(TypeToken.EOF, "\uFFFF")
         ));
 
-        Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
+        Assert.assertTrue("Asserting tokens equal", lexer.compareTokens(expected, lexer.getTokens()));
     }
 
     /**
@@ -443,13 +449,35 @@ public class LexerTest {
                 new Token(TypeToken.COLON, ":"),
                 new Token(TypeToken.TYPE, "char"),
                 new Token(TypeToken.EQUAL_SIGN, "="),
-                new Token(TypeToken.CHARACTER_LITERAL, "'x'"),
+                new Token(TypeToken.CHARACTER_LITERAL, "x"),
                 new Token(TypeToken.SEMI_COLON, ";"),
                 new Token(TypeToken.EOF, "\uFFFF")
         ));
 
-        Assert.assertFalse("Asserting tokens not equal", lexer.compareTokens(expected, lexer.getTokens()));
+        Assert.assertTrue("Asserting tokens equal", lexer.compareTokens(expected, lexer.getTokens()));
     }
+
+    /**
+     * Test for array assignmnet
+     */
+    @Test
+    public void testArrayAssignment() throws IOException, URISyntaxException, InvalidSyntaxException {
+        lexer = new Lexer("lexer/arrayassignment.txt");
+
+        ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
+                new Token(TypeToken.IDENTIFIER, "x"),
+                new Token(TypeToken.SQUARE_OPEN, "["),
+                new Token(TypeToken.INTEGER_LITERAL, "2"),
+                new Token(TypeToken.SQUARE_CLOSE, "]"),
+                new Token(TypeToken.EQUAL_SIGN, "="),
+                new Token(TypeToken.INTEGER_LITERAL, "3"),
+                new Token(TypeToken.SEMI_COLON, ";"),
+                new Token(TypeToken.EOF, "\uFFFF")
+        ));
+
+        Assert.assertTrue("Asserting tokens equal", lexer.compareTokens(expected, lexer.getTokens()));
+    }
+
 
     /**
      * Test for file which does not exist

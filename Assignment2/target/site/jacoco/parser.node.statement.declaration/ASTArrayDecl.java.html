@@ -32,9 +32,25 @@ public class ASTArrayDecl extends ASTDecl {
 <span class="fc" id="L32">        this.values = values;</span>
 <span class="fc" id="L33">    }</span>
 
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
+    public ASTArrayIdentifier getIdentifier() {
+<span class="fc" id="L40">        return identifier;</span>
+    }
+
+    /**
+     * Getter for values
+     * @return values
+     */
+    public ASTArrayValue getValues() {
+<span class="fc" id="L48">        return values;</span>
+    }
+
     @Override
     public void accept(Visitor visitor) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
-<span class="fc" id="L37">        visitor.visit(this);</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L53">        visitor.visit(this);</span>
+<span class="fc" id="L54">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

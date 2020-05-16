@@ -48,6 +48,7 @@ antlrSrc\SmallLangParser$PrintStatementContext.class
 antlrSrc\SmallLangParser$SubExpressionContext.class
 parser\node\statement\ASTFor.class
 antlrSrc\ErrorThrowListener.class
+visitor\VisitorChecker.class
 antlrSrc\SmallLangParser$UnaryContext.class
 exceptions\IncorrectTypeException.class
 antlrSrc\SmallLangParser$RtrnStatementContext.class

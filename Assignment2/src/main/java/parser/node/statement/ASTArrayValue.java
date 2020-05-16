@@ -34,6 +34,13 @@ public class ASTArrayValue implements ASTNode {
         this.values = expressions;
     }
 
+    /**
+     * Getter for values
+     * @return values
+     */
+    public ArrayList<ASTExpression> getValues() {
+        return values;
+    }
 
     @Override
     public void accept(Visitor visitor) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {

@@ -32,6 +32,22 @@ public class ASTArrayDecl extends ASTDecl {
         this.values = values;
     }
 
+    /**
+     * Getter for identifier
+     * @return identifier
+     */
+    public ASTArrayIdentifier getIdentifier() {
+        return identifier;
+    }
+
+    /**
+     * Getter for values
+     * @return values
+     */
+    public ASTArrayValue getValues() {
+        return values;
+    }
+
     @Override
     public void accept(Visitor visitor) throws IncorrectTypeException, AlreadyDeclaredException, UndeclaredException, ReturnTypeMismatchException {
         visitor.visit(this);

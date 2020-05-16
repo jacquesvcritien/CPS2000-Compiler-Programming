@@ -6,6 +6,7 @@ import parser.node.expression.*;
 import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
 import parser.node.statement.declaration.ASTDecl;
 import parser.node.statement.declaration.ASTVariableDecl;
 
@@ -90,7 +91,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
+    void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException;
 
     /**
      * Visitor method for formal params
@@ -100,7 +101,7 @@ public interface Visitor {
      * @throws IncorrectTypeException
      * @throws ReturnTypeMismatchException
      */
-    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException;
+    void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException;
 
     /**
      * Visitor method for function call
@@ -236,7 +237,7 @@ public interface Visitor {
      * Visitor method for array value
      * @param astArrayValue array value node to visit
      */
-    void visit(ASTArrayValue astArrayValue);
+    void visit(ASTArrayValue astArrayValue) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException;
 
     /**
      * Visitor method for declaration
@@ -246,9 +247,20 @@ public interface Visitor {
 
     /**
      * Visitor method for array identifier
-     * @param arrayIdentifier declaration node to visit
+     * @param arrayIdentifier identifier node to visit
      */
-    void visit(ASTArrayIdentifier arrayIdentifier);
+    void visit(ASTArrayIdentifier arrayIdentifier) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException;
 
+    /**
+     * Visitor method for array declaration
+     * @param arrayDecl declaration node to visit
+     */
+    void visit(ASTArrayDecl arrayDecl) throws UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, IncorrectTypeException;
+
+    /**
+     * Visitor method for character literal
+     * @param characterLiteral character literal node to visit
+     */
+    void visit(ASTCharacterLiteral characterLiteral);
 
 }

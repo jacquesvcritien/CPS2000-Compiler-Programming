@@ -93,7 +93,7 @@ public class Parser {
 
     /**
      * Method to parse an array index
-     * '[' <INTEGERLITERAL> ']'
+     * '[' <EXPRESSION> ']'
      * @return identifier node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -102,8 +102,8 @@ public class Parser {
         //absorb opening square bracket
         absorb(TypeToken.SQUARE_OPEN);
 
-        //get integer literal
-        ASTExpression index = literal();
+        //get expression
+        ASTExpression index = expression();
 
         //absorb closing square bracket
         absorb(TypeToken.SQUARE_CLOSE);
@@ -130,7 +130,7 @@ public class Parser {
 
     /**
      * Method to parse an identifier
-     * <IDENTIFIER> '[' <EXPRESSION> ']'
+     * <IDENTIFIER> <ARRAYSIZEINDEX>
      * @return array identifier node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -298,7 +298,7 @@ public class Parser {
 
     /**
      * Method for array value
-     * '{' [ <EXPRESSION> { ',' <EXPRESSION> } ] '}'
+     * '{' <EXPRESSION> { ',' <EXPRESSION> } '}'
      * @return an actual params node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -309,15 +309,6 @@ public class Parser {
 
         //absorb opening curly
         absorb(TypeToken.CURLY_OPEN);
-
-        //check if next is a curly close
-        if(currentToken.getType() == TypeToken.CURLY_CLOSE)
-        {
-            //absorb curly close
-            absorb(TypeToken.CURLY_CLOSE);
-            return new ASTArrayValue(values);
-        }
-
 
         //check the expression and add it to the list
         values.add(expression());
@@ -366,7 +357,7 @@ public class Parser {
 
     /**
      * Method for assignment
-     * <IDENTIFIER> '=' <EXPRESSION>
+     * <ABSTRACTIDENTIFIER> '=' <EXPRESSION>
      * @return an assignment node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -808,7 +799,7 @@ public class Parser {
 
     /**
      * Method for statement
-     * <VARIABLEDECL> ';' | <ASSIGNMENT> ';' | <PRINTSTMNT> ';' | <IFSTMNT>  | <FORSTMNT> | <WHILESTMNT>  | <RETURNSTMNT> ';' |
+     * <DECL> ';' | <ASSIGNMENT> ';' | <PRINTSTMNT> ';' | <IFSTMNT>  | <FORSTMNT> | <WHILESTMNT>  | <RETURNSTMNT> ';' |
      * <FUNCTIONDECL> | <BLOCK>
      * @return a statment node
      * @throws IOException

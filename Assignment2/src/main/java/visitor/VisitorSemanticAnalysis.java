@@ -7,6 +7,7 @@ import parser.node.expression.identifier.ASTAbstractIdentifier;
 import parser.node.expression.identifier.ASTArrayIdentifier;
 import parser.node.expression.identifier.ASTIdentifier;
 import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
 import parser.node.statement.declaration.ASTDecl;
 import parser.node.statement.declaration.ASTVariableDecl;
 
@@ -215,7 +216,7 @@ public class VisitorSemanticAnalysis implements Visitor {
     }
 
     @Override
-    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException {
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
         //loop through formal params
         for(int i=0; i <formalParams.getFormalParams().size(); i++)
         {
@@ -480,7 +481,6 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     }
 
-
     @Override
     public void visit(ASTDecl astDecl) {
 
@@ -488,6 +488,16 @@ public class VisitorSemanticAnalysis implements Visitor {
 
     @Override
     public void visit(ASTArrayIdentifier arrayIdentifier) {
+
+    }
+
+    @Override
+    public void visit(ASTArrayDecl arrayDecl) {
+
+    }
+
+    @Override
+    public void visit(ASTCharacterLiteral characterLiteral) {
 
     }
 
