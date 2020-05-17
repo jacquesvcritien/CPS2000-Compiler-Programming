@@ -385,12 +385,20 @@ public class VisitorXMLGenerator implements Visitor {
         ASTExpression expression = variableDecl.getExpression();
 
 
-        System.out.println(indentation+"<VarDecl>");
-        //visit identifier
-        identifier.accept(this);
-        //visit expression
-        expression.accept(this);
-        System.out.println(indentation+"</VarDecl>");
+        //if there is no identifier - in case of for loop with no variable declaration
+        if(identifier == null)
+        {
+            System.out.println(indentation+"<VarDecl>Empty</VarDecl>");
+        }
+        else
+        {
+            System.out.println(indentation+"<VarDecl>");
+            //visit identifier
+            identifier.accept(this);
+            //visit expression
+            expression.accept(this);
+            System.out.println(indentation+"</VarDecl>");
+        }
 
         //decrement indentation
         indent--;

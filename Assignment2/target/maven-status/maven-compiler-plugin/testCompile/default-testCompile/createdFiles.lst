@@ -5,3 +5,4 @@ AntlrIntegrationTest.class
 IntegrationTest.class
 XMLIntegrationTest.class
 LexerTest.class
+AntlrXMLIntegrationTest.class

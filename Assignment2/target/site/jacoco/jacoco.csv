@@ -30,7 +30,7 @@ Assignment2,parser.node.expression,ASTBooleanLiteral,0,16,0,0,0,6,0,3,0,3
 Assignment2,parser.node.expression,ASTActualParams,0,21,0,0,0,9,0,4,0,4
 Assignment2,parser.node.expression,ASTExpression,0,7,0,0,0,3,0,2,0,2
 Assignment2,visitor,VisitorInterpreter,0,934,0,97,0,201,0,83,0,29
-Assignment2,visitor,VisitorXMLGenerator,0,1029,0,20,0,193,0,40,0,30
+Assignment2,visitor,VisitorXMLGenerator,0,1042,0,22,0,195,0,41,0,30
 Assignment2,visitor,Scope,0,44,0,0,0,13,0,7,0,7
 Assignment2,visitor,VisitorSemanticAnalysis,0,744,0,56,0,183,0,59,0,30
 Assignment2,visitor,SymbolTable,0,178,0,14,0,51,0,25,0,18
@@ -48,5 +48,5 @@ Assignment2,exceptions,IncorrectTypeException,0,4,0,0,0,2,0,1,0,1
 Assignment2,exceptions,AlreadyDeclaredException,0,4,0,0,0,2,0,1,0,1
 Assignment2,exceptions,ReturnTypeMismatchException,0,4,0,0,0,2,0,1,0,1
 Assignment2,exceptions,UndeclaredException,0,4,0,0,0,2,0,1,0,1
-Assignment2,antlrSrc,TransformerVisitor,0,916,0,39,0,193,0,49,0,28
+Assignment2,antlrSrc,TransformerVisitor,0,894,0,39,0,187,0,49,0,28
 Assignment2,antlrSrc,ErrorThrowListener,0,23,0,0,0,2,0,2,0,2
