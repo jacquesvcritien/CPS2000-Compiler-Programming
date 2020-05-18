@@ -1,7 +1,5 @@
 import exceptions.*;
 import lexer.Lexer;
-import lexer.Token;
-import lexer.TypeToken;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +8,6 @@ import parser.Parser;
 import parser.node.ASTProgram;
 import visitor.VisitorChecker;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -50,13 +47,20 @@ public class ParserTest {
     }
 
     /**
-     * Test for bad array declaration
+     * Test for array declaration with no size
      */
-    @Test(expected = InvalidSyntaxException.class)
-    public void testIncorrectArrayDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("parser/arraydeclIncorrect.txt");
+    @Test
+    public void testArrayDeclNoSize() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+        lexer = new Lexer("parser/arraydeclNoSizeNoValue.txt");
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
+        visitorChecker.visit(program);
+
+        System.out.println(visitorChecker.visitedIndexes.toString());
+        //assert sum
+        Assert.assertEquals("Asserting sum", 74, visitorChecker.sum);
+        //assert array size
+        Assert.assertEquals("Asserting array size", 3, visitorChecker.visitedIndexes.size());
 
     }
 

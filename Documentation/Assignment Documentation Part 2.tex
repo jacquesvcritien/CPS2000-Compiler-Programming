@@ -46,17 +46,18 @@
   
   <ArrayIdentifier> 	::= <Identifier> <ArraySizeIndex>
   
-  <ArrayValue> 		::= '{' <Expression> { ',' <Expression> } '}'
+  <ArrayValue> 		::= '{' [ <Expression> { ',' <Expression> } ] '}'
   
   <VariableDecl> ::= <Identifier> ':' (<Type>|<Auto>) '=' <Expression> 
   
-  <ArrayDecl> 	::=  <ArrayIdentifier>`:' <Type> ['=' <ArrayValue>] 
+  <ArrayDecl> 	::=  <Identifier> '[' [ <Expression> ]  ']' `:' 
+  		     <Type> ['=' <ArrayValue> ] 
   
   <FormalParam> 	::= <Identifier> [ '[' ']' ] : <Type>
   
   <AbstractIdentifier>	::= <Identifier> | <ArrayIdentifier>
   
-  <Assignment>	::= <AbstractIdentifier> `=' <Expression>
+  <Assignment>	::= <AbstractIdentifier> '=' <Expression>
   
   <Decl> 		::= 'let' (<VariableDecl> | <ArrayDecl>)
   
@@ -99,7 +100,7 @@
 				
 				\subsubsection{\textless ArrayValue\textgreater}
 				
-				This rule represents the value to set to the array on declaration. This consists of an expression or more inside curly brackets.
+				This rule represents the value to set to the array on declaration. This may consist of expressions separated by commas inside curly brackets.
 				
 				\subsubsection{\textless VariableDecl\textgreater}
 				
@@ -107,7 +108,7 @@
 				
 				\subsubsection{\textless ArrayDecl\textgreater}
 				
-				This rule represents the declaration for an array. It starts with an \textless ArrayIdentifier\textgreater{} node explained above before a semi colon and a type. As can be seen in the figure above, an equals sign and an \textless ArrayValue\textgreater{} node are optional because arrays can be initialised or uninitailised in declarations.
+				This rule represents the declaration for an array. It starts with an \textless Identifer\textgreater{} node and after it, an expression should be found between square bracket tokens. Then,  before a semi colon and a type. As can be seen in the figure above, an equals sign and an \textless ArrayValue\textgreater{} node are optional because arrays can be initialised or uninitailised in declarations.
 				
 				
 				\subsubsection{\textless Decl\textgreater}
@@ -399,7 +400,7 @@
 				
 \item \textbf{factor()}: This function is used to parse a factor. This was created in part 1 of the assignment but was changed in order to cater for character literals and arrays functionalities. This was done by adding a a case to the switch where the type of the token is checked. If the type is of type CHARACTER\_LITERAL, the function literal() is called. To cater for array identifiers, the case for when the token type is an identifier was modified by checking if the token after the identifier is of type SQUARE\_OPEN, because if so, it must mean that it is an array identifier. In fact, if this is the case the function arrayIdentifier() explained above, is called.
 		
-	\item \textbf{arrayValue()}: This function was created to parse an array value which may be used when declaring an array. The EBNF rules defines this as \textbf{'\{' \textless EXPRESSION\textgreater \{ ',' \textless EXPRESSION\textgreater \} '\}'}. In order to follow this rule, this function starts by defining an arraylist of expressions of type ASTExpression to hold values in it. After this, a \{' token is absorbed and the first expression is obtained and added to the array list. After this, there is a loop which goes on until as long as there are more commas to be parsed. Inside this loop, a new expression is obtained and added to the list of values. 
+	\item \textbf{arrayValue()}: This function was created to parse an array value which may be used when declaring an array. The EBNF rules defines this as \textbf{'\{' [ \textless EXPRESSION\textgreater \{ ',' \textless EXPRESSION\textgreater \} ] '\}'}. In order to follow this rule, this function starts by defining an arraylist of expressions of type ASTExpression to hold values in it. After this, a \{' token is absorbed and it is checked if there are any values by checking if the next token is a `\}'. If so, an empty ASTArrayValue node is returned, otherwise, the first expression is obtained and added to the array list. After this, there is a loop which goes on until as long as there are more commas to be parsed. Inside this loop, a new expression is obtained and added to the list of values. 
 	
 	\begin{figure}[H]
 					\centering
@@ -417,7 +418,7 @@
 							
 				\item \textbf{variableDeclaration(ASTIdentifier)}: This function is used to parse a variable declaration and it was changed by adding an the identifier as a parameter rather than obtaining it in the function itself. This is done since the function declaration(), explained above, will be called first and then this function is called from it.
 				
-				\item \textbf{arrayDeclaration(ASTIdentifier)}: This function was created to parse an array declaration and it takes in an identifier as a parameter. The EBNF rule for an array declaration is defined as \textbf{'let' \textless IDENTIFIER\textgreater \textless ARRAYINDEX\textgreater ':' \textless TYPE\textgreater [ '=' \textless ARRAYVALUE\textgreater ]}. The LET token and the identifier are obtained by the declaration() function explained above which initiates this function. Then to continue following the rule, this function gets the array's size by calling arraySizeIndex(), then absorbs the COLON token, gets and sets the type to the identifier and absorbs the TYPE token. Then, it is checked if there is a value by checking if the next token is of type `='. If there is, it is absorbed and the value is obtained by calling arrayValue(). Otherwise, the ASTArrayValue node is left empty. Finally, a new ASTArrayDeclaration node is returned with the identifier and the value nodes.
+				\item \textbf{arrayDeclaration(ASTIdentifier)}: This function was created to parse an array declaration and it takes in an identifier as a parameter. The EBNF rule for an array declaration is defined as \textbf{'let' \textless IDENTIFIER\textgreater '[' [ \textless EXPRESSION\textgreater ] ']' ':' \textless TYPE\textgreater [ '=' \textless ARRAYVALUE\textgreater ]}. The LET token and the identifier are obtained by the declaration() function explained above which initiates this function. Then to continue following the rule, this function absorbs a SQUARE\_OPEN bracket and it checks whether the next token is a SQUARE\_CLOSE. If so, it means that there is no expression and therefore, the expression containing the size or index is left as null. Otherwise, expression() is called to obtain the size. After this step, a SQUARE\_CLOSE token is absorbed, the COLON token is absorbed, the type is obtained and set to the identifier and the TYPE token is absorbed. Then, it is checked if there is a value by checking if the next token is of type `='. If there is, it is absorbed and the value is obtained by calling arrayValue(). Otherwise, the ASTArrayValue node is left empty. Finally, a new ASTArrayDeclaration node is returned with the identifier and the value nodes.
 				
 				\item \textbf{formalParam()}: This function is used to parse a formal parameter and it was updated to match its update EBNF rule which is defined as \textbf{( \textgreater IDENTIFIER\textgreater | \textgreater ARRAYIDENTIFIER\textgreater )  [ '[' ']' ] ':' \textgreater TYPE\textgreater}. This function now starts by getting the identifier and storing it into an ASTAbstractIdentifier object since it can be both a normal identifier and an array identifier. Then, it is checked if the next token is of type SQUARE\_OPEN, because if it is, it means that the formal parameter is an array. If so, `[` and `]' tokens are 
 							absorbed. After that, as used to happen before, a COLON token is absorbed and the type is obtained and set to the identifier. Finally, a new ASTFormalParam node is returned with the identifier of type ASTAbstractIdentifier.

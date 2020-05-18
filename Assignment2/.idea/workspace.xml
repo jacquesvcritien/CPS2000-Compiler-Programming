@@ -2,34 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="184e9c0f-0e90-4b3c-a173-369a38e4bf63" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Assignment1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/antlrSrc/TransformerVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlrSrc/TransformerVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/visitor/VisitorXMLGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/visitor/VisitorXMLGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/antlr4/SmallLangV2.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/antlr4/SmallLangV2.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/parser/arraydeclIncorrect.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/parser/arraydeclNoSizeNoValue.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ParserTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/Assignment2-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Assignment2-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/antlrSrc/TransformerVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/antlrSrc/TransformerVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/visitor/VisitorXMLGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/visitor/VisitorXMLGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/Parser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/parser/Parser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/parser/arraydeclIncorrect.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/target/jacoco.exec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.java.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/index.source.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/visitor/VisitorXMLGenerator.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/visitor/VisitorXMLGenerator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/visitor/VisitorXMLGenerator.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/visitor/VisitorXMLGenerator.java.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/visitor/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/visitor/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/visitor/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/visitor/index.source.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/parser/Parser.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/parser/Parser.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/parser/Parser.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/parser/Parser.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/parser/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/parser/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/parser/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/parser/index.source.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/AntlrIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/AntlrIntegrationTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/AntlrXMLIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/AntlrXMLIntegrationTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/IntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/IntegrationTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/LexerTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/LexerTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/ParserTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/ParserTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-AntlrIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-AntlrIntegrationTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-AntlrXMLIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-AntlrXMLIntegrationTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-IntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-IntegrationTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-LexerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-LexerTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-ParserTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-ParserTest.xml" afterDir="false" />
@@ -39,6 +36,7 @@
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TokenTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TokenTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TransitionTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TransitionTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/XMLIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/XMLIntegrationTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ParserTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ParserTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.synctex.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.tex" afterDir="false" />
@@ -80,7 +78,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/lexer/funcdecl.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/parser/arraydeclNoSizeNoValue.txt" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -89,15 +87,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml\integration" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Software Engineering\git-exercise-CI\Assignment1" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\parser" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\lexer" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\integration" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\antlr4" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -106,12 +104,12 @@
       <recent name="parser.node" />
       <recent name="exceptions" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\lexer" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\integration" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\parser" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\antlr4" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml\integration" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Software Engineering\git-exercise-CI\Assignment1" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -127,7 +125,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.XMLIntegrationTest">
+  <component name="RunManager" selected="JUnit.ParserTest.testArrayDeclNoSize">
     <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Tester" />
       <module name="Assignment2" />
@@ -144,20 +142,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LexerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ParserTest.testArrayDeclNoSize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Assignment2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LexerTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="ParserTest" />
+      <option name="METHOD_NAME" value="testArrayDeclNoSize" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LexerTest.testArrayDecl" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ParserTest.testIncorrectArrayDecl" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Assignment2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LexerTest" />
-      <option name="METHOD_NAME" value="testArrayDecl" />
+      <option name="MAIN_CLASS_NAME" value="ParserTest" />
+      <option name="METHOD_NAME" value="testIncorrectArrayDecl" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -174,11 +173,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ParserTest.testArrayDeclNoSize" />
+        <item itemvalue="JUnit.ParserTest.testIncorrectArrayDecl" />
         <item itemvalue="JUnit.XMLIntegrationTest" />
         <item itemvalue="JUnit.AntlrXMLIntegrationTest" />
         <item itemvalue="Application.Tester" />
-        <item itemvalue="JUnit.LexerTest" />
-        <item itemvalue="JUnit.LexerTest.testArrayDecl" />
       </list>
     </recent_temporary>
   </component>
@@ -282,118 +281,119 @@
     <state x="93" y="93" width="1095" height="504" key="DiffContextDialog/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1588013042162" />
     <state x="-7" y="3" width="1288" height="693" key="DiffContextDialog/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589376485116" />
     <state x="93" y="93" width="1095" height="504" key="DiffContextDialog/0.0.1280.689@0.0.1280.689" timestamp="1587908367081" />
-    <state x="-1181" y="89" key="FileChooserDialogImpl" timestamp="1589645071809">
+    <state x="-1181" y="89" key="FileChooserDialogImpl" timestamp="1589760889401">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1181" y="89" key="FileChooserDialogImpl/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589499119026" />
     <state x="-1181" y="89" key="FileChooserDialogImpl/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589645071809" />
     <state x="493" y="179" key="FileChooserDialogImpl/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588192600503" />
-    <state width="1877" height="301" key="GridCell.Tab.0.bottom" timestamp="1589674793943">
+    <state x="-1181" y="89" key="FileChooserDialogImpl/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760889401" />
+    <state width="1877" height="173" key="GridCell.Tab.0.bottom" timestamp="1589760879616">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="301" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589674793943" />
+    <state width="1877" height="746" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="206" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
     <state width="1238" height="2" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1586711253207" />
     <state width="609" height="175" key="GridCell.Tab.0.bottom/0.23.1280.732@0.23.1280.732" timestamp="1586466154475" />
     <state width="255" height="525" key="GridCell.Tab.0.bottom/0.23.1280.733@0.23.1280.733" timestamp="1586469099839" />
-    <state width="1877" height="206" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591334176" />
+    <state width="1877" height="173" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="301" key="GridCell.Tab.0.center" timestamp="1589674793943">
+    <state width="1877" height="173" key="GridCell.Tab.0.center" timestamp="1589760879616">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.center/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="301" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589674793943" />
+    <state width="1877" height="746" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="206" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
     <state width="1238" height="2" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1586711253204" />
     <state width="609" height="175" key="GridCell.Tab.0.center/0.23.1280.732@0.23.1280.732" timestamp="1586466154474" />
     <state width="255" height="525" key="GridCell.Tab.0.center/0.23.1280.733@0.23.1280.733" timestamp="1586469099836" />
-    <state width="1877" height="206" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591334175" />
+    <state width="1877" height="173" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="301" key="GridCell.Tab.0.left" timestamp="1589674793943">
+    <state width="1877" height="173" key="GridCell.Tab.0.left" timestamp="1589760879616">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.left/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="301" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589674793943" />
+    <state width="1877" height="746" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="206" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
     <state width="1238" height="2" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1586711253203" />
     <state width="609" height="175" key="GridCell.Tab.0.left/0.23.1280.732@0.23.1280.732" timestamp="1586466154474" />
     <state width="255" height="525" key="GridCell.Tab.0.left/0.23.1280.733@0.23.1280.733" timestamp="1586469099835" />
-    <state width="1877" height="206" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591334175" />
+    <state width="1877" height="173" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="301" key="GridCell.Tab.0.right" timestamp="1589674793943">
+    <state width="1877" height="173" key="GridCell.Tab.0.right" timestamp="1589760879616">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.right/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="301" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589674793943" />
+    <state width="1877" height="746" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="206" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
     <state width="1238" height="2" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1586711253206" />
     <state width="609" height="175" key="GridCell.Tab.0.right/0.23.1280.732@0.23.1280.732" timestamp="1586466154475" />
     <state width="255" height="525" key="GridCell.Tab.0.right/0.23.1280.733@0.23.1280.733" timestamp="1586469099837" />
-    <state width="1877" height="206" key="GridCell.Tab.0.right/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591334176" />
+    <state width="1877" height="173" key="GridCell.Tab.0.right/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.right/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="746" key="GridCell.Tab.1.bottom" timestamp="1589668880953">
+    <state width="1877" height="746" key="GridCell.Tab.1.bottom" timestamp="1589708656953">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="274" key="GridCell.Tab.1.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="276" key="GridCell.Tab.1.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1587997075923" />
-    <state width="1877" height="746" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589668880953" />
+    <state width="1877" height="746" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656953" />
     <state width="1877" height="274" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="274" key="GridCell.Tab.1.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078674" />
     <state width="1237" height="160" key="GridCell.Tab.1.bottom/0.0.1280.689@0.0.1280.689" timestamp="1588094430713" />
     <state width="609" height="218" key="GridCell.Tab.1.bottom/0.23.1280.733@0.23.1280.733" timestamp="1586468319510" />
     <state width="1877" height="274" key="GridCell.Tab.1.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591218078" />
     <state width="1237" height="173" key="GridCell.Tab.1.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="746" key="GridCell.Tab.1.center" timestamp="1589668880953">
+    <state width="1877" height="746" key="GridCell.Tab.1.center" timestamp="1589708656952">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.center/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="274" key="GridCell.Tab.1.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="276" key="GridCell.Tab.1.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1587997075923" />
-    <state width="1877" height="746" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589668880953" />
+    <state width="1877" height="746" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="274" key="GridCell.Tab.1.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078674" />
     <state width="1237" height="160" key="GridCell.Tab.1.center/0.0.1280.689@0.0.1280.689" timestamp="1588094430712" />
     <state width="609" height="218" key="GridCell.Tab.1.center/0.23.1280.733@0.23.1280.733" timestamp="1586468319509" />
     <state width="1877" height="274" key="GridCell.Tab.1.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591218078" />
     <state width="1237" height="173" key="GridCell.Tab.1.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="746" key="GridCell.Tab.1.left" timestamp="1589668880953">
+    <state width="1877" height="746" key="GridCell.Tab.1.left" timestamp="1589708656952">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.left/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="274" key="GridCell.Tab.1.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799241" />
     <state width="1237" height="276" key="GridCell.Tab.1.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1587997075922" />
-    <state width="1877" height="746" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589668880953" />
+    <state width="1877" height="746" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656952" />
     <state width="1877" height="274" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="274" key="GridCell.Tab.1.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078674" />
     <state width="1237" height="160" key="GridCell.Tab.1.left/0.0.1280.689@0.0.1280.689" timestamp="1588094430712" />
     <state width="609" height="218" key="GridCell.Tab.1.left/0.23.1280.733@0.23.1280.733" timestamp="1586468319509" />
     <state width="1877" height="274" key="GridCell.Tab.1.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591218078" />
     <state width="1237" height="173" key="GridCell.Tab.1.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936212" />
-    <state width="1877" height="746" key="GridCell.Tab.1.right" timestamp="1589668880953">
+    <state width="1877" height="746" key="GridCell.Tab.1.right" timestamp="1589708656953">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.1.right/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375619" />
     <state width="1877" height="274" key="GridCell.Tab.1.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="276" key="GridCell.Tab.1.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1587997075923" />
-    <state width="1877" height="746" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589668880953" />
+    <state width="1877" height="746" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589708656953" />
     <state width="1877" height="274" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588191179382" />
     <state width="1877" height="274" key="GridCell.Tab.1.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078674" />
     <state width="1237" height="160" key="GridCell.Tab.1.right/0.0.1280.689@0.0.1280.689" timestamp="1588094430712" />
@@ -424,10 +424,10 @@
     </state>
     <state x="0" y="0" width="1294" height="742" key="dock-window-1/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1587340988663" />
     <state x="0" y="0" width="1294" height="775" key="dock-window-1/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589553580071" />
-    <state x="0" y="0" width="1238" height="775" maximized="true" key="dock-window-2" timestamp="1589589405009">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="-1439" y="80" width="1238" height="775" key="dock-window-2" timestamp="1589758554048">
+      <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
-    <state x="0" y="0" width="1238" height="775" maximized="true" key="dock-window-2/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589589405009" />
+    <state x="-1439" y="80" width="1238" height="775" key="dock-window-2/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589758554048" />
     <state x="-1264" y="-61" width="737" height="804" key="find.popup" timestamp="1587593895885">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
@@ -441,7 +441,7 @@
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1254" y="-31" key="refactoring.ChangeSignatureDialog/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1587939464833" />
-    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup" timestamp="1589674793966">
+    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup" timestamp="1589760501142">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589496236691" />
@@ -450,7 +450,7 @@
     <state x="297" y="153" width="672" height="677" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588957361361" />
     <state x="2366" y="49" width="1008" height="679" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078661" />
     <state x="297" y="153" width="672" height="445" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1588096332969" />
-    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589591339525" />
+    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760501142" />
     <state x="297" y="153" key="run.anything.popup/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586255454887" />
     <state x="-1465" y="-169" width="1008" height="1035" key="search.everywhere.popup" timestamp="1589238810673">
       <screen x="-1920" y="-184" width="1920" height="1050" />
@@ -526,7 +526,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
-          <line>49</line>
+          <line>46</line>
           <option name="timeStamp" value="156" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -606,12 +606,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
-          <line>67</line>
+          <line>71</line>
           <option name="timeStamp" value="227" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
-          <line>138</line>
+          <line>142</line>
           <option name="timeStamp" value="229" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -634,15 +634,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
-          <line>55</line>
-          <properties class="ParserTest" method="testIncorrectArrayDecl">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
-          <line>85</line>
+          <line>89</line>
           <properties class="ParserTest" method="testCharVarDecl">
             <option name="EMULATED" value="true" />
           </properties>

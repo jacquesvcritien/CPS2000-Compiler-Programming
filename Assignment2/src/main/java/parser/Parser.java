@@ -298,7 +298,7 @@ public class Parser {
 
     /**
      * Method for array value
-     * '{' <EXPRESSION> { ',' <EXPRESSION> } '}'
+     * '{' [ <EXPRESSION> { ',' <EXPRESSION> } ] '}'
      * @return an actual params node
      * @throws IOException
      * @throws InvalidSyntaxException
@@ -309,6 +309,15 @@ public class Parser {
 
         //absorb opening curly
         absorb(TypeToken.CURLY_OPEN);
+
+        //check if there are no values
+        if(this.currentToken.getType() == TypeToken.CURLY_CLOSE)
+        {
+            //absorb closing curly
+            absorb(TypeToken.CURLY_CLOSE);
+            return new ASTArrayValue(values);
+        }
+
 
         //check the expression and add it to the list
         values.add(expression());
@@ -449,7 +458,7 @@ public class Parser {
 
     /**
      * Method for array declaration
-     * 'let' <IDENTIFIER> <ARRAYINDEX> ':' <TYPE> [ '=' <ARRAYVALUE> ]
+     * 'let' <IDENTIFIER> '[' [ <EXPRESSION> ] ']' ':' <TYPE> [ '=' <ARRAYVALUE> ]
      * @param identifier identifier of for the declaration
      * @return a variable declaration node
      * @throws IOException
@@ -457,8 +466,21 @@ public class Parser {
      */
     private ASTArrayDecl arrayDeclaration(ASTIdentifier identifier) throws IOException, InvalidSyntaxException{
 
-        //get array size
-        ASTExpression arraySize = arraySizeIndex();
+        //absorb open square bracket
+        absorb(TypeToken.SQUARE_OPEN);
+
+        //variable which holds the expression
+        ASTExpression arraySize = null;
+
+        //check if there is an expression;
+        if(this.currentToken.getType() != TypeToken.SQUARE_CLOSE)
+        {
+            //if not, keep it empty
+            arraySize = expression();
+        }
+
+        //absorb closing square bracket
+        absorb(TypeToken.SQUARE_CLOSE);
 
         ASTArrayIdentifier arrayIdentifier = new ASTArrayIdentifier(identifier.getName());
         //absorb colon
