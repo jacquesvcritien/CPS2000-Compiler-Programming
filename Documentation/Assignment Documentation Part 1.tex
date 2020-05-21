@@ -865,116 +865,127 @@ print Pow;
 				
 				\subsubsection{Testing}
 				
-				In order to test my implementation of the XML representation generator, I created several tests to make sure to test all types of representations that the SmallLang language can produce. Then, I asserted that the output from this generator is as expected.
+				In order to test my implementation of the XML representation generator, I created several tests to make sure to test all types of representations that the SmallLang language can produce. Then, I asserted that the output from this generator is as expected. \textbf{It is important to note that the expected results are commented in the file containing the input program}
 				
-				The tests conducted can be found below:
-				\begin{multicols}{2}
-			
-			
+				\noindent The tests conducted can be found below:
+				
+				\begin{enumerate}
+				\item Test for variable declaration
 				\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest1.png}
+			 			\includegraphics[width=0.6\textwidth]{xmltest1.png}
 			 			\centering
 			  			\caption{xmltest1.txt}
 			  			\label{fig:xmltest1}
 					\end{figure}
 					
-			\begin{figure}[H]
+				\item Test for print statement
+				
+				\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest2.png}
+			 			\includegraphics[width=0.6\textwidth]{xmltest2.png}
 			 			\centering
 			  			\caption{xmltest2.txt}
 			  			\label{fig:xmltest2}
 					\end{figure}
 					
-										
-					\begin{figure}[H]
+					\item Test for assignment and float declaration
+					
+								\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest9.png}
+			 			\includegraphics[width=0.6\textwidth]{xmltest3.png}
 			 			\centering
-			  			\caption{xmltest9.txt}
-			  			\label{fig:xmltest9}
+			  			\caption{xmltest3.txt}
+			  			\label{fig:xmltest3}
 					\end{figure}
 					
-
-					
-					\begin{figure}[H]
+				\item Test for if condition
+				\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest4.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest4.png}
 			 			\centering
 			  			\caption{xmltest4.txt}
 			  			\label{fig:xmltest4}
 					\end{figure}
 					
-					\begin{figure}[H]
+			\item Test for empty block 
+			\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest5.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest5.png}
 			 			\centering
 			  			\caption{xmltest5.txt}
 			  			\label{fig:xmltest5}
-					\end{figure}
+					\end{figure}	
+					
+					\item Test for while loop
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest6.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest6.png}
 			 			\centering
 			  			\caption{xmltest6.txt}
 			  			\label{fig:xmltest6}
 					\end{figure}
 					
-					\begin{figure}[H]
+					\item Test for function with formal params
+					
+									\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest7.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest7.png}
 			 			\centering
 			  			\caption{xmltest7.txt}
 			  			\label{fig:xmltest7}
 					\end{figure}
 					
-
-					
+					\item Test for a for loop
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest8.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest8.png}
 			 			\centering
 			  			\caption{xmltest8.txt}
 			  			\label{fig:xmltest8}
 					\end{figure}
 
 					
-										\begin{figure}[H]
+												
+					
+				\item Test for a for loop with no assignment and declaration
+					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest3.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest9.png}
 			 			\centering
-			  			\caption{xmltest3.txt}
-			  			\label{fig:xmltest3}
+			  			\caption{xmltest9.txt}
+			  			\label{fig:xmltest9}
 					\end{figure}
 					
-					
+					\item Test for a function with no formal parameters
 												\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest10.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest10.png}
 			 			\centering
 			  			\caption{xmltest10.txt}
 			  			\label{fig:xmltest10}
 					\end{figure}
 					
 			
-					
+					\item Test for a function call
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest11.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest11.png}
 			 			\centering
 			  			\caption{xmltest11.txt}
 			  			\label{fig:xmltest11}
 					\end{figure}
 					
+					\item Test for function call with no parameters
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{xmltest12.png}
+			 			\includegraphics[width=0.5\textwidth]{xmltest12.png}
 			 			 \centering
 			  			\caption{xmltest12.txt}
 			  			\label{fig:xmltest12}
 					\end{figure}
 					
+					\item Test for unary
 					\begin{figure}[H]
 					\centering
 			 			\includegraphics[width=0.45\textwidth]{xmltest13.png}
@@ -982,8 +993,28 @@ print Pow;
 			  			\caption{xmltest13.txt}
 			  			\label{fig:xmltest13}
 					\end{figure}
+
 					
-			\end{multicols}
+				\end{enumerate}
+			
+			
+				
+					
+			
+					
+										
+					
+
+					
+					
+					
+					
+					
+	
+
+					
+					
+					
 			
 			\section{Task 4 - Semantic Analysis Pass}
 			
@@ -1287,9 +1318,9 @@ the type is boolean, the old value is negated and a new value is set to constant
 			
 			\subsection{Testing}
 			
-			In order to test this implementation several integration tests were developed to make sure they produce expected results. This was made sure by having 100\% code coverage. Some of these test can be found below.
+			In order to test this implementation several integration tests were developed to make sure they produce expected results. This was made sure by having 100\% code coverage. 
 			
-								\begin{figure}[H]
+				\begin{figure}[H]
 					\centering
 			 			\includegraphics[width=0.8\textwidth]{jacoco.png}
 			 			\centering
@@ -1297,64 +1328,80 @@ the type is boolean, the old value is negated and a new value is set to constant
 			  			\label{fig:jacoco}
 					\end{figure}
 					
-					\pagebreak
 					
-					
-									\begin{multicols}{2}
+					Only some of these test can be found below as the others were repetitive and hence, so that this document's length is preserved, not all tests were included but can all be found in the code.
 			
-			
-				\begin{figure}[H]
+			\pagebreak
+				\begin{enumerate}
+				\item \textbf{Test 1}: Containing variable declarations, if statements, print statements, while and for loops.
+								\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{test1.png}
+			 			\includegraphics[width=0.7\textwidth]{test1.png}
 			 			\centering
 			  			\caption{test1.png}
 			  			\label{fig:test1}
 					\end{figure}
 					
-			\begin{figure}[H]
+					\item \textbf{Test 2}: Containing expressions in variable declarations and boolean operations.
+					
+					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{test2.png}
+			 			\includegraphics[width=0.7\textwidth]{test2.png}
 			 			\centering
 			  			\caption{test2.png}
 			  			\label{fig:test2}
-					\end{figure}
+					\end{figure}]
 					
-										
+										item \textbf{Test 3}: Containing functions with if statements and printing with function calls
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{test4.png}
-			 			\centering
-			  			\caption{test4.png}
-			  			\label{fig:test4}
-					\end{figure}
-					
-					\begin{figure}[H]
-					\centering
-			 			\includegraphics[width=0.45\textwidth]{test3.png}
+			 			\includegraphics[width=0.7\textwidth]{test3.png}
 			 			\centering
 			  			\caption{test3.png}
 			  			\label{fig:test3}
 					\end{figure}
-
 					
-
+										\item \textbf{Test 32}: Containing functions with formal parameters having the same identifiers as variables in the parent scope.
 					\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{test32.png}
+			 			\includegraphics[width=0.7\textwidth]{test32.png}
 			 			\centering
 			  			\caption{test32.png}
 			  			\label{fig:test32}
 					\end{figure}
 					
+					item \textbf{Test 4}: Containing function declarations and calls.
+					\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.7\textwidth]{test4.png}
+			 			\centering
+			  			\caption{test4.png}
+			  			\label{fig:test4}
+					\end{figure}
+					
+
+
+					
+
+					
+					\item \textbf{Test 33}: Test code given in the specification
 										\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.45\textwidth]{test33.png}
+			 			\includegraphics[width=0.7\textwidth]{test33.png}
 			 			\centering
 			  			\caption{test33.png}
 			  			\label{fig:test33}
-					\end{figure}					
-			\end{multicols}
+					\end{figure}			
 			
+				\end{enumerate}
+			
+			
+
+					
+			
+					
+										
+					\pagebreak
 		
 			
 		
