@@ -172,7 +172,7 @@ public class Parser {
         // get factor
         ASTExpression node = factor();
 
-        // while the current token is a multiplicative operand
+        // while the current token is a multiplicative operator
         while(this.currentToken.getType() == TypeToken.MULTIPLICATIVE_OP)
         {
             //get current token
@@ -182,10 +182,10 @@ public class Parser {
 
             //get the right factor
             ASTExpression right = factor();
-            //get operand
-            String operand = token.getAttribute();
-            //create a node with left, right and operand
-            node = new ASTBinExpression(node, operand, right);
+            //get operator
+            String operator = token.getAttribute();
+            //create a node with left, right and operator
+            node = new ASTBinExpression(node, operator, right);
         }
 
         //return node
@@ -496,9 +496,9 @@ public class Parser {
         {
             //get current token
             Token token = this.currentToken;
-            //absorb the additive operand
+            //absorb the additive operator
             absorb(TypeToken.ADDITIVE_OP);
-            //create the bin expr node with term, operand and he right term
+            //create the bin expr node with term, operator and he right term
             node = new ASTBinExpression(node, token.getAttribute(), term());
         }
 
@@ -614,10 +614,10 @@ public class Parser {
         {
             //get current token
             Token token = this.currentToken;
-            //absorb the operand
+            //absorb the operator
             absorb(TypeToken.RELATIONAL_OP);
 
-            //set node to binary expression node with left simple expression, operand and right simple expression
+            //set node to binary expression node with left simple expression, operator and right simple expression
             node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());
         }
 

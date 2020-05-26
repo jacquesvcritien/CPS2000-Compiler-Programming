@@ -41,7 +41,7 @@ Assignment2,lexer,Keyword,0,102,0,0,0,18,0,2,0,2
 Assignment2,lexer,State,0,354,0,0,0,36,0,1,0,1
 Assignment2,lexer,Lexer,0,9607,0,69,0,1776,0,56,0,11
 Assignment2,lexer,TypeToken,0,324,0,0,0,33,0,1,0,1
-Assignment2,lexer,Operand,0,78,0,0,0,14,0,2,0,2
+Assignment2,lexer,Operator,0,78,0,0,0,14,0,2,0,2
 Assignment2,lexer,Token,0,44,0,8,0,12,0,8,0,4
 Assignment2,exceptions,InvalidSyntaxException,0,4,0,0,0,2,0,1,0,1
 Assignment2,exceptions,IncorrectTypeException,0,4,0,0,0,2,0,1,0,1

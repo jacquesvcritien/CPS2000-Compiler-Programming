@@ -94,7 +94,7 @@ public class VisitorSemanticAnalysis implements Visitor {
             throw new IncorrectTypeException("Types in expression do not match");
 
         //get operand
-        String operand = expression.getOperand();
+        String operand = expression.getOperator();
         //check operations
         switch(operand)
         {

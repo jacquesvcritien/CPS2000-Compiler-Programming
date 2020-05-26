@@ -1,6 +1,7 @@
 visitor\Visitor.class
 parser\node\ASTNode.class
 lexer\Lexer.class
+lexer\Operator.class
 parser\Parser.class
 parser\node\statement\ASTStatement.class
 visitor\Scope.class
@@ -44,5 +45,4 @@ parser\Parser$1.class
 lexer\Category.class
 lexer\State.class
 parser\node\statement\ASTIf.class
-lexer\Operand.class
 parser\node\expression\ASTFloatLiteral.class

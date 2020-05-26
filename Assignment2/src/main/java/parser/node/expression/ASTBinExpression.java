@@ -11,28 +11,28 @@ public class ASTBinExpression extends ASTExpression {
     private ASTExpression left;
     //right expression
     private ASTExpression right;
-    //operand
-    private String operand;
+    //operator
+    private String operator;
 
     /**
      * Constructor
      * @param left left expression
-     * @param operand operand to perform on expressions
+     * @param operator operator to perform on expressions
      * @param right right expression
      */
-    public ASTBinExpression(ASTExpression left, String operand, ASTExpression right)
+    public ASTBinExpression(ASTExpression left, String operator, ASTExpression right)
     {
         this.left = left;
-        this.operand = operand;
+        this.operator = operator;
         this.right = right;
     }
 
     /**
-     * Getter for operand
-     * @return operand
+     * Getter for operator
+     * @return operator
      */
-    public String getOperand() {
-        return operand;
+    public String getOperator() {
+        return operator;
     }
 
     /**

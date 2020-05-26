@@ -42,7 +42,7 @@ public class TransitionTest {
      */
     @Test
     public void testEqualsWhenNotEqual2() {
-        Transition newTransition = new Transition(State.START, Category.ADDITION_OPERAND);
+        Transition newTransition = new Transition(State.START, Category.ADDITION_OPERATOR);
         Assert.assertFalse("Asserting transitions not equal", transition.equals(newTransition));
     }
 
@@ -51,7 +51,7 @@ public class TransitionTest {
      */
     @Test
     public void testEqualsWhenNotEqualBoth() {
-        Transition newTransition = new Transition(State.S5, Category.ADDITION_OPERAND);
+        Transition newTransition = new Transition(State.S5, Category.ADDITION_OPERATOR);
         Assert.assertFalse("Asserting transitions not equal", transition.equals(newTransition));
     }
 

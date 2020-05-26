@@ -1,16 +1,20 @@
 grammar SmallLangV2;
 
-/*
-Done to add package on top of generated files
-*/
+
+//used to add the package for the generated files
 @header {
 package antlrSrc;
 }
 
+//literal
 literal : BooleanLiteral | IntegerLiteral | FloatLiteral | CharLiteral;
+
+//operators
 multiplicativeOp : TIMES | DIVIDE | AND;
 additiveOp : PLUS | MINUS | OR;
 relationalOp : LT | GT | EQUAL | NOT_EQUAL | LTE | GTE;
+
+//new EBNF rules
 actualParams :  expression (COMMA expression)*;
 functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
 subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
@@ -47,8 +51,12 @@ statement : declaration SEMI_COLON
 block : CURLY_OPEN statement* CURLY_CLOSE;
 program : statement*;
 
+
+//fragments to make up literals and identifiers
 fragment DIGIT : [0-9];
 fragment LETTER : [A-Za-z];
+
+//different types of tokens
 LET : 'let';
 NOT : 'not';
 MINUS : '-';

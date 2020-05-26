@@ -59,7 +59,7 @@ public class VisitorInterpreter implements Visitor {
         Type type = symbolTable.getConstant();
 
         //get operand
-        String operand = expression.getOperand();
+        String operand = expression.getOperator();
         //check operations
         switch(operand)
         {

@@ -17,7 +17,6 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\parser\node\expression\ASTIdentifier.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\parser\node\expression\ASTIntegerLiteral.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\exceptions\ReturnTypeMismatchException.java
-C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\Operand.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\visitor\SymbolTable.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\Keyword.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\Token.java
@@ -25,6 +24,7 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\State.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\parser\node\statement\ASTFormalParam.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\Category.java
+C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\lexer\Operator.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\exceptions\InvalidSyntaxException.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\parser\node\expression\ASTBooleanLiteral.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\java\parser\node\statement\ASTBlock.java

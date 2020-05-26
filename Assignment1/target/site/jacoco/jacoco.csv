@@ -33,7 +33,7 @@ Assignment1,lexer,State,0,304,0,0,0,31,0,1,0,1
 Assignment1,lexer,Lexer,0,7500,0,64,0,1392,0,52,0,11
 Assignment1,lexer,TypeToken,0,294,0,0,0,30,0,1,0,1
 Assignment1,lexer,Category,0,224,0,0,0,23,0,1,0,1
-Assignment1,lexer,Operand,0,78,0,0,0,14,0,2,0,2
+Assignment1,lexer,Operator,0,78,0,0,0,14,0,2,0,2
 Assignment1,lexer,Lexer.new HashMap() {...},0,141,0,0,0,29,0,1,0,1
 Assignment1,lexer,Transition,0,50,0,8,0,13,0,7,0,3
 Assignment1,lexer,Token,0,44,0,8,0,12,0,8,0,4

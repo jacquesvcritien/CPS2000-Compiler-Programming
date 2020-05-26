@@ -172,7 +172,7 @@ public class Parser {
         // get factor
 <span class="fc" id="L173">        ASTExpression node = factor();</span>
 
-        // while the current token is a multiplicative operand
+        // while the current token is a multiplicative operator
 <span class="fc bfc" id="L176" title="All 2 branches covered.">        while(this.currentToken.getType() == TypeToken.MULTIPLICATIVE_OP)</span>
         {
             //get current token
@@ -182,10 +182,10 @@ public class Parser {
 
             //get the right factor
 <span class="fc" id="L184">            ASTExpression right = factor();</span>
-            //get operand
-<span class="fc" id="L186">            String operand = token.getAttribute();</span>
-            //create a node with left, right and operand
-<span class="fc" id="L188">            node = new ASTBinExpression(node, operand, right);</span>
+            //get operator
+<span class="fc" id="L186">            String operator = token.getAttribute();</span>
+            //create a node with left, right and operator
+<span class="fc" id="L188">            node = new ASTBinExpression(node, operator, right);</span>
 <span class="fc" id="L189">        }</span>
 
         //return node
@@ -496,9 +496,9 @@ public class Parser {
         {
             //get current token
 <span class="fc" id="L498">            Token token = this.currentToken;</span>
-            //absorb the additive operand
+            //absorb the additive operator
 <span class="fc" id="L500">            absorb(TypeToken.ADDITIVE_OP);</span>
-            //create the bin expr node with term, operand and he right term
+            //create the bin expr node with term, operator and he right term
 <span class="fc" id="L502">            node = new ASTBinExpression(node, token.getAttribute(), term());</span>
 <span class="fc" id="L503">        }</span>
 
@@ -614,10 +614,10 @@ public class Parser {
         {
             //get current token
 <span class="fc" id="L616">            Token token = this.currentToken;</span>
-            //absorb the operand
+            //absorb the operator
 <span class="fc" id="L618">            absorb(TypeToken.RELATIONAL_OP);</span>
 
-            //set node to binary expression node with left simple expression, operand and right simple expression
+            //set node to binary expression node with left simple expression, operator and right simple expression
 <span class="fc" id="L621">            node = new ASTBinExpression(node, token.getAttribute(), simpleExpression());</span>
 <span class="fc" id="L622">        }</span>
 

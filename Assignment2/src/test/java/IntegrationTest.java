@@ -483,7 +483,7 @@ public class IntegrationTest {
     }
 
     /**
-     * Test for evaluating incorrect expression operand use for non booleans
+     * Test for evaluating incorrect expression operator use for non booleans
      * @throws IOException
      * @throws URISyntaxException
      * @throws InvalidSyntaxException
@@ -493,7 +493,7 @@ public class IntegrationTest {
      * @throws AlreadyDeclaredException
      */
     @Test(expected = IncorrectTypeException.class)
-    public void testExpressionBadOperandsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+    public void testExpressionBadOperatorsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         lexer = new Lexer("integration/test16.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
@@ -502,7 +502,7 @@ public class IntegrationTest {
     }
 
     /**
-     * Test for evaluating incorrect expression operand use for bool type
+     * Test for evaluating incorrect expression operator use for bool type
      * @throws IOException
      * @throws URISyntaxException
      * @throws InvalidSyntaxException
@@ -512,7 +512,7 @@ public class IntegrationTest {
      * @throws AlreadyDeclaredException
      */
     @Test(expected = IncorrectTypeException.class)
-    public void testExpressionBadOperandsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+    public void testExpressionBadOperatorsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         lexer = new Lexer("integration/test17.txt");
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();

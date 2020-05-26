@@ -35,18 +35,18 @@ public class Lexer
 <span class="fc" id="L35">        put(&quot;true&quot;, Keyword.TRUE);</span>
 <span class="fc" id="L36">        put(&quot;false&quot;, Keyword.FALSE);</span>
 <span class="fc" id="L37">        put(&quot;not&quot;, Keyword.NOT);</span>
-<span class="fc" id="L38">        put(&quot;*&quot;, Operand.MULTIPLY);</span>
-<span class="fc" id="L39">        put(&quot;/&quot;, Operand.DIVIDE);</span>
-<span class="fc" id="L40">        put(&quot;+&quot;, Operand.ADDITION);</span>
-<span class="fc" id="L41">        put(&quot;-&quot;, Operand.SUBTRACT);</span>
-<span class="fc" id="L42">        put(&quot;and&quot;, Operand.AND_OP);</span>
-<span class="fc" id="L43">        put(&quot;or&quot;, Operand.OR_OP);</span>
-<span class="fc" id="L44">        put(&quot;&gt;&quot;, Operand.GT);</span>
-<span class="fc" id="L45">        put(&quot;&lt;&quot;, Operand.LT);</span>
-<span class="fc" id="L46">        put(&quot;&gt;=&quot;, Operand.GTE);</span>
-<span class="fc" id="L47">        put(&quot;&lt;=&quot;, Operand.LTE);</span>
-<span class="fc" id="L48">        put(&quot;==&quot;, Operand.EQUAL);</span>
-<span class="fc" id="L49">        put(&quot;&lt;&gt;&quot;, Operand.NOTEQUAL);</span>
+<span class="fc" id="L38">        put(&quot;*&quot;, Operator.MULTIPLY);</span>
+<span class="fc" id="L39">        put(&quot;/&quot;, Operator.DIVIDE);</span>
+<span class="fc" id="L40">        put(&quot;+&quot;, Operator.ADDITION);</span>
+<span class="fc" id="L41">        put(&quot;-&quot;, Operator.SUBTRACT);</span>
+<span class="fc" id="L42">        put(&quot;and&quot;, Operator.AND_OP);</span>
+<span class="fc" id="L43">        put(&quot;or&quot;, Operator.OR_OP);</span>
+<span class="fc" id="L44">        put(&quot;&gt;&quot;, Operator.GT);</span>
+<span class="fc" id="L45">        put(&quot;&lt;&quot;, Operator.LT);</span>
+<span class="fc" id="L46">        put(&quot;&gt;=&quot;, Operator.GTE);</span>
+<span class="fc" id="L47">        put(&quot;&lt;=&quot;, Operator.LTE);</span>
+<span class="fc" id="L48">        put(&quot;==&quot;, Operator.EQUAL);</span>
+<span class="fc" id="L49">        put(&quot;&lt;&gt;&quot;, Operator.NOTEQUAL);</span>
 <span class="fc" id="L50">    }};</span>
     //stack
 <span class="fc" id="L52">    private Stack&lt;State&gt; stack = new Stack&lt;State&gt;();</span>
@@ -100,17 +100,17 @@ public class Lexer
 <span class="fc" id="L100">        transitionTable.put(transition, State.S4);</span>
 <span class="fc" id="L101">        transition = new Transition(State.START, Category.UNDERSCORE);</span>
 <span class="fc" id="L102">        transitionTable.put(transition, State.S4);</span>
-<span class="fc" id="L103">        transition = new Transition(State.START, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L103">        transition = new Transition(State.START, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L104">        transitionTable.put(transition, State.S5);</span>
-<span class="fc" id="L105">        transition = new Transition(State.START, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L105">        transition = new Transition(State.START, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L106">        transitionTable.put(transition, State.S6);</span>
-<span class="fc" id="L107">        transition = new Transition(State.START, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L107">        transition = new Transition(State.START, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L108">        transitionTable.put(transition, State.S7);</span>
-<span class="fc" id="L109">        transition = new Transition(State.START, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L109">        transition = new Transition(State.START, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L110">        transitionTable.put(transition, State.S8);</span>
-<span class="fc" id="L111">        transition = new Transition(State.START, Category.ST_OPERAND);</span>
+<span class="fc" id="L111">        transition = new Transition(State.START, Category.ST_OPERATOR);</span>
 <span class="fc" id="L112">        transitionTable.put(transition, State.S9);</span>
-<span class="fc" id="L113">        transition = new Transition(State.START, Category.GT_OPERAND);</span>
+<span class="fc" id="L113">        transition = new Transition(State.START, Category.GT_OPERATOR);</span>
 <span class="fc" id="L114">        transitionTable.put(transition, State.S10);</span>
 <span class="fc" id="L115">        transition = new Transition(State.START, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L116">        transitionTable.put(transition, State.S14);</span>
@@ -154,17 +154,17 @@ public class Lexer
 <span class="fc" id="L154">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L155">        transition = new Transition(State.S1, Category.UNDERSCORE);</span>
 <span class="fc" id="L156">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L157">        transition = new Transition(State.S1, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L157">        transition = new Transition(State.S1, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L158">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L159">        transition = new Transition(State.S1, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L159">        transition = new Transition(State.S1, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L160">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L161">        transition = new Transition(State.S1, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L161">        transition = new Transition(State.S1, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L162">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L163">        transition = new Transition(State.S1, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L163">        transition = new Transition(State.S1, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L164">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L165">        transition = new Transition(State.S1, Category.ST_OPERAND);</span>
+<span class="fc" id="L165">        transition = new Transition(State.S1, Category.ST_OPERATOR);</span>
 <span class="fc" id="L166">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L167">        transition = new Transition(State.S1, Category.GT_OPERAND);</span>
+<span class="fc" id="L167">        transition = new Transition(State.S1, Category.GT_OPERATOR);</span>
 <span class="fc" id="L168">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L169">        transition = new Transition(State.S1, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L170">        transitionTable.put(transition, State.BAD);</span>
@@ -206,17 +206,17 @@ public class Lexer
 <span class="fc" id="L206">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L207">        transition = new Transition(State.S2, Category.UNDERSCORE);</span>
 <span class="fc" id="L208">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L209">        transition = new Transition(State.S2, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L209">        transition = new Transition(State.S2, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L210">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L211">        transition = new Transition(State.S2, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L211">        transition = new Transition(State.S2, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L212">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L213">        transition = new Transition(State.S2, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L213">        transition = new Transition(State.S2, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L214">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L215">        transition = new Transition(State.S2, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L215">        transition = new Transition(State.S2, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L216">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L217">        transition = new Transition(State.S2, Category.ST_OPERAND);</span>
+<span class="fc" id="L217">        transition = new Transition(State.S2, Category.ST_OPERATOR);</span>
 <span class="fc" id="L218">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L219">        transition = new Transition(State.S2, Category.GT_OPERAND);</span>
+<span class="fc" id="L219">        transition = new Transition(State.S2, Category.GT_OPERATOR);</span>
 <span class="fc" id="L220">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L221">        transition = new Transition(State.S2, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L222">        transitionTable.put(transition, State.BAD);</span>
@@ -258,17 +258,17 @@ public class Lexer
 <span class="fc" id="L258">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L259">        transition = new Transition(State.S3, Category.UNDERSCORE);</span>
 <span class="fc" id="L260">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L261">        transition = new Transition(State.S3, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L261">        transition = new Transition(State.S3, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L262">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L263">        transition = new Transition(State.S3, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L263">        transition = new Transition(State.S3, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L264">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L265">        transition = new Transition(State.S3, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L265">        transition = new Transition(State.S3, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L266">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L267">        transition = new Transition(State.S3, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L267">        transition = new Transition(State.S3, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L268">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L269">        transition = new Transition(State.S3, Category.ST_OPERAND);</span>
+<span class="fc" id="L269">        transition = new Transition(State.S3, Category.ST_OPERATOR);</span>
 <span class="fc" id="L270">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L271">        transition = new Transition(State.S3, Category.GT_OPERAND);</span>
+<span class="fc" id="L271">        transition = new Transition(State.S3, Category.GT_OPERATOR);</span>
 <span class="fc" id="L272">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L273">        transition = new Transition(State.S3, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L274">        transitionTable.put(transition, State.BAD);</span>
@@ -310,17 +310,17 @@ public class Lexer
 <span class="fc" id="L310">        transitionTable.put(transition, State.S4);</span>
 <span class="fc" id="L311">        transition = new Transition(State.S4, Category.UNDERSCORE);</span>
 <span class="fc" id="L312">        transitionTable.put(transition, State.S4);</span>
-<span class="fc" id="L313">        transition = new Transition(State.S4, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L313">        transition = new Transition(State.S4, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L314">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L315">        transition = new Transition(State.S4, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L315">        transition = new Transition(State.S4, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L316">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L317">        transition = new Transition(State.S4, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L317">        transition = new Transition(State.S4, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L318">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L319">        transition = new Transition(State.S4, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L319">        transition = new Transition(State.S4, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L320">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L321">        transition = new Transition(State.S4, Category.ST_OPERAND);</span>
+<span class="fc" id="L321">        transition = new Transition(State.S4, Category.ST_OPERATOR);</span>
 <span class="fc" id="L322">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L323">        transition = new Transition(State.S4, Category.GT_OPERAND);</span>
+<span class="fc" id="L323">        transition = new Transition(State.S4, Category.GT_OPERATOR);</span>
 <span class="fc" id="L324">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L325">        transition = new Transition(State.S4, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L326">        transitionTable.put(transition, State.BAD);</span>
@@ -362,17 +362,17 @@ public class Lexer
 <span class="fc" id="L362">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L363">        transition = new Transition(State.S5, Category.UNDERSCORE);</span>
 <span class="fc" id="L364">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L365">        transition = new Transition(State.S5, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L365">        transition = new Transition(State.S5, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L366">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L367">        transition = new Transition(State.S5, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L367">        transition = new Transition(State.S5, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L368">        transitionTable.put(transition, State.S25);</span>
-<span class="fc" id="L369">        transition = new Transition(State.S5, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L369">        transition = new Transition(State.S5, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L370">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L371">        transition = new Transition(State.S5, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L371">        transition = new Transition(State.S5, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L372">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L373">        transition = new Transition(State.S5, Category.ST_OPERAND);</span>
+<span class="fc" id="L373">        transition = new Transition(State.S5, Category.ST_OPERATOR);</span>
 <span class="fc" id="L374">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L375">        transition = new Transition(State.S5, Category.GT_OPERAND);</span>
+<span class="fc" id="L375">        transition = new Transition(State.S5, Category.GT_OPERATOR);</span>
 <span class="fc" id="L376">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L377">        transition = new Transition(State.S5, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L378">        transitionTable.put(transition, State.BAD);</span>
@@ -414,17 +414,17 @@ public class Lexer
 <span class="fc" id="L414">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L415">        transition = new Transition(State.S6, Category.UNDERSCORE);</span>
 <span class="fc" id="L416">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L417">        transition = new Transition(State.S6, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L417">        transition = new Transition(State.S6, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L418">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L419">        transition = new Transition(State.S6, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L419">        transition = new Transition(State.S6, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L420">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L421">        transition = new Transition(State.S6, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L421">        transition = new Transition(State.S6, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L422">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L423">        transition = new Transition(State.S6, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L423">        transition = new Transition(State.S6, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L424">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L425">        transition = new Transition(State.S6, Category.ST_OPERAND);</span>
+<span class="fc" id="L425">        transition = new Transition(State.S6, Category.ST_OPERATOR);</span>
 <span class="fc" id="L426">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L427">        transition = new Transition(State.S6, Category.GT_OPERAND);</span>
+<span class="fc" id="L427">        transition = new Transition(State.S6, Category.GT_OPERATOR);</span>
 <span class="fc" id="L428">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L429">        transition = new Transition(State.S6, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L430">        transitionTable.put(transition, State.BAD);</span>
@@ -466,17 +466,17 @@ public class Lexer
 <span class="fc" id="L466">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L467">        transition = new Transition(State.S7, Category.UNDERSCORE);</span>
 <span class="fc" id="L468">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L469">        transition = new Transition(State.S7, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L469">        transition = new Transition(State.S7, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L470">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L471">        transition = new Transition(State.S7, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L471">        transition = new Transition(State.S7, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L472">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L473">        transition = new Transition(State.S7, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L473">        transition = new Transition(State.S7, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L474">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L475">        transition = new Transition(State.S7, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L475">        transition = new Transition(State.S7, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L476">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L477">        transition = new Transition(State.S7, Category.ST_OPERAND);</span>
+<span class="fc" id="L477">        transition = new Transition(State.S7, Category.ST_OPERATOR);</span>
 <span class="fc" id="L478">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L479">        transition = new Transition(State.S7, Category.GT_OPERAND);</span>
+<span class="fc" id="L479">        transition = new Transition(State.S7, Category.GT_OPERATOR);</span>
 <span class="fc" id="L480">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L481">        transition = new Transition(State.S7, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L482">        transitionTable.put(transition, State.BAD);</span>
@@ -518,17 +518,17 @@ public class Lexer
 <span class="fc" id="L518">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L519">        transition = new Transition(State.S8, Category.UNDERSCORE);</span>
 <span class="fc" id="L520">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L521">        transition = new Transition(State.S8, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L521">        transition = new Transition(State.S8, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L522">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L523">        transition = new Transition(State.S8, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L523">        transition = new Transition(State.S8, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L524">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L525">        transition = new Transition(State.S8, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L525">        transition = new Transition(State.S8, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L526">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L527">        transition = new Transition(State.S8, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L527">        transition = new Transition(State.S8, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L528">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L529">        transition = new Transition(State.S8, Category.ST_OPERAND);</span>
+<span class="fc" id="L529">        transition = new Transition(State.S8, Category.ST_OPERATOR);</span>
 <span class="fc" id="L530">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L531">        transition = new Transition(State.S8, Category.GT_OPERAND);</span>
+<span class="fc" id="L531">        transition = new Transition(State.S8, Category.GT_OPERATOR);</span>
 <span class="fc" id="L532">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L533">        transition = new Transition(State.S8, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L534">        transitionTable.put(transition, State.BAD);</span>
@@ -570,17 +570,17 @@ public class Lexer
 <span class="fc" id="L570">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L571">        transition = new Transition(State.S9, Category.UNDERSCORE);</span>
 <span class="fc" id="L572">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L573">        transition = new Transition(State.S9, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L573">        transition = new Transition(State.S9, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L574">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L575">        transition = new Transition(State.S9, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L575">        transition = new Transition(State.S9, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L576">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L577">        transition = new Transition(State.S9, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L577">        transition = new Transition(State.S9, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L578">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L579">        transition = new Transition(State.S9, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L579">        transition = new Transition(State.S9, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L580">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L581">        transition = new Transition(State.S9, Category.ST_OPERAND);</span>
+<span class="fc" id="L581">        transition = new Transition(State.S9, Category.ST_OPERATOR);</span>
 <span class="fc" id="L582">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L583">        transition = new Transition(State.S9, Category.GT_OPERAND);</span>
+<span class="fc" id="L583">        transition = new Transition(State.S9, Category.GT_OPERATOR);</span>
 <span class="fc" id="L584">        transitionTable.put(transition, State.S11);</span>
 <span class="fc" id="L585">        transition = new Transition(State.S9, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L586">        transitionTable.put(transition, State.S12);</span>
@@ -622,17 +622,17 @@ public class Lexer
 <span class="fc" id="L622">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L623">        transition = new Transition(State.S10, Category.UNDERSCORE);</span>
 <span class="fc" id="L624">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L625">        transition = new Transition(State.S10, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L625">        transition = new Transition(State.S10, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L626">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L627">        transition = new Transition(State.S10, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L627">        transition = new Transition(State.S10, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L628">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L629">        transition = new Transition(State.S10, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L629">        transition = new Transition(State.S10, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L630">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L631">        transition = new Transition(State.S10, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L631">        transition = new Transition(State.S10, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L632">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L633">        transition = new Transition(State.S10, Category.ST_OPERAND);</span>
+<span class="fc" id="L633">        transition = new Transition(State.S10, Category.ST_OPERATOR);</span>
 <span class="fc" id="L634">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L635">        transition = new Transition(State.S10, Category.GT_OPERAND);</span>
+<span class="fc" id="L635">        transition = new Transition(State.S10, Category.GT_OPERATOR);</span>
 <span class="fc" id="L636">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L637">        transition = new Transition(State.S10, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L638">        transitionTable.put(transition, State.S13);</span>
@@ -674,17 +674,17 @@ public class Lexer
 <span class="fc" id="L674">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L675">        transition = new Transition(State.S11, Category.UNDERSCORE);</span>
 <span class="fc" id="L676">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L677">        transition = new Transition(State.S11, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L677">        transition = new Transition(State.S11, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L678">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L679">        transition = new Transition(State.S11, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L679">        transition = new Transition(State.S11, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L680">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L681">        transition = new Transition(State.S11, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L681">        transition = new Transition(State.S11, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L682">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L683">        transition = new Transition(State.S11, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L683">        transition = new Transition(State.S11, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L684">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L685">        transition = new Transition(State.S11, Category.ST_OPERAND);</span>
+<span class="fc" id="L685">        transition = new Transition(State.S11, Category.ST_OPERATOR);</span>
 <span class="fc" id="L686">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L687">        transition = new Transition(State.S11, Category.GT_OPERAND);</span>
+<span class="fc" id="L687">        transition = new Transition(State.S11, Category.GT_OPERATOR);</span>
 <span class="fc" id="L688">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L689">        transition = new Transition(State.S11, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L690">        transitionTable.put(transition, State.BAD);</span>
@@ -726,17 +726,17 @@ public class Lexer
 <span class="fc" id="L726">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L727">        transition = new Transition(State.S12, Category.UNDERSCORE);</span>
 <span class="fc" id="L728">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L729">        transition = new Transition(State.S12, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L729">        transition = new Transition(State.S12, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L730">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L731">        transition = new Transition(State.S12, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L731">        transition = new Transition(State.S12, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L732">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L733">        transition = new Transition(State.S12, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L733">        transition = new Transition(State.S12, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L734">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L735">        transition = new Transition(State.S12, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L735">        transition = new Transition(State.S12, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L736">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L737">        transition = new Transition(State.S12, Category.ST_OPERAND);</span>
+<span class="fc" id="L737">        transition = new Transition(State.S12, Category.ST_OPERATOR);</span>
 <span class="fc" id="L738">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L739">        transition = new Transition(State.S12, Category.GT_OPERAND);</span>
+<span class="fc" id="L739">        transition = new Transition(State.S12, Category.GT_OPERATOR);</span>
 <span class="fc" id="L740">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L741">        transition = new Transition(State.S12, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L742">        transitionTable.put(transition, State.BAD);</span>
@@ -779,17 +779,17 @@ public class Lexer
 <span class="fc" id="L779">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L780">        transition = new Transition(State.S13, Category.UNDERSCORE);</span>
 <span class="fc" id="L781">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L782">        transition = new Transition(State.S13, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L782">        transition = new Transition(State.S13, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L783">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L784">        transition = new Transition(State.S13, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L784">        transition = new Transition(State.S13, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L785">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L786">        transition = new Transition(State.S13, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L786">        transition = new Transition(State.S13, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L787">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L788">        transition = new Transition(State.S13, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L788">        transition = new Transition(State.S13, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L789">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L790">        transition = new Transition(State.S13, Category.ST_OPERAND);</span>
+<span class="fc" id="L790">        transition = new Transition(State.S13, Category.ST_OPERATOR);</span>
 <span class="fc" id="L791">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L792">        transition = new Transition(State.S13, Category.GT_OPERAND);</span>
+<span class="fc" id="L792">        transition = new Transition(State.S13, Category.GT_OPERATOR);</span>
 <span class="fc" id="L793">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L794">        transition = new Transition(State.S13, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L795">        transitionTable.put(transition, State.BAD);</span>
@@ -831,17 +831,17 @@ public class Lexer
 <span class="fc" id="L831">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L832">        transition = new Transition(State.S14, Category.UNDERSCORE);</span>
 <span class="fc" id="L833">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L834">        transition = new Transition(State.S14, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L834">        transition = new Transition(State.S14, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L835">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L836">        transition = new Transition(State.S14, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L836">        transition = new Transition(State.S14, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L837">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L838">        transition = new Transition(State.S14, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L838">        transition = new Transition(State.S14, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L839">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L840">        transition = new Transition(State.S14, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L840">        transition = new Transition(State.S14, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L841">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L842">        transition = new Transition(State.S14, Category.ST_OPERAND);</span>
+<span class="fc" id="L842">        transition = new Transition(State.S14, Category.ST_OPERATOR);</span>
 <span class="fc" id="L843">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L844">        transition = new Transition(State.S14, Category.GT_OPERAND);</span>
+<span class="fc" id="L844">        transition = new Transition(State.S14, Category.GT_OPERATOR);</span>
 <span class="fc" id="L845">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L846">        transition = new Transition(State.S14, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L847">        transitionTable.put(transition, State.S15);</span>
@@ -883,17 +883,17 @@ public class Lexer
 <span class="fc" id="L883">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L884">        transition = new Transition(State.S15, Category.UNDERSCORE);</span>
 <span class="fc" id="L885">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L886">        transition = new Transition(State.S15, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L886">        transition = new Transition(State.S15, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L887">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L888">        transition = new Transition(State.S15, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L888">        transition = new Transition(State.S15, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L889">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L890">        transition = new Transition(State.S15, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L890">        transition = new Transition(State.S15, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L891">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L892">        transition = new Transition(State.S15, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L892">        transition = new Transition(State.S15, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L893">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L894">        transition = new Transition(State.S15, Category.ST_OPERAND);</span>
+<span class="fc" id="L894">        transition = new Transition(State.S15, Category.ST_OPERATOR);</span>
 <span class="fc" id="L895">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L896">        transition = new Transition(State.S15, Category.GT_OPERAND);</span>
+<span class="fc" id="L896">        transition = new Transition(State.S15, Category.GT_OPERATOR);</span>
 <span class="fc" id="L897">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L898">        transition = new Transition(State.S15, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L899">        transitionTable.put(transition, State.BAD);</span>
@@ -935,17 +935,17 @@ public class Lexer
 <span class="fc" id="L935">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L936">        transition = new Transition(State.S16, Category.UNDERSCORE);</span>
 <span class="fc" id="L937">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L938">        transition = new Transition(State.S16, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L938">        transition = new Transition(State.S16, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L939">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L940">        transition = new Transition(State.S16, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L940">        transition = new Transition(State.S16, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L941">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L942">        transition = new Transition(State.S16, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L942">        transition = new Transition(State.S16, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L943">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L944">        transition = new Transition(State.S16, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L944">        transition = new Transition(State.S16, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L945">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L946">        transition = new Transition(State.S16, Category.ST_OPERAND);</span>
+<span class="fc" id="L946">        transition = new Transition(State.S16, Category.ST_OPERATOR);</span>
 <span class="fc" id="L947">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L948">        transition = new Transition(State.S16, Category.GT_OPERAND);</span>
+<span class="fc" id="L948">        transition = new Transition(State.S16, Category.GT_OPERATOR);</span>
 <span class="fc" id="L949">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L950">        transition = new Transition(State.S16, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L951">        transitionTable.put(transition, State.BAD);</span>
@@ -987,17 +987,17 @@ public class Lexer
 <span class="fc" id="L987">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L988">        transition = new Transition(State.S17, Category.UNDERSCORE);</span>
 <span class="fc" id="L989">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L990">        transition = new Transition(State.S17, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L990">        transition = new Transition(State.S17, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L991">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L992">        transition = new Transition(State.S17, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L992">        transition = new Transition(State.S17, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L993">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L994">        transition = new Transition(State.S17, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L994">        transition = new Transition(State.S17, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L995">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L996">        transition = new Transition(State.S17, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L996">        transition = new Transition(State.S17, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L997">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L998">        transition = new Transition(State.S17, Category.ST_OPERAND);</span>
+<span class="fc" id="L998">        transition = new Transition(State.S17, Category.ST_OPERATOR);</span>
 <span class="fc" id="L999">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1000">        transition = new Transition(State.S17, Category.GT_OPERAND);</span>
+<span class="fc" id="L1000">        transition = new Transition(State.S17, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1001">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1002">        transition = new Transition(State.S17, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1003">        transitionTable.put(transition, State.BAD);</span>
@@ -1039,17 +1039,17 @@ public class Lexer
 <span class="fc" id="L1039">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1040">        transition = new Transition(State.S18, Category.UNDERSCORE);</span>
 <span class="fc" id="L1041">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1042">        transition = new Transition(State.S18, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1042">        transition = new Transition(State.S18, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1043">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1044">        transition = new Transition(State.S18, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1044">        transition = new Transition(State.S18, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1045">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1046">        transition = new Transition(State.S18, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1046">        transition = new Transition(State.S18, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1047">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1048">        transition = new Transition(State.S18, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1048">        transition = new Transition(State.S18, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1049">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1050">        transition = new Transition(State.S18, Category.ST_OPERAND);</span>
+<span class="fc" id="L1050">        transition = new Transition(State.S18, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1051">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1052">        transition = new Transition(State.S18, Category.GT_OPERAND);</span>
+<span class="fc" id="L1052">        transition = new Transition(State.S18, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1053">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1054">        transition = new Transition(State.S18, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1055">        transitionTable.put(transition, State.BAD);</span>
@@ -1091,17 +1091,17 @@ public class Lexer
 <span class="fc" id="L1091">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1092">        transition = new Transition(State.S19, Category.UNDERSCORE);</span>
 <span class="fc" id="L1093">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1094">        transition = new Transition(State.S19, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1094">        transition = new Transition(State.S19, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1095">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1096">        transition = new Transition(State.S19, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1096">        transition = new Transition(State.S19, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1097">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1098">        transition = new Transition(State.S19, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1098">        transition = new Transition(State.S19, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1099">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1100">        transition = new Transition(State.S19, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1100">        transition = new Transition(State.S19, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1101">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1102">        transition = new Transition(State.S19, Category.ST_OPERAND);</span>
+<span class="fc" id="L1102">        transition = new Transition(State.S19, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1103">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1104">        transition = new Transition(State.S19, Category.GT_OPERAND);</span>
+<span class="fc" id="L1104">        transition = new Transition(State.S19, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1105">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1106">        transition = new Transition(State.S19, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1107">        transitionTable.put(transition, State.BAD);</span>
@@ -1143,17 +1143,17 @@ public class Lexer
 <span class="fc" id="L1143">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1144">        transition = new Transition(State.S20, Category.UNDERSCORE);</span>
 <span class="fc" id="L1145">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1146">        transition = new Transition(State.S20, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1146">        transition = new Transition(State.S20, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1147">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1148">        transition = new Transition(State.S20, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1148">        transition = new Transition(State.S20, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1149">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1150">        transition = new Transition(State.S20, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1150">        transition = new Transition(State.S20, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1151">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1152">        transition = new Transition(State.S20, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1152">        transition = new Transition(State.S20, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1153">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1154">        transition = new Transition(State.S20, Category.ST_OPERAND);</span>
+<span class="fc" id="L1154">        transition = new Transition(State.S20, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1155">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1156">        transition = new Transition(State.S20, Category.GT_OPERAND);</span>
+<span class="fc" id="L1156">        transition = new Transition(State.S20, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1157">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1158">        transition = new Transition(State.S20, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1159">        transitionTable.put(transition, State.BAD);</span>
@@ -1195,17 +1195,17 @@ public class Lexer
 <span class="fc" id="L1195">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1196">        transition = new Transition(State.S21, Category.UNDERSCORE);</span>
 <span class="fc" id="L1197">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1198">        transition = new Transition(State.S21, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1198">        transition = new Transition(State.S21, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1199">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1200">        transition = new Transition(State.S21, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1200">        transition = new Transition(State.S21, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1201">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1202">        transition = new Transition(State.S21, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1202">        transition = new Transition(State.S21, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1203">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1204">        transition = new Transition(State.S21, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1204">        transition = new Transition(State.S21, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1205">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1206">        transition = new Transition(State.S21, Category.ST_OPERAND);</span>
+<span class="fc" id="L1206">        transition = new Transition(State.S21, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1207">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1208">        transition = new Transition(State.S21, Category.GT_OPERAND);</span>
+<span class="fc" id="L1208">        transition = new Transition(State.S21, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1209">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1210">        transition = new Transition(State.S21, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1211">        transitionTable.put(transition, State.BAD);</span>
@@ -1247,17 +1247,17 @@ public class Lexer
 <span class="fc" id="L1247">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1248">        transition = new Transition(State.S22, Category.UNDERSCORE);</span>
 <span class="fc" id="L1249">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1250">        transition = new Transition(State.S22, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1250">        transition = new Transition(State.S22, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1251">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1252">        transition = new Transition(State.S22, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1252">        transition = new Transition(State.S22, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1253">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1254">        transition = new Transition(State.S22, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1254">        transition = new Transition(State.S22, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1255">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1256">        transition = new Transition(State.S22, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1256">        transition = new Transition(State.S22, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1257">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1258">        transition = new Transition(State.S22, Category.ST_OPERAND);</span>
+<span class="fc" id="L1258">        transition = new Transition(State.S22, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1259">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1260">        transition = new Transition(State.S22, Category.GT_OPERAND);</span>
+<span class="fc" id="L1260">        transition = new Transition(State.S22, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1261">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1262">        transition = new Transition(State.S22, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1263">        transitionTable.put(transition, State.BAD);</span>
@@ -1299,17 +1299,17 @@ public class Lexer
 <span class="fc" id="L1299">        transitionTable.put(transition, State.S23);</span>
 <span class="fc" id="L1300">        transition = new Transition(State.S23, Category.UNDERSCORE);</span>
 <span class="fc" id="L1301">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1302">        transition = new Transition(State.S23, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1302">        transition = new Transition(State.S23, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1303">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1304">        transition = new Transition(State.S23, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1304">        transition = new Transition(State.S23, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1305">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1306">        transition = new Transition(State.S23, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1306">        transition = new Transition(State.S23, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1307">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1308">        transition = new Transition(State.S23, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1308">        transition = new Transition(State.S23, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1309">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1310">        transition = new Transition(State.S23, Category.ST_OPERAND);</span>
+<span class="fc" id="L1310">        transition = new Transition(State.S23, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1311">        transitionTable.put(transition, State.S23);</span>
-<span class="fc" id="L1312">        transition = new Transition(State.S23, Category.GT_OPERAND);</span>
+<span class="fc" id="L1312">        transition = new Transition(State.S23, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1313">        transitionTable.put(transition, State.S23);</span>
 <span class="fc" id="L1314">        transition = new Transition(State.S23, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1315">        transitionTable.put(transition, State.S23);</span>
@@ -1351,17 +1351,17 @@ public class Lexer
 <span class="fc" id="L1351">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1352">        transition = new Transition(State.S24, Category.UNDERSCORE);</span>
 <span class="fc" id="L1353">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1354">        transition = new Transition(State.S24, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1354">        transition = new Transition(State.S24, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1355">        transitionTable.put(transition, State.S26);</span>
-<span class="fc" id="L1356">        transition = new Transition(State.S24, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1356">        transition = new Transition(State.S24, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1357">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1358">        transition = new Transition(State.S24, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1358">        transition = new Transition(State.S24, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1359">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1360">        transition = new Transition(State.S24, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1360">        transition = new Transition(State.S24, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1361">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1362">        transition = new Transition(State.S24, Category.ST_OPERAND);</span>
+<span class="fc" id="L1362">        transition = new Transition(State.S24, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1363">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1364">        transition = new Transition(State.S24, Category.GT_OPERAND);</span>
+<span class="fc" id="L1364">        transition = new Transition(State.S24, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1365">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1366">        transition = new Transition(State.S24, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1367">        transitionTable.put(transition, State.S24);</span>
@@ -1403,17 +1403,17 @@ public class Lexer
 <span class="fc" id="L1403">        transitionTable.put(transition, State.S4);</span>
 <span class="fc" id="L1404">        transition = new Transition(State.S25, Category.UNDERSCORE);</span>
 <span class="fc" id="L1405">        transitionTable.put(transition, State.S4);</span>
-<span class="fc" id="L1406">        transition = new Transition(State.S25, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1406">        transition = new Transition(State.S25, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1407">        transitionTable.put(transition, State.S5);</span>
-<span class="fc" id="L1408">        transition = new Transition(State.S25, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1408">        transition = new Transition(State.S25, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1409">        transitionTable.put(transition, State.S6);</span>
-<span class="fc" id="L1410">        transition = new Transition(State.S25, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1410">        transition = new Transition(State.S25, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1411">        transitionTable.put(transition, State.S7);</span>
-<span class="fc" id="L1412">        transition = new Transition(State.S25, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1412">        transition = new Transition(State.S25, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1413">        transitionTable.put(transition, State.S8);</span>
-<span class="fc" id="L1414">        transition = new Transition(State.S25, Category.ST_OPERAND);</span>
+<span class="fc" id="L1414">        transition = new Transition(State.S25, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1415">        transitionTable.put(transition, State.S9);</span>
-<span class="fc" id="L1416">        transition = new Transition(State.S25, Category.GT_OPERAND);</span>
+<span class="fc" id="L1416">        transition = new Transition(State.S25, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1417">        transitionTable.put(transition, State.S10);</span>
 <span class="fc" id="L1418">        transition = new Transition(State.S25, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1419">        transitionTable.put(transition, State.S14);</span>
@@ -1455,17 +1455,17 @@ public class Lexer
 <span class="fc" id="L1455">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1456">        transition = new Transition(State.S26, Category.UNDERSCORE);</span>
 <span class="fc" id="L1457">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1458">        transition = new Transition(State.S26, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1458">        transition = new Transition(State.S26, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1459">        transitionTable.put(transition, State.S26);</span>
-<span class="fc" id="L1460">        transition = new Transition(State.S26, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1460">        transition = new Transition(State.S26, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1461">        transitionTable.put(transition, State.S25);</span>
-<span class="fc" id="L1462">        transition = new Transition(State.S26, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1462">        transition = new Transition(State.S26, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1463">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1464">        transition = new Transition(State.S26, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1464">        transition = new Transition(State.S26, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1465">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1466">        transition = new Transition(State.S26, Category.ST_OPERAND);</span>
+<span class="fc" id="L1466">        transition = new Transition(State.S26, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1467">        transitionTable.put(transition, State.S24);</span>
-<span class="fc" id="L1468">        transition = new Transition(State.S26, Category.GT_OPERAND);</span>
+<span class="fc" id="L1468">        transition = new Transition(State.S26, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1469">        transitionTable.put(transition, State.S24);</span>
 <span class="fc" id="L1470">        transition = new Transition(State.S26, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1471">        transitionTable.put(transition, State.S24);</span>
@@ -1507,17 +1507,17 @@ public class Lexer
 <span class="fc" id="L1507">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1508">        transition = new Transition(State.S27, Category.UNDERSCORE);</span>
 <span class="fc" id="L1509">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1510">        transition = new Transition(State.S27, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1510">        transition = new Transition(State.S27, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1511">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1512">        transition = new Transition(State.S27, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1512">        transition = new Transition(State.S27, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1513">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1514">        transition = new Transition(State.S27, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1514">        transition = new Transition(State.S27, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1515">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1516">        transition = new Transition(State.S27, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1516">        transition = new Transition(State.S27, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1517">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1518">        transition = new Transition(State.S27, Category.ST_OPERAND);</span>
+<span class="fc" id="L1518">        transition = new Transition(State.S27, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1519">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1520">        transition = new Transition(State.S27, Category.GT_OPERAND);</span>
+<span class="fc" id="L1520">        transition = new Transition(State.S27, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1521">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1522">        transition = new Transition(State.S27, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1523">        transitionTable.put(transition, State.BAD);</span>
@@ -1559,17 +1559,17 @@ public class Lexer
 <span class="fc" id="L1559">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1560">        transition = new Transition(State.S28, Category.UNDERSCORE);</span>
 <span class="fc" id="L1561">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1562">        transition = new Transition(State.S28, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1562">        transition = new Transition(State.S28, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1563">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1564">        transition = new Transition(State.S28, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1564">        transition = new Transition(State.S28, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1565">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1566">        transition = new Transition(State.S28, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1566">        transition = new Transition(State.S28, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1567">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1568">        transition = new Transition(State.S28, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1568">        transition = new Transition(State.S28, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1569">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1570">        transition = new Transition(State.S28, Category.ST_OPERAND);</span>
+<span class="fc" id="L1570">        transition = new Transition(State.S28, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1571">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1572">        transition = new Transition(State.S28, Category.GT_OPERAND);</span>
+<span class="fc" id="L1572">        transition = new Transition(State.S28, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1573">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1574">        transition = new Transition(State.S28, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1575">        transitionTable.put(transition, State.BAD);</span>
@@ -1611,17 +1611,17 @@ public class Lexer
 <span class="fc" id="L1611">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1612">        transition = new Transition(State.S29, Category.UNDERSCORE);</span>
 <span class="fc" id="L1613">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1614">        transition = new Transition(State.S29, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1614">        transition = new Transition(State.S29, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1615">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1616">        transition = new Transition(State.S29, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1616">        transition = new Transition(State.S29, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1617">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1618">        transition = new Transition(State.S29, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1618">        transition = new Transition(State.S29, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1619">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1620">        transition = new Transition(State.S29, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1620">        transition = new Transition(State.S29, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1621">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1622">        transition = new Transition(State.S29, Category.ST_OPERAND);</span>
+<span class="fc" id="L1622">        transition = new Transition(State.S29, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1623">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1624">        transition = new Transition(State.S29, Category.GT_OPERAND);</span>
+<span class="fc" id="L1624">        transition = new Transition(State.S29, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1625">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1626">        transition = new Transition(State.S29, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1627">        transitionTable.put(transition, State.BAD);</span>
@@ -1663,17 +1663,17 @@ public class Lexer
 <span class="fc" id="L1663">        transitionTable.put(transition, State.S31);</span>
 <span class="fc" id="L1664">        transition = new Transition(State.S30, Category.UNDERSCORE);</span>
 <span class="fc" id="L1665">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1666">        transition = new Transition(State.S30, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1666">        transition = new Transition(State.S30, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1667">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1668">        transition = new Transition(State.S30, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1668">        transition = new Transition(State.S30, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1669">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1670">        transition = new Transition(State.S30, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1670">        transition = new Transition(State.S30, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1671">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1672">        transition = new Transition(State.S30, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1672">        transition = new Transition(State.S30, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1673">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1674">        transition = new Transition(State.S30, Category.ST_OPERAND);</span>
+<span class="fc" id="L1674">        transition = new Transition(State.S30, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1675">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1676">        transition = new Transition(State.S30, Category.GT_OPERAND);</span>
+<span class="fc" id="L1676">        transition = new Transition(State.S30, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1677">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1678">        transition = new Transition(State.S30, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1679">        transitionTable.put(transition, State.BAD);</span>
@@ -1715,17 +1715,17 @@ public class Lexer
 <span class="fc" id="L1715">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1716">        transition = new Transition(State.S31, Category.UNDERSCORE);</span>
 <span class="fc" id="L1717">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1718">        transition = new Transition(State.S31, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1718">        transition = new Transition(State.S31, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1719">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1720">        transition = new Transition(State.S31, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1720">        transition = new Transition(State.S31, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1721">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1722">        transition = new Transition(State.S31, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1722">        transition = new Transition(State.S31, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1723">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1724">        transition = new Transition(State.S31, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1724">        transition = new Transition(State.S31, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1725">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1726">        transition = new Transition(State.S31, Category.ST_OPERAND);</span>
+<span class="fc" id="L1726">        transition = new Transition(State.S31, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1727">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1728">        transition = new Transition(State.S31, Category.GT_OPERAND);</span>
+<span class="fc" id="L1728">        transition = new Transition(State.S31, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1729">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1730">        transition = new Transition(State.S31, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1731">        transitionTable.put(transition, State.BAD);</span>
@@ -1767,17 +1767,17 @@ public class Lexer
 <span class="fc" id="L1767">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1768">        transition = new Transition(State.S32, Category.UNDERSCORE);</span>
 <span class="fc" id="L1769">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1770">        transition = new Transition(State.S32, Category.MULTIPLY_OPERAND);</span>
+<span class="fc" id="L1770">        transition = new Transition(State.S32, Category.MULTIPLY_OPERATOR);</span>
 <span class="fc" id="L1771">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1772">        transition = new Transition(State.S32, Category.DIVIDE_OPERAND);</span>
+<span class="fc" id="L1772">        transition = new Transition(State.S32, Category.DIVIDE_OPERATOR);</span>
 <span class="fc" id="L1773">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1774">        transition = new Transition(State.S32, Category.ADDITION_OPERAND);</span>
+<span class="fc" id="L1774">        transition = new Transition(State.S32, Category.ADDITION_OPERATOR);</span>
 <span class="fc" id="L1775">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1776">        transition = new Transition(State.S32, Category.SUBTRACT_OPERAND);</span>
+<span class="fc" id="L1776">        transition = new Transition(State.S32, Category.SUBTRACT_OPERATOR);</span>
 <span class="fc" id="L1777">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1778">        transition = new Transition(State.S32, Category.ST_OPERAND);</span>
+<span class="fc" id="L1778">        transition = new Transition(State.S32, Category.ST_OPERATOR);</span>
 <span class="fc" id="L1779">        transitionTable.put(transition, State.BAD);</span>
-<span class="fc" id="L1780">        transition = new Transition(State.S32, Category.GT_OPERAND);</span>
+<span class="fc" id="L1780">        transition = new Transition(State.S32, Category.GT_OPERATOR);</span>
 <span class="fc" id="L1781">        transitionTable.put(transition, State.BAD);</span>
 <span class="fc" id="L1782">        transition = new Transition(State.S32, Category.EQUAL_SIGN);</span>
 <span class="fc" id="L1783">        transitionTable.put(transition, State.BAD);</span>
@@ -1821,17 +1821,17 @@ public class Lexer
 <span class="fc" id="L1821">        acceptableStates.put(State.S1, TypeToken.INTEGER_LITERAL);</span>
 <span class="fc" id="L1822">        acceptableStates.put(State.S3, TypeToken.FLOAT_LITERAL);</span>
 <span class="fc" id="L1823">        acceptableStates.put(State.S4, TypeToken.IDENTIFIER);</span>
-<span class="fc" id="L1824">        acceptableStates.put(State.S5, TypeToken.MULTIPLICATIVE_OP); //MULTIPLY_OPERAND</span>
-<span class="fc" id="L1825">        acceptableStates.put(State.S6, TypeToken.MULTIPLICATIVE_OP); //DIVIDE_OPERAND</span>
-<span class="fc" id="L1826">        acceptableStates.put(State.S7, TypeToken.ADDITIVE_OP); //ADDITION_OPERAND</span>
-<span class="fc" id="L1827">        acceptableStates.put(State.S8, TypeToken.ADDITIVE_OP); //SUBTRACT_OPERAND</span>
-<span class="fc" id="L1828">        acceptableStates.put(State.S9, TypeToken.RELATIONAL_OP); //ST_OPERAND</span>
-<span class="fc" id="L1829">        acceptableStates.put(State.S10, TypeToken.RELATIONAL_OP); //GT_OPERAND</span>
+<span class="fc" id="L1824">        acceptableStates.put(State.S5, TypeToken.MULTIPLICATIVE_OP); //MULTIPLY_OPERATOR</span>
+<span class="fc" id="L1825">        acceptableStates.put(State.S6, TypeToken.MULTIPLICATIVE_OP); //DIVIDE_OPERATOR</span>
+<span class="fc" id="L1826">        acceptableStates.put(State.S7, TypeToken.ADDITIVE_OP); //ADDITION_OPERATOR</span>
+<span class="fc" id="L1827">        acceptableStates.put(State.S8, TypeToken.ADDITIVE_OP); //SUBTRACT_OPERATOR</span>
+<span class="fc" id="L1828">        acceptableStates.put(State.S9, TypeToken.RELATIONAL_OP); //ST_OPERATOR</span>
+<span class="fc" id="L1829">        acceptableStates.put(State.S10, TypeToken.RELATIONAL_OP); //GT_OPERATOR</span>
 <span class="fc" id="L1830">        acceptableStates.put(State.S11, TypeToken.RELATIONAL_OP); //NOTEQUAL_OPEAND</span>
-<span class="fc" id="L1831">        acceptableStates.put(State.S12, TypeToken.RELATIONAL_OP); //STE_OPERAND</span>
-<span class="fc" id="L1832">        acceptableStates.put(State.S13, TypeToken.RELATIONAL_OP); //GTE_OPERAND</span>
+<span class="fc" id="L1831">        acceptableStates.put(State.S12, TypeToken.RELATIONAL_OP); //STE_OPERATOR</span>
+<span class="fc" id="L1832">        acceptableStates.put(State.S13, TypeToken.RELATIONAL_OP); //GTE_OPERATOR</span>
 <span class="fc" id="L1833">        acceptableStates.put(State.S14, TypeToken.EQUAL_SIGN);</span>
-<span class="fc" id="L1834">        acceptableStates.put(State.S15, TypeToken.RELATIONAL_OP); //EQUAL_OPERAND</span>
+<span class="fc" id="L1834">        acceptableStates.put(State.S15, TypeToken.RELATIONAL_OP); //EQUAL_OPERATOR</span>
 <span class="fc" id="L1835">        acceptableStates.put(State.S16, TypeToken.BRACKET_OPEN);</span>
 <span class="fc" id="L1836">        acceptableStates.put(State.S17, TypeToken.BRACKET_CLOSE);</span>
 <span class="fc" id="L1837">        acceptableStates.put(State.S18, TypeToken.CURLY_OPEN);</span>
@@ -1901,13 +1901,13 @@ public class Lexer
 <span class="fc bfc" id="L1901" title="All 23 branches covered.">        switch(character)</span>
         {
 <span class="fc" id="L1903">            case '.' : return Category.DOT;</span>
-<span class="fc" id="L1904">            case '*' : return Category.MULTIPLY_OPERAND;</span>
-<span class="fc" id="L1905">            case '/' : return Category.DIVIDE_OPERAND;</span>
-<span class="fc" id="L1906">            case '-' : return Category.SUBTRACT_OPERAND;</span>
-<span class="fc" id="L1907">            case '+' : return Category.ADDITION_OPERAND;</span>
+<span class="fc" id="L1904">            case '*' : return Category.MULTIPLY_OPERATOR;</span>
+<span class="fc" id="L1905">            case '/' : return Category.DIVIDE_OPERATOR;</span>
+<span class="fc" id="L1906">            case '-' : return Category.SUBTRACT_OPERATOR;</span>
+<span class="fc" id="L1907">            case '+' : return Category.ADDITION_OPERATOR;</span>
 <span class="fc" id="L1908">            case '=' : return Category.EQUAL_SIGN;</span>
-<span class="fc" id="L1909">            case '&gt;' : return Category.GT_OPERAND;</span>
-<span class="fc" id="L1910">            case '&lt;' : return Category.ST_OPERAND;</span>
+<span class="fc" id="L1909">            case '&gt;' : return Category.GT_OPERATOR;</span>
+<span class="fc" id="L1910">            case '&lt;' : return Category.ST_OPERATOR;</span>
 <span class="fc" id="L1911">            case '(' : return Category.BRACKET_OPEN;</span>
 <span class="fc" id="L1912">            case ')' : return Category.BRACKET_CLOSE;</span>
 <span class="fc" id="L1913">            case '{' : return Category.CURLY_OPEN;</span>

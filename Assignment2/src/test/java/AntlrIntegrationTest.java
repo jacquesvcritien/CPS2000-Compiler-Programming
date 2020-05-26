@@ -472,7 +472,7 @@ public class AntlrIntegrationTest {
      * @throws AlreadyDeclaredException
      */
     @Test(expected = IncorrectTypeException.class)
-    public void testExpressionBadOperandsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+    public void testExpressionBadOperatorsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test16.txt");
 
         semanticAnalysis.analyse(node);
@@ -489,7 +489,7 @@ public class AntlrIntegrationTest {
      * @throws AlreadyDeclaredException
      */
     @Test(expected = IncorrectTypeException.class)
-    public void testExpressionBadOperandsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+    public void testExpressionBadOperatorsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
         ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test17.txt");
 
         semanticAnalysis.analyse(node);

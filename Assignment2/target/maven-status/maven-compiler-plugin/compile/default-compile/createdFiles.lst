@@ -3,6 +3,7 @@ visitor\Visitor.class
 antlrSrc\SmallLangParser$AdditiveOpContext.class
 parser\node\ASTNode.class
 lexer\Lexer.class
+lexer\Operator.class
 antlrSrc\SmallLangLexer.class
 antlrSrc\SmallLangBaseListener.class
 parser\node\statement\declaration\ASTArrayDecl.class
@@ -86,5 +87,4 @@ lexer\State.class
 antlrSrc\SmallLangParser$AssignmentContext.class
 antlrSrc\SmallLangParser$IfStatementContext.class
 parser\node\statement\ASTIf.class
-lexer\Operand.class
 parser\node\expression\ASTFloatLiteral.class

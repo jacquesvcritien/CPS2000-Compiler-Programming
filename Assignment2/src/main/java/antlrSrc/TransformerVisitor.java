@@ -175,7 +175,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public String visitMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx) {
-        //return operand
+        //return operator
         return ctx.children.get(0).toString();
     }
     /**
@@ -185,7 +185,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public String visitAdditiveOp(SmallLangParser.AdditiveOpContext ctx) {
-        //return operand
+        //return operator
         return ctx.children.get(0).toString();
     }
     /**
@@ -195,7 +195,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
      * {@link #visitChildren} on {@code ctx}.</p>
      */
     @Override public String visitRelationalOp(SmallLangParser.RelationalOpContext ctx) {
-        //return operand
+        //return operator
         return ctx.children.get(0).toString();
     }
 
@@ -216,14 +216,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
         //loop through all children
         for(int i = 1; i < trees.size(); i++)
         {
-            //get the operand
-            String operand = visitMultiplicativeOp((SmallLangParser.MultiplicativeOpContext) trees.get(i));
+            //get the operator
+            String operator = visitMultiplicativeOp((SmallLangParser.MultiplicativeOpContext) trees.get(i));
             //increment counter
             i++;
             //get right expression
             ASTExpression right = visitFactor((SmallLangParser.FactorContext) trees.get(i));
             //set current node as recursive
-            node = new ASTBinExpression(node, operand, right);
+            node = new ASTBinExpression(node, operator, right);
         }
 
         return node;
@@ -246,14 +246,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
         //loop through all children
         for(int i = 1; i < trees.size(); i++)
         {
-            //get the operand
-            String operand = visitAdditiveOp((SmallLangParser.AdditiveOpContext) trees.get(i));
+            //get the operator
+            String operator = visitAdditiveOp((SmallLangParser.AdditiveOpContext) trees.get(i));
             //increment counter
             i++;
             //get right expression
             ASTExpression right = visitTerm((SmallLangParser.TermContext) trees.get(i));
             //set current node as recursive
-            node = new ASTBinExpression(node, operand, right);
+            node = new ASTBinExpression(node, operator, right);
         }
 
         return node;
@@ -275,14 +275,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor<Object> {
         //loop through all children
         for(int i = 1; i < trees.size(); i++)
         {
-            //get the operand
-            String operand = visitRelationalOp((SmallLangParser.RelationalOpContext) trees.get(i));
+            //get the operator
+            String operator = visitRelationalOp((SmallLangParser.RelationalOpContext) trees.get(i));
             //increment counter
             i++;
             //get right expression
             ASTExpression right = visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(i));
             //set current node as recursive
-            node = new ASTBinExpression(node, operand, right);
+            node = new ASTBinExpression(node, operator, right);
         }
 
         return node;

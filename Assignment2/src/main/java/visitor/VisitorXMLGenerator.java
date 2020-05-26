@@ -80,7 +80,7 @@ public class VisitorXMLGenerator implements Visitor {
         //increment indent
         indent++;
         //get operand
-        String operand = expression.getOperand();
+        String operand = expression.getOperator();
         //get left
         ASTExpression left = expression.getLeft();
         //get right

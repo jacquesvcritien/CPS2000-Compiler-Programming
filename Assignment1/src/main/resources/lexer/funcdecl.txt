@@ -1,4 +1,4 @@
-ff plus(x :int, y:int)
+ff plus(x :int, y:int): int
 {
     return x+y;
 }

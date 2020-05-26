@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="14" failures="0" name="XMLIntegrationTest" time="0.031" errors="0" skipped="0">
+<testsuite tests="14" failures="0" name="XMLIntegrationTest" time="0.036" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\bin"/>
@@ -64,18 +64,18 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="XMLIntegrationTest" name="testFunctionCall" time="0"/>
-  <testcase classname="XMLIntegrationTest" name="testJustForCoverage" time="0"/>
-  <testcase classname="XMLIntegrationTest" name="testFunctionDeclFormalParamsReturn" time="0"/>
-  <testcase classname="XMLIntegrationTest" name="testForLoopNoDeclarationNoAssignment" time="0.002"/>
-  <testcase classname="XMLIntegrationTest" name="testUnary" time="0.005"/>
-  <testcase classname="XMLIntegrationTest" name="testAssignment" time="0.008"/>
-  <testcase classname="XMLIntegrationTest" name="testForLoop" time="0.002"/>
+  <testcase classname="XMLIntegrationTest" name="testFunctionDeclFormalParamsReturn" time="0.003"/>
+  <testcase classname="XMLIntegrationTest" name="testForLoopNoDeclarationNoAssignment" time="0.001"/>
+  <testcase classname="XMLIntegrationTest" name="testFunctionCall" time="0.001"/>
+  <testcase classname="XMLIntegrationTest" name="testPrint" time="0.002"/>
+  <testcase classname="XMLIntegrationTest" name="testForLoop" time="0.003"/>
   <testcase classname="XMLIntegrationTest" name="testIFStatement" time="0.002"/>
+  <testcase classname="XMLIntegrationTest" name="testUnary" time="0.004"/>
   <testcase classname="XMLIntegrationTest" name="testDeclVariable" time="0.002"/>
-  <testcase classname="XMLIntegrationTest" name="testWhile" time="0.002"/>
-  <testcase classname="XMLIntegrationTest" name="testEmptyBlock" time="0.002"/>
-  <testcase classname="XMLIntegrationTest" name="testPrint" time="0.004"/>
-  <testcase classname="XMLIntegrationTest" name="testFunctionDeclNoParams" time="0.001"/>
-  <testcase classname="XMLIntegrationTest" name="testFunctionCallNoParams" time="0.001"/>
+  <testcase classname="XMLIntegrationTest" name="testAssignment" time="0.003"/>
+  <testcase classname="XMLIntegrationTest" name="testEmptyBlock" time="0.007"/>
+  <testcase classname="XMLIntegrationTest" name="testWhile" time="0.003"/>
+  <testcase classname="XMLIntegrationTest" name="testFunctionDeclNoParams" time="0.003"/>
+  <testcase classname="XMLIntegrationTest" name="testFunctionCallNoParams" time="0.002"/>
+  <testcase classname="XMLIntegrationTest" name="testJustForCoverage" time="0"/>
 </testsuite>

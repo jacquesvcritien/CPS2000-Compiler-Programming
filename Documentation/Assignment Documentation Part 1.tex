@@ -132,13 +132,13 @@
 						\item LETTER
 						\item DIGIT
 						\item DOT
-			    			\item MULTIPLY\_OPERAND
-			    			\item DIVIDE\_OPERAND
-			    			\item ADDITION\_OPERAND
-			    			\item SUBTRACT\_OPERAND
+			    			\item MULTIPLY\_OPERATOR
+			    			\item DIVIDE\_OPERATOR
+			    			\item ADDITION\_OPERATOR
+			    			\item SUBTRACT\_OPERATOR
 						\item EQUAL\_SIGN
-			    			\item GT\_OPERAND  
-						\item ST\_OPERAND
+			    			\item GT\_OPERATOR  
+						\item ST\_OPERATOR
 			    			\item BRACKET\_OPEN  
 						\item BRACKET\_CLOSE
 			    			\item CURLY\_OPEN
@@ -175,9 +175,9 @@
 					
 					This is a class which extends the Token class and in which all the keywords in the SmallLang syntax are declared. This contains \textbf{INT, FLOAT, BOOL, AUTO, IF, ELSE, FOR, WHILE, LET, RETURN, FF, PRINT, FALSE, TRUE, NOT}.	
 				
-					\subsubsection{Operand.java}
+					\subsubsection{Operator.java}
 					
-					This is a class which extends the Token class and in which all the operands in the SmallLang syntax are declared. This contains: 
+					This is a class which extends the Token class and in which all the operators in the SmallLang syntax are declared. This contains: 
 					
 					
 					\begin{itemize}
@@ -200,7 +200,7 @@
 					This class contains the methods needed from the parser to obtain the next token. Firstly, this class contains these global variables which are used throughout the class:
 					
 					\begin{itemize}
-						\item \textbf{keywords}: This is of type hashmap where the key is a string and the value is an object of type Token. This holds all the keywords and operands defined in the aforementioned name classes, Keyword and Operand.
+						\item \textbf{keywords}: This is of type hashmap where the key is a string and the value is an object of type Token. This holds all the keywords and operators defined in the aforementioned name classes, Keyword and Operator.
 						\item \textbf{stack}: This is a stack to hold states as the tokenization is happening.
 						\item \textbf{acceptableStates}: This is of type hashmap where the key is a State and the value is an object of type TypeToken. This holds the acceptable states and their related tokentypes for example, S1 $\rightarrow$ INTEGER\_LITERAL.
 						\item \textbf{currentLine}: This is of type int and is used to hold the current line in which the lexer has arrived in order to make it easier when reporting back to the user in case of errors.
@@ -335,7 +335,7 @@
 					
 					\begin{enumerate}
 					\item \textbf{left}: Its type is ASTExpression and it is used to hold the leftmost expression
-					\item \textbf{operand}: Its of type String and it is used to hold the operator.
+					\item \textbf{operator}: Its of type String and it is used to hold the operator.
 					\item \textbf{right}: Its type is ASTExpression and it is used to hold the rightmost expression
 					\end{enumerate}
 				
@@ -603,11 +603,11 @@
 			
 				\end{itemize}
 				
-				\item \textbf{term()}: This function is used to parse a term. According to the micro-syntax, a term takes the form of \textless FACTOR\textgreater {\textless MULTIPLICATIVE OP (*, \, and)\textgreater} \textless FACTOR\textgreater. Therefore, this function calls \textbf{factor()} and stores it. Then there is a while loop which goes on as long as the current token is of type MULTIPLICATIVE\_OP. In this loop the MULTIPLICATIVE\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{factor()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operand taken from the MULTIPLICATE\_OP token and the rightmost expression obtained. Finally the expression node is returned.
+				\item \textbf{term()}: This function is used to parse a term. According to the micro-syntax, a term takes the form of \textless FACTOR\textgreater {\textless MULTIPLICATIVE OP (*, \, and)\textgreater} \textless FACTOR\textgreater. Therefore, this function calls \textbf{factor()} and stores it. Then there is a while loop which goes on as long as the current token is of type MULTIPLICATIVE\_OP. In this loop the MULTIPLICATIVE\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{factor()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operator taken from the MULTIPLICATE\_OP token and the rightmost expression obtained. Finally the expression node is returned.
 				
-					\item \textbf{simpleExpression()}: This function is used to parse a simple expression. According to the micro-syntax, a term takes the form of \textless TERM\textgreater {\textless ADDITIVEOP( +, -, 'or')\textgreater} \textless TERM\textgreater. Therefore, this function calls \textbf{term()} and stores it. Then there is a while loop which goes on as long as the current token is of type ADDITIVE\_OP. In this loop the ADDITIVE\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{term()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operand taken from the ADDITIVE\_OP token and the rightmost expression obtained. Finally the expression node is returned.
+					\item \textbf{simpleExpression()}: This function is used to parse a simple expression. According to the micro-syntax, a term takes the form of \textless TERM\textgreater {\textless ADDITIVEOP( +, -, 'or')\textgreater} \textless TERM\textgreater. Therefore, this function calls \textbf{term()} and stores it. Then there is a while loop which goes on as long as the current token is of type ADDITIVE\_OP. In this loop the ADDITIVE\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{term()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operator taken from the ADDITIVE\_OP token and the rightmost expression obtained. Finally the expression node is returned.
 			
-						\item \textbf{expression()}: This function is used to parse a simple expression. According to the micro-syntax, a term takes the form of \textless SIMPLEEXPR\textgreater {\textless RELATIONALOP(<, >, ==, <>, <=, >=)\textgreater} \textless SIMPLEEXPR\textgreater. Therefore, this function calls \textbf{simpleExpression()} and stores it. Then there is a while loop which goes on as long as the current token is of type RELATIONAL\_OP. In this loop the RELATIONAL\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{simpleExpression()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operand taken from the RELATIONAL\_OP token and the rightmost expression obtained. Finally the expression node is returned.
+						\item \textbf{expression()}: This function is used to parse a simple expression. According to the micro-syntax, a term takes the form of \textless SIMPLEEXPR\textgreater {\textless RELATIONALOP(<, >, ==, <>, <=, >=)\textgreater} \textless SIMPLEEXPR\textgreater. Therefore, this function calls \textbf{simpleExpression()} and stores it. Then there is a while loop which goes on as long as the current token is of type RELATIONAL\_OP. In this loop the RELATIONAL\_OP token is absorbed and the rightmost expression is obtained by calling \textbf{simpleExpression()}. The node initialised in the beginning is set to a new ASTBinExpression with the first expression as the current node, the operator taken from the RELATIONAL\_OP token and the rightmost expression obtained. Finally the expression node is returned.
 			
 				\item \textbf{assignment()}: This function is used to parse an assignment. According to the micro-syntax, a term takes the form of \textless IDENTIFIER\textgreater `=` \textless EXPRESSION\textgreater. This function starts by checking if the current token is an identifier, because in the case of a for loop without an assignment, an empty ASTAssignment node has to be returned. Otherwise, the identifier is obtained by calling \textbf{identifier()}, the EQUAL\_SIGN token is absorbed and the expression is obtained by calling \textbf{expression()}. Finally, a new ASTAssignment object is returned with the identifier and expression obtained.
 							
@@ -821,7 +821,7 @@ print Pow;
 				
 					\item \textbf{visit(ASTAssignment)}: This method starts by getting the indentation as a string. Then, after incrementing indent, we get the identifier and expression of the ASTAssignment node. If the assignment is null, the assignment as an empty tag is printed. Otherwise, the opening tag of assignment is printed, \textbf{accept()} is called for the identifier and the expression and the closing tag of the assignment representation is printed before decrementing the indent once again.
 			
-					\item \textbf{visit(ASTBinExpression)}: This method starts by getting the indentation as a string. Then, after incrementing indent, we get the operand, left and right expression of the ASTBinExpression node.  The opening tag of expression is printed with the operand, \textbf{accept()} is called for the left and right expressions and the closing tag of the assignment representation is printed before decrementing the indent once again.		
+					\item \textbf{visit(ASTBinExpression)}: This method starts by getting the indentation as a string. Then, after incrementing indent, we get the operator, left and right expression of the ASTBinExpression node.  The opening tag of expression is printed with the operator, \textbf{accept()} is called for the left and right expressions and the closing tag of the assignment representation is printed before decrementing the indent once again.		
 			
 					\item \textbf{visit(ASTBlock)}: This method starts by getting the indentation as a string. Then, after incrementing indent, we get the statements of the ASTBlock node.  If the statements' size is 0, the assignment as an empty tag is printed. Otherwise,  The opening tag of block is printed, \textbf{accept()} is called for every statement and the closing tag of the block representation is printed before decrementing the indent once again.	
 			
@@ -1094,7 +1094,7 @@ print Pow;
 				
 					\item \textbf{visit(ASTAssignment)}:This method performs semantic analysis on an assignment statement. First, we check if the expression in the node is null in case of a for loop with no assignment and if so, this is skipped. Otherwise, the expression and identifier are obtained from the node. The next step entails looking up the identifier and if this is not found in the symbol table, an \textbf{UndeclaredException} is thrown. The expression is then visited, where the expression's result type is stored in the global. After getting actual identifier's type, we check it across the type of the expression and if these do not match, an \textbf{IncorrectTypeException} is thrown. Finally the global containing the type of the expression is set to null.
 			
-					\item \textbf{visit(ASTBinExpression)}: This method performs semantic analysis on a binary expression node. To do this, the left and right expressions are obtained from the node. Then, the left expression is visited and the type of this expression is stored and the same is done afterwards, for the right expression. After this, the two stored types are checked and if they do not match, an \textbf{IncorrectTypeException} is thrown. The next steps involve getting the operand and operating a switch statement on it. Here, all types of operands are checked and it is made sure that they are being used with the correct types, if not,  an \textbf{IncorrectTypeException} is thrown. Finally, the type for the binary expression return is set.
+					\item \textbf{visit(ASTBinExpression)}: This method performs semantic analysis on a binary expression node. To do this, the left and right expressions are obtained from the node. Then, the left expression is visited and the type of this expression is stored and the same is done afterwards, for the right expression. After this, the two stored types are checked and if they do not match, an \textbf{IncorrectTypeException} is thrown. The next steps involve getting the operator and operating a switch statement on it. Here, all types of operators are checked and it is made sure that they are being used with the correct types, if not,  an \textbf{IncorrectTypeException} is thrown. Finally, the type for the binary expression return is set.
 			
 					\item \textbf{visit(ASTBlock)}: This method performs semantic analysis on a block. This function starts by inserting a new scope and setting a variable named \textbf{alreadyReturn}, which is used to hold a flag whether there was already a return statement, to false. After this, the block's statements are obtained for every statement and it is checked if the alreadyReturn flag is set, if so a warning is outputted. Moreover, each statement is visited and if the statement is a return statement, alreayReturn is set to true. Finally, the scope is popped.
 			
@@ -1275,7 +1275,7 @@ and \textbf{4.1.2}.
 
 					\item \textbf{visit(ASTAssignment)}:This method performs interpretation on an assignment statement. First, we check if the expression in the node is null in case of a for loop with no assignment and if so, this is skipped. Otherwise, the expression and identifier are obtained from the node. The next step entails looking up the identifier and the expression is then visited, where the expression's result type and value are stored in the global variables constantValue and constantType.  Finally a new value is inserted to the hashmap of values with the value obtained from the expression with the key set to the identifier's name.
 			
-					\item \textbf{visit(ASTBinExpression)}: This method performs interpretation on a binary expression node. To do this, the left and right expressions are obtained from the node. Then, the left expression is visited and the type and value of this expression are stored and the same is done afterwards,  for the right expression. The next steps involve getting the operand and operating a switch statement on it. Here, for all different operands, the type stored in the global variable holding the constant type is checked and the values stored are converted either to Integer, Float or Boolean according to the type. After this, according to the operand, an operation is performed on these two values and the resulting value is set to the global symbol table variable constantValue. For division, if there is a division by 0, and Arithmetic Exception is thrown.
+					\item \textbf{visit(ASTBinExpression)}: This method performs interpretation on a binary expression node. To do this, the left and right expressions are obtained from the node. Then, the left expression is visited and the type and value of this expression are stored and the same is done afterwards,  for the right expression. The next steps involve getting the operator and operating a switch statement on it. Here, for all different operators, the type stored in the global variable holding the constant type is checked and the values stored are converted either to Integer, Float or Boolean according to the type. After this, according to the operator, an operation is performed on these two values and the resulting value is set to the global symbol table variable constantValue. For division, if there is a division by 0, and Arithmetic Exception is thrown.
 			
 					\item \textbf{visit(ASTBlock)}: This method performs interpretation on a block. This function starts by inserting a new scope and removing any previously declared declarations with the name `return`. After this, the block's statements are obtained for every statement and each statement is visited and if after the visit, there is a declaration with the name `return`, it must mean that something was returned, hence we break out of the loop since we do not need to continue computing statements. Finally, the scope is popped.
 			

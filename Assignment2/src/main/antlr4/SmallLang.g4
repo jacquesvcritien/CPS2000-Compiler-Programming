@@ -1,13 +1,19 @@
 grammar SmallLang;
 
+//used to add the package for the generated files
 @header {
 package antlrSrc;
 }
 
+//literal
 literal : BooleanLiteral | IntegerLiteral | FloatLiteral;
+
+//operands
 multiplicativeOp : TIMES | DIVIDE | AND;
 additiveOp : PLUS | MINUS | OR;
 relationalOp : LT | GT | EQUAL | NOT_EQUAL | LTE | GTE;
+
+//EBNF rules
 actualParams :  expression (COMMA expression)*;
 functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
 subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
@@ -38,8 +44,11 @@ statement : variableDecl SEMI_COLON
 block : CURLY_OPEN statement* CURLY_CLOSE;
 program : statement*;
 
+//fragments to make up literals and identifiers
 fragment DIGIT : [0-9];
 fragment LETTER : [A-Za-z];
+
+//different types of tokens
 LET : 'let';
 NOT : 'not';
 MINUS : '-';
@@ -75,6 +84,8 @@ BooleanLiteral : 'true' | 'false';
 IntegerLiteral : DIGIT+;
 FloatLiteral : DIGIT+ '.' DIGIT+;
 Identifier : ('_' | LETTER) ('_' | LETTER | DIGIT)*;
+
+//used to skip whitespaces and comments
 WS : [ \r\t\n]+ -> skip ;
 COMMENT : '//' .*? [\n] -> skip;
 MULTI_LINE_COMMENT : '/*' .*? '*/' -> skip ; // .*?
