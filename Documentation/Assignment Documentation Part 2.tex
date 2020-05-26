@@ -496,30 +496,173 @@
 		
 			\subsection{Solution}
 			
-			Since this implementation was done using Java and coded using the IntelliJ IDE, ANTLR's plugin\cite{ANTLRplugin} was used to help in implementing the grammar and seeing its results in the form of parse trees or hierarchies by using the GRUN tool. 
+			Since this implementation was done using Java and coded using the IntelliJ IDE, ANTLR's plugin\cite{ANTLRplugin} was used to help in implementing the grammar and seeing its results in the form of parse trees or hierarchies by using the GRUN tool.  \textbf{Wherever there is a *, it means that the rule can be found 0 or more times, a + means that the rule can be repeated 1 or more times, while where there is a ?, it means that an item is optional.}\\
 				
 			\subsubsection{SmallLang}
 			
-			After spending several hours researching about ANTLR grammars, I started implementing the grammar for SmallLang by creating a SmallLang.g4 file in the \quotes{src/main/antlr} directory. In order to create this grammar, I followed the EBNF rules found in the specification for part 1 of this assignment and tried to replicate them. The file contents can be found in the image below. It is important to note that multiplicative operators, additive operators and relational operators were not listed as lexer rules but were listed as parser rules, that is, starting with a lowercase letter because, for an unknown reason, the`and' and`or operators as for an unknown reason they were being ignored when multiplicate operators and additive operators were listed as lexer rules.
+			After spending several hours researching about ANTLR grammars, I started implementing the grammar for SmallLang by creating a SmallLang.g4 file in the \quotes{src/main/antlr} directory. In order to create this grammar, I followed the EBNF rules found in the specification for part 1 of this assignment and tried to replicate them. The file contents can be found in the image below. It is important to note that multiplicative operators, additive operators and relational operators were not listed as lexer rules but were listed as parser rules, that is, starting with a lowercase letter because the`and' and`or operators were conflicting with the identifier rule when multiplicative operators and additive operators were listed as lexer rules.
+			
+			
+			\noindent As can be seen in the image below, the first part of the grammar consists of the grammar declaration and a header which is added to all generated files. In this header, the package was added.
+	
+			
 			
 								\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.65\textwidth]{smallanggr2.png}
-			  			\caption{Grammar for SmallLang}
-			  			\label{fig:smalllanggr}
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_1.png}
+			  			\caption{First part of grammar}
+			  			\label{fig:antlrv1_1}
 					\end{figure}
+					
+						
+			\noindent The second part of the grammar file consists of the declarations or the literal and operators nodes.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_2.png}
+			  			\caption{Literal and operators}
+			  			\label{fig:antlrv1_2}
+					\end{figure}
+					
+					\noindent The next figure shows the grammar implementation for rules related to expressions.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_3.png}
+			  			\caption{Rules related with expressions}
+			  			\label{fig:antlrv1_3}
+					\end{figure}
+					
+					\noindent The next figure shows the grammar implementation for rules related to statements.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_4.png}
+			  			\caption{Rules related with statements}
+			  			\label{fig:antlrv1_4}
+					\end{figure}
+					
+					\noindent The next figure shows fragments which represent a digit and a letter which are used by other rules to make up literals and identifiers.
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_5.png}
+			  			\caption{Fragment rules}
+			  			\label{fig:antlrv1_5}
+					\end{figure}
+					
+					\noindent The next figure shows the implementation of various tokens.
+				
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_6.png}
+			  			\caption{Token rules}
+			  			\label{fig:antlrv1_6}
+					\end{figure}
+					
+					\noindent Figure 22 shows the token rules of how the different literals and identifiers are constructed.
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_7.png}
+			  			\caption{Token for literals and identifiers}
+			  			\label{fig:antlrv1_7}
+					\end{figure}
+					
+					\noindent Finally, the last figure shows how whitespaces and comments are skipped
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_8.png}
+			  			\caption{Comments and whitespaces}
+			  			\label{fig:antlrv1_8}
+					\end{figure}
+			\pagebreak
 					
 			\subsubsection{SmallLangV2}
 			
-			After implementing the grammar for SmallLang, constructing the grammar for SmallLangV2 was not difficult. Basically, all the changes in the EBNF rules explained in task 1 of this assignment, were made to the grammar.  This included changes to the \textbf{literal, factor, assignment, formalParam} and \textbf{statement} rule. Moreover, new rules were added, namely, \textbf{arrayIndex, arrayDecl, arrayIdentifier, abstractIdentifier, arrayValue, declaration} and \textbf{CharLiteral}
+			After implementing the grammar for SmallLang, constructing the grammar for SmallLangV2 was not difficult. Basically, all the changes in the EBNF rules explained in task 1 of this assignment, were made to the grammar.  This included changes to the \textbf{literal, factor, assignment, formalParam} and \textbf{statement} rule. Moreover, new rules were added, namely, \textbf{arrayIndex, arrayDecl, arrayIdentifier, abstractIdentifier, arrayValue, declaration} and \textbf{CharLiteral}\textbf{The new and updated rules from V1 can be identified with a comments next to the rule}\\
+			
+								\noindent As can be seen in the image below, the first part of the grammar consists of the grammar declaration and a header which is added to all generated files. In this header, the package was added.
+	
+			
 			
 								\begin{figure}[H]
 					\centering
-			 			\includegraphics[width=0.7\textwidth]{smallangv2gr.png}
-			  			\caption{Grammar for SmallLang}
-			  			\label{fig:smalllanggr}
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_1.png}
+			  			\caption{First part of grammar}
+			  			\label{fig:antlrv1_1}
 					\end{figure}
 					
+						
+			\noindent The second part of the grammar file consists of the declarations or the literal and operators nodes.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_2.png}
+			  			\caption{Literal and operators}
+			  			\label{fig:antlrv1_2}
+					\end{figure}
+					
+					\noindent The next figure shows the updated grammar implementation for rules related to expressions. The differences include the updated factor and assignment rules which were made to match the updated EBNF rules as explained in task 1. Moreover, the arrayIndex, arrayIdentifier and abstractIdentifier rules were added.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv2_1.png}
+			  			\caption{Rules related with expressions}
+			  			\label{fig:antlrv2_1}
+					\end{figure}
+					
+					\noindent The next figure shows the updated grammar implementation for rules related to statements. The differences include the updated variableDecl, formalParam and statement rules which were made to match the updated EBNF rules as explained in task 1. Moreover, the arrayDecl, arrayValue and declaration rules were added.
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv2_2.png}
+			  			\caption{Rules related with statements}
+			  			\label{fig:antlrv2_2}
+					\end{figure}
+					
+					\noindent The next figure shows fragments which represent a digit and a letter which are used by other rules to make up literals and identifiers.
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_5.png}
+			  			\caption{Fragment rules}
+			  			\label{fig:antlrv1_5}
+					\end{figure}
+					
+					\noindent The next figure shows the implementation of various tokens.
+				
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_6.png}
+			  			\caption{Token rules}
+			  			\label{fig:antlrv1_6}
+					\end{figure}
+					
+					\noindent Figure 30 shows the updated token rules of how the different literals and identifiers are constructed. One notable addition is the rule for a character literal.
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv2_3.png}
+			  			\caption{Token for literals and identifiers}
+			  			\label{fig:antlrv2_3}
+					\end{figure}
+					
+					\noindent Finally, the last figure shows how whitespaces and comments are skipped
+				
+			
+						\begin{figure}[H]
+					\centering
+			 			\includegraphics[width=0.65\textwidth]{antlrv1_8.png}
+			  			\caption{Comments and whitespaces}
+			  			\label{fig:antlrv1_8}
+					\end{figure}
 					
 					
 		\subsection{Checking correctness}

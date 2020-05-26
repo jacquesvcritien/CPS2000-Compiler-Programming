@@ -8,12 +8,12 @@ package antlrSrc;
 //literal
 literal : BooleanLiteral | IntegerLiteral | FloatLiteral;
 
-//operands
+//operators
 multiplicativeOp : TIMES | DIVIDE | AND;
 additiveOp : PLUS | MINUS | OR;
 relationalOp : LT | GT | EQUAL | NOT_EQUAL | LTE | GTE;
 
-//EBNF rules
+//EBNF expression
 actualParams :  expression (COMMA expression)*;
 functionCall : Identifier BRACKET_OPEN actualParams? BRACKET_CLOSE;
 subExpression : BRACKET_OPEN expression BRACKET_CLOSE;
@@ -23,6 +23,8 @@ term : factor (multiplicativeOp factor)*;
 simpleExpression : term (additiveOp term)*;
 expression : simpleExpression (relationalOp simpleExpression)*;
 assignment : Identifier EQUAL_SIGN expression;
+
+//EBNF statements
 variableDecl : LET Identifier COLON (Type | Auto) EQUAL_SIGN expression;
 printStatement : PRINT expression;
 rtrnStatement : RETURN expression;
@@ -80,9 +82,13 @@ EQUAL : '==';
 NOT_EQUAL : '<>';
 LTE : '<=';
 GTE: '>=';
+
+//tokens for literals
 BooleanLiteral : 'true' | 'false';
 IntegerLiteral : DIGIT+;
-FloatLiteral : DIGIT+ '.' DIGIT+;
+FloatLiteral : IntegerLiteral '.' IntegerLiteral;
+
+//token for identifier
 Identifier : ('_' | LETTER) ('_' | LETTER | DIGIT)*;
 
 //used to skip whitespaces and comments

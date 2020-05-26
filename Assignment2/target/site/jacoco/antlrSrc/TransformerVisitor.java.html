@@ -175,7 +175,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
      * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
      */
     @Override public String visitMultiplicativeOp(SmallLangParser.MultiplicativeOpContext ctx) {
-        //return operand
+        //return operator
 <span class="fc" id="L179">        return ctx.children.get(0).toString();</span>
     }
     /**
@@ -185,7 +185,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
      * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
      */
     @Override public String visitAdditiveOp(SmallLangParser.AdditiveOpContext ctx) {
-        //return operand
+        //return operator
 <span class="fc" id="L189">        return ctx.children.get(0).toString();</span>
     }
     /**
@@ -195,7 +195,7 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
      * {@link #visitChildren} on {@code ctx}.&lt;/p&gt;
      */
     @Override public String visitRelationalOp(SmallLangParser.RelationalOpContext ctx) {
-        //return operand
+        //return operator
 <span class="fc" id="L199">        return ctx.children.get(0).toString();</span>
     }
 
@@ -216,14 +216,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
         //loop through all children
 <span class="fc bfc" id="L217" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
         {
-            //get the operand
-<span class="fc" id="L220">            String operand = visitMultiplicativeOp((SmallLangParser.MultiplicativeOpContext) trees.get(i));</span>
+            //get the operator
+<span class="fc" id="L220">            String operator = visitMultiplicativeOp((SmallLangParser.MultiplicativeOpContext) trees.get(i));</span>
             //increment counter
 <span class="fc" id="L222">            i++;</span>
             //get right expression
 <span class="fc" id="L224">            ASTExpression right = visitFactor((SmallLangParser.FactorContext) trees.get(i));</span>
             //set current node as recursive
-<span class="fc" id="L226">            node = new ASTBinExpression(node, operand, right);</span>
+<span class="fc" id="L226">            node = new ASTBinExpression(node, operator, right);</span>
         }
 
 <span class="fc" id="L229">        return node;</span>
@@ -246,14 +246,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
         //loop through all children
 <span class="fc bfc" id="L247" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
         {
-            //get the operand
-<span class="fc" id="L250">            String operand = visitAdditiveOp((SmallLangParser.AdditiveOpContext) trees.get(i));</span>
+            //get the operator
+<span class="fc" id="L250">            String operator = visitAdditiveOp((SmallLangParser.AdditiveOpContext) trees.get(i));</span>
             //increment counter
 <span class="fc" id="L252">            i++;</span>
             //get right expression
 <span class="fc" id="L254">            ASTExpression right = visitTerm((SmallLangParser.TermContext) trees.get(i));</span>
             //set current node as recursive
-<span class="fc" id="L256">            node = new ASTBinExpression(node, operand, right);</span>
+<span class="fc" id="L256">            node = new ASTBinExpression(node, operator, right);</span>
         }
 
 <span class="fc" id="L259">        return node;</span>
@@ -275,14 +275,14 @@ public class TransformerVisitor extends SmallLangBaseVisitor&lt;Object&gt; {
         //loop through all children
 <span class="fc bfc" id="L276" title="All 2 branches covered.">        for(int i = 1; i &lt; trees.size(); i++)</span>
         {
-            //get the operand
-<span class="fc" id="L279">            String operand = visitRelationalOp((SmallLangParser.RelationalOpContext) trees.get(i));</span>
+            //get the operator
+<span class="fc" id="L279">            String operator = visitRelationalOp((SmallLangParser.RelationalOpContext) trees.get(i));</span>
             //increment counter
 <span class="fc" id="L281">            i++;</span>
             //get right expression
 <span class="fc" id="L283">            ASTExpression right = visitSimpleExpression((SmallLangParser.SimpleExpressionContext) trees.get(i));</span>
             //set current node as recursive
-<span class="fc" id="L285">            node = new ASTBinExpression(node, operand, right);</span>
+<span class="fc" id="L285">            node = new ASTBinExpression(node, operator, right);</span>
         }
 
 <span class="fc" id="L288">        return node;</span>
