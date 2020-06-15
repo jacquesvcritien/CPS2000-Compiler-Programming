@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-public class Tester {
+public class Part1Executor {
     public static void main(String args[]) throws IOException, InvalidSyntaxException, IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException, URISyntaxException {
-        Lexer lexer = new Lexer("sourcecode.txt");
+        Lexer lexer = new Lexer(args[0]);
         VisitorXMLGenerator xml = new VisitorXMLGenerator();
         VisitorSemanticAnalysis semanticAnalysis = new VisitorSemanticAnalysis();
         VisitorInterpreter interpreter = new VisitorInterpreter();
@@ -25,8 +25,6 @@ public class Tester {
 
         xml.visit(node);
         semanticAnalysis.visit(node);
-
         interpreter.visit(node);
-
     }
 }

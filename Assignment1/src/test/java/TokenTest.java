@@ -1,11 +1,13 @@
-import lexer.Category;
-import lexer.State;
-import lexer.Token;
-import lexer.TypeToken;
+import lexer.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class TokenTest {
 

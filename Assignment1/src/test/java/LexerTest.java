@@ -5,14 +5,30 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class LexerTest {
 
+    /**
+     * Method to get absolute path for filename
+     * @param filename filename to get
+     * @throws URISyntaxException when file does not exist
+     * @return Absolute path for file
+     */
+    public String getAbsolutePath(String filename) throws URISyntaxException {
+        //get absolute path from resources path
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
+    
     Lexer lexer;
     @Before
     public void setup() {
@@ -28,7 +44,7 @@ public class LexerTest {
      */
     @Test
     public void testIntDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/intdecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/intdecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -49,7 +65,7 @@ public class LexerTest {
      */
     @Test
     public void testAutoDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/autodecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/autodecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -70,7 +86,7 @@ public class LexerTest {
      */
     @Test
     public void testFloatDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/floatdecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/floatdecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -91,7 +107,7 @@ public class LexerTest {
      */
     @Test
     public void testBoolDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/booldecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/booldecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -120,7 +136,7 @@ public class LexerTest {
      */
     @Test
     public void testBlockandComments() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/block.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/block.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.CURLY_OPEN, "{"),
@@ -143,7 +159,7 @@ public class LexerTest {
      */
     @Test
     public void testExpressionOperators() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/expressions.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/expressions.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.INTEGER_LITERAL, "3"),
@@ -208,7 +224,7 @@ public class LexerTest {
      */
     @Test
     public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/functioncall.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/functioncall.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -234,7 +250,7 @@ public class LexerTest {
      */
     @Test
     public void testIfStatement() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/ifstatement.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/ifstatement.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.IF, "if"),
@@ -265,7 +281,7 @@ public class LexerTest {
      */
     @Test
     public void testForLoop() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/forstatement.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/forstatement.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.FOR, "for"),
@@ -303,7 +319,7 @@ public class LexerTest {
      */
     @Test
     public void testWhileLoop() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/whileloop.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/whileloop.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.WHILE, "while"),
@@ -334,7 +350,7 @@ public class LexerTest {
      */
     @Test
     public void testFuncDecl() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/funcdecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/funcdecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.FF, "ff"),
@@ -368,7 +384,7 @@ public class LexerTest {
      */
     @Test
     public void testCompareTokensUnequalSize() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/intdecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/intdecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),
@@ -388,7 +404,7 @@ public class LexerTest {
      */
     @Test
     public void testCompareTokensNotTheSame() throws IOException, URISyntaxException, InvalidSyntaxException {
-        lexer = new Lexer("lexer/intdecl.txt");
+        lexer = new Lexer(getAbsolutePath("lexer/intdecl.txt"));
 
         ArrayList<Token> expected = new ArrayList<Token>(Arrays.asList(
                 new Token(TypeToken.LET, "let"),

@@ -14,6 +14,7 @@ parser\node\statement\ASTFormalParam.class
 visitor\VisitorInterpreter.class
 parser\node\expression\ASTBinExpression.class
 visitor\SymbolTable.class
+Part1Executor.class
 parser\node\statement\ASTWhile.class
 visitor\VisitorSemanticAnalysis.class
 parser\node\expression\ASTBooleanLiteral.class
@@ -30,7 +31,6 @@ exceptions\AlreadyDeclaredException.class
 parser\node\expression\ASTUnary.class
 parser\node\expression\ASTIdentifier.class
 parser\node\statement\ASTReturn.class
-Tester.class
 visitor\VisitorXMLGenerator.class
 lexer\TypeToken.class
 parser\node\Type.class
