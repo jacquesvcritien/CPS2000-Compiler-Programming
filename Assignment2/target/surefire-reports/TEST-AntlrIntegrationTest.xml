@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="47" failures="0" name="AntlrIntegrationTest" time="0.504" errors="0" skipped="0">
+<testsuite tests="47" failures="0" name="AntlrIntegrationTest" time="0.579" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\bin"/>
@@ -64,51 +64,51 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect2" time="0.277"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect3" time="0.006"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect4" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="test2" time="0.067"/>
-  <testcase classname="AntlrIntegrationTest" name="test4" time="0.023"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect3" time="0.323"/>
+  <testcase classname="AntlrIntegrationTest" name="testGivenCode" time="0.083"/>
+  <testcase classname="AntlrIntegrationTest" name="test1" time="0.02"/>
   <testcase classname="AntlrIntegrationTest" name="testIncorrect5" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect6" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testUndeclared" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testBadReturn" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testFunctionCall" time="0.005"/>
-  <testcase classname="AntlrIntegrationTest" name="testGivenCode" time="0.005"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect1" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect6" time="0.002"/>
   <testcase classname="AntlrIntegrationTest" name="testFunc3Params" time="0.004"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect7" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testUndeclared" time="0.002"/>
   <testcase classname="AntlrIntegrationTest" name="testIncorrect8" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="test1" time="0.007"/>
-  <testcase classname="AntlrIntegrationTest" name="test3" time="0.004"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrect1" time="0.001"/>
-  <testcase classname="AntlrIntegrationTest" name="testExpressions" time="0.009"/>
-  <testcase classname="AntlrIntegrationTest" name="testAlreadyDeclared" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongInt" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testInexistentFunctionCall" time="0.001"/>
-  <testcase classname="AntlrIntegrationTest" name="testAssignmentUndeclared" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testFunctionNoReturn" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testBadVariableDeclFloat" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testDivisionBy0Int" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testGTWithBooleans" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testAlreadyDeclaredFucntion" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongBoolean" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongFloat" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testExpressionDifferentTypes" time="0.001"/>
-  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgInt" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testJustForCoverage" time="0.006"/>
-  <testcase classname="AntlrIntegrationTest" name="testDivisionBy0Float" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testForGetValueNoVariable" time="0"/>
-  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgsSize" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testBadVariableDeclBool" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testPrintFunction" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testFunctionCall" time="0.004"/>
+  <testcase classname="AntlrIntegrationTest" name="test3" time="0.007"/>
+  <testcase classname="AntlrIntegrationTest" name="testExpressions" time="0.017"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect4" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="test2" time="0.004"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect7" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrect2" time="0.004"/>
+  <testcase classname="AntlrIntegrationTest" name="test4" time="0.005"/>
+  <testcase classname="AntlrIntegrationTest" name="testBadReturn" time="0.003"/>
   <testcase classname="AntlrIntegrationTest" name="test5IncorrectSymbol" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgFloat" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testMultipleReturnsWarning" time="0.02"/>
-  <testcase classname="AntlrIntegrationTest" name="testForInsertValue" time="0"/>
-  <testcase classname="AntlrIntegrationTest" name="testAssignmentToFunction" time="0.003"/>
-  <testcase classname="AntlrIntegrationTest" name="testIncorrectType" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testMultipleReturnsWarning" time="0.029"/>
+  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongBoolean" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testFunctionNoReturn" time="0.001"/>
+  <testcase classname="AntlrIntegrationTest" name="testJustForCoverage" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongInt" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testInexistentFunctionCall" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testAlreadyDeclared" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testBadVariableDeclBool" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testDivisionBy0Float" time="0.002"/>
   <testcase classname="AntlrIntegrationTest" name="test6IncorrectSyntax" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testAssignmentUndeclared" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testExpressionDifferentTypes" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testBadVariableDeclFloat" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testDivisionBy0Int" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testGTWithBooleans" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgInt" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testAssignmentWrongFloat" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testIncorrectType" time="0.002"/>
   <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgBool" time="0.002"/>
-  <testcase classname="AntlrIntegrationTest" name="testExpressionBadOperatorsNotBoolean" time="0.001"/>
-  <testcase classname="AntlrIntegrationTest" name="testExpressionBadOperatorsBoolean" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgFloat" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testFunctionCallBadArgsSize" time="0.004"/>
+  <testcase classname="AntlrIntegrationTest" name="testPrintFunction" time="0.003"/>
+  <testcase classname="AntlrIntegrationTest" name="testAlreadyDeclaredFucntion" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testAssignmentToFunction" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testForInsertValue" time="0.001"/>
+  <testcase classname="AntlrIntegrationTest" name="testForGetValueNoVariable" time="0"/>
+  <testcase classname="AntlrIntegrationTest" name="testExpressionBadOperatorsBoolean" time="0.002"/>
+  <testcase classname="AntlrIntegrationTest" name="testExpressionBadOperatorsNotBoolean" time="0.002"/>
 </testsuite>

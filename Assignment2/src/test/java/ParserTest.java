@@ -8,10 +8,26 @@ import parser.Parser;
 import parser.node.ASTProgram;
 import visitor.VisitorChecker;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class ParserTest {
+
+    /**
+     * Method to get absolute path for filename
+     * @param filename filename to get
+     * @throws URISyntaxException when file does not exist
+     * @return Absolute path for file
+     */
+    public String getAbsolutePath(String filename) throws URISyntaxException {
+        //get absolute path from resources path
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
 
     VisitorChecker visitorChecker = new VisitorChecker();
     Parser parser;
@@ -33,7 +49,7 @@ public class ParserTest {
      */
     @Test
     public void testCorrectArrayDecl() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/arraydeclCorrect.txt");
+        lexer = new Lexer(getAbsolutePath("parser/arraydeclCorrect.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
 
@@ -51,7 +67,7 @@ public class ParserTest {
      */
     @Test
     public void testArrayDeclNoSize() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/arraydeclNoSizeNoValue.txt");
+        lexer = new Lexer(getAbsolutePath("parser/arraydeclNoSizeNoValue.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
         visitorChecker.visit(program);
@@ -69,7 +85,7 @@ public class ParserTest {
      */
     @Test
     public void testArrayDeclNoInit() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/arraydeclShort.txt");
+        lexer = new Lexer(getAbsolutePath("parser/arraydeclShort.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
 
@@ -88,7 +104,7 @@ public class ParserTest {
      */
     @Test
     public void testCharVarDecl() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/chardecl.txt");
+        lexer = new Lexer(getAbsolutePath("parser/chardecl.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
         visitorChecker.visit(program);
@@ -105,7 +121,7 @@ public class ParserTest {
      */
     @Test
     public void testUseArrayElement() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/usearrayelement.txt");
+        lexer = new Lexer(getAbsolutePath("parser/usearrayelement.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
         visitorChecker.visit(program);
@@ -124,7 +140,7 @@ public class ParserTest {
      */
     @Test
     public void testArrayAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/arrayassignment.txt");
+        lexer = new Lexer(getAbsolutePath("parser/arrayassignment.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
 
@@ -142,7 +158,7 @@ public class ParserTest {
      */
     @Test
     public void testArrayFormalParam() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("parser/arrayformalparam.txt");
+        lexer = new Lexer(getAbsolutePath("parser/arrayformalparam.txt"));
         parser = new Parser(lexer);
         ASTProgram program = parser.parse();
         visitorChecker.visit(program);

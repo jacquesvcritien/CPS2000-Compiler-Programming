@@ -29,16 +29,10 @@ public class SmallLangParserHelper {
         try
         {
             //get absolute path
-            URL url = SmallLangParserHelper.class.getClassLoader().getResource(filename);
-            if(url == null)
-                throw new FileNotFoundException(filename+" not found");
-            File file = Paths.get(url.toURI()).toFile();
-            String absolutePath = file.getAbsolutePath();
-
             ErrorThrowListener errorThrowListener = new ErrorThrowListener();
 
             //get char stream
-            CharStream cs = fromFileName(absolutePath);
+            CharStream cs = fromFileName(filename);
             //init lexer
             SmallLangLexer lexer  = new SmallLangLexer(cs);
             //add error listener

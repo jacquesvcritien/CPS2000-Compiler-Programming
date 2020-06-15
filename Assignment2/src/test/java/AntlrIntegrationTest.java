@@ -22,9 +22,12 @@ import parser.node.statement.declaration.ASTVariableDecl;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertFalse;
@@ -32,6 +35,19 @@ import static org.junit.Assert.assertNull;
 
 public class AntlrIntegrationTest {
 
+    /**
+     * Method to get absolute path for filename
+     * @param filename filename to get
+     * @throws URISyntaxException when file does not exist
+     * @return Absolute path for file
+     */
+    public String getAbsolutePath(String filename) throws URISyntaxException {
+        //get absolute path from resources path
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
+    
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream original = System.out;
 
@@ -52,7 +68,7 @@ public class AntlrIntegrationTest {
 
     @Test
     public void test1() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test1.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test1.txt"));
 
         String expected = ("1\n2\n0.1\n0.2\n0.3\n0.4\n0.5\n1\n2\n3\n4\n5\ntrue").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -63,7 +79,7 @@ public class AntlrIntegrationTest {
 
     @Test
     public void test2() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test2.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test2.txt"));
 
         String expected = ("12\n4\n2\n15.200001\nfalse").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -74,7 +90,7 @@ public class AntlrIntegrationTest {
 
     @Test
     public void test3() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test3.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test3.txt"));
 
         String expected = ("16\n3.0\ntrue").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -85,7 +101,7 @@ public class AntlrIntegrationTest {
 
     @Test
     public void test4() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test4.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test4.txt"));
 
 
         String expected = ("1\n1").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
@@ -108,7 +124,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void test5IncorrectSymbol() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test5.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test5.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -127,7 +143,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect1() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid3.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid3.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -146,7 +162,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect2() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid4.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid4.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -165,7 +181,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect3() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid5.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid5.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -184,7 +200,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect4() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid6.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid6.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -203,7 +219,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect5() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid7.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid7.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -222,7 +238,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect6() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid8.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid8.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -241,7 +257,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect7() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid9.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid9.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -260,7 +276,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void testIncorrect8() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid10.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid10.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -279,7 +295,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = InvalidSyntaxException.class)
     public void test6IncorrectSyntax() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test6.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test6.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -298,7 +314,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testIncorrectType() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test7.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test7.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -316,7 +332,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testUndeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test8.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test8.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -334,7 +350,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = AlreadyDeclaredException.class)
     public void testAlreadyDeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test9.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test9.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -352,7 +368,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = ReturnTypeMismatchException.class)
     public void testBadReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test10.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test10.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -369,7 +385,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testAssignmentUndeclared() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test11.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test11.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -386,7 +402,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongInt() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test12.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test12.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -403,7 +419,7 @@ public class AntlrIntegrationTest {
      */
     @Test
     public void testMultipleReturnsWarning() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("integration/test18.txt");
+        lexer = new Lexer(getAbsolutePath("integration/test18.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -423,7 +439,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test13.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test13.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -440,7 +456,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentWrongBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test14.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test14.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -457,7 +473,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionDifferentTypes() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test15.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test15.txt"));
         semanticAnalysis.analyse(node);
     }
 
@@ -473,7 +489,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionBadOperatorsNotBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test16.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test16.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -490,7 +506,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testExpressionBadOperatorsBoolean() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test17.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test17.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -508,7 +524,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = UndeclaredException.class)
     public void testInexistentFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test19.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test19.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -525,7 +541,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgsSize() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test20.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test20.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -542,7 +558,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgInt() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test21.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test21.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -559,7 +575,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test22.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test22.txt"));
 
         semanticAnalysis.analyse(node);
     }
@@ -576,7 +592,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testFunctionCallBadArgBool() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test23.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test23.txt"));
 
        semanticAnalysis.analyse(node);
     }
@@ -593,7 +609,7 @@ public class AntlrIntegrationTest {
      */
     @Test
     public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test32.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test32.txt"));
 
         String expected = ("1").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -614,7 +630,7 @@ public class AntlrIntegrationTest {
      */
     @Test
     public void testGivenCode() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test33.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test33.txt"));
 
         String expected = ("1667.9874").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -635,7 +651,7 @@ public class AntlrIntegrationTest {
      */
     @Test
     public void testFunc3Params() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test34.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test34.txt"));
 
         String expected = ("6").replaceAll("\\n|\\r\\n", System.getProperty("line.separator"));
 
@@ -656,7 +672,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = ReturnTypeMismatchException.class)
     public void testFunctionNoReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test24.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test24.txt"));
 
 
         semanticAnalysis.analyse(node);
@@ -674,7 +690,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testBadVariableDeclFloat() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test25.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test25.txt"));
 
 
         semanticAnalysis.analyse(node);
@@ -693,7 +709,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testBadVariableDeclBool() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test26.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test26.txt"));
 
 
         semanticAnalysis.analyse(node);
@@ -760,7 +776,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = ArithmeticException.class)
     public void testDivisionBy0Int() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test27.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test27.txt"));
 
 
         semanticAnalysis.analyse(node);
@@ -779,7 +795,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = ArithmeticException.class)
     public void testDivisionBy0Float() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test28.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test28.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -797,7 +813,7 @@ public class AntlrIntegrationTest {
      */
     @Test
     public void testExpressions() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test29.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test29.txt"));
 
         String expected = ("false\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n" +
                 "true\nfalse\nfalse\nfalse\ntrue\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\ntrue\nfalse\n"+
@@ -820,7 +836,7 @@ public class AntlrIntegrationTest {
      */
     @Test (expected = IncorrectTypeException.class)
     public void testGTWithBooleans() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test30.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test30.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -838,7 +854,7 @@ public class AntlrIntegrationTest {
      */
     @Test (expected = AlreadyDeclaredException.class)
     public void testAlreadyDeclaredFucntion() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/test31.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/test31.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -914,7 +930,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testAssignmentToFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid11.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid11.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);
@@ -933,7 +949,7 @@ public class AntlrIntegrationTest {
      */
     @Test(expected = IncorrectTypeException.class)
     public void testPrintFunction() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("integration/testinvalid12.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("integration/testinvalid12.txt"));
 
         semanticAnalysis.analyse(node);
         interpreter.interpret(node);

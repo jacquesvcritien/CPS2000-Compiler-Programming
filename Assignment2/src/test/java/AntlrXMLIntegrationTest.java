@@ -13,12 +13,28 @@ import visitor.VisitorInterpreter;
 import visitor.VisitorXMLGenerator;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class AntlrXMLIntegrationTest {
 
+    /**
+     * Method to get absolute path for filename
+     * @param filename filename to get
+     * @throws URISyntaxException when file does not exist
+     * @return Absolute path for file
+     */
+    public String getAbsolutePath(String filename) throws URISyntaxException {
+        //get absolute path from resources path
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
+    
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream original = System.out;
 
@@ -48,7 +64,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testDeclVariable() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest1.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest1.txt"));
 
         xml.generate(node);
         String expected = ("<Program>\n" +
@@ -76,7 +92,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testPrint() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest2.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest2.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<Print>\n" +
@@ -101,7 +117,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest3.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest3.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<VarDecl>\n" +
@@ -130,7 +146,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testIFStatement() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest4.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest4.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<If>\n" +
@@ -166,7 +182,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testEmptyBlock() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest5.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest5.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<If>\n" +
@@ -194,7 +210,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testWhile() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest6.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest6.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<While>\n" +
@@ -225,7 +241,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclFormalParamsReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest7.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest7.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<FuncDecl>\n" +
@@ -262,7 +278,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest10.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest10.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<FuncDecl>\n" +
@@ -292,7 +308,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testForLoop() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest8.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest8.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<For>\n" +
@@ -334,7 +350,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testForLoopNoDeclarationNoAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest9.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest9.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<VarDecl>\n" +
@@ -380,7 +396,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest11.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest11.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<VarDecl>\n" +
@@ -409,7 +425,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testFunctionCallNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest12.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest12.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<VarDecl>\n" +
@@ -436,7 +452,7 @@ public class AntlrXMLIntegrationTest {
      */
     @Test
     public void testUnary() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        ASTProgram node = SmallLangParserHelper.getProgramContext("xml/xmltest13.txt");
+        ASTProgram node = SmallLangParserHelper.getProgramContext(getAbsolutePath("xml/xmltest13.txt"));
 
         String expected = ("<Program>\n" +
                 "\t<VarDecl>\n" +

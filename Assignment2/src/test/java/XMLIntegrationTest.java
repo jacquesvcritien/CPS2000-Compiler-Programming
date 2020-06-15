@@ -11,15 +11,31 @@ import parser.node.statement.ASTStatement;
 import visitor.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
 public class XMLIntegrationTest {
 
+    /**
+     * Method to get absolute path for filename
+     * @param filename filename to get
+     * @throws URISyntaxException when file does not exist
+     * @return Absolute path for file
+     */
+    public String getAbsolutePath(String filename) throws URISyntaxException {
+        //get absolute path from resources path
+        URL url = Lexer.class.getClassLoader().getResource(filename);
+        File file = Paths.get(url.toURI()).toFile();
+        return file.getAbsolutePath();
+    }
+    
     private final ByteArrayOutputStream output = new ByteArrayOutputStream();
     private final PrintStream original = System.out;
 
@@ -49,7 +65,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testDeclVariable() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest1.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest1.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -79,7 +95,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testPrint() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest2.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest2.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -106,7 +122,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest3.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest3.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -137,7 +153,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testIFStatement() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest4.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest4.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -175,7 +191,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testEmptyBlock() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest5.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest5.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -205,7 +221,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testWhile() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest6.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest6.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -238,7 +254,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclFormalParamsReturn() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest7.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest7.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -277,7 +293,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionDeclNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest10.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest10.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -309,7 +325,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testForLoop() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest8.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest8.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -353,7 +369,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testForLoopNoDeclarationNoAssignment() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest9.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest9.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -401,7 +417,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionCall() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest11.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest11.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -432,7 +448,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testFunctionCallNoParams() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest12.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest12.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 
@@ -461,7 +477,7 @@ public class XMLIntegrationTest {
      */
     @Test
     public void testUnary() throws IOException, URISyntaxException, InvalidSyntaxException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
-        lexer = new Lexer("xml/xmltest13.txt");
+        lexer = new Lexer(getAbsolutePath("xml/xmltest13.txt"));
         Parser parser = new Parser(lexer);
         ASTProgram node = parser.parse();
 

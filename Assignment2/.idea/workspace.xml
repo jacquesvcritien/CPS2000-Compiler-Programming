@@ -2,18 +2,60 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="184e9c0f-0e90-4b3c-a173-369a38e4bf63" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/sourcecode.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Assignment1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/src/main/java/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/src/main/java/lexer/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/classes/sourcecode.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/classes/sourcecode2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/jacoco.exec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/site/jacoco/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/site/jacoco/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/site/jacoco/jacoco.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/IntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/IntegrationTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/LexerTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/LexerTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-IntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-IntegrationTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-LexerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-LexerTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-TokenTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-TokenTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-TransitionTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-TransitionTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-XMLIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TEST-XMLIntegrationTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TokenTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/TokenTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/XMLIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment1/target/surefire-reports/XMLIntegrationTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/antlr4/SmallLang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/antlr4/SmallLang.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/antlr4/SmallLangV2.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/antlr4/SmallLangV2.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/Assignment2-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/Assignment2-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/antlrSrc/TransformerVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/antlrSrc/TransformerVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid56212.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/replay_pid56212.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AntlrTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HybridParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SmallLangV2Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/antlrSrc/SmallLangParserHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/antlrSrc/SmallLangParserHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lexer/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sourcecode.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sourcecode2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/sourcecode2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/AntlrIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/AntlrIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/AntlrXMLIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/AntlrXMLIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/IntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/IntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/LexerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/LexerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/ParserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ParserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/XMLIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/XMLIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/Assignment2-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/AntlrTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Tester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/antlrSrc/SmallLangParserHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/antlrSrc/SmallLangParserHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lexer/Lexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lexer/Lexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sourcecode.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sourcecode2.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/jacoco.exec" beforeDir="false" afterPath="$PROJECT_DIR$/target/jacoco.exec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/antlrSrc/TransformerVisitor.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/lexer/Lexer.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/lexer/Lexer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/lexer/Lexer.java.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/lexer/Lexer.java.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/lexer/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/lexer/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/site/jacoco/lexer/index.source.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/site/jacoco/lexer/index.source.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/AntlrIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/AntlrIntegrationTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/AntlrXMLIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/AntlrXMLIntegrationTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/IntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/IntegrationTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/LexerTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/LexerTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/ParserTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/ParserTest.txt" afterDir="false" />
@@ -26,10 +68,17 @@
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-TransitionTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-TransitionTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-XMLIntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-XMLIntegrationTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TokenTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TokenTest.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TransitionTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TransitionTest.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/XMLIntegrationTest.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/XMLIntegrationTest.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.synctex.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 2.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/AntlrIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/AntlrIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/AntlrXMLIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/AntlrXMLIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/IntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/IntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/LexerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/LexerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/ParserTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ParserTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/XMLIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/XMLIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.synctex.gz" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.synctex.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../Documentation/Assignment Documentation Part 1.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +117,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/integration/test4.txt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -77,15 +126,15 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\antlr4" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml\integration" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\parser" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\lexer" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\integration" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\antlr4" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -94,12 +143,12 @@
       <recent name="parser.node" />
       <recent name="exceptions" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\parser" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\lexer" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\resources\integration" />
+      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\antlr4" />
       <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml\integration" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment1\src\main\resources\xml" />
-      <recent name="C:\Users\dell\Documents\School\Year 2\Software Engineering\git-exercise-CI\Assignment1" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -115,9 +164,9 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.AntlrIntegrationTest">
-    <configuration name="AntlrTester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="AntlrTester" />
+  <component name="RunManager" selected="JUnit.LexerTest">
+    <configuration name="HybridParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HybridParser" />
       <module name="Assignment2" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -132,30 +181,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ParserTest.testArrayDeclNoSize" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AntlrXMLIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Assignment2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ParserTest" />
-      <option name="METHOD_NAME" value="testArrayDeclNoSize" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="AntlrXMLIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ParserTest.testIncorrectArrayDecl" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="IntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Assignment2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="ParserTest" />
-      <option name="METHOD_NAME" value="testIncorrectArrayDecl" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="IntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XMLIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LexerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Assignment2" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="XMLIntegrationTest" />
+      <option name="MAIN_CLASS_NAME" value="LexerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -163,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LexerTest" />
+        <item itemvalue="JUnit.IntegrationTest" />
+        <item itemvalue="JUnit.AntlrXMLIntegrationTest" />
         <item itemvalue="JUnit.AntlrIntegrationTest" />
-        <item itemvalue="Application.AntlrTester" />
-        <item itemvalue="JUnit.ParserTest.testArrayDeclNoSize" />
-        <item itemvalue="JUnit.ParserTest.testIncorrectArrayDecl" />
-        <item itemvalue="JUnit.XMLIntegrationTest" />
+        <item itemvalue="Application.HybridParser" />
       </list>
     </recent_temporary>
   </component>
@@ -278,13 +325,13 @@
     <state x="-1181" y="89" key="FileChooserDialogImpl/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590512341469" />
     <state x="493" y="179" key="FileChooserDialogImpl/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588192600503" />
     <state x="-1181" y="89" key="FileChooserDialogImpl/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760889401" />
-    <state width="1877" height="42" key="GridCell.Tab.0.bottom" timestamp="1590517875273">
+    <state width="1877" height="502" key="GridCell.Tab.0.bottom" timestamp="1592255384905">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="42" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590517875273" />
+    <state width="1877" height="502" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1592255384905" />
     <state width="1877" height="173" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1589897214822" />
     <state width="1877" height="206" key="GridCell.Tab.0.bottom/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
@@ -293,13 +340,13 @@
     <state width="255" height="525" key="GridCell.Tab.0.bottom/0.23.1280.733@0.23.1280.733" timestamp="1586469099839" />
     <state width="1877" height="173" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.bottom/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="42" key="GridCell.Tab.0.center" timestamp="1590517875273">
+    <state width="1877" height="502" key="GridCell.Tab.0.center" timestamp="1592255384905">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.center/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="42" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590517875273" />
+    <state width="1877" height="502" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1592255384905" />
     <state width="1877" height="173" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1589897214821" />
     <state width="1877" height="206" key="GridCell.Tab.0.center/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
@@ -308,13 +355,13 @@
     <state width="255" height="525" key="GridCell.Tab.0.center/0.23.1280.733@0.23.1280.733" timestamp="1586469099836" />
     <state width="1877" height="173" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.center/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="42" key="GridCell.Tab.0.left" timestamp="1590517875273">
+    <state width="1877" height="502" key="GridCell.Tab.0.left" timestamp="1592255384905">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.left/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="42" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590517875273" />
+    <state width="1877" height="502" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1592255384905" />
     <state width="1877" height="173" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1589897214821" />
     <state width="1877" height="206" key="GridCell.Tab.0.left/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
@@ -323,13 +370,13 @@
     <state width="255" height="525" key="GridCell.Tab.0.left/0.23.1280.733@0.23.1280.733" timestamp="1586469099835" />
     <state width="1877" height="173" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@-1920.-184.1920.1050" timestamp="1589760879616" />
     <state width="1237" height="173" key="GridCell.Tab.0.left/1920.-184.1920.1034/-1920.-184.1920.1050/0.0.1280.689@0.0.1280.689" timestamp="1586273936097" />
-    <state width="1877" height="42" key="GridCell.Tab.0.right" timestamp="1590517875273">
+    <state width="1877" height="502" key="GridCell.Tab.0.right" timestamp="1592255384905">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state width="1237" height="173" key="GridCell.Tab.0.right/-1920.-184.1920.1034/0.0.1280.689/1920.-184.1920.1050@0.0.1280.689" timestamp="1586298375410" />
     <state width="1877" height="274" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589501799242" />
     <state width="1237" height="206" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495263424" />
-    <state width="1877" height="42" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590517875273" />
+    <state width="1877" height="502" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1592255384905" />
     <state width="1877" height="173" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1589897214821" />
     <state width="1877" height="206" key="GridCell.Tab.0.right/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983206539" />
     <state width="1237" height="142" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1588096332947" />
@@ -431,12 +478,12 @@
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1254" y="-31" key="refactoring.ChangeSignatureDialog/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1587939464833" />
-    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup" timestamp="1590517875295">
+    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup" timestamp="1592255384926">
       <screen x="-1920" y="-184" width="1920" height="1050" />
     </state>
     <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1589496236691" />
     <state x="297" y="153" width="672" height="445" key="run.anything.popup/0.0.1280.689/-1920.-184.1920.1050/1920.-184.1920.1050@0.0.1280.689" timestamp="1589495154164" />
-    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1590517875295" />
+    <state x="-1474" y="49" width="672" height="677" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@-1920.-184.1920.1050" timestamp="1592255384926" />
     <state x="297" y="153" width="672" height="677" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@0.0.1280.689" timestamp="1588957361361" />
     <state x="2366" y="49" width="1008" height="679" key="run.anything.popup/0.0.1280.689/1920.-184.1920.1050/-1920.-184.1920.1050@1920.-184.1920.1050" timestamp="1588983078661" />
     <state x="297" y="153" width="672" height="445" key="run.anything.popup/0.0.1280.689@0.0.1280.689" timestamp="1588096332969" />
@@ -535,8 +582,8 @@
           <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/AntlrTester.java</url>
-          <line>22</line>
+          <url>file://$PROJECT_DIR$/src/main/java/HybridParser.java</url>
+          <line>25</line>
           <option name="timeStamp" value="192" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -548,11 +595,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/antlrSrc/TransformerVisitor.java</url>
           <line>336</line>
           <option name="timeStamp" value="195" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Tester.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/parser/node/expression/ASTFloatLiteral.java</url>
@@ -576,7 +618,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/antlrSrc/SmallLangParserHelper.java</url>
-          <line>63</line>
+          <line>57</line>
           <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -617,7 +659,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/IntegrationTest.java</url>
           <line>73</line>
-          <properties class="IntegrationTest" method="test3">
+          <properties class="IntegrationTest">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="85" />
@@ -625,7 +667,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/test/java/ParserTest.java</url>
           <line>89</line>
-          <properties class="ParserTest" method="testCharVarDecl">
+          <properties class="ParserTest">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="228" />

@@ -28,6 +28,7 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\lexer\Transition.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\lexer\Token.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\antlrSrc\SmallLangVisitor.java
+C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\HybridParser.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\identifier\ASTAbstractIdentifier.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\identifier\ASTIdentifier.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\Parser.java
@@ -38,7 +39,6 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\visitor\VisitorInterpreter.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\visitor\Scope.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\lexer\Operator.java
-C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\AntlrTester.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\Type.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\antlrSrc\SmallLangBaseVisitor.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\antlrSrc\SmallLangBaseListener.java
@@ -51,7 +51,6 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\ASTFunctionCall.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\antlrSrc\SmallLangParserHelper.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\statement\ASTFor.java
-C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\Tester.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\identifier\ASTArrayIdentifier.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\ASTExpression.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\expression\ASTFloatLiteral.java
@@ -60,3 +59,4 @@ C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\ma
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\lexer\State.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\antlrSrc\TransformerVisitor.java
 C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\parser\node\statement\ASTFormalParam.java
+C:\Users\dell\Documents\School\Year 2\Compiler Theory\CPS2000\Assignment2\src\main\java\SmallLangV2Executor.java

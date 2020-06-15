@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitorXMLGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Assignment2</a> &gt; <a href="index.source.html" class="el_package">visitor</a> &gt; <span class="el_source">VisitorXMLGenerator.java</span></div><h1>VisitorXMLGenerator.java</h1><pre class="source lang-java linenums">package visitor;
+
+import exceptions.*;
+import parser.node.*;
+import parser.node.expression.*;
+import parser.node.expression.identifier.ASTAbstractIdentifier;
+import parser.node.expression.identifier.ASTArrayIdentifier;
+import parser.node.expression.identifier.ASTIdentifier;
+import parser.node.statement.*;
+import parser.node.statement.declaration.ASTArrayDecl;
+import parser.node.statement.declaration.ASTDecl;
+import parser.node.statement.declaration.ASTVariableDecl;
+
+/**
+ * Visitor class for XML generator
+ */
+<span class="fc" id="L17">public class VisitorXMLGenerator implements Visitor {</span>
+    //variable to hold indent
+<span class="fc" id="L19">    private int indent = 0;</span>
+
+    @Override
+    public void visit(ASTActualParams actualParams) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L24">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L26">        indent++;</span>
+
+        //if no expressions
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if(actualParams.getExpressions().size() == 0)</span>
+<span class="fc" id="L30">            System.out.println(indentation+&quot;&lt;ActualParams&gt;Empty&lt;/ActualParams&gt;&quot;);</span>
+        else
+        {
+<span class="fc" id="L33">            System.out.println(indentation+&quot;&lt;ActualParams&gt;&quot;);</span>
+            //visit every expression
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            for(int i=0; i &lt;actualParams.getExpressions().size(); i++)</span>
+            {
+<span class="fc" id="L37">                actualParams.getExpressions().get(i).accept(this);</span>
+            }
+<span class="fc" id="L39">            System.out.println(indentation+&quot;&lt;/ActualParams&gt;&quot;);</span>
+        }
+        //decrement indent
+<span class="fc" id="L42">        indent--;</span>
+<span class="fc" id="L43">    }</span>
+
+    @Override
+    public void visit(ASTAssignment assignment) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L48">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L50">        indent++;</span>
+
+        //get identifier
+<span class="fc" id="L53">        ASTAbstractIdentifier identifier = assignment.getIdentifier();</span>
+        //get expression
+<span class="fc" id="L55">        ASTExpression expression = assignment.getExpression();</span>
+
+        //if the assignment is null (for example in for loop)
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if(identifier == null)</span>
+        {
+<span class="fc" id="L60">            System.out.println(indentation+&quot;&lt;Assignment&gt;Empty&lt;/Assignment&gt;&quot;);</span>
+        }
+        else
+        {
+<span class="fc" id="L64">            System.out.println(indentation+&quot;&lt;Assignment&gt;&quot;);</span>
+            //visit identifier
+<span class="fc" id="L66">            identifier.accept(this);</span>
+            //visit expression
+<span class="fc" id="L68">            expression.accept(this);</span>
+
+<span class="fc" id="L70">            System.out.println(indentation+&quot;&lt;/Assignment&gt;&quot;);</span>
+        }
+<span class="fc" id="L72">        indent--;</span>
+
+<span class="fc" id="L74">    }</span>
+
+    @Override
+    public void visit(ASTBinExpression expression) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L79">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L81">        indent++;</span>
+        //get operand
+<span class="fc" id="L83">        String operand = expression.getOperator();</span>
+        //get left
+<span class="fc" id="L85">        ASTExpression left = expression.getLeft();</span>
+        //get right
+<span class="fc" id="L87">        ASTExpression right = expression.getRight();</span>
+
+<span class="fc" id="L89">        System.out.println(indentation+&quot;&lt;BinaryExpr Op=\&quot;&quot;+operand+&quot;\&quot;&gt;&quot;);</span>
+        //visit left
+<span class="fc" id="L91">        left.accept(this);</span>
+        //visit right
+<span class="fc" id="L93">        right.accept(this);</span>
+<span class="fc" id="L94">        System.out.println(indentation+&quot;&lt;/BinaryExpr&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L97">        indent--;</span>
+<span class="fc" id="L98">    }</span>
+
+    @Override
+    public void visit(ASTBlock block) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L103">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L105">        indent++;</span>
+
+        //if block has no statements
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if(block.getStatements().size() == 0)</span>
+<span class="fc" id="L109">            System.out.println(indentation+&quot;&lt;Block&gt;Empty&lt;/Block&gt;&quot;);</span>
+        else
+        {
+<span class="fc" id="L112">            System.out.println(indentation+&quot;&lt;Block&gt;&quot;);</span>
+            //visit each statement in block
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            for(int i=0; i &lt;block.getStatements().size(); i++)</span>
+            {
+<span class="fc" id="L116">                block.getStatements().get(i).accept(this);</span>
+            }                    
+<span class="fc" id="L118">            System.out.println(indentation+&quot;&lt;/Block&gt;&quot;);</span>
+        }
+
+        //decrement indent
+<span class="fc" id="L122">        indent--;</span>
+
+<span class="fc" id="L124">    }</span>
+
+    @Override
+    public void visit(ASTBooleanLiteral booleanLiteral) {
+        //get indent
+<span class="fc" id="L129">        String indentation = getIndent();</span>
+<span class="fc" id="L130">        System.out.println(indentation+&quot;&lt;BooleanLiteral&gt;&quot;+booleanLiteral.getValue()+&quot;&lt;/BooleanLiteral&gt;&quot;);</span>
+
+<span class="fc" id="L132">    }</span>
+
+    @Override
+    public void visit(ASTFloatLiteral floatLiteral) {
+        //get indent
+<span class="fc" id="L137">        String indentation = getIndent();</span>
+<span class="fc" id="L138">        System.out.println(indentation+&quot;&lt;FloatLiteral&gt;&quot;+floatLiteral.getValue()+&quot;&lt;/FloatLiteral&gt;&quot;);</span>
+
+<span class="fc" id="L140">    }</span>
+
+    @Override
+    public void visit(ASTFor forNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L145">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L147">        indent++;</span>
+
+        //get declaration
+<span class="fc" id="L150">        ASTDecl declaration = forNode.getDeclaration();</span>
+        //get expression
+<span class="fc" id="L152">        ASTExpression expression = forNode.getExpression();</span>
+        //get assignment
+<span class="fc" id="L154">        ASTAssignment assignment = forNode.getAssignment();</span>
+        //get block
+<span class="fc" id="L156">        ASTBlock block = forNode.getBlock();</span>
+
+<span class="fc" id="L158">        System.out.println(indentation+&quot;&lt;For&gt;&quot;);</span>
+        //check declaration
+<span class="fc" id="L160">        declaration.accept(this);</span>
+        //visit expression
+<span class="fc" id="L162">        expression.accept(this);</span>
+        //visit assignment
+<span class="fc" id="L164">        assignment.accept(this);</span>
+        //visit block
+<span class="fc" id="L166">        block.accept(this);</span>
+<span class="fc" id="L167">        System.out.println(indentation+&quot;&lt;/For&gt;&quot;);</span>
+        //decrement indent
+<span class="fc" id="L169">        indent--;</span>
+<span class="fc" id="L170">    }</span>
+
+    @Override
+    public void visit(ASTFormalParam formalParam) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L175">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L177">        indent++;</span>
+
+        //get identifier
+<span class="fc" id="L180">        ASTAbstractIdentifier identifier = formalParam.getIdentifier();</span>
+
+<span class="fc" id="L182">        System.out.println(indentation+&quot;&lt;FormalParam&gt;&quot;);</span>
+        //visit identifier
+<span class="fc" id="L184">        identifier.accept(this);</span>
+<span class="fc" id="L185">        System.out.println(indentation+&quot;&lt;/FormalParam&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L188">        indent--;</span>
+<span class="fc" id="L189">    }</span>
+
+    @Override
+    public void visit(ASTFormalParams formalParams) throws AlreadyDeclaredException, UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L194">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L196">        indent++;</span>
+        //if there is no params
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        if(formalParams.getFormalParams().size() == 0)</span>
+<span class="fc" id="L199">            System.out.println(indentation+&quot;&lt;FormalParams&gt;Empty&lt;/FormalParams&gt;&quot;);</span>
+        else
+        {
+<span class="fc" id="L202">            System.out.println(indentation+&quot;&lt;FormalParams&gt;&quot;);</span>
+            //visit all params
+<span class="fc bfc" id="L204" title="All 2 branches covered.">            for(int i=0; i &lt;formalParams.getFormalParams().size(); i++)</span>
+            {
+<span class="fc" id="L206">                formalParams.getFormalParams().get(i).accept(this);</span>
+            }
+<span class="fc" id="L208">            System.out.println(indentation+&quot;&lt;/FormalParams&gt;&quot;);</span>
+        }
+<span class="fc" id="L210">        indent--;</span>
+<span class="fc" id="L211">    }</span>
+
+    @Override
+    public void visit(ASTFunctionCall functionCall) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L216">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L218">        indent++;</span>
+
+        //get identifier
+<span class="fc" id="L221">        ASTIdentifier identifier = functionCall.getIdentifier();</span>
+        //get params
+<span class="fc" id="L223">        ASTActualParams params = functionCall.getParams();</span>
+<span class="fc" id="L224">        System.out.println(indentation+&quot;&lt;FunctionCall&gt;&quot;);</span>
+        //visit identifier
+<span class="fc" id="L226">        identifier.accept(this);</span>
+        //visit params
+<span class="fc" id="L228">        params.accept(this);</span>
+<span class="fc" id="L229">        System.out.println(indentation+&quot;&lt;/FunctionCall&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L232">        indent--;</span>
+<span class="fc" id="L233">    }</span>
+
+    @Override
+    public void visit(ASTFunctionDecl functionDecl) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L238">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L240">        indent++;</span>
+        
+        //get identifier
+<span class="fc" id="L243">        ASTIdentifier identifier = functionDecl.getIdentifier();</span>
+        //get formal parameters
+<span class="fc" id="L245">        ASTFormalParams formalParams = functionDecl.getFormalParams();</span>
+        //get block
+<span class="fc" id="L247">        ASTBlock block = functionDecl.getBlock();</span>
+
+<span class="fc" id="L249">        System.out.println(indentation+&quot;&lt;FuncDecl&gt;&quot;);</span>
+        //visit identifier
+<span class="fc" id="L251">        identifier.accept(this);</span>
+        //visit formal parameters
+<span class="fc" id="L253">        formalParams.accept(this);</span>
+        //visit block
+<span class="fc" id="L255">        block.accept(this);</span>
+<span class="fc" id="L256">        System.out.println(indentation+&quot;&lt;/FuncDecl&gt;&quot;);</span>
+        //decrement indent
+<span class="fc" id="L258">        indent--;</span>
+<span class="fc" id="L259">    }</span>
+
+    @Override
+    public void visit(ASTIdentifier identifier) {
+        //get indent
+<span class="fc" id="L264">        String indentation = getIndent();</span>
+        
+        //check type, if there is no type, leave it empty
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        String type = (identifier.getType() != null) ? &quot; Type=\&quot;&quot;+identifier.getType()+&quot;\&quot;&quot; : &quot;&quot;;</span>
+<span class="fc" id="L268">        System.out.println(indentation+&quot;&lt;Identifier&quot;+type+&quot;&gt;&quot;+identifier.getName()+&quot;&lt;/Identifier&gt;&quot;);</span>
+<span class="fc" id="L269">    }</span>
+
+    @Override
+    public void visit(ASTIf ifNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L274">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L276">        indent++;</span>
+
+        //get expression
+<span class="fc" id="L279">        ASTExpression expression = ifNode.getExpression();</span>
+        //get block
+<span class="fc" id="L281">        ASTBlock block = ifNode.getBlock();</span>
+        //get else block
+<span class="fc" id="L283">        ASTBlock elseBlock = ifNode.getElseBlock();</span>
+
+
+<span class="fc" id="L286">        System.out.println(indentation+&quot;&lt;If&gt;&quot;);</span>
+<span class="fc" id="L287">        expression.accept(this);</span>
+<span class="fc" id="L288">        block.accept(this);</span>
+<span class="fc" id="L289">        elseBlock.accept(this);</span>
+<span class="fc" id="L290">        System.out.println(indentation+&quot;&lt;/If&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L293">        indent--;</span>
+<span class="fc" id="L294">    }</span>
+
+    @Override
+    public void visit(ASTIntegerLiteral integerLiteral) {
+        //get indent
+<span class="fc" id="L299">        String indentation = getIndent();</span>
+<span class="fc" id="L300">        System.out.println(indentation+&quot;&lt;IntegerLiteral&gt;&quot;+integerLiteral.getValue()+&quot;&lt;/IntegerLiteral&gt;&quot;);</span>
+<span class="fc" id="L301">    }</span>
+
+    @Override
+    public void visit(ASTPrint printNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L306">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L308">        indent++;</span>
+        
+        //get expression
+<span class="fc" id="L311">        ASTExpression expression = printNode.getExpression();</span>
+<span class="fc" id="L312">        System.out.println(indentation+&quot;&lt;Print&gt;&quot;);</span>
+        //visit expression
+<span class="fc" id="L314">        expression.accept(this);</span>
+<span class="fc" id="L315">        System.out.println(indentation+&quot;&lt;/Print&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L318">        indent--;</span>
+<span class="fc" id="L319">    }</span>
+
+    @Override
+    public void visit(ASTProgram programNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+
+        //get indent
+<span class="fc" id="L325">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L327">        indent++;</span>
+<span class="fc" id="L328">        System.out.println(indentation+&quot;&lt;Program&gt;&quot;);</span>
+        
+        //visit every statment
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        for(int i=0; i &lt;programNode.getStatements().size(); i++)</span>
+        {
+<span class="fc" id="L333">            programNode.getStatements().get(i).accept(this);</span>
+        }
+<span class="fc" id="L335">        System.out.println(indentation+&quot;&lt;/Program&gt;&quot;);</span>
+<span class="fc" id="L336">    }</span>
+
+
+    @Override
+    public void visit(ASTReturn returnNode) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L342">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L344">        indent++;</span>
+        
+        //get expression
+<span class="fc" id="L347">        ASTExpression expression = returnNode.getExpression();</span>
+<span class="fc" id="L348">        System.out.println(indentation+&quot;&lt;Return&gt;&quot;);</span>
+        //visit expression
+<span class="fc" id="L350">        expression.accept(this);</span>
+<span class="fc" id="L351">        System.out.println(indentation+&quot;&lt;/Return&gt;&quot;);</span>
+        
+        //decrement indent
+<span class="fc" id="L354">        indent--;</span>
+<span class="fc" id="L355">    }</span>
+
+    @Override
+    public void visit(ASTUnary unary) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L360">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L362">        indent++;</span>
+
+        //get unary expression
+<span class="fc" id="L365">        ASTExpression expression = unary.getExpression();</span>
+<span class="fc" id="L366">        System.out.println(indentation+&quot;&lt;Unary Type=\&quot;&quot;+unary.getLexeme()+&quot;\&quot;&gt;&quot;);</span>
+        //visit expression
+<span class="fc" id="L368">        expression.accept(this);</span>
+<span class="fc" id="L369">        System.out.println(indentation+&quot;&lt;/Unary&gt;&quot;);</span>
+
+        //decrement indent
+<span class="fc" id="L372">        indent--;</span>
+<span class="fc" id="L373">    }</span>
+
+    @Override
+    public void visit(ASTVariableDecl variableDecl) throws AlreadyDeclaredException, IncorrectTypeException, UndeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L378">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L380">        indent++;</span>
+
+        //get identifier
+<span class="fc" id="L383">        ASTIdentifier identifier = variableDecl.getIdentifier();</span>
+        //get expression
+<span class="fc" id="L385">        ASTExpression expression = variableDecl.getExpression();</span>
+
+
+        //if there is no identifier - in case of for loop with no variable declaration
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        if(identifier == null)</span>
+        {
+<span class="fc" id="L391">            System.out.println(indentation+&quot;&lt;VarDecl&gt;Empty&lt;/VarDecl&gt;&quot;);</span>
+        }
+        else
+        {
+<span class="fc" id="L395">            System.out.println(indentation+&quot;&lt;VarDecl&gt;&quot;);</span>
+            //visit identifier
+<span class="fc" id="L397">            identifier.accept(this);</span>
+            //visit expression
+<span class="fc" id="L399">            expression.accept(this);</span>
+<span class="fc" id="L400">            System.out.println(indentation+&quot;&lt;/VarDecl&gt;&quot;);</span>
+        }
+
+        //decrement indentation
+<span class="fc" id="L404">        indent--;</span>
+<span class="fc" id="L405">    }</span>
+
+    @Override
+    public void visit(ASTWhile whileNode) throws IncorrectTypeException, UndeclaredException, AlreadyDeclaredException, ReturnTypeMismatchException {
+        //get indent
+<span class="fc" id="L410">        String indentation = getIndent();</span>
+        //increment indent
+<span class="fc" id="L412">        indent++;</span>
+        
+        //get expression
+<span class="fc" id="L415">        ASTExpression expression = whileNode.getExpression();</span>
+        //get block
+<span class="fc" id="L417">        ASTBlock block = whileNode.getBlock();</span>
+
+<span class="fc" id="L419">        System.out.println(indentation+&quot;&lt;While&gt;&quot;);</span>
+        //visit expression
+<span class="fc" id="L421">        expression.accept(this);</span>
+        //visit block
+<span class="fc" id="L423">        block.accept(this);</span>
+<span class="fc" id="L424">        System.out.println(indentation+&quot;&lt;/While&gt;&quot;);</span>
+        
+        //decrement indent
+<span class="fc" id="L427">        indent--;</span>
+<span class="fc" id="L428">    }</span>
+
+    @Override
+<span class="fc" id="L431">    public void visit(ASTExpression astExpression) {}</span>
+    @Override
+<span class="fc" id="L433">    public void visit(ASTStatement astStatement) {}</span>
+    @Override
+<span class="fc" id="L435">    public void visit(ASTArrayValue astArrayValue) {}</span>
+    @Override
+<span class="fc" id="L437">    public void visit(ASTArrayDecl arrayDecl) {}</span>
+    @Override
+<span class="fc" id="L439">    public void visit(ASTCharacterLiteral characterLiteral) {}</span>
+
+    @Override
+    public void visit(ASTDecl astDecl) {
+<span class="fc" id="L443">        String indentation = getIndent();</span>
+
+        //if there is no identifier - in case of for loop with no variable declaration
+<span class="fc" id="L446">        System.out.println(indentation+&quot;&lt;Decl&gt;Empty&lt;/Decl&gt;&quot;);</span>
+<span class="fc" id="L447">    }</span>
+
+    @Override
+    public void visit(ASTArrayIdentifier arrayIdentifier) {
+        //get indent
+<span class="fc" id="L452">        String indentation = getIndent();</span>
+
+        //check type
+<span class="fc" id="L455">        String type = &quot; Type=\&quot;&quot;+arrayIdentifier.getType()+&quot;\&quot;&quot;;</span>
+<span class="fc" id="L456">        System.out.println(indentation+&quot;&lt;ArrayIdentifier&quot;+type+&quot;&gt;&quot;+arrayIdentifier.getName()+&quot;&lt;/ArrayIdentifier&gt;&quot;);</span>
+<span class="fc" id="L457">    }</span>
+
+
+    /**
+     * Method to get indent
+     * @return get indent as a string
+     */
+    public String getIndent()
+    {
+<span class="fc" id="L466">        StringBuilder indentation = new StringBuilder(&quot;&quot;);</span>
+
+<span class="fc bfc" id="L468" title="All 2 branches covered.">        for(int i =0; i &lt; this.indent; i++)</span>
+<span class="fc" id="L469">            indentation.append(&quot;\t&quot;);</span>
+
+<span class="fc" id="L471">        return indentation.toString();</span>
+    }
+
+    /**
+     * Method to generate xml
+     * @param program program node where to start
+     * @throws UndeclaredException
+     * @throws IncorrectTypeException
+     * @throws ReturnTypeMismatchException
+     * @throws AlreadyDeclaredException
+     */
+    public void generate(ASTProgram program) throws UndeclaredException, IncorrectTypeException, ReturnTypeMismatchException, AlreadyDeclaredException {
+<span class="fc" id="L483">        program.accept(this);</span>
+<span class="fc" id="L484">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
